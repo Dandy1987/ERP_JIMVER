@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InfComNotaESvsFacxProd_M" language="groovy" pageWidth="1060" pageHeight="636" columnWidth="1046" leftMargin="7" rightMargin="7" topMargin="7" bottomMargin="7" uuid="ccb7ed49-48c3-46dc-a10d-f80b25422c9b">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="usuario" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="empresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA["CODIJISA"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_WHERER" class="java.lang.String">
+		<defaultValueExpression><![CDATA["select distinct p.nescab_id,p.nescab_key,p.nescab_tipnotaes,p.notaes,p.emp_id,p.suc_id,p.serie,p.nescab_nroped,p.nescab_fecha, p.nescab_glosa, p.nescab_situacion, p.nescab_est,p.nescab_ocind,p.nescab_ocnropedkey,p.oc,p.nescab_tipdoc,p.nescab_nrodoc,p.nescab_provid,p.proveedor,p.nescab_cliid,p.cliente,p.nescab_moneda,p.nescab_tcamb,p.nescab_almori,p.nescab_almdes,p.nescab_costeo,p.nescab_despacho,p.sitdes,p.nescab_nrodep,p.nescab_usuadd,p.nescab_fecadd,p.nescab_usumod,p.nescab_fecmod, sum(t.nesdet_pvta) vtotal from v_listanotaescab p,v_listanotaesdet t , v_listafacturaproveedorcab f where p.emp_id=t.emp_id and p.suc_id=t.suc_id and p.nescab_key=t.nescab_key and p.nescab_id=t.nescab_id and f.tc_oc = p.oc and p.emp_id=1 and p.suc_id=1 and to_char(p.nescab_fecha,'yyyymm') like '201506' and t.pro_id='029003002' and p.nescab_est=1 and t.nesdet_est=1 and trunc(f.tc_fecemi) like to_date('22/06/2015','dd/MM/yyyy') and p.nescab_provid like '%%'group by p.nescab_id,p.nescab_key,p.nescab_tipnotaes,p.notaes,p.emp_id,p.suc_id,p.serie,p.nescab_nroped, p.nescab_fecha,p.nescab_glosa, p.nescab_situacion, p.nescab_est,p.nescab_ocind,p.nescab_ocnropedkey,p.oc,p.nescab_tipdoc,p.nescab_nrodoc,p.nescab_provid,p.proveedor,p.nescab_cliid,p.cliente,p.nescab_moneda,p.nescab_tcamb,p.nescab_almori,p.nescab_almdes, p.nescab_costeo,p.nescab_despacho,p.sitdes,p.nescab_nrodep,p.nescab_usuadd,p.nescab_fecadd,p.nescab_usumod,p.nescab_fecmod order by p.nescab_id"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_TITULO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="svimpto" class="java.lang.String"/>
+	<parameter name="svafecto" class="java.lang.String"/>
+	<parameter name="pro_id" class="java.lang.String"/>
+	<parameter name="pro_des" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[$P!{P_WHERER}]]>
+	</queryString>
+	<field name="NESCAB_ID" class="java.lang.String"/>
+	<field name="NESCAB_KEY" class="java.lang.String"/>
+	<field name="NESCAB_TIPNOTAES" class="java.lang.String"/>
+	<field name="NOTAES" class="java.lang.String"/>
+	<field name="EMP_ID" class="java.math.BigDecimal"/>
+	<field name="SUC_ID" class="java.math.BigDecimal"/>
+	<field name="SERIE" class="java.lang.String"/>
+	<field name="NESCAB_NROPED" class="java.lang.String"/>
+	<field name="NESCAB_FECHA" class="java.sql.Timestamp"/>
+	<field name="NESCAB_GLOSA" class="java.lang.String"/>
+	<field name="NESCAB_SITUACION" class="java.math.BigDecimal"/>
+	<field name="NESCAB_EST" class="java.math.BigDecimal"/>
+	<field name="NESCAB_OCIND" class="java.lang.String"/>
+	<field name="NESCAB_OCNROPEDKEY" class="java.math.BigDecimal"/>
+	<field name="OC" class="java.lang.String"/>
+	<field name="NESCAB_TIPDOC" class="java.lang.String"/>
+	<field name="NESCAB_NRODOC" class="java.lang.String"/>
+	<field name="NESCAB_PROVID" class="java.lang.String"/>
+	<field name="PROVEEDOR" class="java.lang.String"/>
+	<field name="NESCAB_CLIID" class="java.lang.String"/>
+	<field name="CLIENTE" class="java.lang.String"/>
+	<field name="NESCAB_MONEDA" class="java.math.BigDecimal"/>
+	<field name="NESCAB_TCAMB" class="java.math.BigDecimal"/>
+	<field name="NESCAB_ALMORI" class="java.lang.String"/>
+	<field name="NESCAB_ALMDES" class="java.lang.String"/>
+	<field name="NESCAB_COSTEO" class="java.math.BigDecimal"/>
+	<field name="NESCAB_DESPACHO" class="java.math.BigDecimal"/>
+	<field name="SITDES" class="java.lang.String"/>
+	<field name="NESCAB_NRODEP" class="java.lang.String"/>
+	<field name="NESCAB_USUADD" class="java.lang.String"/>
+	<field name="NESCAB_FECADD" class="java.sql.Timestamp"/>
+	<field name="NESCAB_USUMOD" class="java.lang.String"/>
+	<field name="NESCAB_FECMOD" class="java.sql.Timestamp"/>
+	<field name="VTOTAL" class="java.math.BigDecimal"/>
+	<variable name="TOTAL" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{VTOTAL}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="70" splitType="Stretch">
+			<textField>
+				<reportElement uuid="802bfce8-5f2f-4abf-ab34-4b5b4ec68dca" x="1009" y="8" width="21" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="false" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="754416d6-40f3-4667-bd96-52a852947d62" x="19" y="19" width="235" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[INFCOMNOTAESVSFACXPROD_M.JASPER]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="b37d99eb-8007-4420-b0d3-b0857917d695" x="958" y="19" width="72" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7" isBold="false" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="39264b5c-f9f3-4c37-a165-0e67ccc8f078" x="978" y="8" width="28" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="7" isBold="false" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[PAG:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4062cdda-cd8b-4c85-8888-c3700c646ed6" x="19" y="31" width="186" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c8f30a53-d22e-4e36-966a-42764734bd1f" x="19" y="8" width="186" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{empresa}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm:ss">
+				<reportElement uuid="7b928a72-54a1-49b6-8256-bb714f91d943" x="958" y="31" width="72" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7" isBold="false" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a6e14650-56ba-4add-a626-c812c96aadd9" x="254" y="18" width="687" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_TITULO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="30ab0118-f875-455e-b53b-a8e8400c04f8" x="19" y="48" width="70" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[PRODUCTO:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="36d271ed-d80b-4254-a6c0-f461b3c13ba4" x="111" y="48" width="410" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pro_id}+"-"+$P{pro_des}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="96a693f4-8005-46ae-aa57-da6c725c36a8" x="19" y="2" width="1011" height="9"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="96a693f4-8005-46ae-aa57-da6c725c36a8" x="19" y="26" width="1011" height="9"/>
+				<textElement textAlignment="Justified">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="822279df-f9d2-4aa2-8717-29bc3e25eab9" x="19" y="13" width="54" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TIPO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8c998a36-83f1-4000-b8d5-f2429ea42a19" x="479" y="13" width="90" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[O.COMPRA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d046799c-3bb9-4e0b-954f-7d9a18a2bcf6" x="294" y="13" width="87" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[#NOTA /ES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c7e5a10f-55aa-4d66-b47e-d56490042c00" x="389" y="13" width="80" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="855e9f32-5fc7-4822-90de-32e377a3e041" x="73" y="13" width="220" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[NOTA E/S]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0c0c2649-186d-4965-9fe9-5849eeb95a04" x="845" y="13" width="90" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CLIENTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="948264a3-fa87-4f62-8165-2d9008392e18" x="576" y="13" width="260" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[PROVEEDOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b03c3b9b-d415-4aa7-b5b5-5ba774f9d5f3" x="941" y="13" width="90" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="12d6925d-62f5-4291-9dff-c8c75f1060f4" x="576" y="0" width="260" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROVEEDOR}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4b1af0e9-0a05-4893-835c-ae19881589d7" x="294" y="0" width="87" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NESCAB_ID}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="018fca99-725c-4675-965a-95f6061bb147" x="73" y="0" width="220" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOTAES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="086b554d-e6f3-4563-99f3-7b3a72dd0a25" x="389" y="0" width="80" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NESCAB_FECHA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="94037c5b-e68e-4cc0-993c-1e4ae8c4642b" x="479" y="0" width="90" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OC}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="6cdbf26c-3b62-406c-8da3-bf548251008d" x="941" y="0" width="90" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{VTOTAL}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3cab954c-5914-491a-a4fd-038b37f7541a" x="19" y="0" width="54" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NESCAB_TIPNOTAES}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="20a78790-1b76-4201-af71-5f4f1d2a8b1b" x="846" y="0" width="89" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NESCAB_CLIID}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="5be848f2-9b7f-4fc6-9e48-c1458a10e4c1" x="19" y="16" width="130" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[TOTAL REGISTROS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="33d4713f-456e-45e8-ba7f-b9008b834fe3" x="155" y="16" width="50" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="96a693f4-8005-46ae-aa57-da6c725c36a8" x="19" y="6" width="1011" height="9"/>
+				<textElement textAlignment="Justified">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="120f6d32-d861-45be-a811-04032b9c82d5" x="941" y="16" width="90" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="141870c9-7f3f-4771-b471-442c8c5e2dfa" x="846" y="16" width="81" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[TOTAL :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cc48b232-842f-4a40-9383-f618bcdd952e" x="464" y="16" width="60" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[V.IMP:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1b2456b6-8f2c-4aa1-b10a-7ce18fc301a1" x="666" y="16" width="60" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[V.AFEC:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="efecdae6-f2d3-4c5b-b2cd-b44e2c798d59" x="534" y="16" width="90" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{svimpto}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="a6a81577-29a8-4c71-b85d-67a3422cff9f" x="734" y="16" width="90" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{svafecto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

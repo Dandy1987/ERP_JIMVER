@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_costeonotes" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_costear" image="/images/iconos/aprobar.png"  tooltiptext="Costear Nota E/S" />         
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir Costeo Nota E/S" disabled="true"  />    
+                        <label value="COSTEO NOTA E/S - AUTOMÁTICO" sclass="titulo_mant" style="margin-left:350px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_notes" ctrlKeys="#f10" apply="org.me.gj.controller.logistica.procesos.ControllerCosteoAuto"> 
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_detalle" label="DETALLE">
+                                <attribute name="onSelect">
+                                    if (lst_costeo.getSelectedIndex() == -1)
+                                    {
+                                    tab_lista.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <hbox>
+                                    <groupbox width="988px" closable="false" >
+                                        <caption label="BUSCAR NOTA DE E/S"/>
+                                        <vbox>
+                                            <hbox align="center"> 
+                                                <cell align="right" valign="center">
+                                                    <label value="PERIODO:"/>
+                                                </cell>
+                                                <space width="2px"/>
+                                                <combobox id="cb_periodo" readonly="true" width="70px" tooltiptext="Seleccione Periodo de Nota de E/S" >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.per_periodo}" value="${each.per_id}"/>                                                                                                      
+                                                    </template>                                                
+                                                </combobox>
+                                                <space width="5px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="FECHA:"/>
+                                                </cell>
+                                                <space width="2px"/>
+                                                <datebox id="d_fecemi" width="85px" format="dd/MM/yyyy" tooltiptext="Fecha de Emisión"/> 
+                                                <space width="5px"/>
+                                                <cell valign="botton">
+                                                    <label value="NOTA E/S: "/>  
+                                                </cell>
+                                                <textbox id="txt_nescab_tipnotaes" maxlength="3" width="30px" disabled="false" tooltiptext="Define el Código del Tipo de Nota E/S, máximo 3 caracteres" />
+                                                <textbox id="txt_nomtipnotaes" maxlength="50" width="280px" disabled="true" tooltiptext="Define la Descripción de la Nota E/S, máximo 50 caracteres" />                                  
+                                                <space width="5px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="SITUACION"/>
+                                                </cell>
+                                                <combobox id="cb_situacion" width="120px" tooltiptext="Concepto de la Nota E/S" readonly="true">
+                                                    <comboitem label=" " value="%%"/>
+                                                    <comboitem label="FALTA SOLES" value="FS"/>
+                                                    <comboitem label="FALTA PRODUCTO" value="FP"/> 
+                                                    <comboitem label="NORMAL" value="N"/> 
+                                                </combobox>                                                
+                                                <separator width="10px"/>
+                                                <button id="btn_consultar" label="Consultar" sclass="botones"/> 
+                                            </hbox> 
+                                        </vbox>
+                                    </groupbox>
+                                </hbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_costeo" mold="paging" pageSize="19" width="985px" height="460px">
+                                    <listhead>
+                                        <!--    <listheader label="DESP" width="40px"/>     -->
+                                        <listheader label="TIP"  width="26px" align="center"/>
+                                        <listheader label="NOTA E/S"  width="234px"/>
+                                        <listheader label="# NOTA E/S"  width="70px" align="center"/>
+                                        <listheader label="FECHA" width="65px" align="center"/>
+                                        <listheader label="# ORDEN" width="70px" align="center"/>
+                                        <listheader label="REFERENCIA" width="100px" align="center"/>
+                                        <listheader label="PROVEEDOR" width="240px"/>
+                                        <!--    <listheader label="CLIENTE" width="70px"/>-->
+                                        <!--    <listheader label="CST" width="30px"/>-->
+                                        <listheader label="SITUACION" width="155px"/>
+                                        <listheader width="25px">
+                                            <checkbox id="chk_selecAll"/>
+                                        </listheader>
+                                    </listhead>
+                                    <template name="model">
+                                        <listitem>
+                                            <!--    <listcell label="${each.despacho}" style="text-align: center; background-color: skyblue;color: blue;"/> -->
+                                            <listcell label="${each.nescab_tipnotaes}"/>
+                                            <listcell label="${each.notaes}"/>
+                                            <listcell label="${each.nescab_id}" style="text-align: center; background-color: #F2F5A9; color: black;"/>
+                                            <listcell label="${each.fecha}"/>
+                                            <listcell label="${each.ord_compra}"/>
+                                            <listcell label="${each.referencia}" style="text-align:right;"/>
+                                            <listcell label="${each.nescab_provrazsoc}"/>
+                                            <!--      <listcell label="${each.nescab_cliid}"/>-->
+                                            <!--      <listcell label="${each.costeo}" style="text-align: center; background-color: #BEF781;color: #2E2E2E;"/>-->
+                                            <listcell label="${each.situacion}" />
+                                            <listcell>
+                                                <checkbox forward="onCheck=lst_costeo.onSeleccion"  checked="${each.valSelec}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>		
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Nota E/S"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación de la Nota E/S"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó la Nota E/S"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación de la Nota E/S"/>   
+                                </hbox>
+                            </tabpanel>
+                            <tabpanel>
+                                <hbox>  
+                                    <listbox id="lst_costeodetalle" width="1270px" fixedLayout="true" height="550px" mold="paging" pageSize="20">
+                                        <frozen columns="2"></frozen>
+                                        <auxhead>
+                                            <auxheader label="..." colspan="2" style="text-align: center;" />
+                                            <auxheader label="FACTURA" colspan="4" style="text-align: center;" />
+                                            <auxheader label="NOTA E/S" colspan="4" style="text-align: center;" />
+                                            <auxheader label="DIFERENCIA" colspan="4" style="text-align: center;" />
+                                            <auxheader label="..." colspan="1" style="text-align: center;" />
+                                        </auxhead>
+                                        <listhead>
+                                            <listheader label="ID"  width="60px"/>
+                                            <listheader label="PRODUCTO"  width="260px"/>
+                                            <listheader label="PRECIO"  width="55px" align="right"/>
+                                            <listheader label="CANT"  width="50px" align="right"/>
+                                            <listheader label="VVENTA"  width="70px" align="right"/>
+                                            <listheader label="TOTAL"  width="70px" align="right"/>
+                                            <listheader label="PRECIO"  width="55px" align="right"/>
+                                            <listheader label="CANT"  width="50px" align="right"/>
+                                            <listheader label="VVENTA"  width="70px" align="right"/>
+                                            <listheader label="TOTAL"  width="70px" align="right"/>
+                                            <listheader label="PRECIO"  width="55px" align="right"/>
+                                            <listheader label="CANT"  width="50px" align="right"/>
+                                            <listheader label="VVENTA"  width="70px" align="right"/>
+                                            <listheader label="TOTAL"  width="70px" align="right"/>
+                                            <listheader label="OBSERVACION" align="right"/>
+                                        </listhead>
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.cstauto_idproducto}"/>
+                                                <listcell label="${each.cstauto_desproducto}"/>
+                                                <listcell label="${each.cstauto_prefac}" style="text-align: right; background-color: #FFFF00;color: #2E2E2E;"/>
+                                                <listcell label="${each.cstauto_cantfac}" style="text-align: right; background-color: #7CFC00;color: #2E2E2E;"/>
+                                                <listcell label="${each.cstauto_svventafac}" style="text-align: right; background-color: #FFD700;color: #2E2E2E;"/>
+                                                <listcell label="${each.cstauto_stotalfac}" style="text-align: right; background-color: #FF7F50;color: #2E2E2E;" />
+                                                <listcell label="${each.cstauto_prenota}" style="text-align: right; background-color: #FFFF00;color: #2E2E2E;"/>
+                                                <listcell label="${each.cstauto_cantnota}" style="text-align: right; background-color: #7CFC00;color: #2E2E2E;"/>
+                                                <listcell label="${each.cstauto_svventanota}" style="text-align: right; background-color: #FFD700;color: #2E2E2E;"/>
+                                                <listcell label="${each.cstauto_stotalnota}" style="text-align: right; background-color: #FF7F50;color: #2E2E2E;" />
+                                                <listcell label="${each.cstauto_difpre}" style="text-align: right; background-color: #FFFF00;color: #2E2E2E;"/>
+                                                <listcell label="${each.cstauto_difcant}" style="text-align: right; background-color: #7CFC00;color: #2E2E2E;"/> 
+                                                <listcell label="${each.cstauto_sdifvventa}" style="text-align: right; background-color: #FFD700;color: #2E2E2E;"/>
+                                                <listcell label="${each.cstauto_sdiftotal}" style="text-align: right; background-color: #FF7F50;color: #2E2E2E;" />  
+                                                <listcell label="${each.cstauto_situacion}"/>                         
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                </hbox>
+                            </tabpanel>                      
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

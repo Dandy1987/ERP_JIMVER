@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>     
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuCxc.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_mancli" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" />   
+                        <label value="MANTENIMIENTO DE CLIENTE" sclass="titulo_mant" style="margin-left:205px;"/>
+                    </toolbar>                        
+                    <tabbox id="tabbox_cliente" ctrlKeys="^a#f8#f10" apply="org.me.gj.controller.cxc.mantenimiento.ControllerCliente">
+                        <tabs>
+                            <tab id="tab_listacliente" label="LISTA" />
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (!tab_listacliente.isDisabled())
+                                    {
+                                    if (lst_cliente.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listacliente.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);  
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                            <tab id="tab_direccion" label="DIRECCION">
+                                <attribute name="onSelect">
+                                    if (!tab_listacliente.isDisabled())
+                                    {
+                                    if (lst_cliente.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listacliente.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);  
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                            <tab id="tab_telefono" label="TELEFONOS">
+                                <attribute name="onSelect">
+                                    if (!tab_listacliente.isDisabled())
+                                    {
+                                    if (lst_cliente.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listacliente.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                            <!--<tab id="tab_financiero" label="DATOS FINANCIEROS">
+                                <attribute name="onSelect">
+                                    if (!tab_listacliente.isDisabled())
+                                    {
+                                    if (lst_cliente.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listacliente.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla");   
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                            <tab id="tab_garantia" label="GARANTIAS">
+                                <attribute name="onSelect">
+                                    if (!tab_listacliente.isDisabled())
+                                    {
+                                    if (lst_cliente.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listacliente.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla");   
+                                    }
+                                    }
+                                </attribute>
+                            </tab>-->
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_cli" >                                
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda" />
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+                                                <label value="FILTRO:"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una Opcion">
+                                                <comboitem label=" "/>                      
+                                                <comboitem label="ID"/>
+                                                <comboitem label="RAZON SOCIAL"/>
+                                                <comboitem label="DIRECCION"/>
+                                                <comboitem label="ZONA"/>
+                                                <comboitem label="RUC"/>
+                                                <comboitem label="DNI"/>
+                                                <comboitem label="HORARIO"/>
+                                                <attribute name="onSelect">
+                                                    txt_busqueda.setDisabled(false);
+                                                </attribute>                                                
+                                            </combobox>
+                                            <space width="2px"/>
+                                            <textbox id="txt_busqueda" width="400px" value="%%" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" tooltiptext="Ingresa un Valor para su Busqueda"/>          
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="ESTADO:" id="lbl_estado"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una Opción" width="110px">
+                                                <comboitem label="ACTIVO"/>
+                                                <comboitem label="INACTIVO"/>
+                                                <comboitem label=" "/>       
+                                            </combobox>
+                                            <space width="10px"/>
+                                            <button id="tbbtn_btn_buscar" label="Buscar" sclass="botones"/> 
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="10px"/>    
+                                    <listbox id="lst_cliente" mold="paging" pageSize="18" width="985px" height="455px">
+                                        <listhead>
+                                            <listheader label="ID" width="73px"/>
+                                            <listheader label="RAZON SOCIAL" width="245px"/>
+                                            <listheader label="DIRECCION" width="358px"/>
+                                            <listheader label="ZONA" width="54px"/>
+                                            <listheader label="RUC" width="80px"/>
+                                            <listheader label="DNI" width="55px"/>
+                                            <listheader label="HORARIO" width="90px"/>
+                                            <listheader label="EST" width="30px"/>
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.cli_id}"/>
+                                                <listcell label="${each.cli_razsoc}"/>
+                                                <listcell label="${each.clidir_direc}"/>
+                                                <listcell label="${each.zon_id}"/>
+                                                <listcell label="${each.cli_ruc}"/>
+                                                <listcell label="${each.cli_dni}"/>
+                                                <listcell label="${each.hor_des}"/>
+                                                <listcell>
+                                                    <checkbox disabled="true" checked="${each.valor}"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <space height="5px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador del Cliente"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación del Cliente"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó al Cliente"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación del Cliente"/>   
+                                    </hbox>
+                                </div>
+                            </tabpanel> 
+                            <tabpanel>
+                                <div >
+                                    <groupbox width="100%" open="true" closable="false">
+                                        <caption label="DATOS PERSONALES"/>
+                                        <grid id="grd_man_cli" width="975px">
+                                            <columns>
+                                                <column width="100px"/>
+                                                <column width="200px"/>
+                                                <column width="100px"/>
+                                                <column width="200px"/>
+                                                <column width="100px"/>
+                                                <column width="275px"/>
+                                            </columns>
+                                            <rows>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="ID:"/>
+                                                    </cell>
+                                                    <textbox id="txt_cliid" disabled="true" maxlength="10" width="180px" tooltiptext="Define el Codigo del Cliente, Máximo 10 caracteres"/>                                    
+                                                    <cell align="right" valign="center">
+                                                        <label value="ESTADO:"/>
+                                                    </cell>
+                                                    <checkbox id="chk_cliestado" disabled="true" tooltiptext="Define el Estado del Cliente"/>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="APEL. PATERNO:"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    <textbox id="txt_cliapepat" disabled="true" tooltiptext="Define el Apellido Paterno del Cliente, Máximo 30 caracteres" maxlength="30" width="180px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="APEL. MATERNO:"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    <textbox id="txt_cliapemat" disabled="true" tooltiptext="Define el Apellido Materno del Cliente, Máximo 30 caracteres" maxlength="30" width="180px"/>                                                                        
+                                                    <cell align="right" valign="center">
+                                                        <label value="NOMBRES:"/>
+                                                        <span class="colorRojo">*</span>   
+                                                    </cell>
+                                                    <textbox id="txt_clinombre" disabled="true" tooltiptext="Define el Nombre del Cliente, Máximo 30 caracteres" maxlength="30" width="250px"/>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="RAZON SOCIAL:"/>
+                                                    </cell>
+                                                    <cell colspan="6">
+                                                        <textbox id="txt_clirazsoc" disabled="true" tooltiptext="Define el Nombre del Cliente, Máximo 100 caracteres" maxlength="100" width="850px"/>
+                                                    </cell>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="TIPO DOC.:"/>
+                                                        <span class="colorRojo">*</span>   
+                                                        
+                                                    </cell>
+                                                    <combobox id="cb_tipodoc" disabled="true" readonly="true" width="180px" tooltiptext="Define el Tipo de Documento de Identidad">
+                                                        <template name="model">
+                                                            <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                        </template> 
+                                                    </combobox>
+                                                    <cell align="right" valign="center">
+                                                        <label value="DNI:"/>
+                                                        <span class="colorRojo">*</span>   
+                                                    </cell>
+                                                    <textbox id="txt_clidni" disabled="true" tooltiptext="Define el DNI del Cliente, maximo 8 caracteres" maxlength="8" width="180px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="F.NAC:"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    <datebox id="txt_clifecnac"  format="dd/MM/yyyy" maxlength="10" tooltiptext="Define la Fecha de Nacimiento del Cliente" width="200px"/>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="P.JURIDICA:"/>
+                                                    </cell>
+                                                    <checkbox id="chk_cliperju" disabled="true" tooltiptext="Define Cliente como persona jurídica">
+                                                        <!--<attribute name="onCheck">
+                                                            if(chk_cliperju.isChecked())
+                                                            txt_clifecnac.setDisabled(true);
+                                                            else
+                                                            txt_clifecnac.setDisabled(false);
+                                                        </attribute>-->
+                                                    </checkbox>
+                                                    <cell align="right" valign="center">
+                                                        <label value="RUC:"/>
+                                                        <span class="colorRojo">*</span> 
+                                                    </cell>
+                                                    <longbox id="txt_cliruc" disabled="true" maxlength="11" width="180px" tooltiptext="Define el RUC del Cliente"/>                                    
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="EMAIL-1:"/>
+                                                    </cell>
+                                                    <cell colspan="6">
+                                                        <textbox id="txt_cliemail1" disabled="true" tooltiptext="Define el E-mail 1 del Cliente, maximo 100 caracteres" maxlength="100" width="500px"/>
+                                                    </cell>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="EMAIL-2:"/>
+                                                    </cell>
+                                                    <cell colspan="6">
+                                                        <textbox id="txt_cliemail2" disabled="true" tooltiptext="Define el E-mail 2 del Cliente, maximo 100 caracteres" maxlength="100" width="500px"/>
+                                                    </cell>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="DIRECCION WEB:"/>
+                                                    </cell>
+                                                    <cell colspan="6">
+                                                        <textbox id="txt_clidirweb" disabled="true" tooltiptext="Define la Direccion Web del Cliente, maximo 100 caracteres" maxlength="100" width="850px"/>
+                                                    </cell>
+                                                </row>
+                                            </rows>
+                                        </grid>
+                                    </groupbox>
+                                    <space height="10px"/>
+                                    <groupbox width="100%" open="true" closable="false">
+                                        <caption label="OTROS"/>
+                                        <hbox>
+                                            <grid width="975px">
+                                                <columns>
+                                                    <column width="100px"/>
+                                                    <column width="200px"/>
+                                                    <column width="100px"/>
+                                                    <column width="200px"/>
+                                                    <column width="100px"/>
+                                                    <column width="275px"/>
+                                                </columns>
+                                                <rows>
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="MONEDA:"/>
+                                                        </cell>
+                                                        <cell>
+                                                            <combobox id="cb_moneda" readonly="true" disabled="true"  tooltiptext="Seleccione una Opcion">
+                                                                <template name="model">
+                                                                    <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                                </template> 
+                                                            </combobox>
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="LISTA:"/>
+                                                        </cell>
+                                                        <cell>
+                                                            <combobox id="cb_lprecio" readonly="true" disabled="true"  tooltiptext="Seleccione una Opcion">
+                                                                <template name="model">
+                                                                    <comboitem label="${each.lp_des}" value="${each.lp_key}"/>
+                                                                </template> 
+                                                            </combobox>
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="CANAL:"/>
+                                                        </cell>
+                                                        <cell>
+                                                            <combobox id="cb_canal" readonly="true" disabled="true"  tooltiptext="Seleccione una Opcion">
+                                                                <template name="model">
+                                                                    <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                                </template> 
+                                                            </combobox>
+                                                        </cell>
+                                                    </row>
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="COND. VENTA:"/>
+                                                        </cell>
+                                                        <cell>
+                                                            <combobox id="cb_condicion" readonly="true" disabled="true"  tooltiptext="Seleccione una Opcion">
+                                                                <template name="model">
+                                                                    <comboitem label="${each.conDes}" value="${each.conKey}"/>
+                                                                </template> 
+                                                            </combobox>
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="FORMA DE PAGO:"/>
+                                                        </cell>
+                                                        <cell>
+                                                            <combobox id="cb_fpago" readonly="true" disabled="true"  tooltiptext="Seleccione una Opcion">
+                                                                <template name="model">
+                                                                    <comboitem label="${each.forpag_des}" value="${each.forpag_key}"/>
+                                                                </template> 
+                                                            </combobox>
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="FACTURA:"/>
+                                                        </cell>
+                                                        <cell>
+                                                            <checkbox id="chk_cli_factura" disabled="true" tooltiptext="Define si Emite Factura"/>
+                                                        </cell>
+                                                    </row>
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="DESCUENTO %:"/>
+                                                        </cell>
+                                                        <cell>
+                                                            <doublebox id="txt_cli_dscto" disabled="true" locale="en_US" format="###0.###" maxlength="5" tooltiptext="Define el Descuento especial por Cliente"/>                                 
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="EMPRESA REL.:"/>
+                                                        </cell>
+                                                        <cell>
+                                                            <checkbox id="chk_cli_emprel" disabled="true" tooltiptext="Define si el cliente está relacionado al grupo"/>
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="AFEC.PERCEP.:"/>
+                                                        </cell>
+                                                        <cell>
+                                                            <checkbox id="chk_cli_perc" disabled="true" tooltiptext="Define si el cliente está relacionado al grupo"/>
+                                                        </cell>
+                                                    </row>
+                                                </rows>
+                                            </grid>
+                                        </hbox>
+                                    </groupbox>
+                                    <space height="10px"/>
+                                    <groupbox width="100%" open="true" closable="false">
+                                        <caption label="DATOS FINANCIEROS GENERALES"/>
+                                        <hbox>
+                                            <grid width="975px">
+                                                <columns>
+                                                    <column width="150px"/>
+                                                    <column width="200px"/>
+                                                    <column width="150px"/>
+                                                    <column width="200px"/>
+                                                </columns>
+                                                <rows>
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="CREDITO CORPORATIVO:"/>
+                                                            <span class="colorRojo">*</span>
+                                                        </cell>
+                                                        <cell>
+                                                            <doublebox id="txt_clicredcor" disabled="true" maxlength="11" tooltiptext="Define el Credito Corportativo" width="120px"/>
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="N° DOC. CORPORATIVO:"/>
+                                                            <span class="colorRojo">*</span>
+                                                        </cell>
+                                                        <cell>
+                                                            <intbox id="txt_clidoccor" disabled="true" maxlength="2" tooltiptext="Define el Numero de Documento Corporativos" width="120px"/>
+                                                        </cell>
+                                                    </row>
+                                                </rows>
+                                            </grid>
+                                        </hbox>
+                                    </groupbox>
+                                </div>
+                            </tabpanel>
+                            <tabpanel>
+                                <div >
+                                    <hbox>
+                                        <listbox id="lst_direccion" mold="paging" pageSize="13" width="950px" height="250px">
+                                            <listhead>
+                                                <listheader label="ID" width="20px" align="center"/>
+                                                <listheader label="DIRECCION"/>
+                                                <listheader label="ZONA" width="240px"/>
+                                                <listheader label="HORARIO" width="90px"/>
+                                                <listheader label="CANAL" width="90px"/>
+                                                <listheader label="EST" width="25px"/>
+                                            </listhead>	
+                                            <template name="model">
+                                                <listitem>
+                                                    <listcell label="${each.clidir_id}"/>
+                                                    <listcell label="${each.clidir_direc}"/>
+                                                    <listcell label="${each.zon_des}"/>
+                                                    <listcell label="${each.hor_des}"/>
+                                                    <listcell label="${each.can_des}"/>
+                                                    <listcell>
+                                                        <checkbox disabled="true" checked="${each.valor}"/>
+                                                    </listcell>
+                                                </listitem>
+                                            </template>
+                                        </listbox>
+                                        <toolbar id="tb_transacciones_direccion" width="30px" height="248px" >
+                                            <toolbarbutton id="tbbtn_btn_nuevod" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true"/>
+                                            <toolbarbutton id="tbbtn_btn_editard" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true"/>            
+                                            <toolbarbutton id="tbbtn_btn_eliminard" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true"/>
+                                            <toolbarbutton id="tbbtn_btn_guardard" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                                            <toolbarbutton id="tbbtn_btn_deshacerd" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                                        </toolbar>
+                                    </hbox>
+                                    <space height="10px"/>
+                                    <grid width="988px" height="255px">
+                                        <columns>
+                                            <column width="100px"/>
+                                            <column width="200px"/>
+                                            <column width="100px"/>
+                                            <column width="200px"/>
+                                            <column width="100px"/>
+                                            <column width="288px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ID:"/>
+                                                </cell>
+                                                <longbox id="txt_clidir_id" disabled="true" maxlength="10" width="180px" tooltiptext="Define el Codigo de la Direccion"/>                                    
+                                                <cell align="right" valign="center">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_clidir_estado" disabled="true" tooltiptext="Define el Estado de la Direccion"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="DEFAULT:"/>
+                                                </cell>
+                                                <checkbox id="chk_clidir_default" disabled="true" tooltiptext="Define la Direccion default"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <button id="btn_mant_direccion" label="Dirección" sclass="botones" width="70px" disabled="true"/>
+                                                </cell>
+                                                <cell colspan="6">
+                                                    <textbox id="txt_clidir_direccion" disabled="true" maxlength="120" width="850px" tooltiptext="Define la Direccion del Cliente "/>                                    
+                                                </cell>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="REFERENCIA:"/>
+                                                </cell>
+                                                <cell colspan="6">
+                                                    <textbox id="txt_clidir_ref" disabled="true" maxlength="50" width="850px" tooltiptext="Define la Referencia de la Dirección del Cliente "/>                                    
+                                                </cell>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ZONA:"/>
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <cell colspan="3">
+                                                    <textbox id="txt_clidir_zona" disabled="true" maxlength="8" width="80px" tooltiptext="Define el Codigo de la Zona"/>      
+                                                    <textbox id="txt_clidir_zonadesc" disabled="true" maxlength="100" width="380px" tooltiptext="Define la Descripcion de la Zona"/>                                    
+                                                </cell>
+                                                
+                                                <cell align="right" valign="center">
+                                                    <label value="VENDEDOR:"/>
+                                                </cell>
+                                                <cell colspan="2">
+                                                    <textbox id="txt_clidir_vendedor" disabled="true" maxlength="60" width="250px" tooltiptext="Define el Vendedor"/>      
+                                                </cell>                                 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="UBIGEO:"/>
+                                                </cell>
+                                                <cell colspan="3">
+                                                    <textbox id="txt_clidir_idubigeo" disabled="true" maxlength="6" width="80px" tooltiptext="Define el Codigo del Ubigeo"/>      
+                                                    <textbox id="txt_clidir_ubigeo" disabled="true"  width="380px" tooltiptext="Define el Ubigeo"/>  
+                                                </cell>
+                                                <cell align="right" valign="botton">
+                                                    <label value="POSTAL:"/>
+                                                </cell>
+                                                <cell colspan="3">
+                                                    <textbox id="txt_clidir_idpost" maxlength="6" disabled="true" width="50px" tooltiptext="Define el Codigo de la Postal"/>      
+                                                    <textbox id="txt_clidir_postal" disabled="true"  width="195px" tooltiptext="Define la Postal"/>  
+                                                </cell>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="HORARIO:"/>
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <cell colspan="3">
+                                                    <textbox id="txt_clidir_idhorario" disabled="true" maxlength="4" width="80px" tooltiptext="Codigo de Horario"/>
+                                                    <textbox id="txt_clidir_horario" disabled="true" maxlength="50" width="380px" tooltiptext="Descripcion de Horario"/>      
+                                                </cell>
+                                                <cell align="right" valign="botton">
+                                                    <label value="GIRO:"/>
+                                                </cell>
+                                                <cell colspan="3">
+                                                    <textbox id="txt_clidir_idgiro" maxlength="6" disabled="true" width="50px" tooltiptext="Define el Codigo del Giro"/>      
+                                                    <textbox id="txt_clidir_giro" disabled="true"  width="195px" tooltiptext="Define el giro de Negocio"/>  
+                                                </cell>
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                    <space height="10px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_clidir_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador del Cliente"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="txt_clidir_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación del Cliente"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_clidir_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó al Cliente"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="txt_clidir_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación del Cliente"/>   
+                                    </hbox>
+                                </div>
+                            </tabpanel>
+                            <tabpanel>
+                                <div >
+                                    <space height="10px"/>
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="TELEFONOS"/>
+                                        <grid width="988px" height="70px">
+                                            <columns>
+                                                <column width="100px"/>
+                                                <column width="200px"/>
+                                                <column width="150px"/>
+                                                <column width="150px"/>
+                                                <column width="150px"/>
+                                                <column width="150px"/>
+                                            </columns>
+                                            <rows>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="ID:"/>
+                                                    </cell>
+                                                    <longbox id="txt_clitel_id" disabled="true" maxlength="10" width="50px" tooltiptext="Define el Codigo del Telefono"/>                                    
+                                                    <!--<cell align="right" valign="center">
+                                                        <label value="ESTADO:"/>
+                                                    </cell>
+                                                    <checkbox id="chk_clitel_estado" disabled="true" tooltiptext="Define el Estado del Telefono"/>-->
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="TELEFONO-1:"/>
+                                                    </cell>
+                                                    <cell>
+                                                        <longbox id="txt_clitel_telef1" disabled="true" maxlength="15" width="100px" tooltiptext="Define el Telefono-1 del Cliente"/>
+                                                    </cell>
+                                                    <cell align="right" valign="center">
+                                                        <label value="TELEFONO-2:"/>
+                                                    </cell>
+                                                    <cell>
+                                                        <longbox id="txt_clitel_telef2" disabled="true" maxlength="15" width="100px" tooltiptext="Define el Telefono-2 del Cliente"/>
+                                                    </cell>
+                                                    <cell align="right" valign="center">
+                                                        <label value="MOVIL:"/>
+                                                    </cell>
+                                                    <cell>
+                                                        <longbox id="txt_clitel_movil" disabled="true" maxlength="15" width="100px" tooltiptext="Define el Movil del Cliente"/>
+                                                    </cell>
+                                                </row>
+                                            </rows>
+                                        </grid>
+                                    </groupbox>
+                                    <space height="10px"/>
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="DATOS FINANCIEROS"/>
+                                        <grid width="988px" height="120px">
+                                            <columns>
+                                                <column width="100px"/>
+                                                <column width="200px"/>
+                                                <column width="150px"/>
+                                                <column width="150px"/>
+                                                <column width="150px"/>
+                                                <column width="150px"/>
+                                            </columns>
+                                            <rows>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="ID:"/>
+                                                    </cell>
+                                                    <longbox id="txt_clifin_id" disabled="true" maxlength="10" width="50px" tooltiptext="Define el Codigo del Dato Financiero"/>                                    
+                                                    <!--<cell align="right" valign="center">
+                                                        <label value="ESTADO:"/>
+                                                    </cell>
+                                                    <checkbox id="chk_clifin_estado" disabled="true" tooltiptext="Define el Estado del Dato Financiero"/>-->
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="CATEGORIA:"/>
+                                                    </cell>
+                                                    <cell>
+                                                        <combobox id="cb_categoria" readonly="true" placeholder="SELECCIONE ......" tooltiptext="Seleccione una Opcion" width="180px" disabled="true">
+                                                            <template name="model">
+                                                                <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                            </template> 
+                                                        </combobox>
+                                                    </cell>
+                                                    <cell align="right" valign="center">
+                                                        <label value="LIMITE CREDITO:"/>
+                                                    </cell>
+                                                    <cell>
+                                                        <doublebox id="txt_clifin_limcred" disabled="true" maxlength="11" width="100px" style="text-align:right;" tooltiptext="Define el Limite de Credito por Empresa"/>
+                                                    </cell>
+                                                    <cell align="right" valign="center">
+                                                        <label value="LIMITE DOCUMENTO:"/>
+                                                    </cell>
+                                                    <cell>
+                                                        <intbox id="txt_clifin_limdoc" disabled="true" maxlength="2" width="100px" style="text-align:right;" tooltiptext="Define el Limite de Documento por Empresa"/>
+                                                    </cell>
+                                                </row>
+                                                <row>
+                                                    <cell/>
+                                                    <cell/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="SALDO CRED.CORP"/>
+                                                    </cell>
+                                                    <cell>
+                                                        <doublebox id="db_saldocredcorp" disabled="true" maxlength="11" width="100px" style="text-align:right;" tooltiptext="Define el Saldo de credito coorporativo"/>
+                                                    </cell>
+                                                    <cell align="right" valign="center">
+                                                        <label value="SALDO DOC.CORP:"/>
+                                                    </cell>
+                                                    <cell>
+                                                        <doublebox id="txt_saldodoccorp" disabled="true" maxlength="11" width="100px" style="text-align:right;" tooltiptext="Define el Saldo de Documentos coorporativos"/>
+                                                    </cell>
+                                                </row>
+                                            </rows>
+                                        </grid>
+                                        <!--<space height="10px"/>
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">                                            
+                                                <label value="USU. ADD:"/>
+                                            </cell>
+                                            <textbox id="txt_clifin_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario de Adición"/>   
+                                            <cell align="right" valign="center">
+                                                <space width="85px"  />
+                                                <label value="FEC. ADD:"/>
+                                            </cell>
+                                            <datebox id="txt_clifin_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Adición"/>  
+                                            <cell align="right" valign="center">
+                                                <space width="95px"  />
+                                                <label value="USU. MOD:"/>
+                                            </cell>
+                                            <textbox id="txt_clifin_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario de Modificación"/>   
+                                            <cell align="right" valign="center">
+                                                <space width="95px"  />
+                                                <label value="FEC. MOD:"/>
+                                            </cell>
+                                            <datebox id="txt_clifin_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación"/>   
+                                        </hbox>-->
+                                    </groupbox>
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="GARANTIA"/>
+                                        <hbox>
+                                            <grid width="100%" height="220px">
+                                                <columns>
+                                                    <column width="100px"/>
+                                                    <column width="300px"/>
+                                                </columns>
+                                                <rows>
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="ESTADO:"/>
+                                                        </cell>
+                                                        <checkbox id="chk_cligar_estado" disabled="true" tooltiptext="Define el Estado de la Garantia"/>
+                                                    </row>
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="ID:"/>
+                                                        </cell>
+                                                        <longbox id="txt_cligar_id" disabled="true" maxlength="10" width="50px" tooltiptext="Define el Codigo de la Garantia"/>
+                                                    </row>
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="GARANTIA:"/>
+                                                        </cell>
+                                                        <cell>
+                                                            <combobox id="cb_garantia" readonly="true" placeholder="SELECCIONE ......" tooltiptext="Seleccione una Opcion" disabled="true" width="180px">
+                                                                <comboitem value="1" label="AVAL"/>
+                                                                <comboitem value="2" label="HIPOTECA"/>
+                                                                <comboitem value="3" label="LETRA"/>
+                                                                <comboitem value="4" label="OTROS"/>
+                                                                <comboitem value="5" label="PAGARE"/>
+                                                            </combobox>
+                                                        </cell>
+                                                    </row>
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="MONTO:"/>
+                                                        </cell>
+                                                        <longbox id="txt_cligar_monto" disabled="true" maxlength="11" width="180px" style="text-align:right;" tooltiptext="Define el Monto de la Garantia"/>                                                
+                                                    </row>
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="OBSERVACION:"/>
+                                                        </cell>
+                                                        <textbox id="txt_cligar_obs" disabled="true" maxlength="60" width="250px" tooltiptext="Define la Observacion de la Garantia"/>                                                
+                                                    </row>
+                                                </rows>
+                                            </grid>
+                                            <hbox width="550px">
+                                                <listbox id="lst_garantia" mold="paging" pageSize="8" width="500px">
+                                                    <listhead>
+                                                        <listheader label="ID" width="30px" align="center"/>
+                                                        <listheader label="GARANTIA" width="140px"/>
+                                                        <listheader label="OBSERVACION"/>
+                                                        <listheader label="MONTO" width="80px" align="center"/>
+                                                        <listheader label="EST" width="25px"/>
+                                                    </listhead>	
+                                                    <template name="model">
+                                                        <listitem>
+                                                            <listcell label="${each.cligar_id}"/>
+                                                            <listcell label="${each.cligar_garantia}"/>
+                                                            <listcell label="${each.cligar_obs}"/>
+                                                            <listcell label="${each.cligar_monto}" style="text-align:right;"/>
+                                                            <listcell>
+                                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                                            </listcell>
+                                                        </listitem>
+                                                    </template>
+                                                </listbox>
+                                                <toolbar id="tb_transacciones_garantias" width="25px" height="200px" >
+                                                    <toolbarbutton id="tbbtn_btn_nuevog" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true" />
+                                                    <toolbarbutton id="tbbtn_btn_editarg" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true" />            
+                                                    <toolbarbutton id="tbbtn_btn_eliminarg" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true" />
+                                                    <toolbarbutton id="tbbtn_btn_guardarg" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                                                    <toolbarbutton id="tbbtn_btn_deshacerg" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                                                </toolbar>
+                                            </hbox>
+                                        </hbox>
+                                        <space height="10px"/>
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">                                            
+                                                <label value="USU. ADD:"/>
+                                            </cell>
+                                            <textbox id="txt_cligar_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario de Adición"/>   
+                                            <cell align="right" valign="center">
+                                                <space width="85px"  />
+                                                <label value="FEC. ADD:"/>
+                                            </cell>
+                                            <datebox id="txt_cligar_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Adición"/>  
+                                            <cell align="right" valign="center">
+                                                <space width="95px"  />
+                                                <label value="USU. MOD:"/>
+                                            </cell>
+                                            <textbox id="txt_cligar_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario de Modificación"/>   
+                                            <cell align="right" valign="center">
+                                                <space width="95px"  />
+                                                <label value="FEC. MOD:"/>
+                                            </cell>
+                                            <datebox id="txt_cligar_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación"/>   
+                                        </hbox>
+                                    </groupbox>
+                                </div>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>
+

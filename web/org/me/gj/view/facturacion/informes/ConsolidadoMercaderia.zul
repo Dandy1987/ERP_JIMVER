@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%"  >
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuFacturacion.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_consomerca" width="100%" height="100%" border="none" closable="true" ctrlKeys="@n@m@e@g@d@i#f2#f4#f7#f10#f9#f8" >
+                    <toolbar id="tb_transacciones"  width="99.75%"  >
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)"  />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Anular (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)"  />   
+                        <label value="LISTADO DE CONSOLIDADOS" sclass="titulo_mant" style="margin-left:247px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_consomerca" apply="org.me.gj.controller.facturacion.informes.ControllerRepConsolidadoMercaderia" >
+                        <tabs>
+                            <tab id="tab_listaConsoMerca" label="LISTA"/>
+                            <tab id="tab_mantenimientoConsoMerca" label="MANTENIMIENTO">    
+                                <!--<attribute name="onSelect">
+                                    if (lst_consomerca.getSelectedIndex() == -1)
+                                    {
+                                    tab_listaConsoMerca.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>-->
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <hbox>
+                                    <groupbox width="988px" open="true" closable="false">
+                                        <caption label="BUSQUEDA"/>
+                                        <vbox>                                            
+                                            <hbox align="center">
+                                                <label value="PERIODO:"/>
+                                                <combobox id="cb_periodo"  readonly="true" width="70px" >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.per_periodo}" value="${each.per_id}"/>                                                                                                      
+                                                    </template>                                                
+                                                </combobox>
+                                                <space width="5px"/>
+                                                <label value="FECHA:"/>                                               
+                                                <datebox id="d_filtro_fecha" onCreate="self.value = new Date();" maxlength="10" width="85px" format="dd/MM/yyyy" />                                                                                                 
+                                                <space width="2px"/>
+                                                <label value="T.DEPU:"/>
+                                                <combobox id="cb_depurado"  readonly="true" width="115px" >
+                                                    <comboitem label="SOLO DESPACHO" value="1"/>
+                                                    <comboitem label="NO DESPACHO" value="2"/>
+                                                    <comboitem label="" value="3"/>                                                
+                                                </combobox>
+                                                <space width="2px"/>
+                                                <label value="HOR.ENT:"/>                                                                                                                                            
+                                                <textbox id="txt_filtro_idhorent" maxlength="4" width="28px" />
+                                                <textbox id="txt_filtro_deshorent" maxlength="60" width="135px" disabled="true"/>
+                                                <space width="2px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="SOLO ACT." id="lbl_soloactivos"/>
+                                                </cell>
+                                                <checkbox id="chk_soloactivos" checked="false"/>
+                                                <space width="2px"/>
+                                                <button id="btn_consultar"  sclass="botones" label="CONSULTAR"/>
+                                                <button id="btn_avedep"  sclass="botones" label="AVA.DEP"/>
+                                            </hbox>                                       
+                                        </vbox> 
+                                    </groupbox>                                                                        
+                                </hbox>                                
+                                <separator height="5px"/>
+                                <listbox id="lst_consomerca" mold="paging" pageSize="15" width="984px" height="365px" >
+                                    <listhead>
+                                        <listheader label="N°DEPURADO" width="100px" style="text-align: center;"/>
+                                        <listheader label="FECHA"  width="70px" style="text-align: center;"/>
+                                        <listheader label="ID"  width="40px" style="text-align: center;"/> 
+                                        <listheader label="TRANSPORTE"  width="120px"/>
+                                        <listheader label="ID"  width="30px" style="text-align: center;"/> 
+                                        <listheader label="H.ENTREGA"  width="80px"/> 
+                                        <listheader label="ZONAS"  width="180px"/>
+                                        <listheader label="PROVEEDOR"  width="90px"/>                                       
+                                        <listheader label="T.DEPURADO"  width="80px" style="text-align: center;"/> 
+                                        <listheader label="SITUACION" width="100px" style="text-align: center;"/>
+                                        <listheader label="ESTADO" width="70px" style="text-align: center;"/>
+                                        <listheader width="25px">
+                                            <checkbox id="chk_selecAll"/>
+                                        </listheader>
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.pcab_nroped}"/>
+                                            <listcell label="${each.s_fecemi}"/>
+                                            <listcell label="${each.cli_id}" style="text-align: right;"/>
+                                            <listcell label="${each.cli_des}"/>
+                                            <listcell label="${each.con_id}"/>
+                                            <listcell label="${each.cond_des}"/>
+                                            <listcell label="${each.ven_id}" style="text-align: right;"/>
+                                            <listcell label="${each.ven_des}"/>
+                                            <listcell label="${each.pcab_situacion_des}"/>
+                                            <listcell label="${each.pcab_motrec_des}" />
+                                            <listcell label="${each.s_totped}" style="text-align: right;"  />
+                                            <!--<listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>-->
+                                            <listcell>
+                                                <checkbox forward="onCheck=lst_consomerca.onSeleccion"  checked="${each.valSelec}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="TOTAL REGISTROS:"/>
+                                    </cell>
+                                    <doublebox id="db_sumped" maxlength="10" disabled="true" width="75px" format="##,##0" style="text-align: right;"/>
+                                    <space width="220px"/>
+                                    <button id="btn_marcardesp"  sclass="botones" label="MARCAR DESPACHADO"/> 
+                                    <space width="105px"/>
+                                    <cell align="right" valign="center">                                            
+                                        <label value="AL IMPRIMIR: "/>
+                                    </cell>
+                                    <space width="2px"/>
+                                    <groupbox>
+                                        <radiogroup id="rbg_orden" >
+                                            <radio label="Q1"/>
+                                            <radio label="Q2"/>
+                                            <radio label="Q3" checked="true"/>
+                                        </radiogroup>
+                                        <space width="10px"/>
+                                        <label value="LISTADO DOC?" id="lbl_listadoc"/>
+                                        <checkbox id="chk_listadoc" checked="true"/>
+                                    </groupbox>
+                                </hbox>
+                                <space height="2px"/>
+                                <hbox align="center">
+                                    <groupbox closable="false">
+                                        <caption label="INFORMES" />
+                                        <button id="btn_consxtransporte"  sclass="botones" label="CONS. X TRANSPORTE"/>
+                                        <space width="10px"/>
+                                        <button id="btn_nodespacho"  sclass="botones" label="NO DESPACHO" tooltiptext="Ingreso de documentos x cobrar"/>
+                                    </groupbox>
+                                    <space width="80px"/>
+                                    <textbox id="txt_marcadespacho" width="250px" maxlength="250" disabled="true"/>                                                
+                                    <space width="140px"/>
+                                    <cell align="right" valign="center">
+                                        <label value="IMPRIMIR QUIEBRE X ALMACEN"/>
+                                    </cell>
+                                    <checkbox id="chk_impquiebre" checked="false"/>
+                                </hbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el usuario creador"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la fecha de creación"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el usuario que modificó "/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la fecha de modificación"/>   
+                                </hbox>
+                            </tabpanel>                                          
+                            <!-- Panel Tab Mantenimiento -->                                                  
+                            <tabpanel>
+                                <div >
+                                    <groupbox style="background-color:#FFFFFF" closable="false" width="988px">
+                                        <caption label="DATOS DE CABECERA"/>
+                                        <vbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="botton">    
+                                                    <label value="N°DEPURADO:"/> 
+                                                </cell>                                               
+                                                <textbox id="txt_nroreg" width="90px" maxlength="10" disabled="true" tooltiptext="Define el Numero de registro, máximo 10 caracteres"/>                                                                                   
+                                                <space width="5px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="TRANSPORTE: "/>
+                                                </cell>
+                                                <textbox id="txt_trans_id" width="62px" disabled="true" maxlength="10" tooltiptext="Define el código del transporte ,máximo 4 caracteres"/>
+                                                <textbox id="txt_trans_des" maxlength="100" width="270px" disabled="true" tooltiptext="Define la descripcion del transporte"/>
+                                                <space width="5px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="HORARIO ENTREGA: "/>
+                                                </cell>
+                                                <textbox id="txt_horent_id" width="62px" disabled="true" maxlength="10" tooltiptext="Define el código de horario de entrega, máximo 4 caracteres"/>
+                                                <textbox id="txt_horent_des" maxlength="100" width="180px" disabled="true" tooltiptext="Define la descrpción del horario de entrega"/>                                               
+                                            </hbox>
+                                        </vbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <hbox>
+                                        <vbox>
+                                            <grid id="grd_consomerca1" width="985px" >
+                                                <columns>
+                                                    <column width="738px"/>
+                                                    <column width="65px"/>
+                                                    <column width="170px"/>
+                                                </columns>                                      
+                                                <rows>
+                                                    <row>
+                                                        <listbox id="lst_consomercadesp" width="738px" height="300px" > 
+                                                            <listhead>
+                                                                <listheader label="ARTICULO" width="150px" style="text-align: center;" />
+                                                                <listheader label="DECRIPCION" style="text-align: center;"/>                                                                                     
+                                                                <listheader label="CANTIDAD"  width="120px" style="text-align: center;"/>
+                                                            </listhead>	    
+                                                            <template name="model">
+                                                                <listitem>
+                                                                    <listcell label="${each.pro_id}"/>
+                                                                    <listcell label="${each.pdet_prodes}"/>                                                                                                      
+                                                                    <listcell label="${each.pdet_ent}" style="text-align: right;" />
+                                                                </listitem>
+                                                            </template>                                                         
+                                                        </listbox>
+                                                        <toolbar id="tb_transacciones_consomerca" width="25px" height="278px" >
+                                                        </toolbar>
+                                                        <groupbox style="background-color:#FFFFFF" closable="false" width="140px">
+                                                            <caption label="TOTALES" />
+                                                            <vbox>
+                                                                <hbox align="center">
+                                                                    <cell align="center" valign="botton">
+                                                                        <label value="ITEMS"/>
+                                                                    </cell> 
+                                                                </hbox>
+                                                                <hbox align="center">
+                                                                    <doublebox id="txt_itemsdesp" width="120px" maxlength="9"  locale="en_US" format="##,##0" disabled="true" style="text-align: right;" />            
+                                                                </hbox>    
+                                                                <hbox align="center">
+                                                                    <cell align="center" valign="botton">
+                                                                        <label value="UNIDADES"/>
+                                                                    </cell>
+                                                                </hbox> 
+                                                                <hbox align="center">
+                                                                    <doublebox id="txt_unidadesdesp" width="120px" maxlength="9"  locale="en_US" format="##,##0" disabled="true" style="text-align: right;" />
+                                                                </hbox>
+                                                            </vbox>                                          
+                                                        </groupbox>
+                                                    </row>
+                                                </rows>
+                                            </grid>
+                                        </vbox>   
+                                    </hbox>
+                                    <separator height="5px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="botton">
+                                            <space width="318px"/>
+                                            <label value="MERCADERÍA NO DESPACHADA "/>
+                                        </cell>                                               
+                                    </hbox>
+                                    <hbox>
+                                        <vbox>
+                                            <grid id="grd_consomerca2" width="985px" >
+                                                <columns>
+                                                    <column width="738px"/>
+                                                    <column width="65px"/>
+                                                    <column width="170px"/>
+                                                </columns>                                      
+                                                <rows>
+                                                    <row>
+                                                        <listbox id="lst_consomercanodesp" width="738px" height="140px" > 
+                                                            <listhead>
+                                                                <listheader label="ARTICULO" width="150px" style="text-align: center;" />
+                                                                <listheader label="DECRIPCION" style="text-align: center;"/>                                                                                     
+                                                                <listheader label="CANTIDAD"  width="120px" style="text-align: center;"/>
+                                                            </listhead>	    
+                                                            <template name="model">
+                                                                <listitem>
+                                                                    <listcell label="${each.pro_id}"/>
+                                                                    <listcell label="${each.pdet_prodes}"/>                                                                                                      
+                                                                    <listcell label="${each.pdet_ent}" style="text-align: right;" />
+                                                                </listitem>
+                                                            </template>                                                         
+                                                        </listbox>
+                                                        <toolbar id="tb_transacciones_consomerca2" width="25px" height="138px" >
+                                                            <toolbarbutton id="tbbtn_btn_eliminarpro" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (ALT+E)" disabled="true" />                                            
+                                                            <separator height="10px"/>
+                                                            <toolbarbutton id="tbbtn_btn_guardarpro" image="/images/iconos/guardar.png" tooltiptext="Guardar (ALT+G)" disabled="true" />                                            
+                                                        </toolbar>
+                                                        <groupbox style="background-color:#FFFFFF" closable="false" width="140px">
+                                                            <caption label="TOTALES"/>
+                                                            <vbox>
+                                                                <hbox align="center">
+                                                                    <cell align="center" valign="botton">
+                                                                        <label value="ITEMS"/>
+                                                                    </cell> 
+                                                                </hbox>
+                                                                <hbox align="center">
+                                                                    <doublebox id="txt_itemsnodesp" width="120px" maxlength="9"  locale="en_US" format="##,##0" disabled="true" style="text-align: right;" />            
+                                                                </hbox>    
+                                                                <hbox align="center">
+                                                                    <cell align="center" valign="botton">
+                                                                        <label value="UNIDADES"/>
+                                                                    </cell>
+                                                                </hbox> 
+                                                                <hbox align="center">
+                                                                    <doublebox id="txt_unidadesnodesp" width="120px" maxlength="9"  locale="en_US" format="##,##0" disabled="true" style="text-align: right;" />
+                                                                </hbox>
+                                                            </vbox>                                       
+                                                        </groupbox>
+                                                    </row>
+                                                </rows>
+                                            </grid>
+                                        </vbox>   
+                                    </hbox>
+                                </div>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

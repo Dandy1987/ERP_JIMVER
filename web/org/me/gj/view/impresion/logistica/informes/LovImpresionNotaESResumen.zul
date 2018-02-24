@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:w="client">
+    <window id="w_lov_impresion_notaesresu" title="LISTADO RESUMEN DE NOTA E/S" border="normal" width="770px"
+            height="430px" position="center,center" closable="true"
+            apply="org.me.gj.controller.impresion.logistica.informes.ControllerImpresionNotaESResumen"
+            action="show: slideDown;hide: slideUp"> 
+        <hlayout>
+            <vbox >
+                <hbox>
+                    <space width="10px"/>
+                    <groupbox width="380px" height="360px" closable="false"  >
+                        <caption label="NOTA E/S A INCLUIR"/>
+                        <listbox id="lst_resnotaes" mold="paging" pageSize="20" width="365px" height="320px">
+                            <listhead>
+                                <listheader label="NRO" width="35px"/>
+                                <listheader label="NOTA E/S" width="280px"/>
+                                <listheader width="25px">
+                                    <checkbox id="chk_all"/>
+                                </listheader> 
+                            </listhead>
+                            <template name="model">
+                                <listitem value="${each}">
+                                    <listcell label="${each.codigo}"/>
+                                    <listcell label="${each.desGui}"/>
+                                    <listcell >
+                                        <checkbox forward="onCheck=lst_resnotaes.onSeleccion"  checked="${each.selImp}"/>
+                                    </listcell>
+                                </listitem>
+                            </template>	
+                        </listbox>
+                    </groupbox>
+                    <space width="10px"/>
+              
+                    <vbox>                        
+                        <groupbox width="300px" closable="false" >
+                            <caption label="LISTA DE INFORMES"/>
+                            <vbox>
+                                <radiogroup id="rbg_lista" >
+                                    <vbox>
+                                        <radio label="RESUMEN POR PRODUCTO" checked="true"/>
+                                        <radio label="DETALLE PRODUCTO-NOTA E/S"/>
+                                        <radio label="LST.DOCUMENTOS"/>
+                                        <radio label="RESUMEN DE NOTA E/S"/>
+                                    </vbox>
+                                
+                               <!-- <checkbox id ="chkresuar" label="RESUMEN POR PRODUCTO" />
+                                <checkbox id="chkdeargui" label="DETALLE PRODUCTO-NOTA E/S"/>
+                                <hbox align="right">
+                                    <checkbox id="chklisdoc" label="LST.DOCUMENTOS"/>
+                                   <space width="40px"/>                                    
+                                    <checkbox id="chkresuguiref" label="ORD.REFERENCIA" disabled="true" checked="true"/>
+                                </hbox>
+                                <checkbox id="ckresugui" label="RESUMEN DE NOTA E/S"/>-->
+                                </radiogroup>
+                            </vbox>
+                            <space height="20px"/>
+                            <hbox align="right">
+                                <space width="20px"/>
+                                <label value="FECHA INICIAL:"/>
+                                <space width="15px"/>
+                                <datebox id="d_fecini" maxlength="10" readonly="true" width="80px" onCreate="self.value = new Date()" disabled="false" format="dd/MM/yyyy" tooltiptext="Define la Fecha de Creación de la Nota de Cambio"/>  
+                            </hbox>
+                            <space height="2px"/>
+                            <hbox align="right">
+                                <space width="20px"/>
+                                <label value="FECHA FINAL:"/>
+                                <space width="20px"/>
+                                <datebox id="d_fecfin" maxlength="10" readonly="true" width="80px" onCreate="self.value = new Date()" disabled="false" format="dd/MM/yyyy" tooltiptext="Define la Fecha de Creación de la Nota de Cambio"/>  
+                            </hbox>  
+                            <space />  
+                        </groupbox>
+                        <hbox>
+                            <groupbox width="150px" closable="false">
+                                <caption label="IMPRESION"/>
+                                <radiogroup id="rbg_impresion" >
+                                    <vbox>
+                                        <radio label="PANTALLA" checked="true"/>
+                                        <radio label="IMPRESORA"/>
+                                        <radio label="ARCHIVO"/>
+                                    </vbox>
+                                </radiogroup>
+                            </groupbox>
+                            <groupbox width="150px" closable="false">
+                                <caption label="TIPO"/>
+                                <radiogroup id="rbg_tipo" >
+                                    <vbox>
+                                        <radio label="GRAFICO" checked="true"/>
+                                        <radio label="MATRICIAL"/>
+                                        <space width="100px"/> 
+                                    </vbox>
+                                </radiogroup>
+                            </groupbox>
+                        </hbox>
+                        <groupbox width="310px" height="60px" closable="false">
+                            <caption label="IMPRESORA"/>
+                            <combobox id="cb_impresoras" readonly="true" width="290px" disabled="false" tooltiptext="Seleccione Impresora" >
+                                <template name="model">    
+                                    <comboitem label="${each.per_periodo}" value="${each.per_id}"/>                                                                                                      
+                                </template>                                                
+                            </combobox> 
+                        </groupbox>
+                        <hbox align="right">
+                            <toolbarbutton id="btn_procesar" image="/images/iconos/imprimir.png" tooltiptext="Imprime el documento Seleccionado"/>
+                            <toolbarbutton id="btn_salir" image="/images/iconos/eliminar.png" tooltiptext="Salir de la Pantalla de Impresion" />       
+                        </hbox>                             
+                    </vbox>   
+                </hbox>
+            </vbox>
+        </hlayout>
+    </window>
+</zk>

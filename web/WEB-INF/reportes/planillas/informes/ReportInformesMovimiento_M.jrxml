@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportInformesMovimiento_M" language="groovy" pageWidth="1008" pageHeight="842" columnWidth="968" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="94910c56-4f78-448c-8c9a-65a7e524f0f6">
+	<property name="ireport.zoom" value="4.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="522"/>
+	<parameter name="P_WHERE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[" select t.pltipdoc || t.plnrodoc codigo, pack_planilla_informes.f_descripcion_nombres(t.plnrodoc, t.pltipdoc) nombres, t.plppag_id, t.plcodcon,e.emp_des, pack_planilla_informes.f_descripcion_constante(t.plcodcon) des_constante, t.plmonto from tplplanilla t,tempresas e where t.emp_id = e.emp_id and t.emp_id = 1 order by t.plnrodoc"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="usuario" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[$P!{P_WHERE}]]>
+	</queryString>
+	<field name="CODIGO" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="PLPPAG_ID" class="java.lang.String"/>
+	<field name="PLCODCON" class="java.lang.String"/>
+	<field name="EMP_DES" class="java.lang.String"/>
+	<field name="DES_CONSTANTE" class="java.lang.String"/>
+	<field name="PLMONTO" class="java.math.BigDecimal"/>
+	<variable name="suma" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{PLMONTO}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="64" splitType="Stretch">
+			<textField>
+				<reportElement uuid="8fb0e2ab-8b5a-4a14-ac8f-f7b0a04540df" x="34" y="44" width="282" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="799f0e59-120c-469a-ab1e-29a203cbbe97" x="34" y="24" width="281" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{EMP_DES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="63bbd5ba-e490-4d1b-a97b-28bf1a17427f" x="773" y="24" width="180" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm a">
+				<reportElement uuid="4684b9c0-ded5-4b36-8919-18091f04b150" x="773" y="44" width="180" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="d5693641-29c3-48c0-93e1-db7d65c11f22" x="367" y="24" width="328" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[REPORTE INFORMES  MOVIMIENTO]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="66" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="55df2442-2b6a-4b86-be14-8e80faf31a56" x="34" y="26" width="101" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54724ffe-5d6b-4186-a184-5dd3c1d90b59" x="34" y="6" width="919" height="20"/>
+				<textElement/>
+				<text><![CDATA[------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54724ffe-5d6b-4186-a184-5dd3c1d90b59" x="34" y="46" width="919" height="20"/>
+				<textElement/>
+				<text><![CDATA[---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="01d8cae2-7319-4666-b2a7-167f1886e2f6" x="138" y="26" width="292" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="13bc7896-cc66-4f6c-ad67-e5e7b5547609" x="433" y="26" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[PERIODO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="05abd49f-e9e6-4046-ab71-6c39b0695a54" x="538" y="26" width="52" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="149903af-8bc4-4383-9233-bddc8a62c80b" x="597" y="26" width="244" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c277b23e-05c0-4488-a53c-70053e86b8cc" x="853" y="26" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[PLMONTO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="d63d0a1e-e7ff-40c0-85a9-7c72b11ec87b" x="34" y="0" width="101" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CODIGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f37d2617-d41f-4c23-810a-01d708f21f2f" x="138" y="0" width="292" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7535bee8-92b8-45c3-ad20-c11fff231d00" x="433" y="0" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PLPPAG_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="21ff9c7c-318b-4f08-936a-28888e9600a0" x="538" y="0" width="52" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PLCODCON}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="61b6141c-a3b5-4911-b610-91c0d4c3c01c" x="597" y="0" width="244" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DES_CONSTANTE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="e91ec7ff-c2af-43ab-9b9c-7f63752a1da0" x="853" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PLMONTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="20">
+			<staticText>
+				<reportElement uuid="b29c6125-bd74-43c0-a3c7-4bb757f92926" x="741" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[TOTAL:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="f986eba7-4d9a-45ce-a606-908b4a49cdf4" x="853" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$V{suma}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

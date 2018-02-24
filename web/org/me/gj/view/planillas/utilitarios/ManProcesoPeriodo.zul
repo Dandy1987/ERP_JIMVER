@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>
+            <div width="100%" sclass="cuerpo-main">
+                
+                <window id="w_periodo" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                    
+                    <tabbox id="tabbox_procesoperiodo"  apply="org.me.gj.controller.planillas.utilitarios.ControllerProcesoPeriodo">
+                        <tabs>
+                            <tab id="tab_lista" label="COLOCAR PLANILLA EN PROCESO"/>
+                        </tabs>
+                        
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="987px" open="true" closable="false">
+                                    
+                                    <space height="32px"/>
+                                    
+                                    <div id="center_01" align="center">
+                                        
+                                        <hbox align="center">
+                                        
+                                            <cell align="left" width="60px">
+                                                <label value="PERIODO : "/>
+                                            </cell>
+                                            <combobox id="cb_periodo" width="90px" tooltiptext="Seleccione periodo de pago" readonly="true" placeholder="Seleccione" style="text-align: center;">
+                                                <template name="model">
+                                                    <comboitem label="${each.periodoProceso}" value="${each.periodoProceso}"/>
+                                                </template>
+                                            </combobox>
+                                        </hbox>
+                                    
+                                        <space height="30px"/>
+                                    
+                                        <hbox align="center">
+                                            <button id="btn_aceptar" label="Aceptar" sclass="botones"/>
+                                        </hbox>
+                                    
+                                    </div>
+                                    
+                                    <space height="30px"/>
+                                    
+                                </groupbox>
+                            </tabpanel>
+                        </tabpanels>
+                      
+                    </tabbox>
+                        
+                </window>
+                
+            </div>  
+        </center> 
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>              
+</zk>
+

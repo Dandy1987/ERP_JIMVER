@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicialSeguridad"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main"  >
+            <include src="/plantillas/MenuAdm.zul"/>
+        </north>
+        <center  >
+            <div sclass="cuerpo-main" >
+                <window id="w_accesos" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%" >
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="false"/>
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true"/>            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar"  disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" disabled="true" />            
+                        <label value="MANTENIMIENTO DE ACCESOS AL SISTEMA" sclass="titulo_mant" style="margin-left:235px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_accesos" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerAccesos">
+                        <tabs>
+                            <tab id="tab_listaaccesos" label="MANTENIMIENTO"/>
+                            <!--<tab id="tab_listaaccesos_1" label="LISTA"/>-->
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_acc" >
+                                    <groupbox width="100%" open="true">
+                                        <caption label="ACCESOS"/>
+                                        <separator width="2px" height="10px"/>
+                                        <vbox>
+                                            <radiogroup id="rb_grupo" >
+                                                <radio label="MODULO" id="rb_modulo" disabled="true" tooltiptext="Busqueda por Módulo"/>
+                                                <radio label="MENU" id="rb_menu" disabled="true" tooltiptext="Busqueda por Menu"/>
+                                                <radio label="SUBMENU-1" id="rb_submenu1" disabled="true" tooltiptext="Busqueda por Submenu-1"/>
+                                                <radio label="SUBMENU-2" id="rb_submenu2" disabled="true" tooltiptext="Busqueda por Submenu-2"/>
+                                            </radiogroup> 
+                                        </vbox>
+                                    </groupbox>
+                                    <separator width="2px" height="20px"/>
+                                    <groupbox width="100%" open="true">
+                                        <caption label="PANEL DE CONTROL"/>
+                                        <separator width="2px" height="10px"/>
+                                        <hbox>
+                                            <space/>
+                                            <cell align="right" valign="botton">
+                                                <label value="USUARIOS:"/>
+                                            </cell>
+                                            <combobox id="cb_usuarios" disabled="false" readonly="true" width="150px" tooltiptext="Seleccione un Usuario">
+                                                <template name="model">
+                                                    <comboitem label="${each.usu_nick}" value="${each.usu_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space/>
+                                            <cell align="right" valign="botton">
+                                                <label value="EMPRESAS:"/>
+                                            </cell>
+                                            <combobox id="cb_empresas" disabled="false" readonly="true" width="300px" tooltiptext="Seleccione una Empresa">
+                                                <template name="model">
+                                                    <comboitem label="${each.emp_sig}" value="${each.emp_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space/>
+                                            <cell align="right" valign="botton">
+                                                <label value="SUCURSALES:"/>
+                                            </cell>
+                                            <combobox id="cb_sucursales" disabled="true" readonly="true" width="150px" tooltiptext="Seleccione una Sucursal">
+                                                <template name="model">
+                                                    <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                                </template>
+                                            </combobox>
+                                        </hbox>
+                                    </groupbox>
+                                    <separator width="2px" height="20px"/>
+                                    <groupbox width="100%" open="true">
+                                        <caption label="PANEL DE ACCESOS"/>
+                                        <separator width="2px" height="5px"/>
+                                        <vbox>
+                                            <space/>
+                                            <cell align="left" valign="botton">
+                                                <label value="MODULOS:"/>
+                                            </cell>
+                                            <combobox id="cb_modulos" disabled="true" readonly="true" width="220px" tooltiptext="Seleccione un Módulo">
+                                                <template name="model">
+                                                    <comboitem label="${each.men_des}" value="${each.men_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <cell align="left" valign="botton">
+                                                <label value="MENUS:"/>
+                                            </cell>
+                                            <combobox id="cb_menus" disabled="true" readonly="true" width="140px" tooltiptext="Seleccione un Menu">
+                                                <template name="model">
+                                                    <comboitem label="${each.men_des}" value="${each.men_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <cell align="left" valign="botton">
+                                                <label value="SUBMENU-1:"/>
+                                            </cell>
+                                            <combobox id="cb_submenu1" disabled="true" readonly="true" width="140px" tooltiptext="Seleccione un Sub-Menu1">
+                                                <template name="model">
+                                                    <comboitem label="${each.men_des}" value="${each.men_id}"/>
+                                                </template>
+                                            </combobox>
+                                            
+                                            <cell align="left" valign="botton">
+                                                <label value="SUBMENU-2:"/>
+                                            </cell>
+                                            <combobox id="cb_submenu2" disabled="true" readonly="true" width="220px" tooltiptext="Seleccione un Sub-Menu2">
+                                                <template name="model">
+                                                    <comboitem label="${each.men_des}" value="${each.men_id}"/>
+                                                </template>
+                                            </combobox>
+                                        </vbox>
+                                        <separator width="2px" height="20px"/>
+                                        <hbox>
+                                            <checkbox id="chk_ins" label="Insertar" tooltiptext="Acceso a Insertar"  disabled="true"/>
+                                            <space/>
+                                            <checkbox id="chk_eli" label="Eliminar" tooltiptext="Acceso a Eliminar" disabled="true"/>
+                                            <space/>
+                                            <checkbox id="chk_mod" label="Modificar" tooltiptext="Acceso a Modificar" disabled="true"/>
+                                            <space/>
+                                            <checkbox id="chk_imp" label="Imprimir" tooltiptext="Acceso a Imprimir" disabled="true"/>
+                                            <space/>
+                                        </hbox>
+                                        
+                                    </groupbox>
+                                </div>    
+                            </tabpanel>
+                            <tabpanel>
+                                <div id="div_lst_acc1" >
+                                    <listbox id="lst_accesos" mold="paging" pageSize="13" width="500px">
+                                        <listhead>
+                                            <listheader label="ID" width="100px"/>
+                                            <listheader label="MENU" width="400px"/>
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.men_id}"/>
+                                                <listcell label="${each.acc_des}"/>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                </div>    
+                            </tabpanel>
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south border="0">
+            <include src="/plantillas/modulos/PieSeguridad.zul"/>
+        </south>
+    </borderlayout>     
+</zk>

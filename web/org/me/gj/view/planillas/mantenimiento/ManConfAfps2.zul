@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>     
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_confafp" width="100%" height="100%" border="none" closable="true"  ctrlKeys="#f2#f4#f7#f10#f9#f8">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)" />   
+                        <label value="CONFIGURACION DE AFP" sclass="titulo_mant" style="margin-left:205px;"/>
+                    </toolbar>                        
+                    <tabbox id="tabbox_confafp" ctrlKeys="^a#f8#f10" apply="org.me.gj.controller.planillas.mantenimiento.ControllerConfAfps">
+                        <tabs>
+                            <tab id="tab_listaConfAfps" label="LISTA" />
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    <!----> 
+                                    if (!tab_listaConfAfps.isDisabled())
+                                    {
+                                    if (lst_confafp.getSelectedIndex() == -1)
+                                    {
+                                    tab_listaConfAfps.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                            
+                            
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_confafp" >                                
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda" />
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+                                                <label value="FILTRO:"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una Opcion">
+                                                <comboitem label=" "/>                      
+                                                <comboitem label="PERIODO"/>
+                                                <comboitem label="ID"/>
+                                                <comboitem label="AFP"/>
+                                                <comboitem label="CTA"/>
+                                                <attribute name="onSelect">
+                                                    txt_busqueda.setDisabled(false);
+                                                </attribute>                                                
+                                            </combobox>
+                                            <space width="2px"/>
+                                            <textbox id="txt_busqueda" width="400px" value="%%" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" tooltiptext="Ingresa un Valor para su Busqueda"/>          
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="ESTADO:" id="lbl_estado"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una Opción" width="110px">
+                                                <comboitem label="ACTIVO"/>
+                                                <comboitem label="INACTIVO"/>
+                                                <comboitem label=" "/>       
+                                            </combobox>
+                                            <space width="10px"/>
+                                            <button id="tbbtn_btn_buscar" label="Buscar" sclass="botones"/> 
+                                            <space width="10px"/>
+                                            <!--<toolbarbutton id="tbbtn_excel" image="/images/iconos_menu/estadisticas/exportarxls.png" tooltiptext="Exportar a Excel" />-->
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="10px"/>    
+                                    <listbox id="lst_confafp" mold="paging" pageSize="18" width="985px" height="455px">
+                                        <listhead>
+                                            <listheader label="PERIODO" width="80px" align = "center"/>
+                                            <listheader label="ID" width="80px" align = "center"/>
+                                            <listheader label="AFP" width="730px"/>
+                                            <listheader label="CTA" width="70px" align = "center"/>
+                                            <listheader label="EST" width="25px"/>
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.periodo}"/>
+                                                <listcell label="${each.afpid}"/>
+                                                <listcell label="${each.afp_des}"/>
+                                                <listcell label="${each.idcta}"/>
+                                                <listcell>
+                                                    <checkbox disabled="true" checked="${each.valor}"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <space height="5px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó al Cliente"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación"/>   
+                                    </hbox>
+                                </div>
+                            </tabpanel> 
+                            <tabpanel>
+                                <div >
+                                    <groupbox width="100%" open="true" closable="false">
+                                        <caption label="DATOS AFP"/>
+                                        <grid id="grd_man_cli" width="975px">
+                                            <columns>
+                                                <column width="100px"/>
+                                                <column width="200px"/>
+                                                <column width="100px"/>
+                                                <column width="200px"/>
+                                                <column width="100px"/>
+                                                <column width="275px"/>
+                                            </columns>
+                                            <rows>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="PERIODO :"/> 
+                                                        <span class="colorRojo">*</span> 
+                                                    </cell>
+                                                    <combobox id="cb_periodo" disabled="true" readonly="true" width="80px" tooltiptext="Define la lista de los Periodos">
+                                                        <template name="model">
+                                                            <comboitem label="${each.per_periodo}" value="${each.per_id}"/>
+                                                        </template> 
+                                                    </combobox>
+                                                    <space width="1px"/>
+                                                   <a href="https://www.integra.com.pe/wps/portal/integra/personas/comisiones-y-cargos/comisiones-y-costos-de-seguro-vigentes-de-todas-las-afp.html" label="Visita web AFP" target="_blank" style="color:#3D91E9;"/> 
+                                                </row>
+                                                
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="ID :"/>
+                                                        <span class="colorRojo">*</span> 
+                                                    </cell>
+                                                    <textbox id="txt_afpid" disabled="true" maxlength="3" width="40px" style="text-align: right;" tooltiptext="Define el Codigo de la AFP, Máximo 3 caracteres"/>                                    
+                                                    <cell align="right" valign="center">
+                                                        <label value="ESTADO :"/>
+                                                    </cell>
+                                                    <checkbox id="chk_confest" disabled="true" tooltiptext="Define el Estado de la Configuración"/>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="DESCRIPCIÓN:"/> 
+                                                    </cell>
+                                                    <textbox id="txt_afpdes" disabled="true" tooltiptext="Define la Descripción de la AFP, Máximo 30 caracteres" maxlength="30" width="160px"/>
+                                                    
+                                                </row>  
+                                           
+                                            </rows>
+                                        </grid>
+                                    </groupbox>
+                                    <space height="10px"/>
+                                    <groupbox width="100%" open="true" closable="false">
+                                        <caption label="COMISION POR FLUJO"/>
+                                        <hbox>
+                                            <grid width="975px">
+                                                <columns>
+                                                    <column width="100px"/>
+                                                    <column width="200px"/>
+                                                    <column width="100px"/>
+                                                    <column width="200px"/>
+                                                    <column width="100px"/>
+                                                    <column width="275px"/>
+                                                </columns>
+                                                <rows>
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="APO.OBLIG % :"/>
+                                                            <span class="colorRojo">*</span> 
+                                                        </cell>
+                                                        <cell>
+                                                            <doublebox id="txt_apobl" disabled="true" maxlength="12" width="80px" style="text-align: right;" locale="en_US" format="##,##0.00" tooltiptext="Define el % Aporte Obligatorio, Máximo 12 caracteres"/>
+                                                            
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="ORIGEN :"/>
+                                                            <span class="colorRojo">*</span> 
+                                                        </cell>
+                                                        <cell>
+                                                            <textbox id="txt_apori" disabled="true" maxlength="3" width="50px" style="text-align: right;"  tooltiptext="Define el Codigo de Concepto Aporte de Origen, Máximo 3 caracteres"/>
+                                                            <space width="5px"/>
+                                                            <textbox id="txt_origen" disabled="true" maxlength="200" width="120px" tooltiptext="Define el Concepto Aporte de Origen"/>
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="DESTINO :"/>
+                                                            <span class="colorRojo">*</span> 
+                                                        </cell>
+                                                        <cell>
+                                                            <textbox id="txt_apodes" disabled="true" maxlength="3" width="50px" style="text-align: right;"  tooltiptext="Define el Codigo de Concepto Aporte de Destino, Máximo 3 caracteres"/>
+                                                            <space width="5px"/>
+                                                            <textbox id="txt_destino" disabled="true" maxlength="200" width="120px" tooltiptext="Define el Concepto Aporte de Destino "/>
+                                                        </cell>
+                                                    </row>
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="COMI. FIJA % :"/>
+                                                            <span class="colorRojo">*</span> 
+                                                        </cell>
+                                                        <cell>
+                                                            <doublebox id="txt_comfig" disabled="true" maxlength="12" width="80px" style="text-align: right;" locale="en_US" format="##,##0.00" tooltiptext="Define el % Comisión Fija, Máximo 12 caracteres"/>
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="ORIGEN :"/>
+                                                            <span class="colorRojo">*</span> 
+                                                        </cell>
+                                                        <cell>
+                                                            <textbox id="txt_comori" disabled="true" maxlength="3" width="50px" style="text-align: right;" tooltiptext="Define el Codigo de Concepto Comision de Origen, Máximo 3 caracteres"/>
+                                                            <space width="5px"/>
+                                                            <textbox id="txt_com_origen" disabled="true" maxlength="200" width="120px"  tooltiptext="Define el Concepto Comision de Origen"/>
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="DESTINO :"/>
+                                                            <span class="colorRojo">*</span> 
+                                                        </cell>
+                                                        <cell>
+                                                            <textbox id="txt_comdes" disabled="true" maxlength="3" width="50px" style="text-align: right;" tooltiptext="Define el Codigo de Concepto Comision de Destino, Máximo 3 caracteres"/>
+                                                            <space width="5px"/>
+                                                            <textbox id="txt_com_destino" disabled="true" maxlength="200" width="120px" tooltiptext="Define el Concepto Comision de Destino"/>
+                                                        </cell>
+                                                    </row>
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="PRIMA SEGU. % :"/>
+                                                            <span class="colorRojo">*</span> 
+                                                        </cell>
+                                                        <cell>
+                                                            <doublebox id="txt_priseg" disabled="true" maxlength="12" width="80px" style="text-align: right;" locale="en_US" format="##,##0.00" tooltiptext="Define el % Prima Seguro, Máximo 12 caracteres"/>                                 
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="ORIGEN :"/>
+                                                            <span class="colorRojo">*</span> 
+                                                        </cell>
+                                                        <cell>
+                                                            <textbox id="txt_priori" disabled="true" maxlength="3" width="50px" style="text-align: right;" tooltiptext="Define el Codigo de Prima de Origen, Máximo 3 caracteres"/>
+                                                            <space width="5px"/>
+                                                            <textbox id="txt_pri_origen" disabled="true" maxlength="200" width="120px" tooltiptext="Define la Prima de Origen"/>
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="DESTINO :"/>
+                                                            <span class="colorRojo">*</span> 
+                                                        </cell>
+                                                        <cell>
+                                                            <textbox id="txt_prides" disabled="true" maxlength="3" width="50px" style="text-align: right;" tooltiptext="Define el Codigo de Prima de Destino, Máximo 3 caracteres"/>
+                                                            <space width="5px"/>
+                                                            <textbox id="txt_pri_destino" disabled="true" maxlength="200" width="120px" tooltiptext="Define la Prima de Destino"/>
+                                                        </cell>
+                                                    </row>
+                                                </rows>
+                                            </grid>
+                                        </hbox>
+                                    </groupbox>
+                                    <space height="10px"/>
+                                    <groupbox width="100%" open="true" closable="false">
+                                        <caption label="COMISION MIXTA"/>
+                                        <hbox>
+                                            <grid width="975px">
+                                                <columns>
+                                                    <column width="100px"/>
+                                                    <column width="200px"/>
+                                                    <column width="100px"/>
+                                                    <column width="200px"/>
+                                                    <column width="100px"/>
+                                                    <column width="275px"/>
+                                                </columns>
+                                                <rows>
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="COMI. FIJA % :"/>
+                                                            <span class="colorRojo">*</span> 
+                                                        </cell>
+                                                        <cell>
+                                                            <doublebox id="txt_commix" disabled="true" maxlength="12" width="80px" style="text-align: right;" locale="en_US" format="##,##0.00" tooltiptext="Define el % Comision Mixta, Máximo 12 caracteres"/>
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="ORIGEN :"/>
+                                                            <span class="colorRojo">*</span> 
+                                                        </cell>
+                                                        <cell>
+                                                            <textbox id="txt_mixori" disabled="true" maxlength="3" width="50px" style="text-align: right;" tooltiptext="Define el Codigo de Comision Mixta de Origen, Máximo 3 caracteres"/>
+                                                            <space width="5px"/>
+                                                            <textbox id="txt_mix_origen" disabled="true" maxlength="200" width="120px" tooltiptext="Define la Comision Mixta de Origen"/>
+                                                        </cell> 
+                                                        <cell align="right" valign="center">
+                                                            <label value="DESTINO :"/>
+                                                            <span class="colorRojo">*</span> 
+                                                        </cell>
+                                                        <cell>
+                                                            <textbox id="txt_mixdes" disabled="true" maxlength="3" width="50px" style="text-align: right;" tooltiptext="Define el Codigo de Comision Mixta de Destino, Máximo 3 caracteres"/>
+                                                            <space width="5px"/>
+                                                            <textbox id="txt_mix_destino" disabled="true" maxlength="200" width="120px" tooltiptext="Define la Comision Mixta de Destino"/>
+                                                        </cell>
+                                                    </row>
+                                                    
+                                                    
+                                                    <row>
+                                                        <cell align="right" valign="center">
+                                                            <label value="TOPE SEGURO :"/>  
+                                                            <span class="colorRojo">*</span>                                                           
+                                                        </cell>
+                                                        <cell>
+                                                            <doublebox id="txt_topseg" disabled="true" maxlength="12" width="120px" style="text-align: right;" locale="en_US" format="##,##0.00" tooltiptext="Define el Tope de Seguro, Máximo 12 caracteres"/>
+                                                        </cell>
+                                                        <cell align="right" valign="center">
+                                                            <label value="CUENTA CONTABLE :"/>
+                                                            <span class="colorRojo">*</span> 
+                                                        </cell>
+                                                        <cell>
+                                                            <textbox id="txt_idcta" disabled="true" maxlength="10" width="50px" style="text-align: right;" tooltiptext="Define el Codigo de la Cuenta Contable, Máximo 10 caracteres"/>
+                                                            <space width="5px"/>
+                                                            <textbox id="txt_descta" disabled="true" maxlength="200" width="120px" tooltiptext="Define la Descripcion de la Cuenta Contable"/>
+                                                        </cell>
+                                                    </row>
+                                                    
+                                                </rows>
+                                            </grid>
+                                        </hbox>
+                                    </groupbox>
+                                </div>
+                            </tabpanel>
+                        
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>
+

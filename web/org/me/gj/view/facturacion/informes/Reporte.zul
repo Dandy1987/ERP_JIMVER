@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:w="client">                      
+    <window id="w_reporte" title="IMPRESION" border="normal" width="100%" height="100%"
+            position="center,center" closable="true"
+            apply="org.me.gj.controller.impresion.ControllerReporte"
+            action="show: slideDown;hide: slideUp" >
+        <hlayout width="100%">
+            <hbox align="right" width="100%" height="10%">
+                <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprime el documento Seleccionado"/>
+                <toolbarbutton id="tbbtn_btn_salir" image="/images/iconos/eliminar.png" tooltiptext="Salir de la Pantalla de Impresion" />       
+            </hbox>
+        </hlayout>
+        <iframe id="reporte" width="100%" height="100%" />
+    </window>                        
+</zk>
+

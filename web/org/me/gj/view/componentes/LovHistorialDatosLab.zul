@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_historial_dl" title="HISTORIAL DE DATOS LABORARES - GRUPO JIMENEZ" border="normal" width="780px"
+            apply="org.me.gj.controller.componentes.ControllerLovHistorialDatosLab"
+            position="center,center"
+            action="show: slideDown;hide: slideUp">
+        <vlayout >
+            <vbox align="center">
+            <space height="5px"/>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label id="lbl_personal" style="font-size: 14px;font-weight: bold;"/>
+                </cell>
+            </hbox>
+            <space height="10px"/>
+            <listbox id="lst_historial_dl" width="750px" height="200px">
+                <listhead>
+                    <listheader label="EMPRESA" width="115px" align="center"/>
+                    <listheader label="FEC.ING" width="70px" align="center"/>
+                    <listheader label="AREA" width="150px" align="center"/>
+                    <listheader label="CARGO" width="150px" align="center"/>
+                    <listheader label="FEC.CESE" width="70px" align="center"/>
+                    <listheader label="MOTIVO" align="center"/>
+                    <listheader label="USUARIO" align="center"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.emp_id_des}"/>
+                        <listcell label="${each.s_plfecing}"/>
+                        <listcell label="${each.plarea_des}"/>
+                        <listcell label="${each.plidcargo_des}"/>
+                        <listcell label="${each.s_plfecces}"/>
+                        <listcell label="${each.plcesemot}"/>
+                        <listcell label="${each.plusuadd}"/>
+                    </listitem>
+                </template>
+            </listbox>
+            <space height="5px"/>
+            <hbox>
+                <button id="btn_salir" label="Salir" sclass="botones"/>
+            </hbox>
+            </vbox>
+        </vlayout>
+    </window>
+</zk>

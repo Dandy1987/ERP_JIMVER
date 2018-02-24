@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:w="client">
+    <window id="w_lov_docxcob" title="DOCUMENTOS - COBRANZA REPARTO" border="normal" width="500px"
+            height="470px" position="center,center" closable="true"
+            apply="org.me.gj.controller.componentes.ControllerLovFacInfDocxCob"
+            action="show: slideDown;hide: slideUp">
+        <toolbar id="tb_transacciones"  width="99.75%">
+            <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />         
+            <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" />
+            <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir"  /> 
+        </toolbar>
+        <tabbox id="tabbox_lovdocxcob" ctrlKeys="#f10" > 
+            <tabs>
+                <tab id="tab_lista" label="LISTA"/>
+                <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                    <!--<attribute name="onSelect">
+                        if (lst_notes.getSelectedIndex() == -1)
+                        {
+                        tab_lista.setSelected(true);
+                        Messagebox.show("Por favor seleccione un registro de la tabla "," ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                        }
+                    </attribute>-->
+                </tab>
+            </tabs>
+            <tabpanels>
+                <tabpanel>
+                    <hbox align="center">
+                        <cell align="right" valign="center">
+                            <label value="FECHA COBRANZA: "/>
+                        </cell>
+                        <space width="10px"/>
+                        <datebox id="d_feccob" width="100px" maxlength="10" format="dd/MM/yyyy" />
+                    </hbox>
+                    <separator height="5px"/>
+                    <listbox id="lst_notes" mold="paging" pageSize="10" width="465px" height="300px">
+                        <listhead>
+                            <listheader label="TIP" width="30px"/>     
+                            <listheader label="NRO DOC" width="80px"/>
+                            <listheader label="ID" width="45px"/>
+                            <listheader label="VENDEDOR" width="190px"/>
+                            <listheader label="SALDO" width="90px"/>
+                            <listheader label="IMP" width="30px"/>
+                        </listhead>
+                        <template name="model">
+                            <listitem>
+                                <listcell label="${each.despacho}"/>
+                                <listcell label="${each.gcab_tipguia}"/>
+                                <listcell label="${each.guia}"/>
+                                <listcell label="${each.gcab_id}"/>
+                                <listcell label="${each.fecha}"/>
+                                <listcell label="${each.ord_compra}"/>
+                            </listitem>
+                        </template>		
+                    </listbox>
+                    <space height="5px"/>
+                    <hbox align="center">
+                        <cell align="right" valign="center">
+                            <label value="NRO DOC: "/>
+                        </cell>
+                        <textbox id="txt_nrodoc" maxlength="15" width="40px" tooltiptext="Número de documento máximo 15 caracteres"/>
+                        <space width="5px"/>
+                        <button id="btn_actsaldos" label="ACTUALIZAR SALDOS" sclass="botones"/>
+                        <space width="5px"/>
+                        <cell align="right" valign="center">
+                            <label value="RESUMEN" id="lbl_resumen"/>
+                        </cell>
+                        <checkbox id="chk_resumen" checked="false"/>
+                    </hbox>
+                </tabpanel>
+                <tabpanel>
+                    <grid width="450px">
+                        <columns>
+                            <column width="80px"/>
+                            <column width="108px"/>
+                            <column width="125px"/>
+                            <column width="137px"/>
+                        </columns>
+                        <rows >
+                            <row >       
+                                <cell align="right" valign="center" >
+                                    <label value="FECHA COB:"/>
+                                </cell>
+                                <datebox id="d_feccobman" width="90px"  maxlength="10" cols="12" format="dd/MM/yyyy"  disabled="true" />
+                                <cell align="right" valign="center">
+                                    <label value="ESTADO:"/>
+                                </cell>
+                                <checkbox id="chk_estado" disabled="true" tooltiptext="Define el estado del documento"/>
+                            </row>
+                            <row>
+                                <cell align="right" valign="center">
+                                    <label value="TIP DOC: "/>
+                                </cell>
+                                <combobox id="cb_tipdoc" disabled="true" readonly="true" width="95px" tooltiptext="Define el tipo de documento">
+                                    <template name="model">
+                                        <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                    </template>
+                                </combobox>
+                                <cell align="right" valign="center">
+                                    <label value="NRO DOC: "/>
+                                </cell>
+                                <textbox id="txt_nrodocman" disabled="true" maxlength="50" width="90px" tooltiptext="Define el número de documento"/>
+                            </row>
+                            <row>
+                                <cell align="right" valign="center">
+                                    <label value="SALDO: "/>
+                                </cell>
+                                <textbox id="txt_saldo" disabled="true" maxlength="50" width="90px" tooltiptext="Define el saldo"/>
+                            </row>
+                            <row>
+                                <cell align="right" valign="center">
+                                    <label value="VENDEDOR: "/>
+                                </cell>
+                                <textbox id="txt_ven_id" disabled="true" maxlength="4" width="90px" tooltiptext="Define el código de vendedor máximo 4 caracteres"/>
+                                <cell align="right" valign="center" colspan="2">
+                                    <textbox id="txt_ven_des" disabled="true" maxlength="50" width="245px" tooltiptext="Define el nombre del vendedor"/>
+                                </cell>
+                            </row>
+                            <row>
+                                <cell align="right" valign="center">
+                                    <label value="ZONA: "/>
+                                </cell>
+                                <textbox id="txt_zona_id" disabled="true" maxlength="6" width="90px" tooltiptext="Define el códido de la zona máximo 6 caracteres"/>
+                                <cell align="right" valign="center" colspan="2">
+                                    <textbox id="txt_zona_des" disabled="true" maxlength="50" width="245px" tooltiptext="Define la descripción de la zona"/>
+                                </cell>
+                            </row>
+                            <row>
+                                <cell align="right" valign="center">
+                                    <label value="CLIENTE: "/>
+                                </cell>
+                                <textbox id="txt_cli_id" disabled="true" maxlength="50" width="90px" tooltiptext="Define el código del cliente máximo 10 caracteres"/>
+                                <cell align="right" valign="center" colspan="2">
+                                    <textbox id="txt_cli_des" disabled="true" maxlength="50" width="245px" tooltiptext="Define el nombre del cliente"/>
+                                </cell>
+                            </row>
+                            <row>
+                                <cell align="right" valign="center">
+                                    <label value="USUARIO:"/>
+                                </cell>
+                                <textbox id="txt_usuadd" disabled="true" maxlength="25" width="90px" tooltiptext="Define el nombre de usuario de adición"/>
+                                <cell align="right" valign="center">
+                                    <label value="FECHA:"/>
+                                </cell>
+                                <datebox id="d_fecadd" width="100px"  maxlength="10" cols="12" format="dd/MM/yyyy"  disabled="true" tooltiptext="Define la fecha de adición"/>
+                            </row>
+                            <row>
+                                <cell align="right" valign="center">
+                                    <label value=""/>
+                                </cell>
+                                <cell align="right" valign="center">
+                                    <label value=""/>
+                                </cell>
+                                <button id="btn_guardar" label="GUARDAR" sclass="botones"/>
+                                <button id="btn_cancelar" label="CANCELAR" sclass="botones"/>
+                            </row>
+                        </rows>                       
+                    </grid>
+                </tabpanel>                            
+            </tabpanels>
+        </tabbox>
+    </window>
+</zk>
+

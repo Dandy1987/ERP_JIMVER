@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+
+    <borderlayout sclass="complex-layout" height="100%">
+       <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuFacturacion.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_manper" width="100%" height="100%" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" onClick='alert("Imprimir")' />            
+                        <label value="APERTURA DE PERIODOS" sclass="titulo_mant" style="margin-left:247px;"/>
+                    </toolbar>  
+                    <tabbox id="tabbox_manper" apply="org.me.gj.controller.facturacion.mantenimiento.ControllerManPer">
+                        <tabs>
+                            <tab id="tab_listamanper" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_manper.getSelectedIndex() == -1)
+                                    {
+                                        tab_listamanper.setSelected(true);
+                                        Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="750px" open="false">
+                                    <caption label="Opciones de Busqueda"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true" placeholder="---seleccione Opcion----" tooltiptext="Seleccione una Opcion">
+                                            <comboitem label="ID"/>
+                                            <comboitem label="PERIODO"/>
+                                            <comboitem label="AÑO"/>
+                                            <comboitem label="MES"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <separator/>
+                                        <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                        <toolbarbutton id="tbbtn_btn_buscar" image="/images/iconos/buscar.png" tooltiptext="Buscar" />            
+                                        <separator width="20px"/>
+                                        <cell align="right" valign="botton">
+                                            <label value="ESTADO:" id="lbl_estado"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <checkbox id="chk_busest" checked="true">
+                                            <attribute name="onCheck">
+                                                if(chk_busest.isChecked())
+                                                   lbl_estado.setValue("ACTIVO");
+                                                else
+                                                   lbl_estado.setValue("INACTIVO");
+                                            </attribute>
+                                        </checkbox>
+                                    </hbox>
+                                </groupbox>
+                                <separator height="10px"/>
+                                <listbox id="lst_manper" mold="paging" pageSize="18" model="@{tabbox_manper$composer.objListModelListManPer}"  width="510px">
+                                    <listhead>
+                                        <listheader label="ID" width="80px"/>
+                                        <listheader label="PERIODO" width="80px"/>
+                                        <listheader label="AÑO" width="80px"/>
+                                        <listheader label="MES" width="80px"/>
+                                        <listheader label="INICIO" width="80px"/>
+                                        <listheader label="FIN" width="80px"/>
+                                        <listheader label="EST" width="30px"/>
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.per_id}"/>
+                                            <listcell label="${each.per_periodo}"/>
+                                            <listcell label="${each.anio}"/>
+                                            <listcell label="${each.mes}"/>
+                                            <listcell label="${each.fecini}"/>
+                                            <listcell label="${each.fecfin}"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                            </tabpanel> 
+                            <tabpanel>
+                                <div >
+                                    <grid width="420px">
+                                        <columns>
+                                            <column width="100px"/>
+                                            <column width="320px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>                 
+                                                <cell align="right" valign="botton">
+                                                    <label value="ID:"/>
+                                                </cell>
+                                                <textbox id="txt_codigo" width="75px" disabled="true" tooltiptext="Define el Codigo del periodo"/>                                    
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_tabest" disabled="true" tooltiptext="Define el Estado del Periodo"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="PERIODO:"/>
+                                                </cell>
+                                                <textbox id="txt_periodo" disabled="true" maxlength="6" width="45px" tooltiptext="Define el Periodo, Máximo 6 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="AÑO:"/>
+                                                </cell>
+                                                <textbox id="txt_anio" disabled="true" maxlength="4" width="30px" tooltiptext="Define el año, Máximo 4 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="MES:"/>
+                                                </cell>
+                                                <textbox id="txt_mes" disabled="true" maxlength="2" width="15px" tooltiptext="Define el mes, Máximo 2 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="PRIMER DIA:"/>
+                                                </cell>                                                
+                                                <datebox id="txt_pridia" disabled="true" maxlength="10" width="90px" format="dd/MM/yyyy"  tooltiptext="Define la fecha de inicio del mes, Máximo 10 caracteres" />
+                                            </row>                                                                                        
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ULTIMO DIA:"/>
+                                                </cell>                                                
+                                                <datebox id="txt_ultdia" disabled="true" maxlength="10" width="90px" format="dd/MM/yyyy"  tooltiptext="Define la fecha final del mes, Máximo 10 caracteres" />
+                                            </row>
+                                            
+                                        </rows>
+                                    </grid>
+                                </div>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+    
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+    
+    
+    
+</zk>

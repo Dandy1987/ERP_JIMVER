@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    @autor: CHUALLPA
+-->
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id = "w_lov_utinrocta" title = "LISTADO DE N° DE CUENTAS" closable="true"
+            width="500px" position="center,center" border="normal"
+            action = "show: slideDown;hide: slideUp"
+            apply="org.me.gj.controller.componentes.ControllerLovUtiNroCuenta">
+        
+        <vlayout>
+            <div id="center" align="center">
+                <hbox align="center">
+                    <cell align="left" width="110px">
+                        <label value="BUSCAR N° CUENTA :" />
+                    </cell>
+                    <textbox id="txt_buscuenta" width="255px" focus="true" maxlength="30" tooltiptext="Buscar N° de cuenta"/>
+                </hbox>    
+            </div>
+            <listbox id="lst_nrocta">
+                <listhead>
+                    <listheader label="GLOSA" align="left" width="210px"/>
+                    <listheader label="M." align="center" width="35px"/>
+                    <listheader label="N° DE CUENTA" align="center"/>
+                </listhead>
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.s_glosa}" style="text-align:left"/>
+                        <listcell label="${each.s_tipmon}" style="text-align:center"/>
+                        <listcell label="${each.s_nrocta}" style="text-align:center"/>
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+               
+    </window>
+</zk>

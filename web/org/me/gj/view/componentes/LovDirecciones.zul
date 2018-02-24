@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_direccion" title="BUSQUEDA DE DIRECCIONES" border="normal" width="658px"
+            apply="org.me.gj.controller.componentes.ControllerLovDirecciones"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="DIRECCION :" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="560px" focus="true" maxlength="45" tooltiptext="Ingrese la descripcion de la Dirección"/>
+            </hbox>
+            <listbox id="lst_direccion" mold="paging" pageSize="13" width="630px">
+                <listhead>
+                    <listheader label="ID" width="30px" align="center"/>
+                    <listheader label="DIRECCION" width="600px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.clidir_id}"/>
+                        <listcell label="${each.clidir_direc}"/>
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk>

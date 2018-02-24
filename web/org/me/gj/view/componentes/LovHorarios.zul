@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_horarios" title="HORARIO SEMANAL" border="normal" width="375px"
+            apply="org.me.gj.controller.componentes.ControllerLovHorariosPlanillas"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <space width="100px"/>
+                <cell align="right" valign="center">
+                    <label value="CODIGO :" />
+                </cell>
+                <textbox id="txt_busqueda"  width="75px" focus="true" maxlength="45" tooltiptext="Ingrese horario"/>
+            </hbox>
+            <listbox id="lst_buscaHorario" mold="paging" pageSize="15" width="375px">
+                <listhead>
+                    <listheader label="CODIGO" width="55px" align="center"/>
+                    <listheader label="DIA INICIO" width="90px" align="center"/>
+                    <listheader label="DIA FIN" width="90px" align="center"/>
+                    <listheader label="DESCANSO" width="120px" align="center"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.man_codigo_semanal}" />
+                        <listcell label="${each.man_de}" />
+                        <listcell label="${each.man_a}" />
+                        <listcell label="${each.man_descanso}" />
+
+                    </listitem>
+                </template>
+            </listbox>
+            
+        </vlayout>
+    </window>
+</zk>

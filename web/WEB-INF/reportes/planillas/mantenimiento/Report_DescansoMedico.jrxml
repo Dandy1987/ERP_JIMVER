@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report_DescansoMedico" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7ccdc249-f64d-4a2a-bfdf-822b4bc0bc55">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="empresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="periodo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString language="plsql">
+		<![CDATA[{call codijisa.pack_tpersonal.p_reportDMedico($P{empresa},$P{periodo},$P{ORACLE_REF_CURSOR})}]]>
+	</queryString>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="FECHA" class="java.lang.String"/>
+	<field name="MOTIVO" class="java.lang.String"/>
+	<field name="CODIGO" class="java.lang.String"/>
+	<group name="DMedicos">
+		<groupExpression><![CDATA[$F{CODIGO}]]></groupExpression>
+		<groupHeader>
+			<band height="43">
+				<staticText>
+					<reportElement uuid="7c6386bf-d9f1-4aa8-8b93-546c8f7d5783" mode="Opaque" x="200" y="1" width="100" height="20" backcolor="#FFFF00"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial Black"/>
+					</textElement>
+					<text><![CDATA[NOMBRE :]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="f80d3a22-dad7-40d1-b3ee-54bf6fbf13d3" x="300" y="1" width="255" height="20" backcolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="2c29d9a3-49c6-491d-821f-970ddf588ae3" mode="Opaque" x="0" y="22" width="100" height="20" backcolor="#FFCC00"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<text><![CDATA[FECHA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="953370be-3eb3-434b-aa39-941ea180ebfe" mode="Opaque" x="100" y="22" width="200" height="20" backcolor="#FFCC00"/>
+					<textElement verticalAlignment="Middle"/>
+					<text><![CDATA[MOTIVO DE DESCANSO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="c5e8000f-fbdb-4126-a6c9-19aa197bdecf" mode="Opaque" x="0" y="1" width="100" height="20" backcolor="#FFFF00"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial Black"/>
+					</textElement>
+					<text><![CDATA[CODIGO :]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="fc4959b9-2bdc-48ca-aaf3-a12767672c86" x="100" y="1" width="100" height="20" backcolor="#FFFFFF"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Arial"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CODIGO}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="18b67c0a-35c3-41bd-b528-763cbe7dfe62" x="0" y="0" width="555" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="2ba990c1-9a52-49ff-8c7d-25d908f05d9c" x="0" y="21" width="555" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+	</group>
+	<title>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="278c5a07-fcfa-4fad-b6d9-1d345ebb0805" x="0" y="1" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<text><![CDATA[REPORTE DESCANSO MEDICO]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement uuid="e7e43467-1f96-4e0e-b9bf-db24e65560a2" x="300" y="21" width="255" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="938d3d0c-6ff4-42df-bb9c-c379f887f04a" x="0" y="21" width="300" height="20"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="0405ac89-04ea-4195-b2a9-ffadcd19e5f5" x="0" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="2e6d1cbc-04e4-41f7-96a3-987c6b6b89de" x="100" y="0" width="200" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{MOTIVO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

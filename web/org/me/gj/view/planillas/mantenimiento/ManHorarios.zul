@@ -1,0 +1,343 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center> 
+            <div width="100%" sclass="cuerpo-main">
+                <window id="w_horario" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                    <toolbar id="tb_horario"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar (F4)"/>            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" disabled="true" tooltiptext="Guardar (F10)" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" disabled="true" tooltiptext="Deshacer (F9)"/>
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)"/>   
+                        <label value="HORARIO" sclass="titulo_mant" style="margin-left:260px;"/>
+                    </toolbar>          
+                    <tabbox id="tabbox_horario" ctrlKeys="#f10" apply="org.me.gj.controller.planillas.mantenimiento.ControllerManHorarios">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO"/>
+                
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>   
+                                <groupbox width="987px" open="true" closable="false">
+                                    <caption label="Opciones de Busqueda" />
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="SUCURSAL :"/>
+                                                  
+                                        </cell>
+                                        <space width="10px"/>
+                                        <combobox id="cb_sucursal" width="135px"  readonly="true" placeholder="-seleccione opción-" tooltiptext="Seleccione tipo documento">
+                                            <template name="model">
+                                                <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                            </template>
+                                        </combobox>
+                                        <space width="10px"/>
+                                        <button id="btn_buscar" label="Buscar" sclass="botones"/>
+                                        <space width="25px"/>
+                                        
+                                      <!--<toolbarbutton id="tbbtn_reset" image="/images/iconos/rechazar.png" tooltiptext="Reset" />-->
+                                    </hbox>
+                                </groupbox>
+                                <space width="10px"/>                 
+                                <listbox id="lst_lista" mold="paging" pageSize="18" width="986px" height="450px">     
+                                    <listhead>
+                                        <listheader label="SUCURSAL"  width="95px" align="center"/>
+                                        <listheader label="HORARIO" align="center"/>  
+                                        <listheader label="TIPO" align="center"/>      
+                                        <listheader label="DIA INICIO" align="center" />  
+                                        <listheader label="INGRESO"  align="center"/>  
+                                        <listheader label="SAL REF"  align="center"/>  
+                                        <listheader label="ING REF"  align="center"/>  
+                                        <listheader label="SALIDA"  align="center"/>  
+
+                                    
+                                    </listhead>
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.sucursal}"  style="text-align:center;"/>
+                                            <listcell label="${each.horario}" style="text-align:left;"/>  
+                                            <listcell label="${each.tipo}" style="text-align:left;"/>  
+                                            <listcell label="${each.tipo_dia}" style="text-align:left;"/>  
+                                            <listcell label="${each.ingreso}" style="text-align:center;"/>  
+                                            <listcell label="${each.sal_ref}" style="text-align:center;" />  
+                                            <listcell label="${each.ing_ref}" style="text-align:center;"  /> 
+                                            <listcell label="${each.salida}" style="text-align:center;" />   
+                                          
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <separator height="5px"/> 
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usua" maxlength="15" style="text-align:left;" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fec" maxlength="10" style="text-align:right;"  readonly="true" width="137px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumo" maxlength="15"  style="text-align:left;" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmo" maxlength="10" style="text-align:right;"  readonly="true" width="137px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación"/>   
+                                </hbox>
+                     
+                            </tabpanel>
+                            <tabpanel>
+                                <hbox>
+                                    <space width="20px"/>
+                                    <groupbox width="890px"  open="true" closable="false">
+                                        <hbox align="center">
+                                            <space width="50px" height="95px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="SUCURSAL :"/>
+                                                  
+                                            </cell>
+                                            <space width="10px"/>
+                                            <combobox id="cb_sucursal_man" width="135px" disabled="true" readonly="true" placeholder="-seleccione opción-" tooltiptext="Seleccione tipo documento">
+                                                <template name="model">
+                                                    <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                                </template>
+                                            </combobox>
+                                        </hbox> 
+                              
+                                        <hbox align="center">
+                                            <space width="50px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="CODIGO : " />
+                                                <!--<span class="colorRojo">*</span>   -->
+                                            </cell>  
+                                            <textbox id = "txt_codigo"  disabled="true" width="70px" style="text-align:right;" maxlength="3" tooltiptext="Define el código"/> 
+                                            <space width="25px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="DESCRIPCIÓN : " />
+                                                <span class="colorRojo">*</span>   
+                                            </cell>  
+                                            <textbox id = "txt_descripcion" disabled="true" width="450px" maxlength="150" tooltiptext="Define la descripción"/> 
+                                        </hbox> 
+                                        <space width="25px"/> 
+                                        <hbox align="center">
+                                            <space width="60px"/> 
+                                            <cell align="right" valign="center">
+                                                <label value="TIPO :" id="lbl_estado"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_tipo" disabled="true" readonly="true" tooltiptext="Seleccione una Opción" width="110px">
+                                          
+                                                <comboitem label="NO MARCAN" value="1"/>
+                                                <comboitem label="NORMAL" value="2"/>
+                                                <comboitem label="VARIABLE" value="3"/>
+                                                <!--<comboitem label=""/>  -->     
+                                            </combobox> 
+                                            <space width="80px"/> 
+                                            <checkbox id="chk_amanecida" disabled="true" tooltiptext="Define amanecida"/>   
+                                            <cell align="right" valign="center">
+                                                <label value="AMANECIDA"/>
+                                            </cell>
+                                 
+                                            <space width="200px"/> 
+                                            <cell align="right" valign="center">
+                                                <label value="RANGO AUTOM. : " />
+                                                <!--<span class="colorRojo">*</span>-->
+                                            </cell>  
+                                            <intbox id = "n_rango" disabled="true" width="70px" style="text-align:right;" maxlength="2" tooltiptext="Define rango automático"/> 
+                                        </hbox>   
+                                        <space width="25px"/>
+                                        <hbox>
+                                            <space width="50px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="HORAS TRABABAJO : " />
+                                                <span class="colorRojo">*</span>   
+                                            </cell>  
+                                            <intbox id = "n_hora_trab" disabled="true" width="70px" style="text-align:right;" maxlength="3" tooltiptext="Define hora de trabajo"/>      
+                                            <space width="15px"/>   
+                                            <cell align="right" valign="center">
+                                                <label value="HORAS REFRIGERIO : " />
+                                                <span class="colorRojo">*</span>   
+                                            </cell>  
+                                            <intbox id = "n_hora_refri" disabled="true" width="70px" style="text-align:right;" maxlength="3" tooltiptext="Define hora de refrigerio"/>      
+                                            <space width="30px"/>   
+                                            <cell align="right" valign="center">
+                                                <label value="MINUTO TOLERANCIA TARDANZA : " />
+                                                <span class="colorRojo">*</span>   
+                                            </cell>  
+                                            <intbox id = "n_min_tole" disabled="true" width="70px" style="text-align:right;" maxlength="3" tooltiptext="Define hora de refrigerio"/>      
+                                        </hbox> 
+                                        <space width="25px"/>
+                                        <hbox align="center">
+                                            <space width="50px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="HORARIO SEMANAL : " />
+                                                <span class="colorRojo">*</span>   
+                                            </cell>  
+                                            <space width="1px"/>
+                                            <textbox id = "txt_hro_sem" placeholder="-----ENTER-----" disabled="true" width="70px" style="text-align:right;" maxlength="3" tooltiptext="Define el horario semanal"/> 
+                                            <space width="25px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="DE : " />
+                                        
+                                            </cell>  
+                                            <textbox id = "txt_desde" disabled="true" width="100px" maxlength="50" /> 
+                                            <space width="20px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="A : " />
+                                          
+                                            </cell>  
+                                            <textbox id = "txt_hasta" disabled="true" width="100px" maxlength="50" /> 
+                                            <space width="20px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="DESCANSO : " />
+                                            </cell>  
+                                            <textbox id = "txt_descanso" disabled="true" width="100px" maxlength="50" /> 
+                                        </hbox> 
+                                
+                                    </groupbox>
+                                </hbox> 
+                                <space width="10px" height="45px"/>
+                                <hbox>
+                                    <space width="10px"/>  
+                                    <label value=" MARCADO" style="background-color: #117be4 ;color:#ffffff;font-size:20px"/>   
+                                    <space width="270px" />
+                                    <label value="HORARIO SEMANAL" style="background-color: #117be4  ;color:#ffffff ;font-size:20px"/> 
+                                    <space width="180px" />
+                                    <label value=" TOLER.MARCA"  style="background-color:  #117be4 ;color:#ffffff ;font-size:20px"/>   
+                                </hbox>
+                                <hbox align="center">
+                                    <label  style="background-color:#08090a;"/>
+                                    <space width="165px"/>
+                                    <label value="LUNES"/>
+                                    <space width="45px"/>
+                                    <label value="MARTES"/>
+                                    <space width="24px"/>
+                                    <label value="MIERCOLES"/>
+                                    <space width="28px"/>
+                                    <label value="JUEVES"/>
+                                    <space width="40px"/>
+                                    <label value="VIENES"/>
+                                    <space width="40px"/>
+                                    <label value="SABADO"/>
+                                    <space width="35px"/>
+                                    <label value="DOMINGO"/>
+                                    <space width="35px"/>
+                                    <label value="ANTES"/>
+                                    <space width="33px"/>
+                                    <label value="DESPUES"/>
+                                    <space width="5px"/>
+                                    
+                                </hbox> 
+                                <space width="70px"/>
+                                <hbox>
+                                    <space width="10px"/>
+                                    <checkbox id="chk_iempresa" disabled="true" /> 
+                                    <cell align="right" valign="center">
+                                        <label value="Ingreso Empresa"/>
+                                    </cell>
+                                    <space width="30px"/>
+                                    <timebox id = "txt_lun1" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;" /> 
+                                    <timebox id = "txt_mar1" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_mie1" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_jue1" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_vie1" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_sab1" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_dom1" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/>  
+                                    <intbox id = "txt_ant1"  disabled="true" width="80px" maxlength="3" style="text-align:right;"/> 
+                                    <intbox id = "txt_des1"  disabled="true" width="80px" maxlength="3" style="text-align:right;"/> 
+                                    <!-- <textbox id = "txt_lun1" type="tel" disabled="true" width="80px" maxlength="50" style="text-align:center;" /> 
+                                    <textbox id = "txt_mar1" disabled="true" width="80px" maxlength="50" style="text-align:center;" /> 
+                                    <textbox id = "txt_mie1" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <textbox id = "txt_jue1" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <textbox id = "txt_vie1" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <textbox id = "txt_sab1" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <textbox id = "txt_dom1" disabled="true" width="80px" maxlength="50" style="text-align:center;"/>  
+                                    <textbox id = "txt_ant1" disabled="true" width="80px" maxlength="50" style="text-align:right;"/> 
+                                    <textbox id = "txt_des1" disabled="true" width="80px" maxlength="50" style="text-align:right;"/>   -->   
+                                </hbox>
+                                <space width="5px"/> 
+                                <hbox>
+                                    <space width="10px"/>
+                                    <checkbox id="chk_srefrigerio" disabled="true" />
+                                    <cell align="right" valign="center">
+                                        <label value="Salida Refrigerio"/>
+                                    </cell>
+                                    <space width="31px"/>
+                                    <timebox id = "txt_lun2" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_mar2" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_mie2" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_jue2" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_vie2" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_sab2" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_dom2" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/>  
+                                    <intbox id = "txt_ant2"  disabled="true" width="80px" maxlength="3" style="text-align:right;"/> 
+                                    <intbox id = "txt_des2"  disabled="true" width="80px" maxlength="3" style="text-align:right;"/>      
+                                     
+                                </hbox>
+                                <space width="5px"/> 
+                                <hbox>
+                                    <space width="10px"/>
+                                    <checkbox id="chk_irefrigerio" disabled="true" /> 
+                                    <cell align="right" valign="center">
+                                        <label value="Ingreso Refrigerio"/>
+                                    </cell>
+                                    <space width="25px"/>
+                                  
+                                    
+                                    <timebox id = "txt_lun3" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_mar3" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_mie3" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_jue3" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_vie3" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_sab3" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_dom3" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/>  
+                                    <intbox id = "txt_ant3"  disabled="true" width="80px" maxlength="3" style="text-align:right;"/> 
+                                    <intbox id = "txt_des3"  disabled="true" width="80px" maxlength="3" style="text-align:right;"/>     
+                                </hbox>
+                                <space width="5px"/> 
+                                <hbox>
+                                    <space width="10px"/>
+                                    <checkbox id="chk_sempresa" disabled="true" />  
+                                    <cell align="right" valign="center">
+                                        <label value="Salida Empresa"/>
+                                    </cell>
+                                    <space width="36px"/>
+                                 
+                                    <timebox id = "txt_lun4" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_mar4" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_mie4" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_jue4" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_vie4" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_sab4" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/> 
+                                    <timebox id = "txt_dom4" format="HH:mm" disabled="true" width="80px" maxlength="50" style="text-align:center;"/>
+                                    <intbox id = "txt_ant4"  disabled="true" width="80px" maxlength="3" style="text-align:right;"/> 
+                                    <intbox id = "txt_des4"  disabled="true" width="80px" maxlength="3" style="text-align:right;"/>    
+                                </hbox>
+                            
+                                   
+                                
+                            </tabpanel>  
+                        </tabpanels>
+                    </tabbox>
+                </window>
+            </div>  
+        </center> 
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>              
+</zk>

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">    
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_cargos" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f9#f8">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <!--<toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" disabled="true" />-->
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)" />            
+                        <!--<toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />-->
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)" />            
+                        <label value="MANTENIMIENTO DE FUNCIONES" sclass="titulo_mant" style="margin-left:229px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_cargos" ctrlKeys="#f10" apply="org.me.gj.controller.planillas.mantenimiento.ControllerFunciones">
+                        <tabs  >
+                            <tab id="tab_listaformulas" label="LISTA" />
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    
+                                    if (lst_formulas.getSelectedIndex() == -1)
+                                    {
+                                    tab_listaformulas.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                    
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="987px" open="true"  closable="false">
+                                    <caption label="Opciones de Busqueda"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true" placeholder="---seleccione Opcion----" tooltiptext="Seleccione una opción">
+                                            <comboitem label=" "/>
+                                            <comboitem label="ID"/>
+                                            <comboitem label="FORMULA"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <separator/>
+                                        <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                        <space width="10px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="ESTADO:" id="lbl_estado"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una opción" width="110px">
+                                            <comboitem label="ACTIVO" value="1" />
+                                            <comboitem label="INACTIVO" value="2"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+                                        <space width="10px"/>
+                                        <button id="btn_buscar" label="Buscar" sclass="botones"/>
+                                         <button id="btn_clonar" label="Clonar"  sclass="botones"/>
+                                        <space width="10px"/>
+                                        <!--<toolbarbutton id="tbbtn_excel" image="/images/iconos_menu/estadisticas/exportarxls.png" tooltiptext="Exportar a Excel" />--> 
+                                    </hbox>
+                                </groupbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_formulas"  mold="paging" pageSize="18" width="985px" height="460px">
+                                    <frozen columns="2"/>
+                                    <listhead>
+                                        <listheader label="ID" width="50px" align="center"/>
+                                        <listheader label="CONCEPTO" width="250px"/>
+                                        <listheader label="FORMULA"/>
+                                        <listheader label="EST" width="25px"/>                                  
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.form_id}"/>
+                                            <listcell label="${each.form_descri}"/>
+                                            <listcell label="${each.form_contenido}"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador del Cargo"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación del Cargo"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó la Ubicación"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación del Cargo"/>    
+                                </hbox>
+                            </tabpanel> 
+                            
+                            <!-- MANTENIMIENTO -->
+                            
+                            <tabpanel>
+                                <div>
+                                    <vlayout >                                        
+                                        <vbox align="right">
+                                            <hbox>
+                                                <textbox id="txt_idform" width="25px" maxlength="3" readonly="true" disabled="true" tooltiptext="Codigo de Formula" />
+                                                <textbox id="txt_desform" width="880px" maxlength="100" readonly="true" disabled="true" tooltiptext="Codigo de Formula" />
+                                                <checkbox id="chk_estado" label="ESTADO" disabled="true" ></checkbox>
+                                            </hbox>                                                                                                                                    
+                                            <groupbox id="gb_funciones" mold="3d" width="987px" closable="false">                                                                                                
+                                                <caption image="/images/iconos_menu/planillas/funciones_math.png" label=" = (  EDITOR DE FORMULAS )" style="text-align:center" />
+                                                <hbox>
+                                                    <textbox id="txt_editor_formula"  width="969px"  rows="8" disabled="true"  /><!--value=""  style="resize:none;"-->
+                                                </hbox>
+                                            </groupbox>
+                                        </vbox>
+                                        <space width="5px"></space>
+
+                                        <hbox pack="center">
+                                                
+                                            <!-- Grupo de Conceptos -->
+                                            <groupbox id="gb_conceptos"  mold="3d" width="460px" height="330px" closable="false">                                                
+                                                <caption image="/images/iconos_menu/planillas/informes10.png" label=" CONCEPTOS - TABLAS " />
+                                                <hbox pack="center" align="center" >
+                                                    <vbox pack="center" align="center" >                                                        
+                                                        <space height="3px"></space>
+                                                        <combobox id="cb_conceptos" width="400px" readonly="true" disabled="true">
+                                                            <comboitem label="PERSONAL" value="1" /> <!-- pldatfor p1 -->
+                                                            <comboitem label="ASISTENCIA" value="2" /> <!-- pldatfor p2 -->
+                                                            <comboitem label="TABLAS" value="3" /> <!-- pltablas2 p3 -->
+                                                            <comboitem label="CONCEPTOS" value="4" /> <!-- pltablas1 p4 -->
+                                                            <comboitem label="UTILIDADES" value="5" /> <!-- pldatfor p5 -->
+                                                        </combobox>
+                                
+                                                        <space width="5px"></space>
+                                                        <listbox id="lst_conceptos"  width="400px" height="240px" sizedByContent="" disabled="true" >
+                                                            <!--
+                                                            <listhead >
+                                                                <listheader label="CONCEPTO" width="380px" align="left"/>
+                                                                <listheader label="CONCEPTO"/>
+                                                                
+                                                            </listhead>	
+                                                            -->
+                                                            <template name="model"  >
+                                                                <listitem >
+                                                                    <listcell label="${each.pldatfor_dview}" />
+                                                                    <!--<listcell label="${each.cargo_des}"/> -->
+                                                                </listitem>
+                                                            </template>
+                                                        </listbox>                                                        
+                                                    </vbox>                                                    
+                                                    <space width="8px"></space>
+                                                    <toolbarbutton id="tbbtn_add_conceptos" disabled="true" image="/images/iconos_menu/planillas/add_concepto.png" tooltiptext="Agregar concepto a la Formula" ></toolbarbutton> 
+                                                </hbox>                                                                                                                    
+                                            </groupbox> 
+                                            
+                                            <separator width="50px"/>
+                                            
+                                            <vbox>
+                                                <!-- Grupo de Operadores -->
+                                                <groupbox id="gb_operadores"  mold="3d" width="470px" height="80px" closable="false">                                                
+                                                    <caption image="/images/iconos_menu/planillas/informes7.png" label="OPERADORES" />                                                
+                                                    <hbox pack="center" align="center" >
+                                                        <vbox>                                                            
+                                                            <space height="3px"></space>
+                                                            <combobox id="cb_operadores" disabled="true" readonly="true" width="420px" tooltiptext="Seleccione un operador" >
+                                                                <template name="model">
+                                                                    <comboitem label = "${each.pldatfor_dview}" value = "${each.pldatfor_dform}"/>
+                                                                </template>                                                                                
+                                                            </combobox>                                                                                                                                                                                                                                                                                                                                                                                                                                    
+                                                        </vbox>                                                                                                    
+                                                        <toolbarbutton id="tbbtn_add_operadores" disabled="true" image="/images/iconos_menu/planillas/add_concepto.png" ></toolbarbutton> 
+                                                    </hbox>                                                
+                                                </groupbox>     
+                                                <space height="23px"></space>
+                                                <!-- Grupo de Constantes -->
+                                                <groupbox id="gb_constantes"  mold="3d" width="470px" height="110px" closable="false">                                                
+                                                    <caption image="/images/iconos_menu/planillas/asistencia.jpg" label="CONSTANTES"/>                                                
+                                                    <hbox pack="center" align="center" >
+                                                        <vbox pack="center" align="center">
+                                                            <radiogroup id="rg_constantes" >
+                                                                <radio id="rad_btn_tex" label="TEXTO" value="T" disabled="true" selected="true" radiogroup="rg_constantes" ></radio>
+                                                                <space width="80px"></space>
+                                                                <radio id="rad_btn_num" label="NUMERO" value="N" disabled="true" radiogroup="rg_constantes"></radio>
+                                                                <space width="80px"></space>
+                                                                <radio id="rad_btn_fec" label="FECHA" value="F" disabled="true" radiogroup="rg_constantes"></radio>
+                                                            </radiogroup>
+                                                            <space height="15px"></space>
+                                                            <hbox pack="center" align="center">
+                                                                <textbox id="txt_texto_constantes" disabled="true" width="80px"></textbox>
+                                                                <space width="55px"></space>
+                                                                <textbox id="txt_constantes" width="80px" disabled="true"></textbox>
+                                                                <space width="55px"></space>
+                                                                <datebox id="db_fecha_constante" width="100px" format="dd/MM/yyyy" readonly="true" disabled="true" ></datebox>    
+                                                            </hbox>    
+                                                            
+                                                        </vbox>
+                                                        <space width="23px"></space>
+                                                        <toolbarbutton id="tbbtn_add_constantes" disabled="true" image="/images/iconos_menu/planillas/add_concepto.png" ></toolbarbutton> 
+                                                    </hbox>                                                
+                                                </groupbox>
+                                                
+                                                <space height="23px"></space>
+                                                <!-- Grupo de Operadores -->
+                                                <groupbox id="gb_crud"  mold="3d" width="470px" height="80px" closable="false">                   
+                                                    <caption image="/images/iconos_menu/planillas/eliminarCalculo.png" label="MANTENIMIENTO"/>                                                
+                                                    <hbox pack="center" align="center" >
+                                                        
+                                                        <space height="10px" width="100px" ></space>
+                                                        <label id="l_deshacer_crud" value="DESHACER" ></label>
+                                                        <toolbarbutton id="tbbtn_deshacer_crud" disabled="true" image="/images/iconos_menu/planillas/remove.png" ></toolbarbutton>     
+                                                        <space width="75px"></space>
+                                                        <label id="l_clean_crud" value="LIMPIAR TODO" ></label>
+                                                        <toolbarbutton id="tbbtn_clean_crud" disabled="true" image="/images/iconos_menu/planillas/clear_all.png" ></toolbarbutton>     
+                                                        
+                                                    </hbox>                                                
+                                                </groupbox>     
+                                            </vbox>
+                                        </hbox>
+                                    </vlayout>
+
+                                </div>
+                            </tabpanel>     
+                        </tabpanels>
+                    </tabbox>   
+                </window>
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

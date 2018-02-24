@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:w="client">
+    <window id="w_lov_anulaciondoc" title="PROCESO DE ANULACION" border="normal" width="670px"
+            height="220px" position="center,center" closable="true"
+            apply="org.me.gj.controller.componentes.ControllerLovAnulaAuto"
+            action="show: slideDown;hide: slideUp"> 
+        <!--<hlayout>-->
+        <div >
+            <vbox>
+                <space width="5px"/>
+                <hbox align="right">
+                    <space width="240px"/>
+                    <label value="ANULACION DE DOCUMENTOS" />
+                </hbox>
+                <hbox align="right">
+                    <space width="185px"/>
+                    <groupbox width="260px" height="50px" closable="false"  >
+                        <caption label="TIPO"/>
+                        <space width="70px"/>
+                        <radio id="rd_tipo" label="DEVOLUCION" checked="true"/>
+                    </groupbox>
+                </hbox>
+                <space height="10px"/>
+                <hbox align="right">
+                    <space width="20px"/>
+                    <label value="FECHA GUIA:"/>
+                    <space width="30px"/>
+                    <datebox id="d_fecguia" maxlength="10" readonly="true" width="80px" onCreate="self.value = new Date()" disabled="false" format="dd/MM/yyyy" tooltiptext="Define la Fecha de Creación de la Nota de Cambio"/>   
+                    <space width="10px"/>
+                    <cell align="right" valign="center" >
+                        <label value="GUIA:"/>
+                    </cell>
+                    <space width="5px"/>
+                    <combobox id="cb_notaes" readonly="true" width="230px" tooltiptext="Seleccione Nota E/S">
+                        <template name="model">    
+                            <comboitem label="${each.desGui}" value="${each.idGui}"/>                                                                                                      
+                        </template>                                                
+                    </combobox>
+                    <space width="10px"/>
+                    <cell align="right" valign="center" >
+                        <label value="SERIE:"/>
+                    </cell>
+                    <combobox id="cb_serie" readonly="true" width="80px"  tooltiptext="Seleccione la Serie de la Guia">
+                        <template name="model">                                                                                                 
+                            <comboitem label="${each.num_ser}" value="${each.num_ser}"/>                                                                                                      
+                        </template>                                               
+                    </combobox> 
+                </hbox>
+                <space height="2px"/>
+                <hbox align="right">
+                    <space width="20px"/>
+                    <cell align="right" valign="center" >
+                        <label value="FECHA ANULACION:"/>
+                    </cell>
+                    <datebox id="d_fecanu" maxlength="10" readonly="true" width="80px" onCreate="self.value = new Date()" disabled="false" format="dd/MM/yyyy" tooltiptext="Define la Fecha de Creación de la Nota de Cambio"/>
+                    <space width="10px"/>
+                    <cell align="right" valign="center" >
+                        <label value="HORA:"/>
+                    </cell>
+                    <datebox id="d_hora" maxlength="10" readonly="true" width="90px" onCreate="self.value = new Date()" disabled="false" format="hh/mm/ss a" tooltiptext="Define la Fecha de Creación de la Nota de Cambio"/>
+                    <space width="50px"/>
+                    <button id="btn_procesar" label="Procesar" sclass="botones"/>
+                    <button id="btn_cancelar" label="Cancelar" sclass="botones"/>
+                </hbox>                            
+            </vbox>
+        </div>
+        <!--</hlayout>-->
+    </window>
+</zk>
+

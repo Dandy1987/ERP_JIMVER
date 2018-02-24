@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north height="27px" sclass="arriba-main">
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_repnotaes" width="100%" height="100%" 
+                        border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png"  tooltiptext="Imprimir" />              
+                        <label value="INFORME DE NOTA E/S" sclass="titulo_mant" style="margin-left:400px;"/>
+                    </toolbar>                    
+                    <tabbox id="tabbox_notaes" apply="org.me.gj.controller.logistica.informes.ControlleNotaESInf">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <hbox>
+                                    <groupbox width="985px" closable="false">
+                                        <vbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="50px">
+                                                    <label value="PERIODO :"/>
+                                                </cell>
+                                                <combobox id="cb_periodo" readonly="true" width="70px" tooltiptext="Seleccione Periodo" >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.per_periodo}" value="${each.per_id}"/>                                                                                                      
+                                                    </template>                                                
+                                                </combobox>
+                                                <space width="10px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="SELECCIONAR TIPO NOTA E/S :"/>
+                                                </cell>
+                                                <combobox id="cb_notaes" readonly="true" width="350px" tooltiptext="Seleccione Nota E/S">
+                                                    <template name="model">    
+                                                        <comboitem label="${each.desGui}" value="${each.idGui}"/>                                                                                                      
+                                                    </template>                                                
+                                                </combobox>
+                                                <space width="20px"/>
+                                                <button id="btn_consultar"  sclass="botones" label="Consultar" tooltiptext="consultar Nota E/S"/>                                                                                                                                    
+                                                <space width="10px"/>
+                                                <button id="btn_resumen"  sclass="botones" label="Resumen de Nota E/S" tooltiptext="Consultar el resumen de Nota E/S"/>                                 
+                                            </hbox> 
+                                        </vbox>
+                                    </groupbox>
+                                </hbox>
+                                <separator height="10px"/>
+                                <listbox id="lst_notaes" mold="paging" pageSize="20" width="985px" height="490px">
+                                    <listhead>
+                                        <listheader label="FECHA" width="65px" style="text-align: center;"/>
+                                        <listheader label="NOTA E/S"/>
+                                        <listheader label="# NOTA E/S" width="70px" align="center"/>
+                                        <listheader label="REFERENCIA"  width="90px" align="center"/>
+                                        <listheader label="PEDIDO" width="70px" align="center"/>
+                                        <listheader label="CLIENTE" width="70px" align="center"/>
+                                        <listheader label="PROVEEDOR"  width="252px"/>
+                                        <listheader label="CST" width="30px" align="center"/>
+                                        <listheader label="EST" width="30px" align="center"/>
+                                        <listheader label="USUARIO" width="90px" align="center"/>
+                                        <listheader width="25px">
+                                            <checkbox id="chk_imprimir"/>
+                                        </listheader> 
+                                    </listhead>
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.fecha}" style="text-align: center;"/>
+                                            <listcell label="${each.notaesinf}"/>
+                                            <listcell label="${each.nescab_id}" style="text-align: center;"/>
+                                            <listcell label="${each.referencia}" style="text-align: right;"/>
+                                            <listcell label="${each.nescab_nroped}"/>
+                                            <listcell label="${each.clienteinf}"/>
+                                            <listcell label="${each.proveedorinf}"/>
+                                            <listcell label="${each.costeo}" style="text-align: center; background-color: #BEF781;color: #2E2E2E;"/>
+                                            <listcell label="${each.estado}" style="text-align: center; background-color: #F8E0E0;color: #2E2E2E;"/>
+                                            <listcell label="${each.nescab_usuadd}" style="text-align: center;"/>
+                                            <listcell>
+                                                <checkbox forward="onCheck=lst_notaes.onSeleccion"  checked="${each.selImp}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>		
+                                </listbox>
+                            </tabpanel> 
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south height="25px" border="0">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>    
+</zk>

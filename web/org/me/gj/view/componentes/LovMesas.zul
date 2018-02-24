@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_mesas" title="Busqueda de Mesas" border="normal" width="450px"
+            apply="org.me.gj.controller.componentes.ControllerLovMesas"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="DESCRIPCION :" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="340px" focus="true" maxlength="45" tooltiptext="Ingrese los nombres del Canal de Venta"/>
+            </hbox>
+            <listbox id="lst_mesas" mold="paging" pageSize="13" width="420px">
+                <listhead>
+                    <listheader label="NºMESA" width="50px" align="center"/>
+                    <listheader label="SUPERVISOR A CARGO" width="370px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.mes_id}"/>
+                        <listcell label="${each.sup_apenom}"/>
+                    </listitem>
+                </template>
+            </listbox>
+            
+        </vlayout>
+    </window>
+</zk>

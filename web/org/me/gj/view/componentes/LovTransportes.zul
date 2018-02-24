@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_transportes" title="Busqueda de Transporte" border="normal" width="450px"
+            apply="org.me.gj.controller.componentes.ControllerLovTransportes"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="DESCRIPCION:" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="250px" focus="true" maxlength="45" tooltiptext="Ingrese la Placa de transporte"/>
+            </hbox>
+            <listbox id="lst_transportes" mold="paging" pageSize="13" width="450px">
+                <listhead>
+                    <listheader label="ID" width="50px"/>
+                    <listheader label="TRANSPORTE" width="200px"/>
+                    <listheader label="PLACA" width="200px"/>
+
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.trans_id}"/>
+                        <listcell label="${each.trans_alias}"/>
+                        <listcell label="${each.trans_placa}"/>
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk> 

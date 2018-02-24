@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:w="client">
+    <window id="w_lov_impresion_progreparto" title="IMPRESION" border="normal" width="350px"
+            height="230px" position="center,center" closable="true"
+            apply="org.me.gj.controller.impresion.distribucion.mantenimiento.ControllerImpresionProgReparto"
+            action="show: slideDown;hide: slideUp"> 
+        <hlayout>
+            <vbox width="150px">
+                <hbox>
+                    <groupbox width="150px" closable="false">
+                        <caption label="IMPRESION"/>
+                        <radiogroup id="rbg_impresion" >
+                            <vbox>
+                                <radio label="PANTALLA" checked="true"/>
+                                <radio label="IMPRESORA"/>
+                                <radio label="ARCHIVO"/>
+                            </vbox>
+                        </radiogroup>
+                    </groupbox>
+                   <groupbox width="150px" closable="false">
+                        <caption label="TIPO"/>
+                        <radiogroup id="rbg_tipo" >
+                            <vbox>
+                                <radio label="GRAFICO" checked="true"/>
+                                <radio label="MATRICIAL"/>
+                            </vbox>
+                        </radiogroup>
+                    </groupbox>
+                </hbox>
+                <groupbox width="310px" height="60px" closable="false">
+                    <caption label="IMPRESORA"/>
+                    <combobox id="cb_impresoras" readonly="true" width="290px" disabled="false" tooltiptext="Seleccione Impresora" >
+                        <template name="model">    
+                            <comboitem label="${each.per_periodo}" value="${each.per_id}"/>                                                                                                      
+                        </template>                                                
+                    </combobox> 
+                </groupbox>
+
+                <hbox align="right">
+                    <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprime el documento Seleccionado"/>
+                    <toolbarbutton id="tbbtn_btn_salir" image="/images/iconos/eliminar.png" tooltiptext="Salir de la Pantalla de Impresion" />       
+                </hbox>
+            </vbox>
+        </hlayout>
+    </window>
+</zk>

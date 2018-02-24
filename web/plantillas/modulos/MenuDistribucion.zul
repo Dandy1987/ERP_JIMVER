@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <div id="menu_distribucion" align="center" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerLogin" >
+        <separator sclass="z-separator-hor" /> 
+        <menubar id="mod_distribucion" width="100%" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerPrivilegios">
+            <menu id="men_mantenimiento" label="Mantenimiento" width="90px" >
+                <menupopup>
+                    <menuitem id="smen1_horario" label="Horario de Entrega" image="/images/iconos_menu/distribucion/horario.png" href="/org/me/gj/view/distribucion/mantenimiento/ManHorario.zul" />
+                    <menuitem id="smen1_empresa" label="Empresa Aseguradora" image="/images/iconos_menu/distribucion/empresaa.png" href="/org/me/gj/view/distribucion/mantenimiento/ManEmpresa.zul" />
+                    <menuitem id="smen1_propietario" label="Propietario" image="/images/iconos_menu/distribucion/soat.png" href="/org/me/gj/view/distribucion/mantenimiento/ManPropietario.zul" />
+                    <menu id="smen1_transporte" label="Transporte" image="/images/iconos_menu/distribucion/transporte.png"  >
+                            <menupopup>
+                                <menuitem id="smen2_vehiculo" label="Vehiculo" image="/images/iconos_menu/distribucion/vehiculo.png" href="/org/me/gj/view/distribucion/mantenimiento/ManVehiculo.zul" />
+                                <menuitem id="smen2_categoria" label="Categoría Vehiculo" image="/images/iconos_menu/distribucion/categoria.png" href="/org/me/gj/view/distribucion/mantenimiento/ManCategoria.zul" />
+                                <menuitem id="smen2_color" label="Color Vehiculo" image="/images/iconos_menu/distribucion/color.png" href="/org/me/gj/view/distribucion/mantenimiento/ManColor.zul" />
+                                <menuitem id="smen2_combustible" label="Combustible Vehiculo" image="/images/iconos_menu/distribucion/combustible.png" href="/org/me/gj/view/distribucion/mantenimiento/ManCombustible.zul" />
+                                <menuitem id="smen2_marca" label="Marca Vehiculo" image="/images/iconos_menu/distribucion/marca.png" href="/org/me/gj/view/distribucion/mantenimiento/ManMarca.zul" />
+                                <menuitem id="smen2_modelo" label="Modelo Vehiculo" image="/images/iconos_menu/distribucion/modelo.png" href="/org/me/gj/view/distribucion/mantenimiento/ManModelo.zul" />
+                                <menuitem id="smen2_carroceria" label="Tipo Carroceria" image="/images/iconos_menu/distribucion/carroceria.png" href="/org/me/gj/view/distribucion/mantenimiento/ManCarroceria.zul" />
+                                <menuitem id="smen2_transmision" label="Tipo Transmisión" image="/images/iconos_menu/distribucion/transmision.png" href="/org/me/gj/view/distribucion/mantenimiento/ManTransmision.zul" />
+                            </menupopup>
+                    </menu>
+                    <menuitem id="smen1_chofer" label="Chofer" image="/images/iconos_menu/distribucion/horario.png" href="/org/me/gj/view/distribucion/mantenimiento/ManChofer.zul" />
+                   	<menuitem id="smen1_repartidor" label="Repartidor" image="/images/iconos_menu/distribucion/horario.png" href="/org/me/gj/view/distribucion/mantenimiento/ManRepartidor.zul" />
+                	<menuitem id="smen1_progreparto" label="Programacion Reparto" image="/images/iconos_menu/distribucion/horario.png" href="/org/me/gj/view/distribucion/mantenimiento/ManProgReparto.zul" />
+					<menuitem id="smen1_progrutas" label="Programacion Rutas" image="/images/iconos_menu/distribucion/horario.png" href="/org/me/gj/view/distribucion/mantenimiento/ManProgRutas.zul" />
+                </menupopup>
+            </menu>
+            <menu id="men_procesos" label="Procesos" width="90px" ></menu>
+            <menu id="men_informes" label="Informes" width="90px" ></menu>
+            <menu id="men_utilitarios" label="Utilitarios" width="90px" ></menu>
+            <menu id="men_ayuda" label="Ayuda" width="90px" ></menu>
+            <menuitem  width="100px" />
+            <menuitem label="Bienvenido:  ${sessionScope.usuariosCredential.nombre}"/>
+            <menuitem label="Menu Principal" href="/Main.zul" />
+            <menuitem label="Cerrar Sesión" id="btn_logout"/>
+        </menubar>
+    </div>
+</zk>
+

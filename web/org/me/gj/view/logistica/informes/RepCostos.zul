@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north height="27px" sclass="arriba-main">
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_repcostos" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png"  tooltiptext="Imprimir" />              
+                        <label value="LISTADO DE COSTOS" sclass="titulo_mant" style="margin-left:380px;"/>
+                    </toolbar>                    
+                    <tabbox id="tabbox_costos" apply="org.me.gj.controller.logistica.informes.ControllerCostos">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <hbox>
+                                    <groupbox width="985px" closable="false">
+                                        <vbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="50px">
+                                                    <label value="PERIODO :"/>
+                                                </cell>
+                                                <combobox id="cb_periodo" readonly="true" width="70px" tooltiptext="Seleccione Periodo" >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.per_periodo}" value="${each.per_id}"/>                                                                                                      
+                                                    </template>                                                
+                                                </combobox>
+                                                <space width="10px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="ALMACEN :"/>
+                                                </cell>
+                                                <intbox id="txt_almid" maxlength="4" width="40px" format="0000" tooltiptext="Define el Codigo del Almacen"/>   
+                                                <textbox id="txt_almdes" disabled="true" width="150px" tooltiptext="Define la Descripcion del Almacen"/>
+                                                <space width="10px"/>
+                                                <cell align="right" valign="center">                                             
+                                                    <label value="PROVEEDOR :"/> 
+                                                </cell>                                                                                                                                             
+                                                <textbox id="txt_provid" maxlength="8" width="50px" tooltiptext="Codigo del Proveedor, máximo 8 caracteres"/>
+                                                <textbox id="txt_provdes" maxlength="50" width="350px"  tooltiptext="Razón Social del Proveedor" disabled="true"/> 
+                                            </hbox>
+                                            <hbox align="center">
+                                                <label value="PRODUCTO : " />
+                                                <textbox id="txt_proid"  width="60px" maxlength="9" tooltiptext="Define el código del producto, máximo 9 caracteres"  />                                                
+                                                <textbox id="txt_prodes" width="420px" maxlength="100" disabled="true" tooltiptext="Define la descripción del producto, máximo 60 caracteres"/>
+                                                <space width="30px"/>
+                                                <button id="btn_consultar"  sclass="botones" label="Consultar" tooltiptext="consultar Costos"/>
+                                            </hbox>
+                                        </vbox>
+                                    </groupbox>
+                                </hbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_costos" mold="paging" pageSize="20" width="985px" height="475px">
+                                    <listhead>
+                                        <listheader label="PERIODO" width="50px" style="text-align: center;"/>
+                                        <listheader label="ALM" width="30px" align="center"/>
+                                        <listheader label="IDPROV" width="60px" align="center"/>
+                                        <listheader label="RAZON SOCIAL" width="200px"/>
+                                        <listheader label="IDPROD" width="65px" align="center"/>
+                                        <listheader label="DESCRIPCION" width="230px"/>
+                                        <listheader label="CST INI" width="65px" align="center"/>
+                                        <listheader label="CST FIN" width="65px" align="center"/>
+                                        <listheader label="INILIFO" width="65px" align="center"/>
+                                        <listheader label="FINLIFO" width="65px" align="center"/>
+                                        <listheader label="CST REP" width="65px" align="center"/>
+                                        <listheader label="EST" width="25px"/>
+                                    </listhead>
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.cst_periodo}" style="text-align: center;"/>
+                                            <listcell label="${each.alm_id}"/>
+                                            <listcell label="${each.prov_id}" />
+                                            <listcell label="${each.prov_des}" style="text-align: left;"/>
+                                            <listcell label="${each.prod_id}"/>
+                                            <listcell label="${each.prod_des}" style="text-align: left;"/>
+                                            <listcell label="${each.s_cst_cstini}" style="text-align: right;"/>
+                                            <listcell label="${each.s_cst_cstfin}" style="text-align: right;"/>
+                                            <listcell label="${each.s_cst_inilifo}" style="text-align: right;"/>
+                                            <listcell label="${each.s_cst_finlifo}" style="text-align: right;"/>
+                                            <listcell label="${each.s_cst_repo}" style="text-align: right;"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>		
+                                </listbox>
+                            </tabpanel> 
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south height="25px" border="0">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>    
+</zk>

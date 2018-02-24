@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuCxc.zul"/>
+        </north>
+        <center>  
+            <div sclass="cuerpo-main" >
+                <window id="w_mantipcam" width="100%" height="100%" border="none" closable="true" ctrlKeys="@n@m@e@g@d@i#f2#f4#f7#f10#f8#f9">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)" />   
+                        <label value="MANTENIMIENTO DE TIPO DE CAMBIO" sclass="titulo_mant" style="margin-left:205px;"/>
+                    </toolbar>        
+                    <tabbox id="tabbox_tipcambio" ctrlKeys="#f10" apply="org.me.gj.controller.cxc.mantenimiento.ControllerTipoCambio">                                   
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_tipcamb.getSelectedIndex() == -1)
+                                    {
+                                    tab_lista.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>          
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_cat" >                                
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="BUSCAR PERIODO" />
+                                        <hbox align="center">
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="50px">
+                                                    <label value="PERIODO:"/>
+                                                </cell>
+                                                <space width="2px"/> 
+                                                <combobox id="cb_periodo" readonly="true" width="70px" tooltiptext="Seleccione Periodo" >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.per_periodo}" value="${each.per_id}"/>                                                                                                      
+                                                    </template>                                                
+                                                </combobox>                                                                                        
+                                            </hbox> 
+                                            <!--  <space width="2px"/>
+                                            <textbox id="txt_busqueda" width="400px" value="%%" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" tooltiptext="Ingresa un Valor para su Busqueda"/>          -->
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="ESTADO:" id="lbl_estado"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una Opción" width="110px">
+                                                <comboitem label="ACTIVO"/>
+                                                <comboitem label="INACTIVO"/>
+                                                <comboitem label=" "/>       
+                                            </combobox>
+                                          <!--  <space width="10px"/>
+                                            <button id="tbbtn_btn_buscar" label="Buscar" sclass="botones"/> -->
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="10px"/>
+                                    <listbox id="lst_tipcamb" mold="paging" pageSize="18" width="985px" height="460px">
+                                        <listhead>
+                                            <listheader label="FECHA" width="70px"/>
+                                            <listheader label="ID" width="50px"/>
+                                            <listheader label="MONEDA"  width="205px"/>
+                                            <listheader label="T.C. COMERCIAL" width="110px"/>
+                                            <listheader label="T.C. VENTA" width="110px"/>
+                                            <listheader label="T.C. COMPRA" width="110px"/>
+                                            <listheader label="USUADD" width="150px"/>
+                                            <listheader label="USUMOD" width="150px"/>
+                                            <listheader label="EST" width="30px"/>
+                                        </listhead>
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.fecha_cambio}"/>
+                                                <listcell label="${each.tab_id}"/>
+                                                <listcell label="${each.moneda}"/>
+                                                <listcell label="${each.tcam_scom}" style="text-align:right;"/> <!-- tcam_com -->
+                                                <listcell label="${each.tcam_sconv}" style="text-align:right;"/> <!-- tcam_conv -->
+                                                <listcell label="${each.tcam_sconc}" style="text-align:right;"/> <!-- tcam_conc -->
+                                                <listcell label="${each.tcam_usuadd}" style="text-align:center;"/>
+                                                <listcell label="${each.tcam_usumod}" style="text-align:center;"/>
+                                                <listcell>
+                                                    <checkbox disabled="true" checked="${each.valor}"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <space height="5px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Categoria del Cliente"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación de la Categoria del Cliente"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó la Categoria del Cliente"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación de la Categoria del Cliente"/>   
+                                    </hbox>
+                                </div>    
+                            </tabpanel>                            
+                            <tabpanel>
+                                <div >
+                                    <grid width="670px">
+                                        <columns>
+                                            <column width="120px"/>
+                                            <column width="550px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ID:" />
+                                                </cell>
+                                                <textbox id="txt_tcam_id" disabled="true" maxlength="4" width="50px" tooltiptext="Define el Codigo del Tipo de Cambio, Máximo 4 caracteres"/> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_tcambest" disabled="true" tooltiptext="Define el Estado del Tipo de Cambio"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="FECHA:"/>
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <datebox id="txt_dia_fec" disabled="true" maxlength="10" width="90px" format="dd/MM/yyyy"  tooltiptext="Define la fecha del Tipo de Cambio, Máximo 10 caracteres" />
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="MONEDA:"/>
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <combobox id="cb_moneda" readonly="true" disabled="true" width="200px" tooltiptext="Define la Moneda">
+                                                    <template name="model">
+                                                        <comboitem label=" ${each.tab_subdes}" value="${each.tab_id}"/>
+                                                    </template>
+                                                </combobox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="T.C. COMERCIAL:"/>
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <doublebox id="txt_tcam_com" locale="en_US" format="#0.000" maxlength="6"  width="80px" disabled="true"  style="text-align:right;" tooltiptext="Define el Tipo de Cambio Comercial, 5 digitos"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="T.C. CONT. VENTA:"/>
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <doublebox id="txt_tcam_conv" locale="en_US" format="#0.000" maxlength="6"  width="80px" disabled="true" style="text-align:right;" tooltiptext="Define el Tipo de Cambio Contable de Ventas, 5 digitos"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="T.C. CONT. COMPRA:"/>
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <doublebox id="txt_tcam_conc" locale="en_US" format="#0.000" maxlength="6"  width="80px" disabled="true"  style="text-align:right;" tooltiptext="Define el Tipo de Cambio Contable de Compras, 5 digitos"/>
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                </div>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>
+
+

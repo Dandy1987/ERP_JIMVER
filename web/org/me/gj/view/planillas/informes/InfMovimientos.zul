@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>     
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_infmovimientos" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" />   
+                        <label value="REPORTE DE MOVIMIENTOS" sclass="titulo_mant" style="margin-left:225px;"/>
+                    </toolbar>                        
+                    <tabbox id="tabbox_infmovimientos" ctrlKeys="^a#f8#f10" apply="org.me.gj.controller.planillas.informes.ControllerMovimiento">
+                        <tabs>
+                            <tab id="tab_listamovi" label="LISTA" />
+                        </tabs>
+                        
+                        <tabpanels>
+                            
+                            <!--LISTA-->
+                            <tabpanel>
+                                <div id="div_lst_infmovi">
+                                    
+                                    <groupbox width="987px" height="135px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda" />
+                                        
+                                        <div id="div_center01" align="center">
+                                        
+                                            <hbox align="center">
+                                                <radiogroup Id="rg_periodo" onCheck="true">
+                                                    <radio label="PERIODO ACTUAL"/>
+                                                    <space width="67px"/>
+                                                    <radio label="PERIODO ANTERIOR"/>
+                                                </radiogroup>
+                                                <space width="636px"/>
+                                            </hbox>
+                                            
+                                            <space height="5px"/>
+                                            
+                                            <hbox align="center">
+                                                <cell align="left" width="65px">
+                                                    <label value="PERIODO :"/>
+                                                </cell>
+                                                <textbox id="txt_periodo" maxlength="8" placeholder="ENTER" width="100px" tooltiptext="Seleccione periodo" style="text-align:center;"/>
+                                                <textbox id="txt_periodo1" visible="false" />
+                                                <space width="13px"/>
+                                                <cell align="left" width="290px">
+                                                    <label id="lbl_desper" value="OCTUBRE NORMAL - VACACIONES" style="font-weight: bold;"/>
+                                                </cell>
+                                                <space width="10px"/>
+                                                <cell align="left" width="65px">
+                                                    <label value="SUCURSAL :"/>
+                                                </cell>
+                                                <combobox id="cb_fsucursal" width="120px" tooltiptext="Seleccione sucursal" readonly="true">
+                                                    <template name="model">
+                                                        <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                                    </template>
+                                                </combobox>
+                                                <space width="132px"/>
+                                                <button id="btn_consultar" label="Consultar" sclass="botones"/>
+                                            </hbox>
+                                        
+                                            <space height="5px"/>
+                                        
+                                            <hbox align="center">
+                                                <cell align="left" width="65px">
+                                                    <label value="PERSONAL :"/>
+                                                </cell>
+                                                <textbox id="txt_codper" maxlength="9"  placeholder="ENTER" width="100px" focus="false" tooltiptext="Código de Personal" style="text-align:center;"/>
+                                                <textbox id="txt_desper" disabled="true" width="300px" focus="false" tooltiptext="Descripción de Personal"/>
+                                                <textbox id="txt_codper1" visible="false"/>
+                                                <space width="10px"/>
+                                                <cell align="left" width="65px">
+                                                    <label value="CONCEPTO :"/>
+                                                </cell>
+                                                <textbox id="txt_codcon" maxlength="3" placeholder="ENTER" width="40px" focus="false" tooltiptext="Código de concepto" style="text-align:center;"/>
+                                                <textbox id="txt_descon"  disabled="true" width="300px" focus="false" tooltiptext="Descripción de concepto"/>
+                                                <textbox id="txt_codcon1"  visible="false"/>
+                                            </hbox>
+                                            
+                                            <space height="5px"/>
+                                                                                                                       
+                                            <hbox align="center">
+                                                <checkbox  id="chk_positivos" label="POSITIVOS" />
+                                                <space width="96px"/>
+                                                <checkbox  id="chk_negativos" label="NEGATIVOS" />
+                                                <space width="674px"/>
+                                            </hbox>
+                                        
+                                        </div>
+                                        
+                                    </groupbox>
+                                     
+                                    <listbox id="lst_movimiento" mold="paging"  pageSize="14" width="985px" height="380px">
+                                        <listhead>
+                                            <listheader label="CODIGO" width="110px" align="center"/>
+                                            <listheader label="NOMBRES" width="300px"  align="center"/>
+                                            <listheader label="PERIODO" width="100px" align="center"/>
+                                            <listheader label="C.C." width="30px" align="center"/>
+                                            <listheader label="CONCEPTO" width="320px" align="center"/>
+                                            <listheader label="MONTO" width="105px" align="center"/>
+                                        </listhead>	
+                                        <template name="model">     
+                                            <listitem>
+                                                <listcell label="${each.codigo}"/>
+                                                <listcell label="${each.nombres}" style="text-align:left"/> 
+                                                <listcell label="${each.periodo}"/> 
+                                                <listcell label="${each.id_concepto}"/> 
+                                                <listcell label="${each.des_concepto}" style="text-align:left"/> 
+                                                <listcell label="${each.s_monto}" style="text-align:right"/>
+                                            </listitem>
+                                        </template>
+                                        <listfoot>
+                                            <listfooter>
+                                                <label id="space_08" value="" />
+                                            </listfooter>
+                                            <listfooter>
+                                                <label id="space_09" value="" />
+                                            </listfooter>
+                                            <listfooter>
+                                                <label id="space_03" value="" />
+                                            </listfooter>
+                                            <listfooter>
+                                                <label id="space_04" value="" />
+                                            </listfooter>
+                                            <listfooter>
+                                                <label id="l_tot" value="Total Monto : " style="position:center; top:550px; left:795px;"/>
+                                            </listfooter>
+                                            <listfooter>
+                                                <doublebox id="txt_total" width="94px" maxlength="12"  locale="en_US" format="##,##0.00" disabled="true" style="text-align: right;" />
+                                            </listfooter>
+                                 
+                                        </listfoot>
+                                    </listbox>
+                                    <space height="10px"/>
+                                </div>
+                            </tabpanel>
+                                                        
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>
+

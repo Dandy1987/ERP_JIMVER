@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ManCliente_M" language="groovy" pageWidth="1060" pageHeight="636" columnWidth="1046" leftMargin="7" rightMargin="7" topMargin="7" bottomMargin="7" uuid="ccb7ed49-48c3-46dc-a10d-f80b25422c9b">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="647"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="usuario" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="empresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_WHERE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["select y.*,x.clidir_id,x.clidir_direc, x.zon_key, x.zon_id, x.zon_des, x.hor_id, x.hor_des, x.ven_id, x.ven_apenom,x.sup_id,x.sup_apenom, x.trans_id, x.trans_alias from ( select * from v_listacliente t where t.emp_id=1 and t.suc_id=1 ) x,tclientes y where x.cli_id(+)=y.cli_id and x.cli_key(+)=y.cli_key and y.cli_est=1 order by y.cli_key"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{P_WHERE}]]>
+	</queryString>
+	<field name="CLI_ID" class="java.lang.String"/>
+	<field name="CLI_KEY" class="java.math.BigDecimal"/>
+	<field name="CLI_APEPAT" class="java.lang.String"/>
+	<field name="CLI_APEMAT" class="java.lang.String"/>
+	<field name="CLI_NOMBRE" class="java.lang.String"/>
+	<field name="CLI_RAZSOC" class="java.lang.String"/>
+	<field name="CLI_FECNAC" class="java.sql.Timestamp"/>
+	<field name="CLI_RUC" class="java.math.BigDecimal"/>
+	<field name="CLI_DIRWEB" class="java.lang.String"/>
+	<field name="CLI_EMAIL1" class="java.lang.String"/>
+	<field name="CLI_EMAIL2" class="java.lang.String"/>
+	<field name="CLI_EST" class="java.math.BigDecimal"/>
+	<field name="CLI_DNI" class="java.lang.String"/>
+	<field name="CLI_TIPODOC" class="java.math.BigDecimal"/>
+	<field name="CLI_PERJU" class="java.math.BigDecimal"/>
+	<field name="CLI_CREDCOR" class="java.math.BigDecimal"/>
+	<field name="CLI_DOCCOR" class="java.math.BigDecimal"/>
+	<field name="CLI_DSCTO" class="java.math.BigDecimal"/>
+	<field name="CLI_FACTURA" class="java.math.BigDecimal"/>
+	<field name="CLI_MON" class="java.math.BigDecimal"/>
+	<field name="CLI_LISTA" class="java.math.BigDecimal"/>
+	<field name="CLI_CON" class="java.math.BigDecimal"/>
+	<field name="CLI_CANAL" class="java.math.BigDecimal"/>
+	<field name="FORPAG_KEY" class="java.math.BigDecimal"/>
+	<field name="FORPAG_ID" class="java.lang.String"/>
+	<field name="CLI_USUADD" class="java.lang.String"/>
+	<field name="CLI_FECADD" class="java.sql.Timestamp"/>
+	<field name="CLI_USUMOD" class="java.lang.String"/>
+	<field name="CLI_FECMOD" class="java.sql.Timestamp"/>
+	<field name="CLIDIR_ID" class="java.math.BigDecimal"/>
+	<field name="CLIDIR_DIREC" class="java.lang.String"/>
+	<field name="ZON_KEY" class="java.math.BigDecimal"/>
+	<field name="ZON_ID" class="java.lang.String"/>
+	<field name="ZON_DES" class="java.lang.String"/>
+	<field name="HOR_ID" class="java.lang.String"/>
+	<field name="HOR_DES" class="java.lang.String"/>
+	<field name="VEN_ID" class="java.lang.String"/>
+	<field name="VEN_APENOM" class="java.lang.String"/>
+	<field name="SUP_ID" class="java.lang.String"/>
+	<field name="SUP_APENOM" class="java.lang.String"/>
+	<field name="TRANS_ID" class="java.lang.String"/>
+	<field name="TRANS_ALIAS" class="java.lang.String"/>
+	<variable name="tot" class="java.lang.String" incrementType="Report" calculation="Count">
+		<variableExpression><![CDATA[$V{tot}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="46" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="b37d99eb-8007-4420-b0d3-b0857917d695" x="958" y="20" width="72" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7" isBold="false" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c8f30a53-d22e-4e36-966a-42764734bd1f" x="19" y="8" width="130" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="604d291a-456d-4ab9-ab90-4ba701076c41" x="164" y="20" width="777" height="10"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE CLIENTES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="39264b5c-f9f3-4c37-a165-0e67ccc8f078" x="978" y="8" width="28" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="7" isBold="false" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[PAG:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="802bfce8-5f2f-4abf-ab34-4b5b4ec68dca" x="1009" y="8" width="21" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="false" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="754416d6-40f3-4667-bd96-52a852947d62" x="19" y="20" width="130" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[MANCLIENTE_M.JASPER]]></text>
+			</staticText>
+			<textField pattern="HH:mm:ss">
+				<reportElement uuid="7b928a72-54a1-49b6-8256-bb714f91d943" x="958" y="33" width="72" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7" isBold="false" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4062cdda-cd8b-4c85-8888-c3700c646ed6" x="19" y="33" width="130" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="96a693f4-8005-46ae-aa57-da6c725c36a8" x="19" y="25" width="1011" height="9"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="96a693f4-8005-46ae-aa57-da6c725c36a8" x="19" y="2" width="1011" height="9"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="802" y="14" width="82" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RUC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b1db3d9-e572-4933-b690-d4fed10f2612" x="19" y="14" width="79" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="355" y="14" width="372" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DIRECCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="98" y="14" width="255" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[RAZON SOCIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="739" y="14" width="62" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[ZONA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="887" y="14" width="62" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DNI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="950" y="14" width="80" height="10"/>
+				<textElement>
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[HORARIO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement uuid="bb4be21a-b95c-4d61-8e69-eb32d82e6198" x="19" y="0" width="79" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLI_ID}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="706605a1-ba10-4cf1-8c54-a0a259e1a296" x="98" y="0" width="255" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLI_RAZSOC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="880433b8-24b2-4c43-a5d0-4a45848a00f5" x="355" y="0" width="372" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLIDIR_DIREC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="af60050f-80e0-49e6-bd6f-b8012fa7f867" x="739" y="0" width="62" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZON_ID}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="0320b528-6710-4c7e-a097-9ca654c67a3d" x="802" y="0" width="82" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLI_RUC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="6deecc13-3c0a-4b8f-9d86-ed3bc8c55254" x="887" y="0" width="62" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CLI_DNI}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="3530cd35-15ca-40fc-b04d-d675645c8828" x="950" y="0" width="80" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HOR_DES}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement uuid="33d4713f-456e-45e8-ba7f-b9008b834fe3" x="214" y="16" width="100" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5be848f2-9b7f-4fc6-9e48-c1458a10e4c1" x="19" y="16" width="130" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[TOTAL REGISTROS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="96a693f4-8005-46ae-aa57-da6c725c36a8" x="19" y="6" width="1011" height="9"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

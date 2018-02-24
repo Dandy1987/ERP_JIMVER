@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ManUniMan" language="groovy" pageWidth="612" pageHeight="792" columnWidth="598" leftMargin="7" rightMargin="7" topMargin="7" bottomMargin="7" uuid="ccb7ed49-48c3-46dc-a10d-f80b25422c9b">
+	<property name="ireport.zoom" value="2.000000000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="usuario" class="java.lang.String">
+		<defaultValueExpression><![CDATA["GREYES"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_WHERE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["select E.*,decode(e.tabla_tipo1,'F','FUNCION','C','CONSTANTE','M','CONSTANTE MENSUAL') tipo from TPLTABLAS1 E  WHERE E.TABLA_COD='00001' and e.tabla_estado=1 and e.tabla_id<>000  order by e.tabla_id"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{P_WHERE}]]>
+	</queryString>
+	<field name="TABLA_COD" class="java.lang.String"/>
+	<field name="TABLA_ID" class="java.lang.String"/>
+	<field name="TABLA_ESTADO" class="java.math.BigDecimal"/>
+	<field name="TABLA_DESCRI" class="java.lang.String"/>
+	<field name="TABLA_VALOR1" class="java.math.BigDecimal"/>
+	<field name="TABLA_VALOR2" class="java.math.BigDecimal"/>
+	<field name="TABLA_TIPO1" class="java.lang.String"/>
+	<field name="TABLA_DATFOR" class="java.lang.String"/>
+	<field name="TABLA_VALOR3" class="java.lang.String"/>
+	<field name="TABLA_VALOR4" class="java.lang.String"/>
+	<field name="TABLA_PRIOR" class="java.math.BigDecimal"/>
+	<field name="TABLA_DATBOL" class="java.lang.String"/>
+	<field name="TABLA_USUADD" class="java.lang.String"/>
+	<field name="TABLA_FECADD" class="java.sql.Timestamp"/>
+	<field name="TABLA_PCADD" class="java.lang.String"/>
+	<field name="TABLA_USUMOD" class="java.lang.String"/>
+	<field name="TABLA_FECMOD" class="java.sql.Timestamp"/>
+	<field name="TABLA_PCMOD" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<variable name="tot" class="java.lang.String" incrementType="Report" calculation="Count">
+		<variableExpression><![CDATA[$V{tot}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="81" splitType="Stretch">
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="18" y="75" width="580" height="1"/>
+			</line>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0fd40718-f392-45a9-a101-94a4007100d9" x="495" y="33" width="103" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4062cdda-cd8b-4c85-8888-c3700c646ed6" x="18" y="33" width="139" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c289e06b-2312-4760-b605-b508252abc85" x="495" y="20" width="50" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAG:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="754416d6-40f3-4667-bd96-52a852947d62" x="18" y="20" width="139" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[MANCONCEPTOS.JASPER]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1251bc3b-e918-4723-a52c-1ff3c82c28e5" isPrintRepeatedValues="false" x="545" y="20" width="53" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm:ss">
+				<reportElement uuid="90af5a26-2a30-4959-84e1-fc414af41b2e" x="495" y="46" width="103" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8b1db3d9-e572-4933-b690-d4fed10f2612" x="18" y="63" width="66" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="84" y="63" width="73" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="18" y="61" width="580" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="604d291a-456d-4ab9-ab90-4ba701076c41" x="157" y="20" width="338" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CONCEPTOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="157" y="63" width="209" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="366" y="63" width="129" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[C. DEBE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="495" y="63" width="103" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[C. HABER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eebb6be5-3023-4e5a-9d07-1f16deeaacd1" x="157" y="33" width="338" height="10"/>
+				<textElement/>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c6419818-f45a-4f94-b5e2-bc45286c35dd" x="18" y="0" width="66" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TABLA_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fac9c0d0-97a0-4197-9bc7-33f87895dbbe" x="84" y="0" width="73" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIPO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3988c5d8-c411-4e8c-9303-803f2f89f145" x="157" y="0" width="209" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TABLA_DESCRI}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="33ad7264-9c92-46d5-b62f-a27df157aaab" x="366" y="0" width="129" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TABLA_VALOR3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="1f2fa6c2-892f-4952-a7df-783b169bbd1d" x="495" y="0" width="103" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TABLA_VALOR4}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="25" splitType="Stretch">
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="18" y="3" width="580" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="33d4713f-456e-45e8-ba7f-b9008b834fe3" x="84" y="7" width="73" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5be848f2-9b7f-4fc6-9e48-c1458a10e4c1" x="18" y="7" width="66" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL REGISTROS:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicialSeguridad"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main"  >
+            <include src="/plantillas/MenuAdm.zul"/>
+        </north>
+        <center  >
+            <div sclass="cuerpo-main" >
+                <window id="w_usuarios" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%" >
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" disabled="true" />            
+                        <label value="MANTENIMIENTO DE EMPRESAS" sclass="titulo_mant" style="margin-left:247px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_empresas" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerEmpresas">
+                        <tabs>
+                            <tab id="tab_listaempresas" label="LISTA"/>
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_empresas.getSelectedIndex() == -1)
+                                    {
+                                        tab_listaempresas.setSelected(true);
+                                        Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_emp" >
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="Opciones de busqueda"/>
+                                        <hbox>
+                                            <cell align="right" valign="center">
+                                                <label value="FILTRO:"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una opción">
+                                                <comboitem label=" "/>
+                                                <comboitem label="ID"/>
+                                                <comboitem label="EMPRESA"/>
+                                                <comboitem label="SIGLAS"/>
+                                                <comboitem label="RUC"/>
+                                                <attribute name="onSelect">
+                                                    txt_busqueda.setDisabled(false);
+                                                </attribute>
+                                            </combobox>
+                                            <space width="2px"/>
+                                            <textbox id="txt_busqueda" width="400px" value="%%" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un valor para la busqueda" tooltiptext="Ingresa un valor para su busqueda"/>
+                                            <space width="2px"/>
+                                            <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una opción" width="110px">
+                                                <comboitem label="ACTIVO"/>
+                                                <comboitem label="INACTIVO"/>
+                                                <comboitem label=" "/>       
+                                            </combobox>
+                                            <space width="10px"/>
+                                            <button id="btn_buscar" label="Buscar" sclass="botones"/> 
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <listbox id="lst_empresas"  mold="paging" pageSize="20" width="985px" height="490px">
+                                        <listhead>
+                                            <listheader label="ID" width="50px"/>
+                                            <listheader label="EMPRESA"/>
+                                            <listheader label="SIGLAS" width="200px"/>
+                                            <listheader label="RUC" width="200px"/>
+                                            <listheader label="EST" width="30px"/>
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.emp_id}"/>
+                                                <listcell label="${each.emp_des}"/>
+                                                <listcell label="${each.emp_sig}"/>
+                                                <listcell label="${each.emp_ruc}"/>
+                                                <listcell >
+                                                    <checkbox checked="${each.valor}" disabled="true"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                </div>    
+                            </tabpanel>
+                            <tabpanel>
+                                <div id="div_man_emp" >
+                                    <grid id="grd_man_emp" width="900px">
+                                        <columns>
+                                            <column width="100px"/>
+                                            <column width="500px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>
+                                                <cell align="right" valign="bottom" colspan="2">
+                                                    <checkbox id="chk_empest"  checked="false" disabled="true" label="Activo" tooltiptext="Define el estado de la empresa"/>
+                                                </cell>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="ID:" />
+                                                </cell>
+                                                <intbox id="txt_id" disabled="true" maxlength="3" tooltiptext="Define el código de la empresa, máximo 3 caracteres"/>  
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="RAZON SOCIAL:" />
+                                                </cell>
+                                                <textbox id="txt_empdes" disabled="true" width="320px" maxlength="50" tooltiptext="Define el nombre de la empresa, máximo 50 caracteres"/> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="SIGLAS:" />
+                                                </cell>
+                                                <textbox id="txt_empsig" disabled="true" width="250px" maxlength="20" tooltiptext="Define las siglas de la empresa, máximo 20 caracteres"/> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="DIRECCION:" />
+                                                </cell>
+                                                <textbox id="txt_empdir" disabled="true" width="340px" maxlength="60" tooltiptext="Define la dirección de la empresa, máximo 60 caracteres"/> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="RUC:" />
+                                                </cell>
+                                                <longbox id="txt_empruc" disabled="true" tooltiptext="Define el RUC de la empresa, máximo 11 caracteres" maxlength="11"/> 
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                </div>    
+                            </tabpanel>
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south border="0">
+            <include src="/plantillas/modulos/PieSeguridad.zul"/>
+        </south>
+    </borderlayout>     
+</zk>

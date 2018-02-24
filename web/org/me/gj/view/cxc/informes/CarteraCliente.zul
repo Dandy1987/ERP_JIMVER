@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuCxc.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_cartcli" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="false"/>            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" />   
+                        <label value="CARTERA DE CLIENTE" sclass="titulo_mant" style="margin-left:205px;"/>
+                    </toolbar>        
+                           
+                    <tabbox id="tabbox_cartcli" ctrlKeys="#f10" apply="org.me.gj.controller.cxc.informes.ControllerCarteraCliente"> 
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO" disabled="true"/>
+                                       
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <listbox id="lst_cartcli" mold="paging" pageSize="18" width="985px" height="470px">
+                                     
+                                    <listhead>
+                                        <listheader label="COD" width="85px" style="text-align: center;"/>
+                                        <listheader label="ZONA" width="280px" style="text-align: center;"/>
+                                        <listheader label="COD" width="85px" style="text-align: center;"/>
+                                        <listheader label="VENDEDOR" width="250px" style="text-align: center;"/>
+                                                                               
+                                        <listheader label="D.VISITA" width="100px" style="text-align: center;"/>
+                                        <listheader label="H.ENT" width="85px" style="text-align: center;"/>
+                                        <listheader label="" width="55px" style="text-align: center;"/>
+                                        <listheader label="ACT" width="45px" style="text-align: center;"/>
+                                                    
+                                    </listhead>
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.tab_subdir}"/>
+                                            <listcell label="${each.tab_subdes}"/>
+                                            <listcell label="${each.tab_subdir}"/>                                           
+                                            <listcell label="${each.tab_subdir}"/>
+                                            <listcell label="${each.tab_subdes}"/>
+                                            <listcell label="${each.tab_subdir}"/>
+                                            <listcell label="${each.tab_subdes}"/>
+                                            <listcell label="${each.tab_subdir}"/>                                            
+                                                          
+                                        </listitem>
+                                    </template>                         
+                                </listbox>
+                                <separator height="3px"/>
+                                <groupbox width="987px" open="true" closable="false" height="70px">
+                                    <caption label="GENERA ESTADISTICA DE VENTAS" />
+                                    <vbox>
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+                                                <space width="5px"  />
+                                                <label value="FEC. INI:"/>
+                                            </cell>
+                                            <datebox id="d_fecini" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy" tooltiptext="Define la Fecha de Creación de la Cartera Cliente"/>  
+                                            <cell align="right" valign="center">
+                                                <space width="35px"  />
+                                                <label value="FEC. FIN:"/>
+                                            </cell>
+                                            <datebox id="d_fecfin" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy" tooltiptext="Define la Fecha de Fin de la Cartera Cliente"/>   
+                                            <space/>                                           
+                                            <toolbarbutton id="tbbtn_btn_excel" image="/images/iconos/excel.png"  tooltiptext="Editar" disabled="false"/>            
+                                        
+                                       
+                                            <space width="350px"/>
+                                            <button id="btn_generar" width="100%"  sclass="botones" label="GENERAR DATA" tooltiptext="Consulta los documentos de venta"/>
+                                   
+                                        
+                                        </hbox> 
+                                    </vbox>
+                                </groupbox>
+                            </tabpanel>
+                            <tabpanel> </tabpanel> 
+                        </tabpanels>
+                    </tabbox>
+                </window>      
+            </div>      
+        </center>
+        <south height="25px" border="0">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>
+

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ManProv" language="groovy" pageWidth="612" pageHeight="792" columnWidth="598" leftMargin="7" rightMargin="7" topMargin="7" bottomMargin="7" uuid="ccb7ed49-48c3-46dc-a10d-f80b25422c9b">
+	<property name="ireport.zoom" value="2.049040366095212"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="usuario" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="empresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_WHERE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{P_WHERE}]]>
+	</queryString>
+	<field name="PROV_ID" class="java.lang.String"/>
+	<field name="PROV_KEY" class="java.math.BigDecimal"/>
+	<field name="PROV_RUC" class="java.math.BigDecimal"/>
+	<field name="CON_KEY" class="java.math.BigDecimal"/>
+	<field name="CON_TIPO" class="java.lang.String"/>
+	<field name="CON_DES" class="java.lang.String"/>
+	<field name="PROV_RAZSOC" class="java.lang.String"/>
+	<field name="PROV_SIGLAS" class="java.lang.String"/>
+	<field name="PROV_DIR" class="java.lang.String"/>
+	<field name="PROV_TIP" class="java.math.BigDecimal"/>
+	<field name="PROV_RUCEXT" class="java.math.BigDecimal"/>
+	<field name="PROV_WEB" class="java.lang.String"/>
+	<field name="PROV_CLAVE" class="java.lang.String"/>
+	<field name="PROV_EST" class="java.math.BigDecimal"/>
+	<field name="PROV_NORMAL" class="java.math.BigDecimal"/>
+	<field name="PROV_RETEN" class="java.math.BigDecimal"/>
+	<field name="PROV_BUENC" class="java.math.BigDecimal"/>
+	<field name="PROV_PERCEP" class="java.math.BigDecimal"/>
+	<field name="PROV_DETRAC" class="java.math.BigDecimal"/>
+	<field name="PROV_USUADD" class="java.lang.String"/>
+	<field name="PROV_FECADD" class="java.sql.Timestamp"/>
+	<field name="PROV_USUMOD" class="java.lang.String"/>
+	<field name="PROV_FECMOD" class="java.sql.Timestamp"/>
+	<field name="PROV_NOMREP" class="java.lang.String"/>
+	<field name="PROV_ORD" class="java.math.BigDecimal"/>
+	<variable name="tot" class="java.lang.String" incrementType="Report" calculation="Count">
+		<variableExpression><![CDATA[$V{tot}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="81" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c8f30a53-d22e-4e36-966a-42764734bd1f" x="10" y="8" width="138" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="604d291a-456d-4ab9-ab90-4ba701076c41" x="239" y="21" width="120" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROVEEDORES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="68" y="65" width="181" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RAZON SOCIAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fa546eb0-f8f5-49ba-a850-ae90f93bf7df" x="410" y="65" width="177" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIRECCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c289e06b-2312-4760-b605-b508252abc85" x="488" y="21" width="50" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAG:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0fd40718-f392-45a9-a101-94a4007100d9" x="488" y="34" width="100" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1251bc3b-e918-4723-a52c-1ff3c82c28e5" isPrintRepeatedValues="false" x="538" y="21" width="50" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="11" y="62" width="578" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="4062cdda-cd8b-4c85-8888-c3700c646ed6" x="10" y="34" width="138" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm:ss">
+				<reportElement uuid="90af5a26-2a30-4959-84e1-fc414af41b2e" x="488" y="47" width="100" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="ab51fd1e-0ffe-41ce-9c9f-5abf6acebd78" x="255" y="65" width="60" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RUC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="754416d6-40f3-4667-bd96-52a852947d62" x="10" y="21" width="138" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[MANPROV.JASPER]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="11" y="76" width="578" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="8b1db3d9-e572-4933-b690-d4fed10f2612" x="10" y="65" width="50" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a852e23b-d945-4ea9-abfc-42f259703ba2" x="324" y="65" width="76" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[F.PAGO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f5378b8b-c470-459a-9e27-22159698bf1a" x="11" y="0" width="49" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROV_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="71c6cd10-7bf3-4ea9-a234-f5ab4b124ca4" x="68" y="0" width="181" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROV_RAZSOC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b9417406-d043-4192-bd3e-c6ef0849e85b" x="255" y="0" width="60" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROV_RUC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="00df395a-d8a5-4afa-afb2-bd7b5f91f1a8" x="324" y="0" width="76" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CON_DES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8f46fcae-d6a7-4ee9-a662-c7018c14a492" x="410" y="0" width="177" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROV_DIR}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement uuid="33d4713f-456e-45e8-ba7f-b9008b834fe3" x="159" y="8" width="90" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5be848f2-9b7f-4fc6-9e48-c1458a10e4c1" x="11" y="8" width="138" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL REGISTROS:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="10" y="4" width="578" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

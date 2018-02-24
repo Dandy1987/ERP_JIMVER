@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <div id="menu_logistica" align="center" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerLogin" >
+        <separator sclass="z-separator-hor" /> 
+        <menubar id="mod_logistica" width="100%" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerPrivilegios">
+            <!-- MENU MANTENIMIENTO -->
+            <menu id="men_mantenimiento" label="Mantenimiento" width="90px" >
+                <menupopup>
+                    <!-- 1. ALMACENES -->
+                    <menu id="smen1_almacenes" label="Almacenes" image="/images/iconos_menu/logistica/almacenes.png">
+                        <menupopup>
+                            <!-- 1.2. MANTENIMIENTO DE ALMACENES -->
+                            <menuitem id="smen2_mantalmacenes" label="Mantenimiento de Almacenes" image="/images/iconos_menu/logistica/mantenimiento_almacen.png" href="/org/me/gj/view/logistica/mantenimiento/ManAlm.zul" />
+                            <!-- 1.1. TIPO DE ALMACENES -->
+                            <menuitem id="smen2_tipalmacenes"  label="Tipo de Almacenes" image="/images/iconos_menu/logistica/tipo_almacen.png" href="/org/me/gj/view/logistica/mantenimiento/ManTipAlm.zul" />
+                        </menupopup>
+                    </menu>
+                    <!-- 2. UBICACIONES -->
+                    <menuitem id="smen1_ubicaciones" label="Ubicaciones" image="/images/iconos_menu/logistica/ubicaciones.png" href="/org/me/gj/view/logistica/mantenimiento/ManUbi.zul" />
+                    <!-- 3. LINEAS -->
+                    <menuitem id="smen1_lineas" label="Lineas"  image="/images/iconos_menu/logistica/lineas.png" href="/org/me/gj/view/logistica/mantenimiento/ManLin.zul" />
+                    <!-- 4. SUB-LINEAS -->                    
+                    <menuitem id="smen1_sublineas" label="Sub-Lineas" image="/images/iconos_menu/logistica/sublineas.png" href="/org/me/gj/view/logistica/mantenimiento/ManSubLin.zul"    />
+                    <!-- 5. MARCAS -->
+                    <menuitem id="smen1_marcas" label="Marcas" image="/images/iconos_menu/logistica/marcas.png" href="/org/me/gj/view/logistica/mantenimiento/ManMar.zul"   />
+                    <!-- 6. UNIDADES DE MANEJO -->
+                    <menuitem id="smen1_umanejo" label="Unidades de Manejo" image="/images/iconos_menu/logistica/unidades_manejo.png" href="/org/me/gj/view/logistica/mantenimiento/ManUniMan.zul"/>
+                    <!-- 7. GUIAS -->
+                    <menu id="smen1_guias" label="Nota de E/S" image="/images/iconos_menu/logistica/notaes.png">
+                        <menupopup>
+                            <!-- 7.1. TIPO DE MOVIMIENTO DE Nota de E/S -->
+                            <menuitem id="smen2_tipmovguias" label="Tipo de Movimiento de Nota de E/S" image="/images/iconos_menu/logistica/tipo_mov_guias.png" href="/org/me/gj/view/logistica/mantenimiento/ManTipMovNotaES.zul"  />  
+                            <!-- 7.2. RELACION DE GUIAS -->
+                            <menuitem id="smen2_relguias" label="Relacion de Nota de E/S" image="/images/iconos_menu/logistica/relacion_guias.png" href="/org/me/gj/view/logistica/mantenimiento/ManRelNotaES.zul"/>
+                            <!-- 7.3. DETALLE DE GUIAS -->
+                            <menuitem id="smen2_detguias" label="Detalle de Nota de E/S" image="/images/iconos_menu/logistica/detalle_guias.png" href="/org/me/gj/view/logistica/mantenimiento/ManDetNotaES.zul"/>     
+                            <!-- 7.4. MANTENIMIENTO DE GUIAS -->
+                            <menuitem id="smen2_mantguias" label="Mantenimiento de Nota de E/S" image="/images/iconos_menu/logistica/mantenimiento_guias.png"  href="/org/me/gj/view/logistica/mantenimiento/ManNotaES.zul"/>                                                                                   
+                        </menupopup>
+                    </menu>
+                    <!-- 8. CONDICIONES -->
+                    <menu id="smen1_condiciones" label="Condiciones" image="/images/iconos_menu/logistica/condiciones.png">
+                        <menupopup>
+                            <!-- 8.1. CONDICIONES DE COMPRA -->
+                            <menuitem id="smen2_compra" label="Compra" image="/images/iconos_menu/logistica/compra.png"  href="/org/me/gj/view/logistica/mantenimiento/ManConComp.zul"/>
+                            <!-- 8.2. CONDICIONES DE VENTA -->
+                            <menuitem id="smen2_venta" label="Venta" image="/images/iconos_menu/logistica/venta.png" href="/org/me/gj/view/logistica/mantenimiento/ManConVen.zul"/>      
+                        </menupopup>
+                    </menu>
+                    <!-- 9. PROVEEDORES -->
+                    <menuitem id="smen1_proveedores" label="Proveedores" image="/images/iconos_menu/logistica/proveedores.png"  href="/org/me/gj/view/logistica/mantenimiento/ManProv.zul"/>
+                    <!-- 10. LISTA DE PRECIOS -->
+                    <menu id="smen1_lista_precios" label="Lista Precios" image="/images/iconos_menu/logistica/listas.png">
+                        <menupopup>
+                            <!-- 10.1. LISTA DE PRECIOS DE COMPRA -->
+                            <menuitem id="smen2_lisprecompra" label="Lista Precios de Compra" image="/images/iconos_menu/logistica/compra.png"  href="/org/me/gj/view/logistica/mantenimiento/ManLpcompra.zul"/>
+                            <!-- 10.2. LISTA DE PRECIOS DE VENTA -->
+                            <menuitem id="smen2_lisprecventa" label="Lista Precios de Venta" image="/images/iconos_menu/logistica/venta.png" href="/org/me/gj/view/logistica/mantenimiento/ManLpventa.zul"/>      
+                        </menupopup>
+                    </menu>
+                    <!-- 11. PRODUCTOS -->
+                    <menuitem id="smen1_articulos" label="Productos" image="/images/iconos_menu/logistica/productos.png" href="/org/me/gj/view/logistica/mantenimiento/ManProd.zul" />
+                    <!-- 12. PRECIOS -->
+                    <menu id="smen1_precios"  label="Precios" image="/images/iconos_menu/logistica/precios.png" >
+                        <menupopup>
+                            <!-- 12.1. PRECIOS DE COMPRA -->
+                            <menuitem id="smen2_precompra" label="Precios de Compra" image="/images/iconos_menu/logistica/compra.png"  href="/org/me/gj/view/logistica/mantenimiento/ManPreCom.zul"/>
+                            <!-- 12.2. PRECIOS DE VENTA -->
+                            <menuitem id="smen2_precventa" label="Precios de Venta" image="/images/iconos_menu/logistica/venta.png" href="/org/me/gj/view/logistica/mantenimiento/ManPreVen.zul"/>      
+                        </menupopup>
+                    </menu>
+                    <!-- 13. MOTIVOS DE CAMBIO -->
+                    <menuitem id="smen1_motcam" label="Motivo Cambio" image="/images/iconos_menu/logistica/motivo_cambio.png" href="/org/me/gj/view/logistica/mantenimiento/ManMotCam.zul"/>           
+                    <!-- 14. UNIDADES DE MEDIDA -->
+                    <menuitem id="smen1_undmed" label="Unidad Medida" image="/images/iconos_menu/logistica/medida.png" href="/org/me/gj/view/logistica/mantenimiento/ManUniMed.zul"/>
+                </menupopup>
+            </menu>
+            <!-- MENU PROCESOS -->
+            <menu id="men_procesos" label="Procesos" width="90px" >
+                <menupopup>
+                    <!-- 14. GENERAR PEDIDO DE COMPRA -->
+                    <menuitem id="smen1_pedcom" label="Generar Pedido de Compra" image="/images/iconos_menu/logistica/pedido_compra.png" href="/org/me/gj/view/logistica/procesos/GenPedCom.zul"   /> 
+                    <!-- 15. ADMINISTRAR PEDIDO DE COMPRA -->
+                    <menuitem id="smen1_admped" label="Administrar Pedido de Compra" image="/images/iconos_menu/logistica/administrar_pedido.png"  href="/org/me/gj/view/logistica/procesos/AdmPedCom.zul" />                     
+                    <!-- 16. GENERAR ORDEN DE COMPRA -->
+                    <menu id="smen1_genord" label="Generar Orden de Compra" image="/images/iconos_menu/logistica/orden_compra.png" >
+                        <menupopup>
+                            <!-- 16.1. MERCADERIA -->
+                            <menuitem id="smen2_genordcompmerc" label="Mercaderia" image="/images/iconos_menu/logistica/mercaderia.png" href="/org/me/gj/view/logistica/procesos/GenOrdCom.zul"/>    
+                            <!-- 16.2. OTROS -->
+                            <!--  <menuitem id="smen2_genordcompotr" label="Otros" image="/images/iconos_menu/logistica/otros.png" />    -->
+                        </menupopup>
+                    </menu>
+                    <!-- 17. AUTORIZACION DE ORDENES DE COMPRA -->
+                    <menuitem id="smen1_autord" label="Administrar Orden de Compra" image="/images/iconos_menu/logistica/autorizar_orden.png"  href="/org/me/gj/view/logistica/procesos/AdmOrdCom.zul"/> 
+                    <!-- 18. ORDENES DE COMPRA POR RECIBIR -->
+                    <menuitem id="smen1_ordrec" label="Ordenes de Compra por Recibir" image="/images/iconos_menu/logistica/ordenes_pendientes.png"  href="/org/me/gj/view/logistica/procesos/ProcOrdComRec.zul"/> 
+                    <!-- 19. GENERAR FACTURA DE PROVEEDOR -->
+                    <menuitem id="smen1_compras" label="Generar Factura Proveedor" image="/images/iconos_menu/logistica/genera_fproveedor.png" href="/org/me/gj/view/logistica/procesos/GenFacPro.zul"  />    
+                    <!-- 20. GENERAR NOTA DE ENTRADA Y SALIDA -->
+                    <menuitem id="smen1_notes" label="Generar Nota E/S" image="/images/iconos_menu/logistica/nota_es.png" href="/org/me/gj/view/logistica/procesos/GenNotaES.zul"  />    
+                    <!-- 21. GENERAR COSTEO GUIAS -->
+                    <menu id="smen1_costos" label="Costeo Nota de E/S" image="/images/iconos_menu/logistica/costeo_guias.png" >            
+                        <menupopup>
+                            <!-- 21.1. GENERAR COSTEO GUIAS AUTOMATICO -->                   
+                            <menuitem id="smen2_cosauto" label="Costeo Automatico" image="/images/iconos_menu/logistica/costeo_auto.png" href="/org/me/gj/view/logistica/procesos/CosteoAutomatico.zul"/>    
+                            <!-- 21.2. GENERAR COSTEO GUIAS MANUAL-->
+                            <menuitem id="smen2_cosman" label="Costeo Manual" image="/images/iconos_menu/logistica/costeo_man.png" href="/org/me/gj/view/logistica/procesos/CosteoManual.zul"/>    
+                        </menupopup>         
+                    </menu>
+                    <!-- 22. CONTABILIZAR FACTURAS PROVEEDOR -->
+                    <menuitem id="smen1_comprascon" label="Contabilizar Factura Proveedor" image="/images/iconos_menu/logistica/comprascon.png" href="/org/me/gj/view/logistica/procesos/ContaFactura.zul"  />                                            
+                    <!-- 23. GENERAR C-I-R CAMBIOS - INTERCAMBIOS - REINTEGROS -->
+                    <menu id="smen1_generarnot" label="Generar Nota C-I-R" image="/images/iconos_menu/logistica/genera_cir.png">
+                        <menupopup>
+                            <!-- 22.1. NOTA DE CAMBIO -->
+                            <menuitem id="smen2_gennotcam" label="Nota de Cambio" image="/images/iconos_menu/logistica/cambio.png" href="/org/me/gj/view/logistica/procesos/GenNotCam.zul" />    
+                            <!-- 22.1. NOTA DE RECOJO -->
+                            <menuitem id="smen2_gennotrec" label="Nota de Recojo" image="/images/iconos_menu/logistica/recojo.png"  href="/org/me/gj/view/logistica/procesos/GenNotRec.zul"/>    
+                            <!-- 22.1. NOTA DE INTERCAMBIO -->
+                            <menuitem id="smen2_gennotint" label="Nota de Intercambio" image="/images/iconos_menu/logistica/intercambio.png"  href="/org/me/gj/view/logistica/procesos/GenNotInter.zul"/>    
+                        </menupopup>
+                    </menu>
+                    <!-- 24. AUTORIZAR CIR -->
+                    <menu id="smen1_autcir" label="Administrar Nota C-I-R" image="/images/iconos_menu/logistica/autorizar_cir.png">
+                        <menupopup>
+                            <!-- 23.1. AUTORIZACION DE CAMBIOS -->
+                            <menuitem id="smen2_autcam" label="Autorizar Cambio" image="/images/iconos_menu/logistica/cambio.png" href="/org/me/gj/view/logistica/procesos/AdmNotCam.zul"/>    
+                            <!-- 23.2. AUTORIZACION DE INTERCAMBIOS -->
+                            <menuitem id="smen2_autrec" label="Autorizar Recojo" image="/images/iconos_menu/logistica/recojo.png" href="/org/me/gj/view/logistica/procesos/AdmNotRec.zul"/>   
+                            <!-- 23.3 AUTORIZACION DE RECOJOS -->
+                            <menuitem id="smen2_autint" label="Autorizar Intercambio" image="/images/iconos_menu/logistica/intercambio.png" href="/org/me/gj/view/logistica/procesos/AdmNotInter.zul"/>     
+                        </menupopup>
+                    </menu>
+                    <!-- 25. PROCESAR CIR -->
+                    <menuitem id="smen1_pronot" label="Procesar Nota C-I-R" image="/images/iconos_menu/logistica/procesar_cir.png"  href="/org/me/gj/view/logistica/procesos/ProcNotCIR.zul"/> 
+                    <!-- 26. REGENERAR -->
+                    <menu id="smen1_regenerar" label="Regenerar" image="/images/iconos_menu/logistica/regenerar.png">
+                        <menupopup>
+                            <!-- 26.1. REGENERAR STOCKS -->
+                            <menuitem id="smen2_regsto" label="Stocks" image="/images/iconos_menu/logistica/stocks.png" href="/org/me/gj/view/logistica/procesos/ProcRegStock.zul" />    
+                            <!-- 26.2. REGENERAR COSTOS -->
+                            <menuitem id="smen2_regcos" label="Costos" image="/images/iconos_menu/logistica/costos.png" href="/org/me/gj/view/logistica/procesos/ProcRegCosto.zul" />        
+                        </menupopup>
+                    </menu>
+                    <!-- 27. INVENTARIO FISICO -->
+                    <menu id="smen1_infis" label="Inventario Fisico" image="/images/iconos_menu/logistica/inventario.png"> 
+                        <menupopup>
+                            <!-- 27.1. INGRESO STOCK REAL -->
+                            <menuitem id="smen2_ingreainv" label="Ingreso Stock Real" image="/images/iconos_menu/logistica/inventarioing.png" href="/org/me/gj/view/logistica/procesos/ProcInvFis.zul" />    
+                            <!-- 27.2. REGENERAR COSTOS -->
+                            <menuitem id="smen2_forinvfis" label="Formato Inventario Fisico" image="/images/iconos_menu/logistica/inventariofor.png" href="/org/me/gj/view/logistica/procesos/ProcInvFor.zul" />        
+                        </menupopup>
+                    </menu>
+                </menupopup> 
+            </menu>
+            <!-- MENU INFORMES -->
+            <menu id="men_informes" label="Informes" width="90px" >
+                <menupopup>
+                    <menu id="smen1_comxpedcomp" label="Compras x Pedido de Compra" image="/images/iconos_menu/logistica/inf_compra.png">
+                        <menupopup>
+                            <menuitem id="smen2_pedcompxprov" label="por Proveedor" image="/images/iconos_menu/logistica/inf_xprov.png" href="/org/me/gj/view/logistica/informes/RepPedComProv.zul"/>    
+                            <menuitem id="smen2_pedcompxprod" label="por Producto" image="/images/iconos_menu/logistica/inf_xprod.png" href="/org/me/gj/view/logistica/informes/RepPedComProd.zul"/>                               
+                            <menuitem id="smen2_pedcompxlin" label="por Linea" image="/images/iconos_menu/logistica/inf_xlin.png" href="/org/me/gj/view/logistica/informes/RepPedComLin.zul"/>     
+                            <menuitem id="smen2_pedcompxsublin" label="por Sublinea" image="/images/iconos_menu/logistica/inf_xsublin.png" href="/org/me/gj/view/logistica/informes/RepPedComSlin.zul"/>     
+                        </menupopup>
+                    </menu>
+                    <menu id="smen1_comxordcomp" label="Compras x Orden de Compra" image="/images/iconos_menu/logistica/inf_compra.png">
+                        <menupopup>
+                            <menuitem id="smen2_ordcompxprov" label="por Proveedor" image="/images/iconos_menu/logistica/inf_xprov.png" href="/org/me/gj/view/logistica/informes/RepOrdComProv.zul"/>    
+                            <menuitem id="smen2_ordcompxprod" label="por Producto" image="/images/iconos_menu/logistica/inf_xprod.png" href="/org/me/gj/view/logistica/informes/RepOrdComProd.zul"/>                               
+                            <menuitem id="smen2_ordcompxlin" label="por Linea" image="/images/iconos_menu/logistica/inf_xlin.png" href="/org/me/gj/view/logistica/informes/RepOrdComLin.zul"/>     
+                            <menuitem id="smen2_ordcompxsublin" label="por Sublinea" image="/images/iconos_menu/logistica/inf_xsublin.png" href="/org/me/gj/view/logistica/informes/RepOrdComSublin.zul"/>     
+                        </menupopup>
+                    </menu>
+                    <menu id="smen1_comxfactprov" label="Compras x Factura Proveedor" image="/images/iconos_menu/logistica/inf_compra.png">
+                        <menupopup>
+                            <menuitem id="smen2_factprovxprov" label="por Proveedor" image="/images/iconos_menu/logistica/inf_xprov.png" href="/org/me/gj/view/logistica/informes/RepFacProProv.zul"/>    
+                            <menuitem id="smen2_factprovxprod" label="por Producto" image="/images/iconos_menu/logistica/inf_xprod.png" href="/org/me/gj/view/logistica/informes/RepFacProProd.zul"/>                               
+                            <menuitem id="smen2_factprovxlin" label="por Linea" image="/images/iconos_menu/logistica/inf_xlin.png" href="/org/me/gj/view/logistica/informes/RepFacProLin.zul"/>     
+                            <menuitem id="smen2_factprovxsublin" label="por Sublinea" image="/images/iconos_menu/logistica/inf_xsublin.png" href="/org/me/gj/view/logistica/informes/RepFacProSlin.zul"/>     
+                        </menupopup>
+                    </menu>
+                    <menu id="smen1_comxnotes" label="Compras x Nota E/S" image="/images/iconos_menu/logistica/inf_compra.png">
+                        <menupopup>
+                            <menuitem id="smen2_notesxprov" label="por Proveedor" image="/images/iconos_menu/logistica/inf_xprov.png" href="/org/me/gj/view/logistica/informes/RepNotaESProv.zul"/>    
+                            <menuitem id="smen2_notesxprod" label="por Producto" image="/images/iconos_menu/logistica/inf_xprod.png" href="/org/me/gj/view/logistica/informes/RepNotaESProd.zul" />                               
+                            <menuitem id="smen2_notesxlin" label="por Linea" image="/images/iconos_menu/logistica/inf_xlin.png" href="/org/me/gj/view/logistica/informes/RepNotaESLin.zul"/>     
+                            <menuitem id="smen2_notesxsublin" label="por Sublinea" image="/images/iconos_menu/logistica/inf_xsublin.png" href="/org/me/gj/view/logistica/informes/RepNotaESSublin.zul"/>     
+                        </menupopup>
+                    </menu>		                        
+                    <menu id="smen1_comvsnotesfac" label="Compras Nota E/S vs Factura Proveedor" image="/images/iconos_menu/logistica/inf_compra.png">
+                        <menupopup>
+                            <menuitem id="smen2_notesvsfacxprov" label="por Proveedor" image="/images/iconos_menu/logistica/inf_xprov.png" href="/org/me/gj/view/logistica/informes/RepNotaESvsFacProv.zul"/>    
+                            <menuitem id="smen2_notesvsfacxprod" label="por Producto" image="/images/iconos_menu/logistica/inf_xprod.png" href="/org/me/gj/view/logistica/informes/RepNotaESvsFacProd.zul"/>                               
+                            <menuitem id="smen2_notesvsfacxlin" label="por Linea" image="/images/iconos_menu/logistica/inf_xlin.png" href="/org/me/gj/view/logistica/informes/RepNotaESvsFacLin.zul"/>     
+                            <menuitem id="smen2_notesvsfacxsublin" label="por Sublinea" image="/images/iconos_menu/logistica/inf_xsublin.png" href="/org/me/gj/view/logistica/informes/RepNotaESvsFacSublin.zul"/>     
+                        </menupopup>
+                    </menu>
+                    <menuseparator/>        
+                    <menu id="smen1_infsto" label="Stocks" image="/images/iconos_menu/logistica/stocks.png">                                
+                        <menupopup>
+                            <menuitem id="smen2_stkbasico" label="Stock Basico" image="/images/iconos_menu/logistica/stocks.png" href="/org/me/gj/view/logistica/informes/RepStockBasico.zul"/>
+                            <menuitem id="smen2_stkpareto" label="Stock Pareto" image="/images/iconos_menu/logistica/stocks.png"/>
+                        </menupopup> 
+                    </menu>
+                    <menuitem id="smen1_infkar" label="Kardex" image="/images/iconos_menu/logistica/kardex.png"  href="/org/me/gj/view/logistica/informes/RepKardex.zul"/> 
+                    <menuitem id="smen1_infnotaes" label="Nota E/S" image="/images/iconos_menu/logistica/notaes.png"  href="/org/me/gj/view/logistica/informes/RepNotaES.zul"/> 
+                    <menuitem id="smen1_infcos" label="Costos" image="/images/iconos_menu/logistica/costos.png" href="/org/me/gj/view/logistica/informes/RepCostos.zul" /> 
+                </menupopup>                
+            </menu>
+            <!-- MENU UTILITARIOS -->
+            <menu id="men_utilitarios" label="Utilitarios" width="90px" >
+                <menupopup>
+                    <menuitem id="smen1_ciedialog" label="Cierre Diario" image="/images/iconos_menu/logistica/cierre_diario.png" href="/org/me/gj/view/logistica/utilitarios/CieDia.zul" /> 
+                    <menuitem id="smen1_ciemenlog" label="Cierre Mensual" image="/images/iconos_menu/logistica/cierre_mensual.png"  href="/org/me/gj/view/logistica/utilitarios/CiePeriodo.zul"/> 
+                    <menu id="smen1_auditoria" label="Auditoria" image="/images/iconos_menu/logistica/auditoria.png"> 
+                        <menupopup>
+                            <menuitem id="smen2_audnotaes" label="Auditoria Nota E/S" image="/images/iconos_menu/logistica/auditoria_notas.png"  /> 
+                            <menuitem id="smen2_audnotacam" label="Auditoria Cambios" image="/images/iconos_menu/logistica/auditoria_cambios.png"  /> 
+                        </menupopup>
+                    </menu>
+                </menupopup>
+            </menu>
+            <menu id="men_ayuda" label="Ayuda" width="90px" >
+                <menupopup>
+                    <menuitem id="smen1_manayu" label="Manual de Ayuda" image="/images/iconos_menu/logistica/manual_ayuda.png"  />                     
+                </menupopup>
+            </menu>
+            <menuitem  width="100px" />
+            <menuitem label="Bienvenido:  ${sessionScope.usuariosCredential.nombre}"/>
+            <menuitem label="Menu Principal" href="/Main.zul" />
+            <menuitem label="Cerrar Sesión" id="btn_logout"/>
+        </menubar>
+    </div>
+</zk>

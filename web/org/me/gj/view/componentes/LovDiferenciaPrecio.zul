@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_difprecio" title="DIFERENCIA DE PRECIOS" border="normal" width="800px"
+        apply="org.me.gj.controller.componentes.ControllerLovDiferenciaPrecio"
+        position="center,center" closable="true"
+        action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox>
+                <checkbox id="chk_difprecio" label="Solo diferencias" checked="true"/>       		
+            </hbox>
+            <separator/>
+            <listbox id="lst_difprecio" mold="paging" pageSize="13" width="790px">
+                <auxhead>
+                    <auxheader label="COD" colspan="1" style="text-align: center;" width="70px" />
+                    <auxheader label="DESCRIPCION" colspan="1" style="text-align: center;" />
+                    <auxheader label="CANTIDAD" colspan="2" style="text-align: center;" />
+                    <auxheader label="UND PRE" colspan="2" style="text-align: center;" />
+                    <auxheader label="VALOR UNIT." colspan="2" style="text-align: center;" />
+                    <auxheader label="%DCT" colspan="1" style="text-align: center;" />
+                    <auxheader label="MONTO DSCT" colspan="2" style="text-align: center;" />
+                    <auxheader label="%IGV" colspan="2" style="text-align: center;" />
+                    <auxheader label="MONTO IGV" colspan="2" style="text-align: center;" />
+                    <auxheader label="PRECIO" colspan="1" style="text-align: center;" />
+                    <auxheader label="TOTAL" colspan="2" style="text-align: center;" />
+                </auxhead>
+                <listhead>
+                    <listheader label="" width="60px"/>
+                    <listheader label="" width="260px"/>
+                    <listheader label="ENT" width="50px" style="text-align: center;"/>
+                    <listheader label="FRAC" width="40px" style="text-align: center;"/>
+                    <listheader label="PD" width="30px" style="text-align: center;"/>      
+                    <listheader label="PR" width="30px" style="text-align: center;"/>
+                    <listheader label="PD" width="50px" style="text-align: center;"/>      
+                    <listheader label="PR" width="50px" style="text-align: center;"/>
+                    <listheader label="" width="40px"/>
+                    <listheader label="PD" width="60px" style="text-align: center;"/>
+                    <listheader label="CAL" width="60px" style="text-align: center;"/>      
+                    <listheader label="PD" width="40px" style="text-align: center;"/>
+                    <listheader label="CA" width="40px" style="text-align: center;"/>       
+                    <listheader label="PD" width="60px" style="text-align: center;" />
+                    <listheader label="CAL" width="60px" style="text-align: center;" />
+                    <listheader label="VENTA" width="60px" style="text-align: center;"/> 
+                    <listheader label="PEDIDO" width="80px" style="text-align: center;"/>
+                    <listheader label="CALCULADO" width="80px" style="text-align: center;"/>                                      
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.pro_id}" />
+                        <listcell label="${each.pdet_prodes}" />
+                        <listcell label="${each.pdet_ent}" style="text-align: right;"/>
+                        <listcell label="${each.pdet_frac}" style="text-align: right;"/>
+                        <listcell label="${each.pdet_unipre}" style="text-align: right;"/>   
+                        <listcell label="${each.pdet_unipre}" style="text-align: right; background-color: yellow;color: #2E2E2E;"/>
+                        <listcell label="${each.difPrecio_spunit}" style="text-align: right;" />   
+                        <listcell label="${each.difPrecio_spunit}" style="text-align: right; background-color: yellow;color: #2E2E2E;"/>
+                        <listcell label="${each.pdet_dscto}" style="text-align: right;"/>   
+                        <listcell label="${each.difPrecio_sdscto}" style="text-align: right;"/>
+                        <listcell label="${each.difPrecio_sdscto}" style="text-align: right; background-color: yellow;color: #2E2E2E;"/>   
+                        <listcell label="${each.pdet_impto}" style="text-align: right;"/>
+                        <listcell label="${each.pdet_impto}" style="text-align: right; background-color: yellow;color: #2E2E2E;"/>
+                        <listcell label="${each.difPrecio_svimpto}" style="text-align: right;"/>   
+                        <listcell label="${each.difPrecio_svimpto}" style="text-align: right; background-color: yellow;color: #2E2E2E;"/>
+                        <listcell label="${each.difPrecio_spventa}" style="text-align: right;"/>   
+                        <listcell label="${each.difPrecio_spventa}" style="text-align: right; "/>
+                        <listcell label="${each.difPrecio_spventa}" style="text-align: right; "/>                        
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk>

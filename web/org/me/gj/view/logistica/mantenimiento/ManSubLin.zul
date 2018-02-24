@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center>
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_sublineas" width="100%" height="100%" border="none" closable="true" ctrlKeys="@n@m@e@g@d@i#f2#f4#f7#f10#f8#f9">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)" />          
+                        <label value="MANTENIMIENTO DE SUBLINEAS" sclass="titulo_mant" style="margin-left:235px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_sublineas" ctrlKeys="#f10" apply="org.me.gj.controller.logistica.mantenimiento.ControllerSubLineas">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA" />
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_sublineas.getSelectedIndex() == -1)
+                                    {
+                                    tab_lista.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_sublin" >
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda"/>
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+                                                <label value="FILTRO:"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una Opción">
+                                                <comboitem label=" "/>
+                                                <comboitem label="ID-SUBLINEA"/>
+                                                <comboitem label="SUBLINEA"/>
+                                                <comboitem label="ID-LINEA"/>
+                                                <comboitem label="LINEA"/>
+                                                <attribute name="onSelect">
+                                                    txt_busqueda.setDisabled(false);
+                                                </attribute>
+                                            </combobox>
+                                            <space width="2px"/>
+                                            <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="ESTADO:" id="lbl_estado"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_estado" readonly="true"  tooltiptext="Seleccione una Opción" width="110px">
+                                                <comboitem label="ACTIVO"/>
+                                                <comboitem label="INACTIVO"/>
+                                                <comboitem label=" "/>       
+                                            </combobox>
+                                            <space width="10px"/>
+                                            <button id="tbbtn_btn_buscar" label="Buscar" sclass="botones"/> 
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <listbox id="lst_sublineas" mold="paging" pageSize="18" width="985px" height="460px">
+                                        <listhead>
+                                            <listheader label="ID" width="60px" align="center"/>
+                                            <listheader label="SUBLINEA" width="430px"/>
+                                            <listheader label="ID" width="40px" align="center"/>
+                                            <listheader label="LINEA" width="430px"/>
+                                            <listheader label="EST" width="25px"/>
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.slin_cod}"/>
+                                                <listcell label="${each.slin_des}"/>
+                                                <listcell label="${each.sslin_codlin}"/>
+                                                <listcell label="${each.slin_deslin}"/>                                               
+                                                <listcell >
+                                                    <checkbox checked="${each.val}" disabled="true"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <space height="5px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Sublinea"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación de la Sublinea"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó la Sublinea"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación de la Sublinea"/>   
+                                    </hbox>
+                                </div>    
+                            </tabpanel>
+                            <tabpanel>
+                                <div id="div_man_sublin" >
+                                    <grid id="grd_man_sublin" width="600px">
+                                        <columns>
+                                            <column width="100px"/>
+                                            <column width="500px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>
+                                                <intbox id="txt_tabcod" disabled="true" visible="False"  value="2"/>                                                
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ID:" />
+                                                </cell>
+                                                <textbox id="txt_codsublinea" disabled="true" maxlength="6" width="50px" tooltiptext="Define el Código de la Sub-Linea, Máximo 6 caracteres"/> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_tabest" disabled="true" tooltiptext="Define el Estado de la Sub-Linea"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="LINEA :"/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell> 
+                                                <hbox>
+                                                <textbox id="txt_codlinea" disabled="true" maxlength="3"  width="30px" tooltiptext="Código de la Linea, Máximo 3 caracteres"/>
+                                                <textbox id="txt_deslinea" disabled="true" width="310px" tooltiptext="Descripción de la linea"/>
+                                                </hbox>
+                                                <!--<cell align="right" valign="center">
+                                                    <label value="LINEA:" />
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>
+                                                <combobox id="cbx_tabtip" readonly="true" disabled="true" tooltiptext="Define el Tipo de Linea, Máximo 40 caracteres" width="450px">
+                                                    <template name="model">
+                                                        <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                    </template>
+                                                </combobox>-->
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="SUBLINEA: " />
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>
+                                                <textbox id="txt_dessublinea" disabled="true" width="350px" maxlength="50" tooltiptext="Define la Descripción de la sub-linea, Máximo 50 caracteres"/> 
+                                            </row>                                                                                                                           
+                                            <!--<row>
+                                                <textbox id="txt_tabdes" disabled="true" visible="false"  value="ALMACENES"/>
+                                            </row>-->
+                                        </rows>
+                                    </grid>
+                                </div>    
+                            </tabpanel>
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>
+

@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ManProdCata2" language="groovy" pageWidth="612" pageHeight="800" columnWidth="598" leftMargin="7" rightMargin="7" topMargin="7" bottomMargin="7" uuid="4677112f-835c-4e13-b44f-37b00fe12ae2">
+	<property name="ireport.zoom" value="1.9487171000000096"/>
+	<property name="ireport.x" value="507"/>
+	<property name="ireport.y" value="940"/>
+	<parameter name="prod_id" class="java.lang.String"/>
+	<parameter name="empresa" class="java.lang.String"/>
+	<parameter name="usuario" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select t.*,
+decode(t.pro_tip,'B','BIEN','S','SERVICIO')t_protipdes,
+decode(t.PRO_CLAS,'B','BONIFICACION','N','NORMAL','C','CUPON','J','CANJE')t_proclasdes,
+decode(t.pro_proc,'N','NACIONAL','I','IMPORTADO')t_proprocdes,
+decode(t.PRO_FRAC,'E','ENTERO','M','MEDIO','C','CUARTOS','T','TODOS') t_provenxfracdes,
+decode(t.PRO_ROT,1,'NORMAL',2,'ALTA',3,'BAJA') t_prorotdes,
+decode(t.pro_unipeso,'GRM','GRAMOS','MLL','MILILITROS','KLG','KILOGRAMOS','LTS','LITROS') t_prounipesodes
+from v_listaproductos t
+where t.pro_id=$P{prod_id}]]>
+	</queryString>
+	<field name="PRO_ID" class="java.lang.String"/>
+	<field name="PRO_KEY" class="java.math.BigDecimal"/>
+	<field name="PRO_EST" class="java.math.BigDecimal"/>
+	<field name="PRO_DES" class="java.lang.String"/>
+	<field name="PRO_DESDES" class="java.lang.String"/>
+	<field name="PRO_DESCOR" class="java.lang.String"/>
+	<field name="PRO_LIN" class="java.lang.String"/>
+	<field name="PRO_SUBLIN" class="java.lang.String"/>
+	<field name="PRO_MAR" class="java.lang.String"/>
+	<field name="PRO_CLAS" class="java.lang.String"/>
+	<field name="PRO_TIP" class="java.lang.String"/>
+	<field name="PRO_ORDKAR" class="java.math.BigDecimal"/>
+	<field name="PRO_ORDLSTPREC" class="java.math.BigDecimal"/>
+	<field name="PRO_ORDCONS" class="java.math.BigDecimal"/>
+	<field name="PRO_ORD" class="java.math.BigDecimal"/>
+	<field name="PRO_TIPEXISUN" class="java.math.BigDecimal"/>
+	<field name="PRO_INDPERC" class="java.math.BigDecimal"/>
+	<field name="PRO_MEDUNISUN" class="java.lang.String"/>
+	<field name="PRO_PROVID" class="java.lang.String"/>
+	<field name="PRO_CODORI" class="java.lang.String"/>
+	<field name="PRO_CONV" class="java.lang.String"/>
+	<field name="PRO_UNIMAS" class="java.math.BigDecimal"/>
+	<field name="PRO_UNIMANVEN" class="java.lang.String"/>
+	<field name="PRO_EMPINDVEN" class="java.lang.String"/>
+	<field name="PRO_PRESMINVEN" class="java.math.BigDecimal"/>
+	<field name="PRO_UNIBODEGUERO" class="java.math.BigDecimal"/>
+	<field name="PRO_FRAC" class="java.lang.String"/>
+	<field name="PRO_PROC" class="java.lang.String"/>
+	<field name="IMP_ID" class="java.math.BigDecimal"/>
+	<field name="PRO_CONDIMP" class="java.lang.String"/>
+	<field name="PRO_UBI" class="java.math.BigDecimal"/>
+	<field name="PRO_ALT" class="java.math.BigDecimal"/>
+	<field name="PRO_ANC" class="java.math.BigDecimal"/>
+	<field name="PRO_LAR" class="java.math.BigDecimal"/>
+	<field name="PRO_ROT" class="java.math.BigDecimal"/>
+	<field name="PRO_PESO" class="java.math.BigDecimal"/>
+	<field name="PRO_UNIPESO" class="java.lang.String"/>
+	<field name="PRO_VOL" class="java.math.BigDecimal"/>
+	<field name="PRO_UNIMANCOM" class="java.lang.String"/>
+	<field name="PRO_EMPINDCOM" class="java.lang.String"/>
+	<field name="PRO_PRESMINCOM" class="java.math.BigDecimal"/>
+	<field name="PRO_SCKNOFACT" class="java.math.BigDecimal"/>
+	<field name="PRO_CODBAR" class="java.lang.String"/>
+	<field name="PRO_TIPCODBAR" class="java.lang.String"/>
+	<field name="PRO_CODEAN" class="java.lang.String"/>
+	<field name="PRO_IMGCODBAR" class="java.lang.String"/>
+	<field name="PRO_IMG" class="java.lang.String"/>
+	<field name="PRO_USUADD" class="java.lang.String"/>
+	<field name="PRO_FECADD" class="java.sql.Timestamp"/>
+	<field name="PRO_USUMOD" class="java.lang.String"/>
+	<field name="PRO_FECMOD" class="java.sql.Timestamp"/>
+	<field name="PRO_SIGPROV" class="java.lang.String"/>
+	<field name="PRO_DESMAR" class="java.lang.String"/>
+	<field name="DESSUBLIN" class="java.lang.String"/>
+	<field name="TAB_SUBDES" class="java.lang.String"/>
+	<field name="PRO_AFECAM" class="java.math.BigDecimal"/>
+	<field name="T_PROTIPDES" class="java.lang.String"/>
+	<field name="T_PROCLASDES" class="java.lang.String"/>
+	<field name="T_PROPROCDES" class="java.lang.String"/>
+	<field name="T_PROVENXFRACDES" class="java.lang.String"/>
+	<field name="T_PROROTDES" class="java.lang.String"/>
+	<field name="T_PROUNIPESODES" class="java.lang.String"/>
+	<variable name="variable1" class="java.lang.String"/>
+	<pageHeader>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="14" y="13" width="111" height="9"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MANTPRODCATA.JASPER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="173" y="10" width="249" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="false" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[CATALOGO DE PRODUCTO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7f4583d4-52dc-4bbd-907a-f5ba70565a64" x="14" y="24" width="111" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="78a3ecbf-6287-49e3-bb6b-915abd67b4c5" x="14" y="1" width="112" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{empresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2da1beb3-a3ff-4a53-b060-18409ce25806" x="562" y="0" width="16" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="b7e39392-637b-4917-a429-40b119084df3" x="510" y="12" width="69" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm:ss">
+				<reportElement uuid="a52e24ca-d7bd-4986-86b7-3bae60df3121" x="510" y="24" width="69" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="007b224e-f969-4c31-b341-58a85af7ccfb" x="510" y="2" width="22" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAG:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="527" splitType="Stretch">
+			<image scaleImage="FillFrame" hAlign="Center">
+				<reportElement uuid="645b1083-0315-4fb9-ae1f-22ee7f35089f" x="107" y="55" width="400" height="400"/>
+				<imageExpression><![CDATA[$F{PRO_IMG}]]></imageExpression>
+			</image>
+			<image scaleImage="FillFrame">
+				<reportElement uuid="b8142aaa-873e-4ee5-897b-f788a824638e" x="219" y="456" width="178" height="70"/>
+				<imageExpression><![CDATA["C:\\CODIGO BARRA\\"+$P{prod_id}+".PNG"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement uuid="a61b84df-3e97-43d0-b92d-ec27a4790100" x="98" y="4" width="418" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESSUBLIN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0f39eb29-18a6-4edd-912c-2551ed10bc0a" x="98" y="16" width="418" height="23"/>
+				<textElement textAlignment="Center">
+					<font size="18" isBold="false" isItalic="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_DES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a61b84df-3e97-43d0-b92d-ec27a4790100" x="98" y="41" width="419" height="11"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_SIGPROV}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<columnFooter>
+		<band height="223" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="107" y="7" width="247" height="20"/>
+				<textElement>
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DATOS GENERALES]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c0bc79c5-b809-4912-b609-0c404d16e066" x="192" y="140" width="160" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_PROVID} +"  -  "+$F{PRO_SIGPROV}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="360" y="187" width="90" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VOLUMEN:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="d2d6fb35-c765-418b-9f02-cec9cf58921f" x="459" y="148" width="62" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_PROROTDES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="359" y="79" width="91" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PESO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="dc70d238-267f-4b00-b6fa-9888cee76d52" x="193" y="51" width="159" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TAB_SUBDES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="105" y="198" width="73" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNI.PRESENTACION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="105" y="110" width="247" height="20"/>
+				<textElement>
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DATOS COMPRA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="106" y="91" width="66" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SUBLINEA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a61b84df-3e97-43d0-b92d-ec27a4790100" x="192" y="91" width="160" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESSUBLIN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="105" y="140" width="73" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROVEEDOR:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c729e9c7-71b5-408f-8f47-c578fb0e9858" x="193" y="37" width="159" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_PROTIPDES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="360" y="134" width="90" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[VTA X FRACCION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="359" y="66" width="91" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROCEDENCIA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9b46b1e3-931b-4cc4-8702-b885ae901957" x="191" y="169" width="161" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_CODORI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c573f008-ee80-49cd-80e9-8a2001a0ce00" x="192" y="64" width="160" height="11"/>
+				<textElement>
+					<font size="7" isStrikeThrough="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_DESCOR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e99092f8-d93b-4151-8884-f0f601ac8ca8" x="191" y="198" width="161" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_PRESMINCOM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b0efd313-bb86-495b-8611-57d32e8a43dc" x="457" y="37" width="64" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_UNIMANVEN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8478d935-587a-43a6-9d11-5e81b3e93d91" x="192" y="78" width="160" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_PROCLASDES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="105" y="155" width="73" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDAD MANEJO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="106" y="37" width="66" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TIPO :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b1077b23-2871-4410-8cea-3aea86a8a4b5" x="460" y="187" width="61" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_VOL}+" MT3 "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9463a53a-9e16-4d97-a512-c3e41ee17d4d" x="459" y="119" width="62" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_PRESMINVEN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="360" y="148" width="90" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ROTACION:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="106" y="78" width="66" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLASIFICACION:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="c6e006fb-d85e-4c49-876c-1f0c4760b861" x="459" y="105" width="62" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_LAR}+" MTS "]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="359" y="7" width="162" height="20"/>
+				<textElement>
+					<font size="14" isBold="false"/>
+				</textElement>
+				<text><![CDATA[DATOS VENTA]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9ad4ff29-df74-427f-8795-63dce81efad5" x="191" y="183" width="161" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_EMPINDCOM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="12906c08-3175-4527-9914-ef75a67702fa" x="191" y="155" width="161" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_UNIMANCOM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="359" y="37" width="91" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDAD MANEJO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="360" y="161" width="90" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNI.MEDIDA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="91a85eeb-8ed1-4ed6-8581-c2f26175f0c8" x="457" y="52" width="64" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_EMPINDVEN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="359" y="92" width="91" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ALTURA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f9f418d7-3ef8-4805-b979-1728a97c4758" x="458" y="79" width="63" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_PESO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="106" y="51" width="66" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LINEA : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="105" y="183" width="73" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMP.INDIVIDUAL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a443cb04-1f7b-4ff4-b1b6-ca91f445b13c" x="459" y="174" width="62" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_ANC}+" MTS "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4b699873-af3b-4969-8c6b-e267d563c333" x="457" y="66" width="64" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_PROPROCDES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="360" y="174" width="90" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ANCHO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="105" y="169" width="73" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[C.ORIGEN:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="359" y="52" width="91" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMP.INDIVIDUAL:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="1844a2ac-4584-4297-875d-5d4d67a23284" x="458" y="92" width="63" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRO_ALT}+" MTS "]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f9f418d7-3ef8-4805-b979-1728a97c4758" x="459" y="161" width="62" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_PROUNIPESODES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="360" y="119" width="90" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDAD PRESENTACION :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="106" y="64" width="66" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ADJETIVO:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a5cdc9da-82e7-48ec-a5ee-69d74ab69afe" x="359" y="105" width="91" height="11"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[LARGO:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="d2d6fb35-c765-418b-9f02-cec9cf58921f" x="459" y="134" width="62" height="11"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{T_PROVENXFRACDES}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

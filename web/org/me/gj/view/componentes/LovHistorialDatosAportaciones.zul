@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_historial_AP" title="APORTACIONES - GRUPO JIMENEZ" border="normal" width="81%"
+                apply="org.me.gj.controller.componentes.ControllerLovHistorialDatosAportacion"
+            position="center,center"
+            action="show: slideDown;hide: slideUp">
+        <vlayout >
+            <vbox align="center">
+            <space height="5px"/>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label id="lbl_personal" style="font-size: 14px;font-weight: bold;"/>
+                </cell>
+            </hbox>
+            <space height="10px"/>
+            <listbox id="lst_historial_ap" width="1010px" height="200px">
+                <listhead>
+                 
+                    <listheader label="FEC.ING" width="70px" align="center"/>
+                    <listheader label="ENTIDAD P.SALUD" width="150px" align="center"/>
+                    <listheader label="FEC.CESE" width="70px" align="center"/>
+                    <listheader label="AFP" width="180px" align="center"/>
+                    <listheader label="SITUACION DE EPS" width="270px" align="center"/>
+                    <listheader label="REG. PENS." width="270px" align="center"/>
+                    <listheader label="USUARIO" width="80px" align="center"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                       
+                        <listcell label="${each.plfiregpen_s}"/>
+                        <listcell label="${each.plpressal_des}"/>
+                        <listcell label="${each.plfbeps_s}"/>
+                        <listcell label="${each.plcodafp_des}"/>
+                        <listcell label="${each.plsiteps_des}"/>
+                        <listcell label="${each.plregpen_des}"/>
+                         <listcell label="${each.plusuadd}"/>
+                    </listitem>
+                </template>
+            </listbox>
+            <space height="5px"/>
+            <hbox>
+                <button id="btn_salir" label="Salir" sclass="botones"/>
+            </hbox>
+            </vbox>
+        </vlayout>
+    </window>
+</zk>

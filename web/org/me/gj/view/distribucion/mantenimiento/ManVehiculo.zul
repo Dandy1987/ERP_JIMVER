@@ -1,0 +1,620 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuDistribucion.zul"/>
+        </north>
+        <center  >
+            <div sclass="cuerpo-main" >
+                <window id="w_manvehiculo" width="100%" height="100%" ctrlKeys="#f2#f4#f7#f10#f9#f8" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)"  />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar (F4)" />                 
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png"  tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png"  tooltiptext="Imprimir (F8)"  />
+                        <label value="MANTENIMIENTO DE VEHICULO" sclass="titulo_mant" style="margin-left:247px;"/>
+                    </toolbar>  
+                    <tabbox id="tabbox_vehiculo" ctrlKeys="#f10" apply="org.me.gj.controller.distribucion.mantenimiento.ControllerVehiculo" >
+                        <tabs>
+                            <tab id="tab_listavehiculo" label="LISTA"/>
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (!tab_listavehiculo.isDisabled())
+                                    {
+                                    if (lst_vehiculo.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listavehiculo.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                            <tab id="tab_medidas" label="MEDIDAS" disabled="false">
+                                <attribute name="onSelect">
+                                    if (!tab_listavehiculo.isDisabled())
+                                    {
+                                    if (lst_vehiculo.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listavehiculo.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla");   
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                            <tab id="tab_propietariosoat" label="PROPIETARIO-SOAT" disabled="false">
+                                <attribute name="onSelect">
+                                    if (!tab_listavehiculo.isDisabled())
+                                    {
+                                    if (lst_vehiculo.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listavehiculo.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla");   
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                            <!--<tab id="tab_soat" label="SOAT" disabled="true"/>-->
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="987px" open="true" closable="false">
+                                    <caption label="Opciones de Busqueda"/>
+                                    <hbox align="center">
+                                        <space width="20px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO :"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una Opcion">
+                                            <comboitem label=" "/>
+                                            <comboitem label="ID"/>
+                                            <comboitem label="PLACA"/>
+                                            <comboitem label="ALIAS"/>
+                                            <comboitem label="AÑO FAB."/>
+                                            <comboitem label="RUEDAS"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <space width="2px"/>
+                                        <textbox id="txt_busqueda" width="400px" value="%%" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                        <space width="2px"/>
+                                        <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una Opcion" width="110px">
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+                                        <space width="10px"/>
+                                        <button id="btn_buscar" label="Buscar" sclass="botones"/>
+                                    </hbox>
+                                </groupbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_vehiculo" mold="paging" pageSize="18" width="985px" height="460px">
+                                    <listhead>
+                                        <listheader label="ID" width="40px" align="center"/>
+                                        <listheader label="PLACA" width="100px" align="center"/>
+                                        <listheader label="ALIAS"/>
+                                        <listheader label="FEC.INGRESO" width="90px" align="center"/>
+                                        <listheader label="MARCA" width="100px" align="center"/>
+                                        <listheader label="COMBUSTIBLE" width="150px" align="center"/>
+                                        <listheader label="COLOR" width="100px" align="center"/>
+                                        <listheader label="EST" width="25px"/>
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.trans_id}"/>
+                                            <listcell label="${each.trans_placa}"/>
+                                            <listcell label="${each.trans_alias}"/>
+                                            <listcell label="${each.strans_fecing}"/>
+                                            <listcell label="${each.desmarca}"/>
+                                            <listcell label="${each.descombustible}"/>
+                                            <listcell label="${each.descolor}"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador del Vehículo"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creacion del Vehículo"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modifico el Vehículo"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificacion del Vehículo"/>   
+                                </hbox>
+                            </tabpanel> 
+                            <tabpanel>
+                                <groupbox open="true" closable="false">
+                                    <caption label="DATOS DEL VEHICULO"/>
+                                    <div >
+                                        <grid width="960px">
+                                            <columns>
+                                                <column width="100px"/>
+                                                <column width="380px"/>
+                                                <column width="100px"/>
+                                                <column width="380px"/>
+                                            </columns>
+                                            <rows>                                     
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="ID:"/>
+                                                        <intbox id="txt_transkey" visible="false" tooltiptext="Define el Codigo del Vehiculo"/> 
+                                                    </cell>
+                                                    <textbox id="txt_transid" disabled="true" tooltiptext="Define el Codigo del Vehiculo"/>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="ESTADO:"/>
+                                                    </cell>
+                                                    <checkbox id="chk_transestado" disabled="true" tooltiptext="Define el Estado del Vehiculo"/>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="PLACA:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <textbox id="txt_transplaca" disabled="true" tooltiptext="Define la Placa del Vehiculo" maxlength="8" width="250px"/>
+                                                
+                                                    <cell align="right" valign="botton">
+                                                        <label value="ALIAS:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <textbox id="txt_transalias" disabled="true" maxlength="20" width="250px" tooltiptext="Define el Alias, Maximo 20 caracteres"/>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="MARCA:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <combobox id="cb_transmarca" disabled="true" readonly="true" width="300px" tooltiptext="Define la Marca del vehiculo">
+                                                        <template name="model">
+                                                            <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                        </template>
+                                                    </combobox>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="COMBUSTIBLE:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <combobox id="cb_transcombustible" disabled="true" readonly="true" width="300px" tooltiptext="Define el Combustible del vehiculo">
+                                                        <template name="model">
+                                                            <comboitem label="${each.tab_subdir}" value="${each.tab_id}"/>
+                                                        </template>
+                                                    </combobox>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="CATEGORIA:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <combobox id="cb_transcategoria" disabled="true" readonly="true" width="300px" tooltiptext="Define la Categoría del vehiculo">
+                                                        <template name="model">
+                                                            <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                        </template>
+                                                    </combobox>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="MODELO:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <combobox id="cb_transmodelo" disabled="true" readonly="true" width="300px" tooltiptext="Define el Modelo del vehiculo">
+                                                        <template name="model">
+                                                            <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                        </template>
+                                                    </combobox>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="COLOR:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <combobox id="cb_transcolor" disabled="true" readonly="true" width="300px" tooltiptext="Define el Color del vehiculo">
+                                                        <template name="model">
+                                                            <comboitem label="${each.tab_subdir}" value="${each.tab_id}"/>
+                                                        </template>
+                                                    </combobox>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="TRANSMISION:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <combobox id="cb_transtransmision" disabled="true" readonly="true" width="300px" tooltiptext="Define la Transmision del vehiculo">
+                                                        <template name="model">
+                                                            <comboitem label="${each.tab_subdir}" value="${each.tab_id}"/>
+                                                        </template>
+                                                    </combobox>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="CARROCERIA:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <combobox id="cb_transcarroceria" disabled="true" readonly="true" width="300px" tooltiptext="Define la Carroceria del vehiculo">
+                                                        <template name="model">
+                                                            <comboitem label="${each.tab_subdir}" value="${each.tab_id}"/>
+                                                        </template>
+                                                    </combobox>                                  
+                                                    <cell align="right" valign="botton">
+                                                        <label value="VIN:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <textbox id="txt_transvin" disabled="true" tooltiptext="Define el Número VIN del Vehiculo" maxlength="25" width="250px"/>                                    
+                                                </row>
+                                            </rows>
+                                        </grid>
+                                    </div>
+                                </groupbox>
+                                <separator height="10px"/>
+                                <groupbox open="true" closable="false">
+                                    <caption label="DATOS AUXILIARES"/>
+                                    <div >
+                                        <grid width="960px">
+                                            <columns>
+                                                <column width="100px"/>
+                                                <column width="380px"/>
+                                                <column width="100px"/>
+                                                <column width="380px"/>
+                                            </columns>
+                                            <rows>
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="CHASIS:"/>
+                                                    </cell>
+                                                    <textbox id="txt_transchasis" disabled="true" tooltiptext="Define el Número de Chasis del Vehiculo" maxlength="25" width="250px"/>                               
+                                                    <cell align="right" valign="botton">
+                                                        <label value="MOTOR:"/>
+                                                    </cell>
+                                                    <textbox id="txt_transmotor" disabled="true" tooltiptext="Define el Motor del Vehiculo" maxlength="20" width="250px"/>                                    
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="AÑO FABRICA:"/>
+                                                    </cell>
+                                                    <intbox id="txt_aniofab" disabled="true" tooltiptext="Define el Año de Fabricacion" maxlength="4" width="150px"/>                               
+                                                    <cell align="right" valign="botton">
+                                                        <label value="AÑO DE MODELO:"/>
+                                                    </cell>
+                                                    <intbox id="txt_aniomod" disabled="true" tooltiptext="Define el Año del Modelo" maxlength="4" width="150px"/>                                    
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="VERSION:"/>
+                                                    </cell>
+                                                    <textbox id="txt_transversion" disabled="true" tooltiptext="Define la Version del Vehiculo" maxlength="20" width="250px"/>                                                             
+                                                    <cell align="right" valign="botton">
+                                                        <label value="EJES:"/>
+                                                    </cell>
+                                                    <intbox id="txt_transejes" disabled="true" tooltiptext="Define los Ejes del Vehiculo" maxlength="4" width="150px"/>                                                                  
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="ASIENTOS:"/>
+                                                    </cell>
+                                                    <intbox id="txt_transasientos" disabled="true" tooltiptext="Define los Asientos del Vehiculo" maxlength="4" width="150px"/>                                                             
+                                                    <cell align="right" valign="botton">
+                                                        <label value="PASAJEROS:"/>
+                                                    </cell>
+                                                    <intbox id="txt_transpasajeros" disabled="true" tooltiptext="Define los Pasajeros del Vehiculo" maxlength="4" width="150px"/>                                                                  
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="RUEDAS:"/>
+                                                    </cell>
+                                                    <intbox id="txt_transruedas" disabled="true" tooltiptext="Define las Ruedas del Vehiculo" maxlength="4" width="150px"/>                                                             
+                                                    <cell align="right" valign="botton">
+                                                        <label value="POTENCIA:"/>
+                                                    </cell>
+                                                    <textbox id="txt_transpotencia" disabled="true" tooltiptext="Define la Potencia del Vehiculo" maxlength="20" width="150px"/>                                                                  
+                                                </row>                                            
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="CILINDROS:"/>
+                                                    </cell>
+                                                    <intbox id="txt_transcilindros" disabled="true" tooltiptext="Define los Cilindros del Vehiculo" maxlength="4" width="150px"/>                                                             
+                                                    <cell align="right" valign="botton">
+                                                        <label value="CILINDRADA:"/>
+                                                    </cell>                                                
+                                                    <doublebox id="txt_transcilindradas" disabled="true" locale="en_US" format="###0.###" maxlength="5" width="150px" tooltiptext="Define las Cilindradas del Vehiculo"/>                                 
+                                                </row>                                            
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="TRACCION:"/>
+                                                    </cell>
+                                                    <textbox id="txt_transtraccion" disabled="true" tooltiptext="Define la Tracci|n del Vehiculo" maxlength="20" width="150px"/>                                                             
+                                                </row>
+                                            </rows>
+                                        </grid>
+                                    </div>
+                                </groupbox>
+                            </tabpanel>
+                            <tabpanel>
+                                <div >
+                                    <groupbox closable="false" style="background-color:#FFFFFF" width="100%">
+                                        <caption label="DATOS DE CALCULO" width="100%"/> 
+                                        <grid width="860px">
+                                            <columns>
+                                                <column width="150px"/>
+                                                <column width="170px"/>
+                                                <column width="100px"/>
+                                                <column width="380px"/>
+                                            </columns>
+                                            <rows>                                    
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="PESO BRUTO:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <doublebox id="txt_transpesob" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.##" maxlength="15" width="150px" tooltiptext="Define el peso bruto del vehículo"/>                                 
+                                                    <cell align="left">
+                                                        <label value="KG."/>
+                                                    </cell>
+                                                    <cell align="right" valign="botton" rowspan="6">
+                                                        <hbox align="botton" >
+                                                            <label value="FOTO VEHICULO:"/>
+                                                            <span class="colorRojo">*</span>
+                                                            <textbox id="txt_transimg" disabled="true" maxlength="40" readonly="true" width="220px" tooltiptext="Imagen del Producto,Maximo 40 digitos"/>
+                                                            <toolbarbutton id="tbbtn_btn_imagenpro" image="/images/iconos/buscar.png" 
+                                                                           tooltiptext="Buscar Imagen Vehiculo" upload="true" disabled="true"/>
+                                                        </hbox>
+                                                        <div id="img_vehiculo" width="350px" height="190px" style="border: solid 1px; float: right"/>                                                        
+                                                    </cell>
+                                                </row> 
+                                                <row>    
+                                                    <cell align="right" valign="botton">
+                                                        <label value="PESO NETO:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <doublebox id="txt_transpeson" disabled="true" style="text-align:right" locale="en_US" format="###0.###" maxlength="5" width="150px" tooltiptext="Define el Peso Neto del Vehiculo"/>
+                                                    <cell align="left">
+                                                        <label value="KG."/>
+                                                    </cell>
+                                                </row> 
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="CARGA UTIL:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <doublebox id="txt_transcarga" disabled="true" style="text-align:right" locale="en_US" format="###0.###" maxlength="5" width="150px" tooltiptext="Define la Carga Util del Vehiculo"/>
+                                                    <cell align="left">
+                                                        <label value="KG."/>
+                                                    </cell>
+                                                </row> 
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="LARGO:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <doublebox id="txt_translargo" disabled="true" style="text-align:right" locale="en_US" format="###0.###" maxlength="5" width="150px" tooltiptext="Define la Longitud del Vehiculo"/>
+                                                    <cell align="left">
+                                                        <label value="MT."/>
+                                                    </cell>
+                                                </row> 
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="ALTURA:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <doublebox id="txt_transaltura" disabled="true" style="text-align:right" locale="en_US" format="###0.###" maxlength="5" width="150px" tooltiptext="Define la Altura del Vehiculo"/>
+                                                    <cell align="left">
+                                                        <label value="MT."/>
+                                                    </cell>
+                                                </row> 
+                                                <row>
+                                                    <cell align="right" valign="botton" rowspan="8">
+                                                        <label value="ANCHO:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <doublebox id="txt_transancho" disabled="true" style="text-align:right" locale="en_US" format="###0.###" maxlength="5" width="150px" tooltiptext="Define el Ancho del Vehiculo"/>
+                                                    <cell align="left">
+                                                        <label value="MT."/>
+                                                    </cell>
+                                                </row>                                                   
+                                            </rows>                                           
+                                        </grid>
+                                    </groupbox>
+                                </div>
+                                <space></space>
+                                <div >
+                                    <groupbox closable="false" style="background-color:#FFFFFF" width="100%">
+                                        <caption label="DATOS LABORABLES / OTROS" width="100%"/> 
+                                        <grid width="960px">
+                                            <columns>
+                                                <column width="150px"/>
+                                                <column width="300px"/>
+                                                <column width="150px"/>
+                                                <column width="300px"/>
+                                            </columns>
+                                            <rows>                                    
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="FECHA DE INGRESO:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <datebox id="txt_transfecing" disabled="true" readonly="true" format="dd/MM/yyyy" width="200px" tooltiptext="Define la Fecha de Ingreso del Vehiculo"/>                                 
+                                                    <cell align="right" valign="botton">
+                                                        <label value="FECHA DE SALIDA:"/>
+                                                    </cell>
+                                                    <datebox id="txt_transfecsal" disabled="true" readonly="true" format="dd/MM/yyyy" width="200px" tooltiptext="Define la Fecha de Salida del Vehiculo"/>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="botton">
+                                                        <label value="ORDEN:"/>
+                                                    </cell>
+                                                    <spinner id="sp_transord" value="0" disabled="true" constraint="min 0;max 9999" maxlength="4" tooltiptext="Define el orden del Vehiculo"/>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="REPORTE:" />
+                                                    </cell>
+                                                    <textbox id="txt_transnomrep" disabled="true" width="200px"  maxlength="25" tooltiptext="Define el Nombre del Reporte a Utilizar, Maximo 25 caracteres"/>
+                                                </row>
+                                            </rows>
+                                        </grid>
+                                    </groupbox>
+                                </div>
+                            </tabpanel>
+                            <tabpanel>
+                                <div >
+                                    <groupbox closable="false" style="background-color:#FFFFFF" width="100%">
+                                        <caption label="DATOS PROPIETARIO" width="100%"/>
+                                        <hbox>
+                                            <grid id="grd_veh_prop" width="100%" >
+                                                <columns>
+                                                    <column width="100px"/>
+                                                    <column width="350px"/>
+                                                </columns>
+                                                <rows>
+                                                    <row>
+                                                        <cell align="right" valign="bottom">
+                                                            <label value="ESTADO:" />
+                                                        </cell>
+                                                        <checkbox id="chk_prop_est"  checked="false" disabled="true" label="Activo" tooltiptext="Define el Estado del Propietario"/>
+                                                    </row>
+                                                    <row >
+                                                        <cell align="right" valign="bottom">
+                                                            <label value="ID:" />
+                                                        </cell>
+                                                        <intbox id="txt_prop_id" disabled="true" maxlength="4" width="100px"  tooltiptext="Define el Codigo del Propietario"/>
+                                                    </row>             
+                                                    <row>
+                                                        <cell align="right" valign="bottom">
+                                                            <label value="PROPIETARIO:" />
+                                                        </cell>
+                                                        <combobox id="cb_prop" disabled="true" readonly="true" width="320px" tooltiptext="Define el Propietario del vehiculo">
+                                                            <template name="model">
+                                                                <comboitem label="${each.prop_razsoc}" value="${each.prop_id}"/>
+                                                            </template>
+                                                        </combobox>
+                                                    </row>   
+                                                </rows>
+                                            </grid>
+                                            <hbox width="380px">
+                                                <listbox id="lst_propietario" mold="paging" pageSize="5" width="430px">
+                                                    <listhead>
+                                                        <listheader label="ID" width="40px" align="center"/>
+                                                        <listheader label="PROPIETARIO"/>
+                                                    </listhead>	
+                                                    <template name="model">
+                                                        <listitem>
+                                                            <listcell label="${each.prop_id}"/>
+                                                            <listcell label="${each.prop_razsoc}"/>
+                                                        </listitem>
+                                                    </template>
+                                                </listbox>
+                                                <toolbar id="tb_propietario" width="25px" height="150px">
+                                                    <toolbarbutton id="tbbtn_btn_nuevop" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                                                    <toolbarbutton id="tbbtn_btn_editarp" image="/images/iconos/editar.png"  tooltiptext="Editar" />            
+                                                    <toolbarbutton id="tbbtn_btn_eliminarp" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" />
+                                                    <toolbarbutton id="tbbtn_btn_guardarp" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                                                    <toolbarbutton id="tbbtn_btn_deshacerp" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                                                </toolbar>
+                                            </hbox>
+                                        </hbox>
+                                    </groupbox>
+                                </div>
+                                <separator height="10px"/>
+                                <div>
+                                    <groupbox closable="false" style="background-color:#FFFFFF" width="100%">
+                                        <caption label="DATOS SOAT" width="100%"/> 
+                                        <hbox>
+                                            <grid id="grd_veh_soat" width="100%" >
+                                                <columns>
+                                                    <column width="100px"/>
+                                                    <column width="300px"/>
+                                                </columns>
+                                                <rows>
+                                                    <row>
+                                                        <cell align="right" valign="bottom">
+                                                            <label value="ESTADO:" />
+                                                        </cell>
+                                                        <checkbox id="chk_soat_est"  checked="false" disabled="true" label="Activo" tooltiptext="Define el Estado del Soat"/>
+                                                    </row>
+                                                    <row >
+                                                        <cell align="right" valign="bottom">
+                                                            <label value="ID:" />
+                                                        </cell>
+                                                        <intbox id="txt_soat_id" disabled="true" maxlength="4" width="100px"  tooltiptext="Define el Codigo del Soat"/>
+                                                    </row>
+                                                    <row>
+                                                        <cell align="right" valign="botton">
+                                                            <label value="EMPRESA:"/>
+                                                        </cell>
+                                                        <combobox id="cb_seguro" disabled="true" readonly="true" width="200px" tooltiptext="Define la Empresa Aseguradora">
+                                                            <template name="model">
+                                                                <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                            </template>
+                                                        </combobox> 
+                                                    </row>               
+                                                    <row>
+                                                        <cell align="right" valign="bottom">
+                                                            <label value="SOAT:" />
+                                                        </cell>
+                                                        <textbox id="txt_soat_nro" disabled="true" width="280px" maxlength="15" tooltiptext="Define el Numero del Soat, Maximo 15 caracteres"/> 
+                                                    </row>
+                                                    <row>    
+                                                        <cell align="right" valign="bottom">
+                                                            <label value="F.INICIO:" />
+                                                        </cell>
+                                                        <datebox id="txt_soat_fecini" disabled="true" readonly="true" format="dd/MM/yyyy" width="150px" tooltiptext="Define la Fecha de Inicio del Soat"/> 
+                                                    </row>
+                                                    <row>
+                                                        <cell align="right" valign="bottom">
+                                                            <label value="F.VCTO:" />
+                                                        </cell>
+                                                        <datebox id="txt_soat_fecfin" disabled="true" readonly="true" format="dd/MM/yyyy" width="150px" tooltiptext="Define la Fecha de Vencimiento del Soat"/> 
+                                                    </row>
+                                                </rows>
+                                            </grid>
+                                            <hbox width="380px">
+                                                <listbox id="lst_soat" mold="paging" pageSize="8" width="430px">
+                                                    <listhead>
+                                                        <listheader label="ASEGURADORA" align="center"/>
+                                                        <listheader label="SOAT" width="120px" align="center"/>
+                                                        <listheader label="FEC.INICIO" width="90px" align="center"/>
+                                                        <listheader label="FEC.VENCIM" width="90px" align="center"/>
+                                                    </listhead>	
+                                                    <template name="model">
+                                                        <listitem>
+                                                            <listcell label="${each.tab_subdes}"/>
+                                                            <listcell label="${each.soat_nro}"/>
+                                                            <listcell label="${each.soat_fechainicial}"/>
+                                                            <listcell label="${each.soat_fechafinal}"/>
+                                                        </listitem>
+                                                    </template>
+                                                </listbox>
+                                                <toolbar id="tb_soat"  width="25px" height="200px">
+                                                    <toolbarbutton id="tbbtn_btn_nuevos" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                                                    <toolbarbutton id="tbbtn_btn_editars" image="/images/iconos/editar.png"  tooltiptext="Editar" />            
+                                                    <toolbarbutton id="tbbtn_btn_eliminars" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" />
+                                                    <toolbarbutton id="tbbtn_btn_guardars" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                                                    <toolbarbutton id="tbbtn_btn_deshacers" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                                                </toolbar>
+                                            </hbox>
+                                        </hbox>
+                                    </groupbox>
+                                </div>    
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+    
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>

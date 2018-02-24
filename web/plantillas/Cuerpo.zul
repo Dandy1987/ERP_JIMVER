@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <hbox self="@define(content)"  vflex="1" hflex="1" align="top" pack="center" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerPrivilegios" >
+        <vlayout style="margin-top:5px;">
+            <hbox>
+                <div sclass="details-holder show-details"  >
+                    <a href="/org/me/gj/view/logistica/Logistica.zul">
+                        <image src="images/modulos/Logistica.png" id="img_logistica"  />
+                    </a>
+                    <div sclass="img-info">
+                        <label value="MODULO DE LOGISTICA"/>
+                    </div>
+                </div>
+                <div sclass="details-holder show-details">
+                    <a href="/org/me/gj/view/cxc/Cxc.zul">
+                            <image src="images/modulos/Cuentas x cobrar.png" id="img_cxc"/>
+                    </a>
+                    <div sclass="img-info">
+                        <label value="MODULO DE CUENTAS POR COBRAR"/>
+                 
+                    </div>
+                </div>
+                <div sclass="details-holder show-details">
+                    <a href="/org/me/gj/view/distribucion/Distribucion.zul">
+                        <image src="images/modulos/Distribucion.png" id="img_distribucion"/>
+                    </a>
+                    <div sclass="img-info">
+                        <label value="MODULO DE DISTRIBUCION"/>
+                    </div>
+                </div>
+                <div sclass="details-holder show-details">
+                    <a href="/org/me/gj/view/facturacion/Facturacion.zul">
+                        <image src="images/modulos/Facturacion.png" id="img_facturacion"/>
+                    </a>
+                    <div sclass="img-info">
+                        <label value="MODULO DE FACTURACION"/>
+                 
+                    </div>
+                </div>
+            </hbox>
+            <hbox>
+                <div sclass="details-holder show-details">
+                    <a href="#">
+                        <image src="images/modulos/Cuentas x pagar.png" id="img_cxp"/>
+                    </a>
+                    <div sclass="img-info">
+                        <label value="MODULO DE CUENTAS POR PAGAR"/>
+                 
+                    </div>
+                </div>
+                <div sclass="details-holder show-details">
+                    <a href="#">
+                        <image src="images/modulos/Bancos.png" id="img_bancos"/>
+                    </a>
+                    <div sclass="img-info">
+                        <label value="MODULO DE BANCOS"/>
+                 
+                    </div>
+                </div>
+                <div sclass="details-holder show-details">
+                    <a href="#">
+                        <image src="images/modulos/Caja.png" id="img_caja"/>
+                    </a>
+                    <div sclass="img-info">
+                        <label value="MODULO DE CAJA"/>
+                 
+                    </div>
+                </div>
+                <div sclass="details-holder show-details">
+                    <a href="/org/me/gj/view/contabilidad/Contabilidad.zul">
+                        <image src="images/modulos/Contabilidad.png" id="img_contabilidad"/>
+                    </a>
+                    <div sclass="img-info">
+                        <label value="MODULO DE CONTABILIDAD"/>
+                 
+                    </div>
+                </div>
+            </hbox>
+            <hbox>
+                <div sclass="details-holder show-details">
+                    <a href="/org/me/gj/view/planillas/Planillas.zul">
+                        <image src="images/modulos/Planillas.png" id="img_planillas"/>
+                    </a>
+                    <div sclass="img-info">
+                        <label value="MODULO DE PLANILLAS"/>
+                    </div>
+                </div>
+                <div sclass="details-holder show-details">
+                    <a href="/org/me/gj/view/seguridad/Seguridad.zul">
+                        <image src="images/modulos/Seguridad.png" id="img_seguridad"/>
+                    </a>
+                    <div sclass="img-info">
+                        <label value="MODULO DE SEGURIDAD"/>
+                    </div>
+                </div>
+                <div sclass="details-holder show-details">
+                    <a href="#">
+                        <image src="images/modulos/Finanzas.png" id="img_finanzas"/>
+                    </a>
+                    <div sclass="img-info">
+                        <label value="MODULO DE FINANZAS"/>
+                 
+                    </div>
+                </div>
+                <div sclass="details-holder show-details">
+                    <a href="#">
+                        <image src="images/modulos/Estadistica.png" id="img_estadisticas"/>
+                    </a>
+                    <div sclass="img-info">
+                        <label value="MODULO DE ESTADISTICAS"/>
+                    </div>
+                </div>
+            </hbox>
+        </vlayout>
+    </hbox>
+</zk>

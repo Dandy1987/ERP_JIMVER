@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuFacturacion.zul"/>
+        </north>
+        <center>
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_manvendedores" ctrlKeys="#f2#f4#f7#f10#f9#f8" width="100%" height="100%" border="none" closable="true">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)"  />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar (F4)" />                 
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png"  tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png"  tooltiptext="Imprimir (F8)"  />
+                        <label value="MANTENIMIENTO DE VENDEDORES" sclass="titulo_mant" style="margin-left:229px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_vendedores" ctrlKeys="#f10" apply="org.me.gj.controller.facturacion.mantenimiento.ControllerVendedores">
+                        <tabs  >
+                            <tab id="tab_listavendedores" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_vendedores.getSelectedIndex() == -1)
+                                    {
+                                    tab_listavendedores.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="985px" closable="false">
+                                    <caption label="Opciones de Busqueda"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true" >
+                                            <comboitem label=" "/><!-- Indice 0 -->
+                                            <comboitem label="ID"/>     <!-- Indice 1 -->
+                                            <comboitem label="APELLIDOS"/>  <!-- Indice 2 -->
+                                            <comboitem label="NOMBRES"/>    <!-- Indice 3 -->
+                                            <comboitem label="CANAL"/>      <!-- Indice 4 -->
+                                            <comboitem label="MOVIL"/>      <!-- Indice 5 -->
+                                            <comboitem label="DNI"/>        <!-- Indice 6 -->
+                                            <comboitem label="SUPERVISOR"/> <!-- Indice 7 -->
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <separator/>
+                                        <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;" value="%%" placeholder="Ingrese un Valor para la busqueda"/>
+                                        <separator width="20px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="ESTADO:" id="lbl_estado"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busest" readonly="true" tooltiptext="Seleccione una Opción" width="110px">
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+
+                                        <separator width="20px"/>
+                                        <button id="tbbtn_btn_buscar" sclass="botones" label="Consultar" tooltiptext="Buscar" />            
+                                    </hbox>
+                                </groupbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_vendedores"  mold="paging" pageSize="18"  width="985px" height="460px">
+                                    <listhead>
+                                        <listheader label="ID VEND" width="50px" align="center"/>
+                                        <listheader label="APELLIDOS" width="200px"/>                                        
+                                        <listheader label="NOMBRES"/>
+                                        <listheader label="MOVIL" width="85px" align="center"/>
+                                        <listheader label="DNI" width="75px" align="center"/>                                        
+                                        <listheader label="CANAL" width="120px"/>
+                                        <listheader label="MESA-SUPERVISOR" width="200px"/>
+                                        <listheader label="EST" width="25px"/>                                  
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.ven_id}"/>
+                                            <listcell label="${each.ven_ape}"/>
+                                            <listcell label="${each.ven_nom}"/>
+                                            <listcell label="${each.ven_mov}"/>
+                                            <listcell label="${each.ven_dni}"/>
+                                            <listcell label="${each.tab_subdir}-${each.canal}"/>
+                                            <listcell label="${each.mesa_id}-${each.sup_des}"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="10"  readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador al Vendedor"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación al Vendedor"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó al Vendedor"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación al Vendedor"/>    
+                                </hbox>
+                            </tabpanel> 
+                            <tabpanel>
+                                <div >
+                                    <grid width="988px">
+                                        <columns>
+                                            <column width="140px"/>
+                                            <column width="355px"/>
+                                            <column width="135px"/>
+                                            <column width="355px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>                 
+                                                <cell align="right" valign="botton">
+                                                    <label value="CODIGO:"/>
+                                                </cell>
+                                                <textbox id="txt_venid" disabled="true" maxlength="4" width="30px" tooltiptext="Define el Codigo del Vendedor, Maximo 4 digitos "/>                                    
+                                                
+                                                <cell align="right" valign="botton">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_venest" disabled="true" checked="true" label="ACTIVO" tooltiptext="Define el Estado del Vendedor">
+                                                    <attribute name="onCheck">
+                                                        if(chk_venest.isChecked())
+                                                        chk_venest.setLabel("ACTIVO");
+                                                        else
+                                                        chk_venest.setLabel("INACTIVO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="APELLIDOS:"/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <textbox id="txt_venape" disabled="true" maxlength="30" width="225px" tooltiptext="Define el apellido del Vendedor, Máximo 30 caracteres"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="NOMBRES:"/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <textbox id="txt_vennom" disabled="true" maxlength="30" width="225px" tooltiptext="Define el nombre del vendedor, Máximo 30 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="DNI:"/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <textbox id="txt_vendni" disabled="true" maxlength="8" width="60px" tooltiptext="Define el DNI del Vendedor, Máximo 8 caracteres"/>
+                                                
+                                                <cell align="right" valign="botton">
+                                                    <label value="PASSWORD:"/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <textbox id="txt_venpas" disabled="true" maxlength="4" width="30px" tooltiptext="Define la contraseña para el Tomapedido, Máximo 4 caracteres"/>
+                                            </row>
+                                            
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="MOVIL:"/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <longbox id="txt_venmov" disabled="true" maxlength="9" width="68px" tooltiptext="Define el telefono nextel del Vendedor, Máximo 9 caracteres"/>
+                                                
+                                                <cell align="right" valign="botton">
+                                                    <label value="CELULAR:"/>
+                                                    <span class="colorRojo">*</span>   
+                                                      
+                                                </cell>
+                                                <longbox id="txt_vencel" disabled="true" maxlength="9" width="68px" tooltiptext="Define el telefono movil del Vendedor, Máximo 9 caracteres"/>
+                                            </row>
+                                            
+                                            <row>
+                                                
+                                                <cell align="right" valign="botton">
+                                                    <label value="SUPERVISOR:"/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <hbox>
+                                                    <textbox id="txt_supid" disabled="true" width="30px" maxlength="4" tooltiptext="Define el Codigo del Supervisor, Maximo 4 digitos"/>
+                                                    <!-- descripcion auxiliar-->
+                                                    <textbox id="txt_supdes" disabled="true" maxlength="50" width="300px" tooltiptext="Define el nombre y apellido del supervisor que sera apoyado, Máximo 50 caracteres"/>
+                                                </hbox>
+                                                
+                                                <cell align="right" valign="botton">
+                                                    <label value="CANAL DE VENTA:"/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <hbox>
+                                                    <textbox id="txt_tabid" disabled="true" width="15px" maxlength="2" tooltiptext="Define el Codigo del Canal de Venta, Maximo 4 digitos"/>
+                                                    <!-- descripcion auxiliar-->
+                                                    <textbox id="txt_tabdes" disabled="true" maxlength="50" width="200px" tooltiptext="Define la descripcion del Canal de Venta, Máximo 50 caracteres"/>
+                                                </hbox>
+                                                
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="DIAS MOROSIDAD:"/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <intbox id="txt_vendiamor" disabled="true" maxlength="2" width="15px" tooltiptext="Define los dias de morosidad para el Vendedor, Maximo 2 digitos"/>
+                                                
+                                                <cell align="right" valign="botton">
+                                                    <label value="GPS:"/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <checkbox id="chk_vengps" disabled="true" checked="true" label="ACTIVO" tooltiptext="Define el GPS del Vendedor">
+                                                    <attribute name="onCheck">
+                                                        if(chk_vengps.isChecked())
+                                                        chk_vengps.setLabel("ACTIVO");
+                                                        else
+                                                        chk_vengps.setLabel("INACTIVO");
+                                                    </attribute>
+                                                </checkbox>
+                                                
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="NOMBRE DE REPORTE:"/>
+                                                </cell>
+                                                <textbox id="txt_nomrep" disabled="true" maxlength="25" width="188px" tooltiptext="Define los dias de morosidad para el Vendedor, Maximo 25 digitos"/>
+                                                
+                                                <cell align="right" valign="botton">
+                                                    <label value="ORDEN:"/>
+                                                </cell>
+                                                <spinner id="sp_tabord" value="0" disabled="true" constraint="min 0; max 999" maxlength="3" tooltiptext="Define el orden de los vendedores"/>
+                                            </row>
+                                           
+                                           
+                                        </rows>
+                                    </grid>
+                                </div>
+                            </tabpanel>     
+                        </tabpanels>
+                    </tabbox>   
+                </window>
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+    
+    
+</zk>

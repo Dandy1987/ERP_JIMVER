@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north height="27px" sclass="arriba-main">
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_cieperiodo" width="100%" height="100%" 
+                        border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_cerrar" image="/images/iconos/aprobar.png"  tooltiptext="Cerrar Periodo" />
+                        <toolbarbutton id="tbbtn_btn_revertir" image="/images/iconos/rechazar.png"  tooltiptext="Revertir Cierre" />              
+                        <label value="APERTURA/CIERRE PERIODO" sclass="titulo_mant" style="margin-left:360px;"/>
+                    </toolbar>                    
+                    <tabbox id="tabbox_cierreperiodo" apply="org.me.gj.controller.logistica.utilitarios.ControllerCierrePeriodo">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <hbox>
+                                    <groupbox width="988px" open="true" closable="false">
+                                        <caption label="BUSCAR AÑO"/>
+                                        <vbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="50px">
+                                                    <label value="AÑO:"/>
+                                                </cell>
+                                                <space width="2px"/> 
+                                                <combobox id="cb_anio" readonly="true" width="70px" tooltiptext="Seleccione Año" >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.anio}" value="${each.anio}"/>                                                                                                      
+                                                    </template>                                                
+                                                </combobox>                                                                                        
+                                            </hbox> 
+                                        </vbox>
+                                    </groupbox>
+                                </hbox>
+                                <separator height="10px"/>
+                                <listbox id="lst_cierreperiodo" mold="paging" pageSize="21" width="984px" height="490px" >
+                                    <listhead>
+                                        <listheader label="PERIODO" width="70px"/>
+                                        <listheader label="SITUACION" width="84px"/>
+                                        <listheader label="USUARIO ADICION"  width="160px"/>
+                                        <listheader label="FECHA ADICION"  width="255px"/>
+                                        <listheader label="USUARIO MODIFICACION"  width="160px"/>
+                                        <listheader label="FECHA MODIFICACION"  width="255px"/>
+                                    </listhead>
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.per_id}"/>
+                                            <listcell label="${each.cieper_sitlog}"/>
+                                            <listcell label="${each.cieper_usuadd}"/>
+                                            <listcell label="${each.cieper_sfecadd}"/>
+                                            <listcell label="${each.cieper_usumod}"/>
+                                            <listcell label="${each.cieper_sfecmod}"/>
+                                        </listitem>
+                                    </template>		
+                                </listbox>
+                            </tabpanel> 
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south height="25px" border="0">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>    
+</zk>

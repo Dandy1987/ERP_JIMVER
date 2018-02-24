@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:w="client">
+    <window id="w_lov_guiaremision" title="LISTADO DE GUIAS DE REMISION" border="normal" width="596px"
+            height="520px" position="center,center" closable="true"
+            apply="org.me.gj.controller.componentes.ControllerLovFacInfGuiaRem"
+            action="show: slideDown;hide: slideUp"> 
+        <div >
+            <vbox>
+                <hbox align="right">
+                    <groupbox width="500px" height="60px" closable="false"  >
+                        <caption label="MODO DE GENERACION"/>
+                        <radiogroup id="rbg_modo" >
+                            <space width="30px"/>
+                            <radio label="INDIVIDUAL"/>
+                            <space width="30px"/>
+                            <radio label="BLOQUE" checked="true"/>
+                        </radiogroup>
+                        <space width="30px"/>
+                        <label value="TIPO GUIA:"/>
+                        <space width="10px"/>
+                        <combobox id="cb_tipguia" readonly="true" width="180px" value="REMITENTE">
+                            <comboitem label="REMITENTE" value="01"/>
+                            <comboitem label="TRANSPORTISTA" value="02"/>
+                            <comboitem label="" value=""/>                                                                                                                                 
+                        </combobox>
+                    </groupbox>
+                    <space height="15px"/>
+                    <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)"  /> 
+                </hbox>
+                <space height="5px"/>
+                <hbox align="right">
+                    <cell align="right" valign="center" >
+                        <label value="SUCURSAL:"/>
+                    </cell>
+                    <combobox id="cb_sucursal" readonly="true" width="135px">
+                        <template name="model">    
+                            <comboitem label="${each.suc_des}" value="${each.suc_id}"/>                                                                                                      
+                        </template>                                                
+                    </combobox>
+                    <space width="5px"/>
+                    <cell align="right" valign="center">
+                        <label value="ACTIVOS" id="lbl_activos"/>
+                    </cell>
+                    <checkbox id="chk_activos" checked="true"/>
+                    <space width="5px"/>
+                    <label value="FEC.EMI:"/>
+                    <datebox id="d_fecemi" maxlength="10" width="80px" format="dd/MM/yyyy"/>  
+                    <space width="10px"/>
+                    <label value="FEC.ENVÍO:"/>
+                    <datebox id="d_fecenvio" maxlength="10" width="80px" format="dd/MM/yyyy"/>  
+                </hbox>
+                <space height="2px"/>
+                <hbox align="right">
+                    <cell align="right" valign="center">
+                        <label value="TRANSPORTE:"/>
+                    </cell>                                                                                                                                              
+                    <textbox id="txt_trans_id" maxlength="4" width="35px" disabled="true" tooltiptext="Código del transporte máximo 4 caracteres"/>
+                    <textbox id="txt_trans_des" maxlength="60" width="200px" disabled="true" tooltiptext="Nombre del transporte"/>
+                    <space height="2px"/>
+                    <button id="btn_consultar" label="CONSULTAR" sclass="botones"/>
+                    <button id="btn_generar" label="GENERAR" sclass="botones"/> 
+                </hbox>
+                <space height="2px"/>
+                <listbox id="lst_p" mold="paging" pageSize="10" width="570px" height="310px" >
+                    <listhead>
+                        <listheader label="ID" width="40px"/>
+                        <listheader label="TRANSPORTE"  width="155px"/>
+                        <listheader label="GUIA"  width="120px"/> 
+                        <listheader label="TIPO"  width="120px"/>
+                        <listheader label="ESTADO"  width="100px"/> 
+                        <listheader label="" width="35px"/>
+                    </listhead>	
+                    <template name="model">
+                        <listitem>
+                            <listcell label="${each.pcab_nroped}"/>
+                            <listcell label="${each.s_fecemi}"/>
+                            <listcell label="${each.cli_id}" style="text-align: right;"/>
+                            <listcell label="${each.cli_des}"/>
+                            <listcell label="${each.con_id}"/>
+                            <listcell>
+                                <checkbox disabled="true" checked="${each.valor}"/>
+                            </listcell>
+                        </listitem>
+                    </template>
+                </listbox>
+                <hbox align="right">
+                    <cell align="right" valign="center">
+                        <label value="TOTAL GUIAS:"/>
+                    </cell>                                                                                                                                              
+                    <textbox id="txt_totguias" maxlength="10" width="80px" disabled="true"/>
+                </hbox>                           
+            </vbox>
+        </div>
+    </window>
+</zk>
+

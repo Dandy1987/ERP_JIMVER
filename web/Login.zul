@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos_login.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <hbox hflex="1" vflex="1" align="center" pack="center"> <!-- self="@define(content)" -->
+        <vlayout>
+            <div id="div_login" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerLogin" style="border: 2px solid #0080C8;border-radius: 15px;">
+                <grid id="grd_logins" width="400px" height="auto">
+                    <rows>
+                        <row >
+                            <cell colspan="2" valign="bottom" align="middle">
+                                <image src="/images/logos/jimver.png"/>
+                            </cell>
+                        </row>
+                    </rows>
+                </grid>
+                <grid id="grd_login" width="400px"  height="auto">
+                     <rows>
+                        <row>
+                            <cell sclass="celda" width="130px">
+                                <label value="USUARIO : " />
+                            </cell>
+                            <textbox id="txt_user" focus="true" maxlength="15" sclass="caja-user" placeholder="Usuario" tooltiptext="Ingrese Usuario" value="CHUALLPA" width="150px"/> <!-- value="WCAMACHO"  -->
+                        </row>
+                        <row>
+                            <cell sclass="celda">
+                                <label value="CONTRASEÑA : " />
+                            </cell>
+                            <textbox id="txt_pass" type="password" maxlength="15" sclass="caja-password" placeholder="Contraseña" tooltiptext="Ingrese Contraseña" value="0258" width="150px" />  <!-- value="123456"  -->
+                        </row>
+                        <row>
+                            <cell sclass="celda">
+                                <label value="EMPRESA : " />
+                            </cell>
+                            <combobox id="cbx_emp" sclass="combo-empresa" placeholder="Empresa" readonly="true" tooltiptext="Seleccione Empresa" value="DACIA" width="172px">   <!-- value="CODIJISA"  -->           
+                                <template name="model"> 
+                                    <comboitem label="${each.emp_sig}" value="${each.emp_id}"/>
+                                </template>
+                            </combobox>
+                        </row>
+                        <row>
+                            <cell sclass="celda">
+                                <label value="SUCURSAL : "/>
+                            </cell>
+                            <combobox id="cbx_suc" sclass="combo-sucursal"  placeholder="Sucursal" disabled="true" readonly="true" tooltiptext="Seleccione Sucursal" width="172px" >             
+                                <template name="model"> 
+                                    <comboitem label="${each.suc_des}" value="${each.suc_id}" />
+                                </template>
+                            </combobox>
+                        </row>
+                        <row > 
+                            <cell colspan="2" sclass="celdaCentrada" >
+                                <button id="btn_login" label="Acceder" sclass="botones"/>
+                            </cell>
+                        </row>
+                        <row > 
+                            <cell colspan="2" sclass="celdaCentrada">
+                                <label id="lbl_tipologin" value="USER" visible="false"/>
+                            </cell>
+                        </row>
+                        <row > 
+                            <cell colspan="2" sclass="celdaCentrada">
+                                <a href="/LoginAdm.zul" zclass="login-hiperlink" >
+                                    <label id="lbl_administrador" value="Iniciar Sesión como Administrador" />    
+                                </a>
+                            </cell>
+                        </row>
+                    </rows>
+                </grid>
+            </div>
+            <div >
+                <a href="#" disabled="true" sclass="details-holder show-details">
+                    <image src="/images/iconos/zk1.png" tooltip="msg"/>
+                    <popup id="msg" width="100px">
+                        <vlayout>
+                            <a href="http://www.zkoss.org/" zclass="login-hiperlink" disabled="true"  >ZK Framework</a>
+                        </vlayout>
+                    </popup>
+                </a>
+                <a href="#" disabled="true" sclass="details-holder show-details">
+                    <image src="/images/iconos/oracle1.png" tooltip="msg1"/>
+                    <popup id="msg1" width="60px">
+                        <vlayout>
+                            <a href="http://www.oracle.com/es/index.html" zclass="login-hiperlink" disabled="true"  >Oracle</a>
+                        </vlayout>
+                    </popup>    
+                </a>
+                <a href="#" disabled="true" sclass="details-holder show-details">
+                    <image src="/images/iconos/java1.png" tooltip="msg2"/>
+                    <popup id="msg2" width="50px">
+                        <vlayout>
+                            <a href="https://www.java.com/es/" zclass="login-hiperlink" disabled="true"  >Java</a>
+                        </vlayout>
+                    </popup>
+                </a>
+            </div>    
+        </vlayout>
+    </hbox>
+</zk>
+

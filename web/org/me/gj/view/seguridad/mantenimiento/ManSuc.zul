@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicialSeguridad"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main"  >
+            <include src="/plantillas/MenuAdm.zul"/>
+        </north>
+        <center  >
+            <div sclass="cuerpo-main" >
+                <window id="w_usuarios" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%" >
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" disabled="true" />            
+                        <label value="MANTENIMIENTO DE SUCURSALES" sclass="titulo_mant" style="margin-left:247px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_sucursales" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerSucursales">
+                        <tabs>
+                            <tab id="tab_listasucursales" label="LISTA"/>
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_sucursales.getSelectedIndex() == -1)
+                                    {
+                                        tab_listasucursales.setSelected(true);
+                                        Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_emp" >
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="Opciones de busqueda"/>
+                                        <hbox>
+                                            <cell align="right" valign="center">
+                                                <label value="FILTRO:"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una opción">
+                                                <comboitem label=" "/>
+                                                <comboitem label="ID"/>
+                                                <comboitem label="REGION"/>
+                                                <comboitem label="DIRECCION"/>
+                                                <comboitem label="EMPRESA"/>
+                                                <attribute name="onSelect">
+                                                    txt_busqueda.setDisabled(false);
+                                                </attribute>
+                                            </combobox>
+                                            <space width="2px"/>
+                                            <textbox id="txt_busqueda" width="400px" disabled="true" value="%%" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                            <space width="2px"/>
+                                            <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una opción" width="110px">
+                                                <comboitem label="ACTIVO"/>
+                                                <comboitem label="INACTIVO"/>
+                                                <comboitem label=" "/>       
+                                            </combobox>
+                                            <space width="10px"/>
+                                            <button id="btn_buscar" label="Buscar" sclass="botones"/>
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <listbox id="lst_sucursales"  mold="paging" pageSize="20" width="985px" height="490px">
+                                        <listhead>
+                                            <listheader label="ID" width="50px"/>
+                                            <listheader label="EMPRESA" width="200px"/>
+                                            <listheader label="REGION" width="200px"/>
+                                            <listheader label="DIRECCION" width="200px"/>
+                                            <listheader label="TELEFONO" width="200px"/>
+                                            <listheader label="FAX" width="70px"/>
+                                            <listheader label="EST" width="30px"/>
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.suc_id}"/>
+                                                <listcell label="${each.emp_sig}"/>
+                                                <listcell label="${each.suc_des}"/>
+                                                <listcell label="${each.suc_dir}"/>
+                                                <listcell label="${each.suc_telef}"/>
+                                                <listcell label="${each.suc_fax}"/>
+                                                <listcell >
+                                                    <checkbox checked="${each.valor}" disabled="true"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                </div>    
+                            </tabpanel>
+                            <tabpanel>
+                                <div id="div_man_suc" >
+                                    <grid id="grd_man_suc" width="900px">
+                                        <columns>
+                                            <column width="100px"/>
+                                            <column width="500px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>
+                                                <cell align="right" valign="bottom" colspan="2">
+                                                    <checkbox id="chk_sucest"  checked="false" disabled="true" label="Activo" tooltiptext="Define el estado de la sucursal"/>
+                                                </cell>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="ID:" />
+                                                </cell>
+                                                <intbox id="txt_id" disabled="true" maxlength="3" tooltiptext="Define el código de la sucursal, máximo 3 caracteres"/>  
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="EMPRESA:" />
+                                                </cell>
+                                                <combobox id="cb_empsig" disabled="true" width="320px" tooltiptext="Definde la empresa">  
+                                                    <template name="model">
+                                                        <comboitem label="${each.emp_sig}" value="${each.emp_id}"/>
+                                                    </template>
+                                                </combobox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="REGION:" />
+                                                </cell>
+                                                <textbox id="txt_suclug" disabled="true" width="320px" maxlength="50" tooltiptext="Define la región de la sucursal, máximo 50 caracteres"/> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="DIRECCION:" />
+                                                </cell>
+                                                <textbox id="txt_sucdir" disabled="true" width="340px" maxlength="70" tooltiptext="Define la dirección de la sucursal, máximo 70 caracteres"/> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="TELEFONO" />
+                                                </cell>
+                                                <longbox id="txt_suctel" disabled="true" width="100px" maxlength="15" tooltiptext="Define el telefono de la sucursal, Máximo 15 caracteres"/> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="FAX:" />
+                                                </cell>
+                                                <textbox id="txt_sucfax" disabled="true" width="100px" maxlength="15" tooltiptext="Define el fax de la sucursal, máximo 15 caracteres"/> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ORDEN:"/>
+                                                </cell>
+                                                <spinner id="sp_sucord" value="0" disabled="true" constraint="min 0" tooltiptext="Define el orden de la sucursal"/>
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                </div>    
+                            </tabpanel>
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south border="0">
+            <include src="/plantillas/modulos/PieSeguridad.zul"/>
+        </south>
+    </borderlayout>     
+</zk>

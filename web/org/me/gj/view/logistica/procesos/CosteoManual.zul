@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_costeonotes" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" disabled="true" />   
+                        <label value="COSTEO NOTA E/S - MANUAL" sclass="titulo_mant" style="margin-left:220px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_notes" ctrlKeys="#f10" apply="org.me.gj.controller.logistica.procesos.ControllerCosteoMan"> 
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_notes.getSelectedIndex() == -1)
+                                    {
+                                    tab_lista.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla "," ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <hbox>
+                                    <groupbox width="988px" closable="false" >
+                                        <caption label="BUSCAR NOTA DE E/S"/>
+                                        <vbox>
+                                            <hbox align="center"> 
+                                                <cell align="right" valign="center">
+                                                    <label value="PERIODO:"/>
+                                                </cell>
+                                                <space width="2px"/>
+                                                <combobox id="cb_periodo" readonly="true" width="70px" tooltiptext="Seleccione Periodo de Nota de E/S" >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.per_periodo}" value="${each.per_id}"/>                                                                                                      
+                                                    </template>                                                
+                                                </combobox>
+                                                <space width="5px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="FECHA :"/>
+                                                </cell>
+                                                <space width="2px"/>
+                                                <datebox id="d_fecemi" width="85px" format="dd/MM/yyyy" tooltiptext="Fecha de Emisión"/> 
+                                                <space width="5px"/>
+                                                <cell valign="botton">
+                                                    <label value="NOTA E/S:"/>  
+                                                </cell>
+                                                <textbox id="txt_nestipnotaes" maxlength="3" width="30px" disabled="false" tooltiptext="Define el Código del Tipo de Nota E/S, máximo 3 caracteres" />
+                                                <textbox id="txt_ntipnotaes" maxlength="50" width="280px" disabled="true" tooltiptext="Define la Descripción de la Nota E/S, máximo 50 caracteres" />                                  
+                                                <space width="5px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="SITUACION: "/>
+                                                </cell>
+                                                <combobox id="cb_situacion" width="120px" tooltiptext="Concepto de la Nota E/S" readonly="true">
+                                                    <comboitem label=" " value="%%"/>
+                                                    <comboitem label="FALTA FACTURA" value="FF"/>
+                                                    <comboitem label="FALTA PRODUCTO" value="FP"/> 
+                                                    <comboitem label="NORMAL" value="N"/> 
+                                                </combobox>                                                
+                                                <separator width="10px"/>
+                                                <button id="btn_consultar" label="Consultar" sclass="botones"/> 
+                                            </hbox> 
+                                        </vbox>
+                                    </groupbox>
+                                </hbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_notes" mold="paging" pageSize="19" width="985px" height="460px">
+                                    <listhead>
+                                        <!--    <listheader label="DESP" width="40px"/>     -->
+                                        <listheader label="TIPO"  width="35px"/>
+                                        <listheader label="NOTA E/S"  width="234px"/>
+                                        <listheader label="# NOTA E/S"  width="70px"/>
+                                        <listheader label="FECHA" width="65px"/>
+                                        <listheader label="# O/C" width="75px"/>
+                                        <listheader label="REFERENCIA" width="85px"/>
+                                        <listheader label="PROVEEDOR" width="250px"/>
+                                        <!--    <listheader label="CLIENTE" width="70px"/>-->
+                                        <!--    <listheader label="CST" width="30px"/>-->
+                                        <listheader label="SITUACION" width="170px"/>
+                                    </listhead>
+                                    <template name="model">
+                                        <listitem>
+                                            <!--    <listcell label="${each.despacho}" style="text-align: center; background-color: skyblue;color: blue;"/> -->
+                                            <listcell label="${each.nescab_tipnotaes}"/>
+                                            <listcell label="${each.notaes}"/>
+                                            <listcell label="${each.nescab_id}" style="text-align: center; background-color: #F2F5A9; color: black;"/>
+                                            <listcell label="${each.fecha}"/>
+                                            <listcell label="${each.ord_compra}"/>
+                                            <listcell label="${each.referencia}"/>
+                                            <listcell label="${each.nescab_provrazsoc}"/>
+                                            <!--      <listcell label="${each.nescab_cliid}"/>-->
+                                            <!--      <listcell label="${each.costeo}" style="text-align: center; background-color: #BEF781;color: #2E2E2E;"/>-->
+                                            <listcell label="${each.situacion}" />
+                                        </listitem>
+                                    </template>		
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Nota E/S"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación de la Nota E/S"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó la Nota E/S"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación de la Nota E/S"/>   
+                                </hbox>
+                            </tabpanel>
+                            <tabpanel>
+                                <div >
+                                    <groupbox closable="false" width="986px">
+                                        <caption label="DATOS DE CABECERA - NOTA DE E/S" />
+                                        <vbox>
+                                            <hbox align="center">
+                                                <cell valign="botton">
+                                                    <label value="# NOTA E/S: "/>
+                                                </cell>
+                                                <textbox id="txt_nescab_id"  width="165px" maxlength="10" disabled="true" tooltiptext="Define el Código de la Nota E/S, máximo 10 caracteres"/>                                    
+                                                <space width="12px"/>
+                                                <cell valign="botton">
+                                                    <label value="MONEDA: "/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <combobox id="cb_moneda" readonly="true" width="210px" disabled="true" tooltiptext="Define la Moneda de la Nota E/S">
+                                                    <template name="model">    
+                                                        <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>                                                                                                      
+                                                    </template>                                              
+                                                </combobox>
+                                                <space width="12px"/>
+                                                <cell valign="botton">
+                                                    <label value="FECHA: "/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <datebox id="d_nescab_fecha" width="80px"  maxlength="10" cols="12" format="dd/MM/yyyy"  disabled="true" tooltiptext="Fecha de Emisión de la Nota de E/S" /> 
+                                                
+                                                <space width="12px"/>
+                                                <cell valign="botton">
+                                                    <label value="T.CAMBIO: "/>
+                                                </cell>
+                                                <doublebox id="txt_nescab_tcamb" locale="en_US" format="##.000" maxlength="6"  width="50px" disabled="true"  tooltiptext="Define el Tipo de Cambio Comercial,máximo 6 caracteres"/>
+                                                
+                                                <space width="12px"/>
+                                                <cell valign="botton">
+                                                    <label value="HORA: "/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <timebox id="d_nescab_hora" width="118px" format="HH:mm:ss"  disabled="true"  tooltiptext="Define la Hora de la Nota E/S"/> 
+                                            </hbox>
+                                            <hbox align="center">
+                                                <cell valign="botton">
+                                                    <label value="NOTA E/S: "/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <textbox id="txt_nescab_tipnotaes" maxlength="3" width="30px" disabled="true" tooltiptext="Define el Código del Tipo de Nota E/S, máximo 3 caracteres" />
+                                                <textbox id="txt_nomtipnotaes" maxlength="50" width="220px" disabled="true" tooltiptext="Define la Descripción de la Nota E/S, máximo 50 caracteres" />                                    
+                                                <space width="5px"/>
+                                                <cell  valign="botton">
+                                                    <label value="SERIE: "/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <space width="3px"/>
+                                                <combobox id="cb_serie" readonly="true" width="55px" disabled="true" tooltiptext="Seleccione la Serie de la Nota E/S">
+                                                    <template name="model">                                                                                                 
+                                                        <comboitem label="${each.num_ser}" value="${each.num_ser}"/>                                                                                                      
+                                                    </template>                                               
+                                                </combobox> 
+                                                <space width="5px"/>
+                                                <cell valign="botton">
+                                                    <label value="O/C: "/>
+                                                </cell>
+                                                <textbox id="txt_nescab_ocnropedkey" maxlength="10" width="70px" disabled="true" tooltiptext="Define el Número de la O/C, máximo 10 caracteres"/>
+                                                <button id="btn_nescab_ocnropedkey" disabled="true" sclass="botones" label=".........." tooltiptext="Consultar las Notas de E/S" width="10px" height="20px"/>
+                                                <space width="5px"/>
+                                                <cell valign="botton">
+                                                    <label value="REFERENCIA: "/>
+                                                    <span class="colorRojo">*</span>    
+                                                </cell>
+                                                <combobox id="cb_nescab_tipdoc" readonly="true" width="150px" disabled="true" tooltiptext="Define el Tipo de Documento de Referencia" >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.tipdoc_des}" value="${each.tipdoc_key}"/>                                                                                                      
+                                                    </template>                                               
+                                                </combobox>
+                                                <textbox id="txt_nescab_nroserie" maxlength="5" width="33px" disabled="true" placeholder="Serie" tooltiptext="Define el Número de Serie de Referencia, máximo 5 caracteres"/>
+                                                <textbox id="txt_nescab_nrodoc" maxlength="10" width="75px" disabled="true" placeholder="Documento" tooltiptext="Define el Número de Documento de Referencia, máximo 15 caracteres"/>
+                                            </hbox>
+                                            <hbox align="center">
+                                                <cell valign="botton">
+                                                    <label value="PROVEEDOR: "/>                                                                                                                                                
+                                                </cell>
+                                                <textbox id="txt_nescab_provid" maxlength="8" width="85px" disabled="true" tooltiptext="Define el Código del Proveedor, máximo 8 caracteres"/>
+                                                <textbox id="txt_nescab_provrazsoc" maxlength="60" width="324px" disabled="true" tooltiptext="Define la Razón Social del Proveedor, máximo 60 caracteres"/>
+                                                <space width="3px"/>
+                                                <cell  valign="botton">
+                                                    <label value="CLIENTE: "/>                                                                                                                                                
+                                                </cell>
+                                                <textbox id="txt_nescab_cliid" maxlength="10" width="85px" disabled="true" tooltiptext="Define el Código del Cliente, máximo 10 caracteres"/>
+                                                <textbox id="txt_nescab_clinom" maxlength="100" width="324px" disabled="true" tooltiptext="Define la Razón Social del Cliente, máximo 100 caracteres"/>
+                                            </hbox>
+                                            <hbox align="center">
+                                                <cell valign="botton">
+                                                    <label value="GLOSA: "/>
+                                                </cell>
+                                                <textbox id="txt_nescab_glosa" width="450px" maxlength="50" disabled="true" tooltiptext="Define la Glosa de la Nota de E/S, máximo 50 caracteres" />                                    
+                                                <space width="3px"/>
+                                                <cell valign="botton">
+                                                    <label value="LIS.PRE: "/>
+                                                </cell>
+                                                <textbox id="txt_listapreid" width="30px" maxlength="4" disabled="true" tooltiptext="Define la lista de precio máximo 4 caracteres" />                                    
+                                                <textbox id="txt_listapredes" width="180px" maxlength="50" disabled="true" tooltiptext="Define la descripción de la lista de precio, máximo 50 caracteres" />                                    
+                                                <space width="3px"/>
+                                                <cell  valign="botton">
+                                                    <label value="DEPURADO: "/>
+                                                </cell>
+                                                <textbox id="txt_nescab_nrodep" maxlength="10" width="129px" disabled="true" tooltiptext="Define el Número de Depurado, máximo 10 caracteres" />
+                                                <textbox id="txt_nescab_nroped" maxlength="10" width="1px" disabled="true" visible="false" tooltiptext="Define el Número de Pedido, máximo 10 caracteres" />
+                                            </hbox>
+                                            <hbox align="center">
+                                                <cell valign="botton">
+                                                    <label value="ALMACEN ORIGEN:"/>                                                                                                                                                
+                                                </cell>
+                                                <space width="3px"/>
+                                                <combobox id="cb_nescab_almori" readonly="true" disabled="true" width="250px" tooltiptext="Seleccione el Almacen Origen">
+                                                    <template name="model">    
+                                                        <comboitem label="${each.alm_des}" value="${each.alm_id}"/>                                                                                                      
+                                                    </template>                                                
+                                                </combobox>
+                                                <space width="250px"/>                                    
+                                                <cell valign="botton">
+                                                    <label value="ALMACEN DESTINO:"/>
+                                                </cell>
+                                                <space width="3px"/>
+                                                <combobox id="cb_nescab_almdes" readonly="true" disabled="true" width="250px"  tooltiptext="Seleccione el Almacen Destino" >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.alm_des}" value="${each.alm_id}"/>                                                                                                      
+                                                    </template>                                              
+                                                </combobox>
+                                            </hbox>
+                                        </vbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <hbox>
+                                        <listbox id="lst_notes_det" width="954px" height="300px">
+                                            <listhead>
+                                                <listheader label="ID" width="60px"/>
+                                                <listheader label="DESCRIPCION" width="344px"/>                                          
+                                                <listheader label="CANTIDAD" width="75px"/>
+                                                <listheader label="FRACCION" width="75px"/>
+                                                <listheader label="CONV."  width="50px"/>
+                                                <listheader label="V.AFECTO" width="80px"/>
+                                                <listheader label="V.INAFECTO" width="80px"/>
+                                                <listheader label="IGV" width="30px"/>
+                                                <listheader label="IMPTO" width="80px"/>                                            
+                                                <listheader label="TOTAL" width="80px"/>
+                                            </listhead>
+                                            <template name="model">
+                                                <listitem>
+                                                    <listcell label="${each.pro_id}"/>
+                                                    <listcell label="${each.pro_des}"/>
+                                                    <listcell label="${each.nesdet_ent}" style="text-align: right; background-color: #BEF781;color: #2E2E2E;"/>
+                                                    <listcell label="${each.nesdet_frac}" style="text-align: right;"/>
+                                                    <listcell label="${each.nesdet_cantconv}" style="text-align: right;"/>
+                                                    <listcell label="${each.nesdet_svalafe}" style="text-align: right;" />
+                                                    <listcell label="${each.nesdet_svalina}" style="text-align: right;" />
+                                                    <listcell label="${each.nesdet_spimpto}" style="text-align: right;" />
+                                                    <listcell label="${each.nesdet_svimpto}" style="text-align: right;" />
+                                                    <listcell label="${each.nesdet_spvta}" style="text-align: right;" />
+                                                </listitem>
+                                            </template>
+                                        </listbox>
+                                        <toolbar id="tb_transacciones_notes" width="30px" height="298px" >
+                                            <separator height="55px"/>
+                                            <toolbarbutton id="tbbtn_btn_nuevoes" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true" />
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_editares" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true" />            
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_eliminares" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true" />
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_guardares" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_deshaceres" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                                        </toolbar>
+                                    </hbox>
+                                    <separator height="10px"/>
+                                    <groupbox closable="false" width="985px">
+                                        <caption label="DATOS DEL DETALLE - NOTA DE E/S" />
+                                        <hbox align="center">   
+                                            <cell valign="botton">
+                                                <label value="COD: "/>
+                                                <span class="colorRojo">*</span>    
+                                            </cell>                                                    
+                                            <textbox id="txt_proid" maxlength="9" disabled="true" tooltiptext="Define el Código del Producto, máximo 9 caracteres"  width="60px" placeholder="ID ARTICULO" />
+                                            <intbox id="txt_prokey" maxlength="9" disabled="true" tooltiptext="Define el key del Producto, máximo 9 caracteres" width="1px" visible="false" />
+                                            <textbox id="txt_prodes" maxlength="50" disabled="true" tooltiptext="Define la descripción del Producto, máximo 60 caracteres" width="430px" placeholder="Artículo"/>
+                                            <textbox id="txt_prodesdes" disabled="true" tooltiptext="Define la descripción del Producto" width="1px" visible="false"/>                                              
+                                            <textbox id="txt_ubicod" disabled="true" width="40px" placeholder="Cod.ubi" visible="false"/>
+                                            <textbox id="txt_ubides" disabled="true" width="100px" placeholder="Ubicación" visible="false"/>
+                                            <intbox id="txt_undpre" maxlength="5" disabled="true" width="1px" visible="false"/> 
+                                            <intbox id="txt_unimas" maxlength="5" disabled="true" width="1px" visible="false"/> 
+                                            <textbox id="txt_provid" maxlength="8" disabled="true" tooltiptext="Define el Proveedor" placeholder="Proveedor"  width="1px" visible="false"/>
+                                            <textbox id="txt_proveedor" disabled="true" tooltiptext="Define el Proveedor" placeholder="Proveedor"  width="1px" visible="false"/> 
+                                            <doublebox id="txt_canent" maxlength="10" disabled="true"  tooltiptext="Define la Cantidad Entera, máximo 10 caracteres" width="70px" placeholder="C.ENTERA"  />
+                                            <doublebox id="txt_canfra" maxlength="10" disabled="true"  tooltiptext="Define la Cantidad Fracción, máximo 10 caracteres" width="70px" placeholder="C.FRACCION" />
+                                            <textbox id="txt_proconv" visible="false" disabled="true" width="1px"/>                                            
+                                            <doublebox id="txt_vimpto" maxlength="18" disabled="true" locale="en_US" format="##,##0.00" tooltiptext="Define el Monto de Impuesto" width="1px"  visible="false"/>
+                                            <doublebox id="txt_valafe" maxlength="18" disabled="true" locale="en_US" format="##,##0.00" tooltiptext="Define el Valor Afecto" placeholder="V.AFECTO" width="70px"  visible="true"/>
+                                            <doublebox id="txt_valina" maxlength="18" disabled="true" locale="en_US" format="##,##0.00" tooltiptext="Define el Valor Inafecto" placeholder="V.INAFECTO" width="70px"  visible="true"/>
+                                            <doublebox id="txt_pimpto" maxlength="18" disabled="true" locale="en_US" format="##,##0.00" tooltiptext="Define el Porcentaje de Impuesto" placeholder="IGV" width="20px"  visible="true"/>
+                                            <doublebox id="txt_pvta" maxlength="18" disabled="true" locale="en_US" format="##,##0.00" tooltiptext="Define el Precio de Venta" width="70px"  visible="true" placeholder="TOTAL"/> 
+                                            <textbox id="txt_stock" disabled="true" tooltiptext="Define el Stock Actual" width="70px" placeholder="Stock" style="color: red; background-color: yellow" visible="false"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">                                            
+                                                <label value="USU. ADD:"/>
+                                            </cell>
+                                            <textbox id="txt_usuadd_det" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Nota E/S"/>   
+                                            <cell align="right" valign="center">
+                                                <space width="85px"  />
+                                                <label value="FEC. ADD:"/>
+                                            </cell>
+                                            <datebox id="txt_fecadd_det" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación de la Nota E/S"/>  
+                                            <cell align="right" valign="center">
+                                                <space width="85px"  />
+                                                <label value="USU. MOD:"/>
+                                            </cell>
+                                            <textbox id="txt_usumod_det" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó la Nota E/S"/>   
+                                            <cell align="right" valign="center">
+                                                <space width="95px"  />
+                                                <label value="FEC. MOD:"/>
+                                            </cell>
+                                            <datebox id="txt_fecmod_det" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación de la Nota E/S"/>   
+                                        </hbox>
+                                    </groupbox>
+                                </div>
+                            </tabpanel>                        
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

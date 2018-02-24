@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_reintegro" title="Enlace Reintegros" border="normal" width="850px"
+            apply="org.me.gj.controller.componentes.ControllerLovDescuentosReintegros"
+            position="center,center"
+            action="show: slideDown;hide: slideUp">
+    
+        <vlayout>
+              <hbox align="center">
+                    <space width="50px" height="15px"/>
+                    <span class="colorRojo">
+                        <label  value="ENLACE AUTOMATICO DE RECIBOS NO COMERCIALES DE INGRESOS POR REINTEGROS DE DINERO" style="font-size:15px;" />
+                    </span>
+                </hbox> 
+                 <space width="1px"/>
+            <groupbox  height="110px" open="true" closable="false">
+                <caption label="Opciones de Busqueda" />
+                <hbox align="center">
+                    <cell align="left" width="65px">
+                        <label value="SUCURSAL :"/>
+                    </cell>
+                    <combobox id="cb_fsucursal" width="120px" tooltiptext="Seleccione sucursal" readonly="true">
+                        <template name="model">
+                            <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                        </template>
+                    </combobox>
+                    <space width="35px"/>
+                    <cell align="right" valign="center">
+                        <label value="PERIODO:"/>                                                 
+                    </cell>
+                    <space width="2px"/>
+                    <textbox id="txt_periodo"  disabled="true"  width="72px"/> 
+                    <space width="5px"/>                        
+                    <label value="FECHA PROCESO:"/>
+                
+                    <datebox id="d_fecha"   maxlength="10" width="100px" onCreate="self.value = new Date()"  format="dd/MM/yyyy" readonly="true" style="text-align:right;"  tooltiptext="Fecha de inicio"/>
+                  <space width="20px"/>
+                    <cell align="left" width="65px">
+                        <label value="PERSONAL :"/>
+                    </cell>
+                    <combobox id="cb_personal" width="120px" tooltiptext="Seleccione" readonly="true">
+                        <comboitem label="" value="1"/>
+                        <comboitem label="VENDEDORES" value="2"/>
+                        <comboitem label="REPARTIDORES" value="3"/>
+                        <comboitem label="OFICINA" value="4"/>
+                    </combobox>
+                 
+                </hbox> 
+                  <space width="1px"/>
+                <hbox align="center">
+                      <space width="80px"/>
+                    <checkbox  id="chk_rango" label="Rango de fecha" />
+                    
+                    <space width="30px"/>                        
+                    <label value="FECHA INICIO: "/>
+                
+                    <datebox id="d_inicio" disabled="true" maxlength="10" width="100px" onCreate="self.value = new Date()"  format="dd/MM/yyyy" readonly="true" style="text-align:right;"  tooltiptext="Fecha de inicio"/>
+                
+                    <space width="15px"/>                        
+                    <label value="FECHA FIN: "/>
+                
+                    <datebox id="d_fin" disabled="true" maxlength="10" width="100px" onCreate="self.value = new Date()"  format="dd/MM/yyyy" readonly="true" style="text-align:right;"  tooltiptext="Fecha de inicio"/>
+                
+                    <button id="btn_consultar" label="Consultar" sclass="botones" />
+                </hbox>
+                
+            </groupbox>
+            
+            <separator height="12px"/>    
+            <listbox id="lst_lista" mold="paging" width="825px" height="350px">
+                <listhead>
+                    <listheader label="REC. INGRESO" align="center"/>
+                    <listheader label="CODIGO"  align="center"/>
+                    <listheader label="TRABAJADOR"  align="center"/>
+                    <listheader label="IMPORTE"  align="center"/>
+                    <listheader label="GLOSA"  align="center"/>
+                    <listheader label="REC. EGRESO"  align="center"/>
+                    <listheader width="25px" >
+                        <checkbox id="chk_selecAll"/>
+                    </listheader>
+                </listhead>
+                <template name="model">	
+                    <listitem>
+                        <listcell label="${each.codigo_vista}"/>
+                        <listcell label="${each.paterno} ${each.materno} ${each.nombre}" style="text-align:left;"/>
+                        <listcell label="${each.valor_concepto}" style="text-align:right;"/>
+                        <listcell label="${each.codigo_vista}"/>
+                        <listcell label="${each.codigo_vista}"/>
+                        <listcell label="${each.codigo_vista}"/>
+                        <listcell>
+                            <checkbox forward="onCheck=lst_bloque.onSeleccion"  checked="${each.valSelec}"/>
+                        </listcell>  
+                    </listitem>
+                </template>
+            </listbox>
+            
+            
+            <separator height="12px"/>    
+            <hbox align="center">
+                <space width="30px"/>
+                <button id="btn_cancelar" label="Salir" sclass="botones"/>
+                <space width="580px"/>
+                <button id="btn_procesar" label="Procesar..." sclass="botones"/>
+            </hbox>
+        </vlayout>
+    </window>
+</zk>

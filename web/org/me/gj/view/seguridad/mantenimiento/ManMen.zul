@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicialSeguridad"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main"  >
+            <include src="/plantillas/MenuAdm.zul"/>
+        </north>
+        <center  >
+            <div sclass="cuerpo-main" >
+                <window id="w_menu" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%" >
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar"  disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" disabled="true" />            
+                        <label value="MANTENIMIENTO DE MENU" sclass="titulo_mant" style="margin-left:247px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_menus" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerMenu">
+                        <tabs>
+                            <tab id="tab_listamenus" label="LISTA"/>
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO"/>
+                             
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_men" >
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="Opciones de busqueda"/>
+                                        <hbox>
+                                            <space/>
+                                            <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una opción">
+                                                <comboitem label=" "/>
+                                                <comboitem label="MODULO"/>
+                                                <comboitem label="MENU"/>
+                                                <comboitem label="SUBMENU1"/>
+                                                <comboitem label="SUBMENU2"/>
+                                                <attribute name="onSelect">
+                                                    txt_busqueda.setDisabled(false);
+                                                </attribute>
+                                            </combobox>
+                                            <space width="2px"/>
+                                            <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un valor para la busqueda"/>
+                                            <space width="10px"/>
+                                            <button id="btn_buscar" label="Buscar" sclass="botones"/> 
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <listbox id="lst_menus"  mold="paging" pageSize="20" width="985px" height="490px">
+                                        <listhead>
+                                            <listheader label="MENU"/>
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.men_des}"/>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                </div>    
+                            </tabpanel>
+                            <tabpanel>
+                                <div >
+                                    <grid width="900px">
+                                        <columns>
+                                            <column width="120px"/>
+                                            <column width="320px"/>
+                                            <column width="120px"/>
+                                            <column width="320px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ELIJA UNA OPCION:" style="font-weight: bold"/>
+                                                </cell>
+                                                <radiogroup id="rb_grupo">
+                                                    <radio label="Módulo" id="rb_modulo" disabled="true" tooltiptext="Creación de módulos"/>
+                                                    <radio label="Menú" id="rb_menu" disabled="true" tooltiptext="Creación de menús"/>
+                                                    <radio label="Submenu1" id="rb_submenu1" disabled="true" tooltiptext="Creación de submenú-1"/>
+                                                    <radio label="Submenu2" id="rb_submenu2" disabled="true" tooltiptext="Creación de submenú-2"/>
+                                                </radiogroup> 
+                                                <separator height="40px"></separator>
+                                            </row>
+                                            
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="MODULO:"/>
+                                                </cell>
+                                                <combobox id="cb_modulo" disabled="true" readonly="true" width="300px" tooltiptext="Seleccione un módulo">
+                                                    <template name="model">
+                                                        <comboitem label="${each.men_des}" value="${each.men_id}"/>
+                                                    </template>
+                                                </combobox>
+                                                <cell align="right" valign="botton">
+                                                    <label value="NOM. MODULO:"/>
+                                                </cell>
+                                                <textbox id="txt_nommod" disabled="true" maxlength="30" width="250px" tooltiptext="Nombre de módulo, máximo 30 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="MENU:"/>
+                                                </cell>
+                                                <combobox id="cb_menu" disabled="true" readonly="true" width="300px" tooltiptext="Seleccione un menú">
+                                                    <template name="model">
+                                                        <comboitem label="${each.men_des}" value="${each.men_id}"/>
+                                                    </template>
+                                                </combobox>
+                                                <cell align="right" valign="botton">
+                                                    <label value="NOM. MENU:"/>
+                                                </cell>
+                                                <textbox id="txt_nommenu" disabled="true" maxlength="30" width="250px" tooltiptext="Nombre de menú, máximo 30 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="SUBMENU-1:"/>
+                                                </cell>
+                                                <combobox id="cb_submenu1" disabled="true" readonly="true" width="300px" tooltiptext="Seleccione un sub-menú1">
+                                                    <template name="model">
+                                                        <comboitem label="${each.men_des}" value="${each.men_id}"/>
+                                                    </template>
+                                                </combobox>
+                                                <cell align="right" valign="botton">
+                                                    <label value="NOM. SUBMENU-1:"/>
+                                                </cell>
+                                                <textbox id="txt_nomsubmenu1" disabled="true" maxlength="30" width="250px" tooltiptext="Nombre de submenu-1, máximo 30 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="NOM. SUBMENU-2:"/>
+                                                </cell>
+                                                <textbox id="txt_nomsubmenu2" disabled="true" maxlength="30" width="250px" tooltiptext="Nombre de submenu-2, máximo 30 caracteres"/>
+                                            </row>
+                                        </rows>                       
+                                    </grid>
+                                </div>
+                            </tabpanel>     
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south border="0">
+            <include src="/plantillas/modulos/PieSeguridad.zul"/>
+        </south>
+    </borderlayout>     
+</zk>
+

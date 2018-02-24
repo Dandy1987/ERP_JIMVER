@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ManProgZona" language="groovy" pageWidth="612" pageHeight="792" columnWidth="598" leftMargin="7" rightMargin="7" topMargin="7" bottomMargin="7" uuid="ccb7ed49-48c3-46dc-a10d-f80b25422c9b">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="390"/>
+	<property name="ireport.y" value="189"/>
+	<parameter name="usuario" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="empresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_WHERE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["select * from v_listaprogramacionzonas t where t.prog_est=1 and t.emp_id=1 and t.suc_id=1 order by t.prog_zonid"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{P_WHERE}]]>
+	</queryString>
+	<field name="PROG_KEY" class="java.math.BigDecimal"/>
+	<field name="PROG_ZONID" class="java.lang.String"/>
+	<field name="PROG_ZONDES" class="java.lang.String"/>
+	<field name="SUC_ID" class="java.math.BigDecimal"/>
+	<field name="EMP_ID" class="java.math.BigDecimal"/>
+	<field name="VEN_ID" class="java.lang.String"/>
+	<field name="ZON_APENOM" class="java.lang.String"/>
+	<field name="PROG_TRANSID" class="java.math.BigDecimal"/>
+	<field name="TRANSPORTE" class="java.lang.String"/>
+	<field name="PROG_TRANSALIAS" class="java.lang.String"/>
+	<field name="PROG_HORENTID" class="java.lang.String"/>
+	<field name="PROG_HORENTDES" class="java.lang.String"/>
+	<field name="PROG_GLOSA" class="java.lang.String"/>
+	<field name="PROG_EST" class="java.math.BigDecimal"/>
+	<field name="PROG_USUADD" class="java.lang.String"/>
+	<field name="PROG_FECADD" class="java.sql.Timestamp"/>
+	<field name="PROG_USUMOD" class="java.lang.String"/>
+	<field name="PROG_FECMOD" class="java.sql.Timestamp"/>
+	<field name="PROG_ORD" class="java.math.BigDecimal"/>
+	<field name="PROG_NOMREP" class="java.lang.String"/>
+	<variable name="tot" class="java.lang.String" incrementType="Report" calculation="Count">
+		<variableExpression><![CDATA[$V{tot}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="81" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c8f30a53-d22e-4e36-966a-42764734bd1f" x="10" y="7" width="138" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="604d291a-456d-4ab9-ab90-4ba701076c41" x="180" y="20" width="254" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE PROGRAMACION DE ZONAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="422" y="64" width="166" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HORARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c289e06b-2312-4760-b605-b508252abc85" x="488" y="10" width="79" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAG:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0fd40718-f392-45a9-a101-94a4007100d9" x="488" y="23" width="100" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1251bc3b-e918-4723-a52c-1ff3c82c28e5" isPrintRepeatedValues="false" x="567" y="10" width="21" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="10" y="61" width="578" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="4062cdda-cd8b-4c85-8888-c3700c646ed6" x="10" y="33" width="138" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm:ss">
+				<reportElement uuid="90af5a26-2a30-4959-84e1-fc414af41b2e" x="488" y="36" width="100" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="754416d6-40f3-4667-bd96-52a852947d62" x="10" y="20" width="138" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[MANPROGZONA.JASPER]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="10" y="75" width="578" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="8b1db3d9-e572-4933-b690-d4fed10f2612" x="10" y="64" width="41" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18bf61cb-397f-4f8c-9cfe-0eab91437bfc" x="174" y="64" width="36" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID TRANS.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18bf61cb-397f-4f8c-9cfe-0eab91437bfc" x="210" y="64" width="177" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TRANSPORTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18bf61cb-397f-4f8c-9cfe-0eab91437bfc" x="389" y="64" width="33" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID HOR.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18bf61cb-397f-4f8c-9cfe-0eab91437bfc" x="51" y="64" width="123" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ZONA]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement uuid="e976631e-c2c1-471e-8219-cd621c4d5961" x="10" y="0" width="41" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROG_ZONID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="556310ff-c97e-41ad-9d1d-b6f4b29ceae8" x="51" y="0" width="123" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROG_ZONDES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="73115081-40d3-437b-a07d-1ca3f445efeb" x="174" y="0" width="36" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TRANSPORTE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f5e0b122-5d28-4f01-b7a6-11d238e39d0c" x="210" y="0" width="177" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROG_TRANSALIAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="31c3f0c6-63f7-4a60-8c67-a76629367754" x="389" y="0" width="33" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROG_HORENTID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0ced2d44-1678-4abd-b7fd-96dd864996ce" x="422" y="0" width="166" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROG_HORENTDES}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement uuid="33d4713f-456e-45e8-ba7f-b9008b834fe3" x="160" y="8" width="90" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5be848f2-9b7f-4fc6-9e48-c1458a10e4c1" x="10" y="8" width="140" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL REGISTROS:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="10" y="4" width="578" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

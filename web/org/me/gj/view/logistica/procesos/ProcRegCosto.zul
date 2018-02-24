@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_manregcostos" width="100%" height="100%" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar"  disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" onClick='alert("Imprimir")' disabled="true"/>            
+                        <label value="REGENERAR COSTOS" sclass="titulo_mant" style="margin-left:247px;"/>
+                    </toolbar>  
+                    <tabbox id="tabbox_manregstock" apply="org.me.gj.controller.logistica.procesos.ControllerRegeneraCosto">
+                        <tabs>
+                            <tab id="tab_listaregstock" label="LISTA"/>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <separator height="50px"/>     
+                                <div id="panel1" align="center">
+                                    <groupbox width="330px" style="align=center" closable="false">
+                                        <caption label="Regenera Costo"/>
+                                        <hbox align="center">
+                                            <separator height="30px"/>
+                                            <label id="lb_apeanio" value="SELECCIONE PERIODO" />
+                                            <separator width="10px" />
+                                            <combobox id="cb_periodo" width="70px" readonly="true">
+                                                <template name="model">
+                                                    <comboitem label=" ${each.per_periodo}" value="${each.per_periodo}"/>
+                                                </template>
+                                            </combobox>
+                                            <separator width="10px" />
+                                            <button id="btn_procesar" label="Procesar" sclass="botones" disabled="true" />
+                                        </hbox>
+                                        <separator height="10px" />
+                                        <hbox align="center">
+                                            <separator height="30px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="ACTUALIZAR COSTO REPOSICION" id="lbl_costorep"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <checkbox id="chk_costorep" checked="false"/>
+                                        </hbox>                                        
+                                    </groupbox>
+                                </div>
+                            </tabpanel> 
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>

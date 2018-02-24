@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuCxc.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_consulxdoc" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)"  disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar (F4)" disabled="true" />                 
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png"  tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png"  tooltiptext="Imprimir (F8)"  />   
+                        <label value="CONSULTA POR DOCUMENTO" sclass="titulo_mant" style="margin-left:205px;"/>
+                    </toolbar>        
+                    <!--<tabbox id="tabbox_consulxdoc" ctrlKeys="#f10" apply="org.me.gj.controller.cxc.informes.ControllerConsultaxDocumento" >
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA" />                            
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>-->
+                                <div id="div_doc"  align="center"  apply="org.me.gj.controller.cxc.informes.ControllerConsultaxDocumento" >
+                                      <groupbox width="987px" open="true" closable="false" height="200px">
+                                        <caption label="DATOS DEL DOCUMENTO " />
+                                        <vbox>  
+                                        	 <hbox align="center"> 
+                                        		<space width="700px"/> 
+                                        		<button id="btn_observacion" sclass="botones" label="Observacion" tooltiptext="Consulta los documentos de venta"/>                                        		
+                                        		<space width="30px"/> 
+                                        		<cell align="right" valign="botton">
+                                        			<label value="ESTADO: "/>
+                                    			</cell>                                    			   
+                                    			<checkbox id="chk_cliest" checked="true" label="ACTIVO" disabled="true" tooltiptext="Define el Estado del Cliente">
+                                        			<attribute name="onCheck">
+                                           				 chk_cliest.setLabel(chk_cliest.isChecked()?"ACTIVO":"INACTIVO");
+                                        			</attribute>
+                                    			</checkbox>   
+                                        	</hbox> 
+                                        	<separator height="10px"/>                                          
+                                            <hbox align="center"> 
+                                            	<space width="25px"/>     
+                                            	<cell align="right" valign="botton">
+                                                    <label value="# DOC: "/>                                             
+                                                </cell>   
+                                                <textbox id="txt_nrodoc" maxlength="10"  width="80px" disabled="false" tooltiptext="Define el numero del documento "/>
+                                                 <space width="5px"/>                                            
+                                                <cell align="right" valign="center" >
+                                           			 <label value="TIP DOC "/>                                            	
+                                        		</cell>
+                                        		<space width="5px"/>
+		                                        <combobox id="cb_tipdoc" width="120px" tooltiptext="Define el tipo de documento"  readonly="true"    >
+		                                            <template name="model">    
+		                                                <comboitem label="${each.tipdoc_des}" value="${each.tipdoc_key}"/>                                                                                                      
+		                                            </template>                                                
+		                                        </combobox>                                                
+                                                <space width="10px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="FEC. EMI: "/>                                                  
+                                                </cell>                                                
+                                                <datebox id="d_fecemi" maxlength="10" width="85px" disabled="true" onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="Define la fecha de emision del documento o cheque"/>                                              
+                                                <space width="10px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="FEC.ENT/REC CHQ: "/>                                                  
+                                                </cell>
+                                                <space width="2px"/>
+                                                <datebox id="d_feccheque" maxlength="10" width="85px" disabled="true" onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="Define la fecha de entrega o recepcion del cheque"/> 
+												<space width="3px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="FEC.ANU: " style="color: red;"/>
+                                                </cell>                                                
+                                                <datebox id="d_fecanu" maxlength="10" width="85px" disabled="true"  onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="Define la fecha de anulacion del documento"/> 
+                                           	    <space width="5px"/>                                                
+                                                <cell align="right" valign="botton">
+                                                    <label value="FEC REG: "/>
+                                                </cell>                                                
+                                                <datebox id="d_fecreg" maxlength="10" width="85px" disabled="true" onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="Define fecha emision del registro"/> 
+                                            </hbox>
+                                            <hbox align="center">
+                                                <space width="16px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="CLIENTE: "/>                                             
+                                                </cell>
+                                                <textbox id="txt_cli_id" width="62px" disabled="true" maxlength="10" tooltiptext="Define el codigo del Cliente, Maximo 10 caracteres"/>
+                                                <textbox id="txt_cli_des" maxlength="100" width="345px" disabled="true" tooltiptext="Define la Razon Social del cliente, Maximo 100 caracteres"/>
+                                                <space width="3px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="DOC IDEN: "/>
+                                                </cell>                                                
+                                                <textbox id="txt_nroiden" width="100px" disabled="true" maxlength="15" tooltiptext="Define el numero de documento de identificacion, Maximo 15 caracteres"/>    
+                                                <space width="3px"/>
+                                                  <cell align="right" valign="center">
+                                                    <label value="RUC:"/>
+                                                </cell>                                                
+                                                <textbox id="txt_ruc" disabled="true"  maxlength="11" width="80px" tooltiptext="Define el RUC del Cliente"/>                                                                  
+                                          		<space width="3px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="C.VTA: "/>
+                                                </cell>                                                
+                                                <textbox id="txt_conid" maxlength="4" width="30px" disabled="true" tooltiptext="Define el codigo de la Condicion de Venta"/>
+                                                <textbox id="txt_condes" maxlength="50" width="105px" disabled="true" tooltiptext="Define la descripcion de la Condicion de Venta, Maximo 50 caracteres"/>                                               
+                                            </hbox>
+                                            <hbox align="center">
+                                                <space width="3px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="DIRECCION: "/>
+                                                </cell>
+                                                <textbox id="txt_direcc" maxlength="120" width="413px" disabled="true" tooltiptext="Define la descripcion de la Direccion, Maximo 120 caracteres"/>
+                                             	 <space width="3px"/>
+                                            	<cell align="right" valign="botton">
+                                                    <label value="L.PRECIO: "/>
+                                                </cell>
+                                                <textbox id="txt_lp_id" maxlength="4" width="30px" disabled="true" tooltiptext="Define el codigo de la Lista de Precio"/>
+                                                <textbox id="txt_lp_des" maxlength="50" width="150px" disabled="true" tooltiptext="Define la descripcion de la Lista de Precio, Maximo 50 caracteres"/>                                                                                                
+                                                                                                
+                                          		<space width="3px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="D.PLAZO: "/>
+                                                </cell>                                                
+                                                <intbox id="txt_dplazo" maxlength="4" width="30px" disabled="true" tooltiptext="Define el dia de plazo"/>                                                
+                                                
+                                               <space width="3px"/>
+												<cell align="right" valign="botton">
+                                                    <label value="T/CAMB: "/>
+                                                </cell>                                                
+                                                <doublebox id="txt_tipcam" width="80px" disabled="true" format="##.000" style="text-align:left;" locale="en_US" maxlength="6"  tooltiptext="Define el tipo de cambio que posee la moneda" />    
+                                           
+                                                
+                                            </hbox>                                        
+                                            <hbox align="center">
+                                                <space width="25px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ZONA: "/>
+                                                </cell>                                                  
+                                                <textbox id="txt_zon_id" width="50px" disabled="true" maxlength="8" tooltiptext="Define el codigo de la zona, Maximo 8 caracteres"/>
+                                                <textbox id="txt_zon_des" maxlength="50" width="186px" disabled="true" tooltiptext="Define la descripcion de la Zona , Maximo 50 caracteres"/>     
+                                                <space width="3px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="VENDEDOR: "/>
+                                                </cell>
+                                                <textbox id="txt_ven_id" maxlength="4" width="30px" disabled="true" tooltiptext="Define el codigo del Vendedor,Maximo 4 caracteres"/>
+                                                <textbox id="txt_ven_des" maxlength="50" width="200px" disabled="true" tooltiptext="Define el nombre del Vendedor, Maximo 50 caracteres"/>                                               
+                                           
+                                           		<space width="3px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="TRANSPORTE: "/>
+                                                </cell>
+                                                <space width="1px"/>
+                                                <textbox id="txt_trans_id" width="30px" maxlength="4" disabled="true" tooltiptext="Define el codigo del Transporte, maximo 4 caracteres"  />
+                                                <textbox id="txt_trans_des" width="220px"  maxlength="60"  disabled="true" tooltiptext="Define la descripcion del Transporte, maximo 60 caracteres"/>                                                
+                                            </hbox>                                            
+                                            <hbox align="center">
+                                            	<space width="2px"/>                                                
+                                                <cell align="right" valign="botton">
+                                                    <label value="# PED VTA: "/>
+                                                </cell>
+                                                <textbox id="txt_nroped" maxlength="10" width="140px" disabled="true" style="text-align: center;" tooltiptext="Define el numero del pedido de venta , Maximo 10 caracteres"/>
+                                                <space width="17px"/>                                                
+                                                <cell align="right" valign="botton">
+                                                    <label value="# NOTA SALIDA : "/>
+                                                </cell>
+                                                 <space width="5px"/>
+                                                <textbox id="txt_nescab_id" maxlength="10" width="140px" disabled="true" style="text-align: center; background-color: #F2F5A9; color: black;" tooltiptext="Define el numero de la nota de salida, Maximo 10 caracteres"/>
+                                                <space width="17px"/>                                                
+                                                <cell align="right" valign="botton">
+                                                    <label value="# DEPURACION: "/>
+                                                </cell>         
+                                                 <space width="5px"/>                                       
+                                                <textbox id="txt_dep" maxlength="10" width="140px" disabled="true" style="text-align: center;" tooltiptext="Define el numero de depuracion , Maximo 10 caracteres"/>                                                
+                                                <space width="17px"/>                                                
+                                                <cell align="right" valign="botton">
+                                                    <label value="# REGISTRO: "/>
+                                                </cell>
+                                                <space width="5px"/>
+                                                <textbox id="txt_nreg" maxlength="10" width="140px" disabled="true" style="text-align: center;" tooltiptext="Define el numero del registro, Maximo 10 caracteres"/>    
+                                            </hbox>                                            
+                                        </vbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="botton">
+                                            <label value="MONEDA: "/>
+                                        </cell>    
+                                        <space width="1px"/>                         
+                                        <textbox id="txt_moneda" maxlength="50" disabled="true" width="200px" tooltiptext="Define la descripcion de la moneda, Maximo 50 Caracteres"/> 
+                                        <space width="15px"/>
+                                        <cell align="right" valign="botton">
+                                            <label value="TOTAL : " style="color:blue;"/>
+                                        </cell>
+                                        <textbox id="txt_total" maxlength="10" disabled="true"  style="text-align:right; color:blue !important;" width="135px" tooltiptext="Define el monto total del documento, Maximo 10 Caracteres"/> 
+                                        <space width="25px"/>
+                                        <cell align="right" valign="botton">
+                                            <label value="SALDO : "  style="color:red;"/>
+                                        </cell>
+                                        <textbox id="txt_saldo" maxlength="10"  disabled="true" style="text-align:right; color:red !important;" width="135px" tooltiptext="Define la saldo pendiente de pago, Maximo 10 Caracteres"/> 
+                                        <space width="25px"/>
+                                        <cell align="right" valign="botton">
+                                            <label value="SALDO CHQ : "  style="color:red;"/>
+                                        </cell>
+                                        <textbox id="txt_saldochq" maxlength="10" disabled="true" width="135px" style="text-align:right; color:red !important;" tooltiptext="Define el Saldo del Cheque, Maximo 10 Caracteres"/> 
+                                        <space width="15px"/> 
+                                    </hbox>
+                                    <separator height="10px"/>           
+                                    <tabbox id="tabbox_detconsulxdoc" ctrlKeys="#f10" > 
+                                        <tabs>
+                                            <tab id="tab_detdoc" label="DETALLE DEL DOCUMENTO"/>
+                                            <tab id="tab_movdoc" label="MOVIMIENTO DEL DOCUMENTO"/>                                       
+                                        </tabs>
+                                        <tabpanels>
+                                            <tabpanel>
+                                                <listbox id="lst_detdoc" mold="paging" pageSize="8" width="985px" height="250px">                                     
+                                                    <listhead>
+                                                        <listheader label="IDPROD" width="60px" style="text-align: center;"/>
+                                                        <listheader label="PRODUCTO" width="250px" style="text-align: center;"/>
+                                                        <listheader label="CANT" width="50px" style="text-align: center;"/>
+                                                        <listheader label="FRAC" width="50px" style="text-align: center;"/>
+                                                        <listheader label="VAL.UNIT" width="80px" style="text-align: center;"/>
+                                                        <listheader label="V.VTA" width="80px" style="text-align: center;"/>
+                                                        <listheader label="% DESC" width="50px" style="text-align: center;"/>
+                                                        <listheader label="DESC" width="60px" style="text-align: center;"/>
+                                                        <listheader label="% IGV" width="60px" style="text-align: center;"/>
+                                                        <listheader label="V IGV" width="60px" style="text-align: center;"/>
+                                                        <listheader label="TOTAL" width="90px" style="text-align: center;" />
+                                                        <listheader label="PERCEPCION" width="90px" style="text-align: center;"/>                                                
+                                                    </listhead>
+                                                    <template name="model">
+                                                        <listitem>
+                                                            <listcell label="${each.pro_id}" style="text-align: center;"/>
+                                                            <listcell label="${each.pro_des}"/>
+                                                            <listcell label="${each.cantent}" style="text-align: right;"/>
+                                                            <listcell label="${each.cantfrac}" style="text-align: right;"/>
+                                                            <listcell label="${each.spunit}" style="text-align: right;"/>
+                                                            <listcell label="${each.svventa}" style="text-align: right;"/>
+                                                            <listcell label="${each.sdsctot}" style="text-align: right;"/>
+                                                            <listcell label="${each.ssdsctot}"  style="text-align: right;"/>
+                                                            <listcell label="${each.simpto}" style="text-align: right;"/>
+                                                            <listcell label="${each.svimpto}" style="text-align: right;" />
+                                                            <listcell label="${each.spventa}" style="text-align: right; background-color: #F2F5A9; color: black;"/>
+                                                            <listcell label="${each.simpper}" style="text-align: right; background-color: #F2F5A9; color: black;"/>
+                                                        </listitem>
+                                                    </template>  
+                                                    <listfoot>
+                                                        <listfooter>  
+                                                            <label id="l_total1" value="" />
+                                                        </listfooter>
+                                                        <listfooter>  
+                                                            <label id="l_total2" value="" />
+                                                        </listfooter>
+                                                        <listfooter>  
+                                                            <label id="l_total3" value="" />
+                                                        </listfooter>
+                                                        <listfooter>  
+                                                            <label id="l_total4" value="" />
+                                                        </listfooter>
+                                                        <listfooter>  
+                                                            <label id="l_total5" value="TOTALES" />
+                                                        </listfooter>
+                                                        <listfooter>  
+                                                            <doublebox id="txt_totvvta" width="72px" format="#,##0.####" locale="en_US" disabled="true" style="text-align: right; color:black;"/>
+                                                        </listfooter>
+                                                        <listfooter>  
+                                                            <label id="l_total7" value="" />
+                                                        </listfooter>
+                                                        <listfooter>  
+                                                            <label id="l_total8" value="" />
+                                                        </listfooter>                                                     
+                                                        <listfooter>  
+                                                            <label id="l_total9" value="IGV: " />
+                                                        </listfooter>
+                                                        <listfooter> 
+                                                            <doublebox id="txt_igv" width="50px" format="#,##0.####" locale="en_US" style="text-align: right; color:black;" disabled="true"/>
+                                                        </listfooter>
+                                                        <listfooter> 
+                                                            <doublebox id="txt_totventa" width="70px" format="#,##0.####" locale="en_US" style="text-align: right; background-color: #F2F5A9; color: black;" disabled="true"/>
+                                                        </listfooter>
+                                                        <listfooter> 
+                                                            <doublebox id="txt_totimper" width="80px" format="#,##0.####" locale="en_US" style="text-align: right; background-color: #F2F5A9; color: black;" disabled="true"/>
+                                                        </listfooter>                                          
+                                                    </listfoot> 
+                                                </listbox>
+                                                <separator height="35px"/>
+                                            </tabpanel>
+                                            <tabpanel>
+                                                <listbox id="lst_movdoc" mold="paging" pageSize="18" width="985px" height="235px">
+                                                    <frozen columns="12"></frozen>
+                                                    <listhead>
+                                                        <listheader label="F.MOVI." width="60px" style="text-align: center;"/>
+                                                        <listheader label="F.PAGO" width="70px" style="text-align: center;"/>
+                                                        <listheader label="MONEDA" width="70px" style="text-align: center;"/>
+                                                        <listheader label="IMPORTE" width="70px" style="text-align: center;"/>
+                                                        <listheader label="T.CAMB" width="40px" style="text-align: center;"/>
+                                                        <listheader label="CAJA" width="40px" style="text-align: center;"/>
+                                                        <listheader label="T.COB" width="80px" style="text-align: center;"/>
+                                                        <listheader label="NRO.PLA/REG." width="90px" style="text-align: center;"/>
+                                                        <listheader label="BANCO" width="60px" style="text-align: center;"/>
+                                                        <listheader label="NRO.CTA/CHQ.INT" width="100px" style="text-align: center;"/>
+                                                        <listheader label="CHQ/VOUCH" width="80px" style="text-align: center;"/>
+                                                        <listheader label="FEC.DIF." width="60px" style="text-align: center;"/>
+                                                        <listheader label="VENDEDOR" width="180px" style="text-align: center;"/>                                                
+                                                        <listheader label="U.REP" width="80px" style="text-align: center;"/>
+                                                        <listheader label="SEC" width="80px" style="text-align: center;"/>
+                                                        <listheader label="AGE." width="80px" style="text-align: center;"/>                                                
+                                                    </listhead>                                                    
+                                                    <template name="model">
+                                                        <listitem>
+                                                            <listcell label="${each.tab_subdir}"/>
+                                                            <listcell label="${each.tab_subdes}"/>
+                                                            <listcell label="${each.tab_subdir}"/>
+                                                            <listcell label="${each.tab_subdes}" style="text-align: center; background-color: #F2F5A9; color: black;"/>
+                                                            <listcell label="${each.tab_subdir}"/>
+                                                            <listcell label="${each.tab_subdes}"/>
+                                                            <listcell label="${each.tab_subdir}"/>
+                                                            <listcell label="${each.tab_subdir}"/>
+                                                            <listcell label="${each.tab_subdes}"/>
+                                                            <listcell label="${each.tab_subdir}"/>
+                                                            <listcell label="${each.tab_subdes}"/>
+                                                            <listcell label="${each.tab_subdes}"/>
+                                                            <listcell label="${each.tab_subdes}"/>
+                                                            <listcell label="${each.tab_subdir}"/>
+                                                            <listcell label="${each.tab_subdes}"/>
+                                                            <listcell label="${each.tab_subdes}"/>                                                
+                                                        </listitem>
+                                                    </template> 
+                                                </listbox>
+                                                <separator height="2px"/>
+                                                <groupbox width="987px" open="true" closable="false" height="35px">
+                                                <hbox align="center">                                                	
+                                                    <space width="20px" />
+                                                    <cell align="right" valign="center">                                            
+                                                        <label value="DOC REF: "/>
+                                                    </cell>             
+                                                    <space width="8px" />           
+                                                    <textbox id="txt_docref_id" maxlength="5" disabled="true"  width="40px" tooltiptext="Define la serie de referencia, maximo 5 caracteres"/>    
+	                                                <textbox id="txt_docref_des" maxlength="10" disabled="true"   width="80px" tooltiptext="Define el numero de documento de referencia, maximo 10 caracteres"/>   
+	                                               <space width="30px" />
+                                                    <cell align="right" valign="center">                                            
+                                                        <label value="TERMINAL: "/>
+                                                    </cell>
+                                                    <space width="8px" />
+                                                    <textbox id="txt_terminal" maxlength="80" disabled="true"   width="150px" tooltiptext="Define el terminal del usuario"/>   
+                                                    <space width="30px" />
+                                                    <cell align="right" valign="center">                                            
+                                                        <label value="RED: "/>
+                                                    </cell>
+                                                    <space width="8px" />
+                                                    <textbox id="txt_red" maxlength="100" disabled="true"   width="100px" tooltiptext="Define la red del usuario"/>   
+                                                    <space width="30px" />
+                                                    <cell align="right" valign="center">                                            
+                                                        <label value="GLOSA: "/>
+                                                    </cell>
+                                                    <space width="8px" />
+                                                    <textbox id="txt_glosa" maxlength="100" disabled="true"   width="180px" tooltiptext="Define la glosa u observacion"/>  
+                                                </hbox>
+                                                </groupbox>
+                                                 <separator height="13px"/>
+                                            </tabpanel>
+                                        </tabpanels>
+                                    </tabbox>                                   
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador el Documento de Venta"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creacion el Documento de Venta"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modifico el Documento de Venta"/>
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificacion el Documento de Venta"/>   
+                                    </hbox>
+                                </div>    
+                           <!-- </tabpanel>
+                        </tabpanels>
+                    </tabbox> -->
+                </window> 
+            </div>   
+        </center>
+        <south height="25px" border="0">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>
+

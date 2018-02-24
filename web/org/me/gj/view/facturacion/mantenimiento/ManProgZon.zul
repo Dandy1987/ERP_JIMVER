@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuFacturacion.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_manprogzon" width="100%" height="100%"  ctrlKeys="#f2#f4#f7#f10#f9#f8" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%" >
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)"  />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar (F4)" disabled="true" />                 
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)"  />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png"  tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png"  tooltiptext="Imprimir (F8)"  />
+                        <label value="MANTENIMIENTO DE PROGRAMACION DE ZONAS" sclass="titulo_mant" style="margin-left:195px;"/>
+                    </toolbar> 
+                    <tabbox id="tabbox_progzonas" ctrlKeys="#f10" apply="org.me.gj.controller.facturacion.mantenimiento.ControllerProgramacionZonas">
+                        <tabs>
+                            <tab id="tab_listaprogzonas" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_progzonas.getSelectedIndex() == -1)
+                                    {
+                                    tab_listaprogzonas.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>                   
+                                <groupbox width="985px" closable="false">
+                                    <caption label="Opciones de Busqueda"/>
+                                     <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true"  tooltiptext="Seleccione una Opcion">
+                                            <comboitem label=" "/>
+                                            <comboitem label="ID ZONA"/>
+                                            <comboitem label="ZONA"/>
+                                            <comboitem label="ID TRANSPORTE"/>
+                                            <comboitem label="TRANSPORTE"/>
+                                            <comboitem label="ID HORARIO"/> 
+                                            <comboitem label="HORARIO"/>
+                                            <comboitem label="GLOSA"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <separator/>
+                                        <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                        <separator width="20px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="ESTADO:" id="lbl_estado"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busest" readonly="true" tooltiptext="Seleccione una Opcion" width="110px">
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+                                        <separator width="20px"/>
+                                        <button id="tbbtn_btn_buscar" sclass="botones" label="Consultar" tooltiptext="Buscar" />
+                                    </hbox>
+                                </groupbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_progzonas" mold="paging" pageSize="18"  width="985px" height="460px">
+                                    <listhead>
+                                        <listheader label="ZONA" width="65px" align="center"/>
+                                        <listheader label="DESCRIPCION" width="270px"/>
+                                        <listheader label="TRANSP" width="60px" align="center"/>
+                                        <listheader label="DESCRIPCION" width="300px"/>
+                                        <listheader label="HORARIO" width="55px" align="center"/>
+                                        <listheader label="DESCRIPCION" width="210px"/>
+                                        <listheader label="EST" width="25px"/>
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.prog_zonid}"/>
+                                            <listcell label="${each.prog_zondes}"/>
+                                            <listcell label="${each.prog_transid}"/>
+                                            <listcell label="${each.prog_transalias}"/>
+                                            <listcell label="${each.prog_horentid}"/>
+                                            <listcell label="${each.prog_horentdes}"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="10"  readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Programacion de Zona"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creacion de la Programacion de Zona"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modifico la Programacion de Zona"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificacion de la Programacion de Zona"/>    
+                                </hbox>
+                            </tabpanel> 
+                            <tabpanel>
+                                <div >
+                                    <grid width="680px">
+                                        <columns>
+                                            <column width="130px"/>
+                                            <column width="550px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_progzonest" disabled="true" checked="true" label="ACTIVO" tooltiptext="Define el Estado de la programacion de zona">
+                                                    <attribute name="onCheck">
+                                                        chk_progzonest.setLabel(chk_progzonest.isChecked()?"ACTIVO":"INACTIVO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>                 
+                                                <cell align="right" valign="botton">
+                                                    <label value="ZONA:"/>
+                                                     <span class="colorRojo">*</span>
+                                                </cell>
+                                                <hbox>
+                                                    <textbox id="txt_zonid" disabled="true" maxlength="8" width="60px" tooltiptext="Define el Codigo de la zona, maximo 8 digitos"/>                                    
+                                                    <textbox id="txt_zondes" disabled="true" maxlength="50" width="360px" tooltiptext="Define la Descripcion de la zona, maximo 50 caracteres"/>
+                                                </hbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="HORA DE ENTREGA:"/>
+                                                     <span class="colorRojo">*</span>
+                                                </cell>
+                                                <hbox>
+                                                    <textbox id="txt_horentid" disabled="true" maxlength="4" width="50px" tooltiptext="Define el codigo de la hora de entrega, Máximo 4 digitos"/>
+                                                    <textbox id="txt_horentdes" disabled="true" maxlength="50" width="300px" tooltiptext="Define la descripcion de la ruta, Máximo 50 caracteres"/>
+                                                </hbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="TRANSPORTE:"/>
+                                                     <span class="colorRojo">*</span>
+                                                </cell>
+                                                <hbox>
+                                                    
+                                                    <textbox id="txt_transid" disabled="true" maxlength="4" width="50px" tooltiptext="Define el codigo del transporte, Máximo 4 digitos"/>
+                                                    <textbox id="txt_transdes" disabled="true" maxlength="50" width="300px" tooltiptext="Define la descripcion del transporte, Máximo 50 caracteres"/>
+                                                </hbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="GLOSA:"/>
+                                                </cell>
+                                                <textbox id="txt_glosa" disabled="true" maxlength="50" width="300px" tooltiptext="Define la glosa de la programacion, Máximo 50 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="REPORTE:"/>
+                                                </cell>
+                                                <textbox id="txt_progzonnomrep" disabled="true" maxlength="25" width="225px" tooltiptext="Define el nombre de Reporte, Máximo 25 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ORDEN:"/>
+                                                </cell>
+                                                <spinner id="sp_progzonord" value="0" disabled="true" constraint="min 0" tooltiptext="Define el orden de la programacion de zona"/>
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                </div>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window>
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

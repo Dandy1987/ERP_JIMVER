@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center>
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_formatoinvfis" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true"/>            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" disabled="false"/>   
+                        <label value="INVENTARIO FISICO" sclass="titulo_mant" style="margin-left:250px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_formatoinvfis" ctrlKeys="#f10" apply="org.me.gj.controller.logistica.procesos.ControllerInvFisFormato" >
+                        <tabs>
+                            <tab id="tab_formatoinvfis" label="INVENTARIO"/>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="985px" closable="false">
+                                    <caption label="INVENTARIO FISICO"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="PERIODO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_periodo" readonly="true" width="65px" tooltiptext="Seleccione Periodo de Nota de E/S" >
+                                            <template name="model">    
+                                                <comboitem label="${each.per_periodo}" value="${each.per_id}"/>                                                                                                      
+                                            </template>                                                
+                                        </combobox>
+                                        <space width="10px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="ALMACEN : "/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <bandbox id="cb_almacen" mold="rounded" autodrop="true"  readonly="true" disabled="false" width="235px">  
+                                            <bandpopup>
+                                                <listbox id="lst_almacen" width="210px">
+                                                    <listhead>
+                                                        <listheader label="ID" width="30px"  />
+                                                        <listheader label="ALMACEN" width="150px"  />
+                                                        <listheader width="30px" label="SEL">
+                                                        </listheader>
+                                                    </listhead>
+                                                    <template name="model">
+                                                        <listitem>
+                                                            <listcell label="${each.alm_id}"/>
+                                                            <listcell label="${each.alm_des}"/>
+                                                            <listcell>
+                                                                <checkbox forward="onCheck=lst_almacen.onSeleccion"  checked="${each.valSelec}"/>
+                                                            </listcell>
+                                                        </listitem>
+                                                    </template>
+                                                </listbox>
+                                            </bandpopup>
+                                        </bandbox>
+                                        <space width="10px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="PROVEEDOR:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <textbox id="txt_provid" maxlength="8" width="60px" focus="true" tooltiptext="Define el Codigo de Proveedor"/>
+                                        <textbox id="txt_provdes" maxlength="50" width="350px" disabled="true" tooltiptext="Define la descripcion del Proveedor"/>
+                                    </hbox>
+                                    <space height="2px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="PRODUCTO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <textbox id="txt_proid" maxlength="9" width="60px" tooltiptext="Define el Codigo de Producto"/>
+                                        <textbox id="txt_prodes" maxlength="50" width="350px" disabled="true" tooltiptext="Define la descripcion del Producto"/>
+                                        <space width="10px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="SOLO CON STOCK:"/>
+                                        </cell>
+                                        <checkbox id="chk_stock" checked="true" />
+                                        <space width="10px"/>        
+                                        <button id="btn_consultar"  sclass="botones" label="Consultar" tooltiptext="Consultar Productos"/>
+                                    </hbox>
+                                </groupbox>
+                                <space height="5px"/>
+                                <listbox id="lst_formatoinvfis" width="983px" height="465px" mold="paging" pageSize="19">
+                                    <listhead>
+                                        <listheader label="PROVEEDOR"  width="371px"/>
+                                        <listheader label="CODIGO"  width="70px"/>
+                                        <listheader label="DESCRIPCION"  width="342px"/>
+                                        <listheader label="UND.PRES."  width="100px"/>
+                                        <listheader label="UND.MAN."  width="100px"/>                                                                            
+                                    </listhead>	
+                                    <template name="model">   
+                                        <listitem>
+                                            <listcell label="${each.proveedor}" />
+                                            <listcell label="${each.artid}" />
+                                            <listcell label="${each.artdes}" />
+                                            <listcell label="${each.undmed}" />
+                                            <listcell label="${each.undman}" />
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

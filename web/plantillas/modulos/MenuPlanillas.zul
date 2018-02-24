@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <div id="menu_planillas" align="center" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerLogin" >
+        <separator sclass="z-separator-hor" /> 
+        <menubar id="mod_planillas" width="100%" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerPrivilegios">
+            <!-- MENU MANTENIMIENTO -->
+            <menu id="men_mantenimiento" label="Mantenimiento" width="90px" >
+                <menupopup>
+                    <!-- 1. PARAMETROS -->
+                    <menu id="smen1_paramper" label="Parametros" image="/images/iconos_menu/planillas/parametros.png">
+                        <menupopup>
+                            <!-- 1.1. PERIODO DE PROCESOS -->
+                            <menuitem id="smen2_perproc" label="Periodo de Procesos" image="/images/iconos_menu/planillas/per_proceso.png" href="/org/me/gj/view/planillas/mantenimiento/ManPerProc.zul"/>
+                            <!-- 1.2. UTILIDADES -->
+                            <menuitem id="smen2_util" label="Utilidades" image="/images/iconos_menu/planillas/utilidades.png" href="/org/me/gj/view/planillas/mantenimiento/ManUtil.zul"/>
+                            <!-- 1.3. CONFIGURACIÓN PERSONAL -->
+                            <menuitem id="smen3_areas" label="Areas" image="/images/iconos_menu/planillas/areas.png"  href="/org/me/gj/view/planillas/mantenimiento/ManAreas.zul"/>
+                            <menuitem id="smen3_cargos" label="Cargos" image="/images/iconos_menu/planillas/cargos.png" href="/org/me/gj/view/planillas/mantenimiento/ManCargos.zul"/>
+                            <!-- 1.4. CONFIGURACIÓN CÁLCULO -->
+                            <menuitem id="smen3_datfor" label="Operadores" image="/images/iconos_menu/planillas/datfor.png"  href="/org/me/gj/view/planillas/mantenimiento/ManDatForm.zul"/>
+                            <menuitem id="smen3_variable" label="Variables" image="/images/iconos_menu/planillas/datfor.png"  href="/org/me/gj/view/planillas/mantenimiento/ManDatFormVar.zul"/>
+                            <menuitem id="smen3_tablas" label="Tablas" image="/images/iconos_menu/planillas/tablas2.png"  href="/org/me/gj/view/planillas/mantenimiento/ManTablas.zul"/>
+                            <menuitem id="smen3_conceptos" label="Conceptos" image="/images/iconos_menu/planillas/conceptos.png" href="/org/me/gj/view/planillas/mantenimiento/ManConceptos.zul"/>
+                            <menuitem id="smen3_funciones" label="Funciones" image="/images/iconos_menu/planillas/funciones.png" href="/org/me/gj/view/planillas/mantenimiento/ManFunciones.zul"/>
+                            <!-- 1.5. UBIGEO 
+                            <menuitem id="smen5_ubigeo" label="Ubigeo" image="/images/iconos_menu/planillas/mantenimiento_almacen.png" href="/org/me/gj/view/planillas/mantenimiento/ManAlm.zul" />
+                            -->
+                            <!-- 1.6. BANCOS -->
+                            <menuitem id="smen2_bancos"  label="Bancos" image="/images/iconos_menu/planillas/bancos.png" href="/org/me/gj/view/planillas/mantenimiento/Bancos.zul" />
+                            <!-- 1.7. AFPS -->                            
+                            <menuitem id="smen3_creacion" label="Creación AFP" image="/images/iconos_menu/planillas/afp_crea.png"  href="/org/me/gj/view/planillas/mantenimiento/ManAfpsCre.zul"/>
+                            <menuitem id="smen3_config" label="Configuración AFP" image="/images/iconos_menu/planillas/afp_conf.png" href="/org/me/gj/view/planillas/mantenimiento/ManConfAfps2.zul"/>      
+                            <!-- 1.8. ASISTENCIA -->
+                            <menuitem id="smen3_horarios" label="Horarios" image="/images/iconos_menu/planillas/horarios.png"  href="/org/me/gj/view/planillas/mantenimiento/ManHorarios.zul"/>
+							<!--1.9 Configuracion Planilla -->
+                            <menuitem id="smen3_confplanilla" label="Configuracion Planilla" image="/images/iconos_menu/planillas/conf_personal.png"  href="/org/me/gj/view/planillas/mantenimiento/ConfPlanilla.zul"/>
+                        </menupopup>
+                    </menu>
+                    <!-- 2. MANTENIMIENTO DE PERSONAL -->
+                    <!--
+                    <menu id="men_manPer"  label="Mantenimiento de Personal" image="/images/iconos_menu/precios.png" >
+                        
+                    </menu>                -->
+                    <menuitem id="smen1_manper" label="Personal" image="/images/iconos_menu/planillas/personal.png" href="/org/me/gj/view/planillas/mantenimiento/ManPersonal.zul" />
+                    <menuitem id="smen1_contrato" label="Contratos" image="/images/iconos_menu/planillas/afp.png" href="/org/me/gj/view/planillas/mantenimiento/ManContratos.zul" />
+                    <!-- 3. PRESTAMOS PERSONALES -->
+                    <menuitem id="smen1_presper" label="Préstamos Personales" image="/images/iconos_menu/planillas/pres_per.png" href="/org/me/gj/view/planillas/mantenimiento/ManPresPer.zul" />
+					<menuitem id="smen1_feriado" label="Feriados" image="/images/iconos_menu/planillas/cierre_diario.png" href="/org/me/gj/view/planillas/mantenimiento/Manferiado.zul" />
+                </menupopup>
+            </menu>
+            <menu id="men_procesos" label="Procesos" width="90px" >
+                <menupopup>
+                    <menuitem id="smen_movLin" label="Movimientos en Línea" image="/images/iconos_menu/planillas/genera_fproveedor.png" href="/org/me/gj/view/planillas/procesos/MovLinea.zul" />
+                    <menuitem id="smen_Desc" label="Descuentos (Cta Cte)" image="/images/iconos_menu/planillas/nota_es.png" href="/org/me/gj/view/planillas/procesos/Descuentos.zul" />
+                    <menuseparator/>        
+                    <menuitem id="smen_RegAsis" label="Registro de Asistencia (Marcado)" image="/images/iconos_menu/planillas/asistencia.png" href="/org/me/gj/view/planillas/procesos/RegAsistencia.zul" />
+                    <menuitem id="smen_AsisGeneral" label="Asistencia General" image="/images/iconos_menu/planillas/asistencia3.png" href="/org/me/gj/view/planillas/procesos/AsiGeneral.zul" />
+                    <menuitem id="smen_ConVac" label="Control de Vacaciones" image="/images/iconos_menu/planillas/asistencia2.png" href="/org/me/gj/view/planillas/procesos/ConVacaciones.zul" />
+                    <menuseparator/>        
+                    <menuitem id="smen_CalPLan" label="Calcular Planilla" image="/images/iconos_menu/planillas/calculo.png" href="/org/me/gj/view/planillas/procesos/CalculoPlanilla.zul" />                    
+                    <menuitem id="smen_EliCal" label="Eliminar Calculo" image="/images/iconos_menu/planillas/eliminarCalculo.png" href="/org/me/gj/view/planillas/procesos/EliminarCalculo.zul" />
+                </menupopup>
+            </menu>
+            <menu id="men_informes" label="Informes" width="90px" >
+                <menupopup>
+                    <menuitem id="smen_movimientos" label="Movimientos" image="/images/iconos_menu/planillas/informes1.png" href="/org/me/gj/view/planillas/informes/InfMovimientos.zul" />
+                    <menuitem id="smen_descuentos" label="Descuentos(Cta Cte)" image="/images/iconos_menu/planillas/informes2.png" href="/org/me/gj/view/planillas/informes/InfDescuentos.zul" />
+                    <menuitem id="smen_prestamos" label="Prestamos" image="/images/iconos_menu/planillas/pres_per.png" href="/org/me/gj/view/planillas/informes/InfPrestamos.zul" />
+                    <menuitem id="smen_descanso" label="Descansos Medicos" image="/images/iconos_menu/planillas/ambulance.png" href="/org/me/gj/view/planillas/informes/InfDescansoM.zul" />
+                    <menuitem id="smen_cruce" label="Planilla Calculada " image="/images/iconos_menu/planillas/informes2.png" href="/org/me/gj/view/planillas/informes/InfPagosCruce.zul" />
+                    <menuitem id="smen_regAsis" label="Registro de Asistencia" image="/images/iconos_menu/planillas/informes4.png" href="/org/me/gj/view/planillas/informes/InfRegistroAsis.zul" />
+                    <menuitem id="smen_cer5ta" label="Certificado de 5ta" image="/images/iconos_menu/planillas/informes5.png" href="/org/me/gj/view/planillas/informes/InfCertificado5ta.zul" />
+                    <menuitem id="smen_cerTra" label="Certificado de Trabajo" image="/images/iconos_menu/planillas/informes13.png" href="/org/me/gj/view/planillas/informes/InfCertificadoTrab.zul" />
+                    <menuitem id="smen_crtCtsBanco" label="Carta Cts Bancos" image="/images/iconos_menu/planillas/informes7.png" href="/org/me/gj/view/planillas/informes/InfCartaBancos.zul" />
+					<menuitem id="smen_contratos" label="Contratos" image="/images/iconos_menu/planillas/afp.png" href="/org/me/gj/view/planillas/informes/InfContratos.zul" />
+                    <menu id="smen_legales" label="Legales" image="/images/iconos_menu/planillas/informes10.png">
+                        <menupopup>
+                            <menuitem id="smen_boleta" label="Boleta de Pago" image="/images/iconos_menu/planillas/bolpago.png"  href="/org/me/gj/view/planillas/informes/InfBoletasPago.zul"/>
+                            <menuitem id="smeni_liqTra" label="Liquidación Trabajador" image="/images/iconos_menu/planillas/liquidacion.png"  href="/org/me/gj/view/planillas/informes/InfLiquidacionTrab.zul"/>
+                            <menuitem id="smeni_liqPla" label="Planillas" image="/images/iconos_menu/planillas/lplanillas.png" href="/org/me/gj/view/planillas/informes/InfPlanillas.zul"/>
+                            <menuitem id="smeni_resRet" label="Resumen Retenciones" image="/images/iconos_menu/planillas/resreten.png" href="/org/me/gj/view/planillas/Planillas.zul"/>
+                            <menuseparator/>
+                            <menuitem id="smeni_bolCts" label="Boletas Cts" image="/images/iconos_menu/planillas/bolcts.png" href="/org/me/gj/view/planillas/informes/InfBoletasCts.zul"/>
+                            <menuitem id="smeni_bolPartic" label="Boletas Partic. Utilidades" image="/images/iconos_menu/planillas/boluti.png" href="/org/me/gj/view/planillas/informes/InfBoletasUti.zul"/>
+                        </menupopup>
+                    </menu>
+                    <menuitem id="smen_anaAfp" label="Análisis de Afps" image="/images/iconos_menu/planillas/anafp.png" href="/org/me/gj/view/planillas/informes/InfAnalisisAfp.zul" />
+                    <menuitem id="smen_pdrEmp" label="Padron de Empleados" image="/images/iconos_menu/planillas/genera_fproveedor.png" href="/org/me/gj/view/planillas/informes/InfPadronEmp.zul" />
+                </menupopup>
+            </menu>
+         
+            <menu id="men_utilitarios" label="Utilitarios" width="90px" >
+                <menupopup>
+                    
+                    <menu id="smen_uti1"  label="Enlaces" image="/images/iconos_menu/planillas/conf_personal.png" >
+                        <menupopup>
+                            <menuitem id="smen3_utienlConta" label="Contabilidad" image="/images/iconos_menu/planillas/ucontabi.png"  href="/org/me/gj/view/planillas/utilitarios/UtiContabilidad.zul"/>
+                            <menuitem id="smen3_utienlComi" label="Comision" image="/images/iconos_menu/planillas/comision.png"  href="/org/me/gj/view/planillas/utilitarios/UtiComision.zul"/>
+                            <menuitem id="smen3_utienlSunat" label="Sunat" image="/images/iconos_menu/planillas/sunat.png"  href="/org/me/gj/view/planillas/utilitarios/UtiSunat.zul"/>
+                            <menuitem id="smen3_utienlAfp" label="Afp" image="/images/iconos_menu/planillas/uafp.png"  href="/org/me/gj/view/planillas/utilitarios/UtiAfp.zul"/>
+                            <menuitem id="smen3_utienlBancos" label="Bancos" image="/images/iconos_menu/planillas/ubancos.png"  href="/org/me/gj/view/planillas/utilitarios/UtiBancos.zul"/>
+                            <menuitem id="smen3_utienlPlaElec" label="Planilla Electrónica" image="/images/iconos_menu/planillas/plaelec.png"  href="/org/me/gj/view/planillas/utilitarios/UtiPlaElectronica.zul"/>
+                            <menuitem id="smen3_utienlCtsSem" label="Cts Semestral" image="/images/iconos_menu/planillas/ctsemes.png"  href="/org/me/gj/view/planillas/utilitarios/UtiCtsSemestral.zul"/>
+                            <menuitem id="smen3_utienlCarArc" label="Cargar desde Archivo" image="/images/iconos_menu/planillas/cararchivo.png"  href="/org/me/gj/view/planillas/utilitarios/UtiCargaArchivo.zul"/>
+                            <menuitem id="smen3_utienlRegPlame" label="T-Registro y PLAME" image="/images/iconos_menu/planillas/tplame.png"  href="/org/me/gj/view/planillas/utilitarios/UtiRegistroPlame.zul"/>
+                        </menupopup>
+                    </menu>
+                                    
+                    <menu id="smen_uti2"  label="Planillas" image="/images/iconos_menu/planillas/planillas.png" >
+                        <menupopup>
+                            <menuitem id="smen3_uti1" label="En Proceso" image="/images/iconos_menu/planillas/proceso.png" href="/org/me/gj/view/planillas/utilitarios/ManProcesoPeriodo.zul"/>
+                            <menuitem id="smen3_uti2" label="Cierre" image="/images/iconos_menu/planillas/cierre.png"  href="/org/me/gj/view/planillas/utilitarios/UtilCierre.zul"/>
+                            <menuitem id="smen3_uti3" label="Revierte Cierre" image="/images/iconos_menu/planillas/revcierre.png" href="/org/me/gj/view/planillas/utilitarios/UtilRevierteCierre.zul"/>
+                        </menupopup>
+                    </menu>
+                
+                </menupopup>
+            </menu>
+            
+            <menu id="men_ayuda" label="Ayuda" width="90px" ></menu>
+            <menuitem  width="100px" />
+            <menuitem label="Bienvenido:  ${sessionScope.usuariosCredential.nombre}"/>
+            <menuitem label="Menu Principal" href="/Main.zul" />
+            <menuitem label="Cerrar Sesión" id="btn_logout"/>
+            
+        </menubar>
+    </div>
+</zk>

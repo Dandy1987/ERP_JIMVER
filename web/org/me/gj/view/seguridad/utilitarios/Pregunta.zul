@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionFinalPregunta"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos_login.css"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+   <!-- <script>
+        window.onbeforeunload = confirmExit;
+    function confirmExit()
+  {
+    return "You have attempted to leave this page.  If you have made any changes to the fields without clicking the Save button, your changes will be lost.  Are you sure you want to exit this page?";
+  }
+</script>-->
+<a href="javascript:void(0);" id="request"></a>
+<script>
+$(document).ready(function(){
+    $('#request').click(function(e){
+        return false;
+        
+    });
+});
+window.onbeforeunload = function(e){
+        return 'Confirmación?';
+}
+
+</script>
+    <hbox vflex="1" hflex="1" align="center" pack="center">
+        <vlayout>
+            <div id="div_pregunta" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerLogin" >
+                <grid id="grd_pregunta" sclass="grilla"  width="600px" height="auto">
+                    <columns>
+                        <column width="130px" />
+                        <column width="100%"/>
+                    </columns>
+                    <rows>
+                        <row>
+                            <cell colspan="2" sclass="celdaCentrada">
+                                <label value="PREGUNTA DE SEGURIDAD" />
+                                <separator height="2px"/>
+                            </cell>
+                        </row>
+                        <row>
+                            <cell  width="10px">
+                                <label value="PREGUNTA :" />
+                            </cell>
+                            <textbox id="txt_preg" focus="true" maxlength="50" width="450px" disabled="true"/> 
+                        </row>
+                        <row>
+                            <cell width="10px">
+                                <label value="RESPUESTA :"  />
+                            </cell>
+                            <textbox id="txt_rpta" focus="true" maxlength="50" width="450px" />
+                        </row>
+                        <row > 
+                                <button id="btn_ok" label="Aceptar" sclass="botones"/>
+                                <button id="btn_cancel" label="Cancelar" sclass="botones"/>
+                        </row>
+                    </rows>
+                </grid>
+            </div>    
+        </vlayout>
+    </hbox>
+</zk>
+
+
+

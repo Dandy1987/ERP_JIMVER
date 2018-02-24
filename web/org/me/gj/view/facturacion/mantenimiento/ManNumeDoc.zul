@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuFacturacion.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_mannumdoc"  ctrlKeys="#f2#f4#f7#f10#f9" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones" width="99.75%" >
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)"  />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar (F4)" />                 
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png"  tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />                        
+                        <label value="MANTENIMIENTO DE NUMERACION DE DOCUMENTO" sclass="titulo_mant" style="margin-left:210px;"/>
+                    </toolbar> 
+                    <tabbox id="tabbox_mannumdoc" apply="org.me.gj.controller.facturacion.mantenimiento.ControllerNumeDoc" >
+                        <tabs>
+                            <tab id="tab_listanumdoc" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_numdoc.getSelectedIndex() == -1)
+                                    {
+                                    tab_listanumdoc.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <!-- Para el Listado -->
+                            <tabpanel>                   
+                                <groupbox width="985px" closable="false">
+                                    <caption label="Opciones de Busqueda"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una Opcion">
+                                            <comboitem label=" "/>
+                                            <comboitem label="ID"/>
+                                            <comboitem label="TIPO DOCUMENTO"/>
+                                            <comboitem label="SERIE"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <separator/>
+                                        <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                        <separator width="20px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="ESTADO:" id="lbl_estado"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busest" readonly="true" tooltiptext="Seleccione una Opcion" width="110px">
+                                            <comboitem label=" "/>  
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>     
+                                        </combobox>
+                                        <separator width="20px"/>
+                                        <button id="tbbtn_btn_buscar" sclass="botones" label="Consultar" tooltiptext="Buscar" />  
+                                    </hbox>
+                                </groupbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_numdoc" mold="paging" pageSize="18" width="985px" height="460px">
+                                    <listhead>
+                                        <listheader label="CODIGO" width="50px" align="center"/>
+                                        <listheader label="DOCUMENTO" width="200px"/>
+                                        <listheader label="SERIE" width="50px" align="center"/>
+                                        <listheader label="DESCRIPCION" width="200px"/>
+                                        <listheader label="NOTA E/S"/>
+                                        <listheader label="EST" width="25px"/>
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.numefac_tipdoc_id}"/>
+                                            <listcell label="${each.numefac_tipdoc_des}"/>
+                                            <listcell label="${each.numefac_serie_id}"/>
+                                            <listcell label="${each.numefac_des}"/>
+                                            <listcell label="${each.numefac_notes_des}"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="10"  readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Numeracion de Documento"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creacion de la Numeracion de Documento"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modifico la Numeracion de Documento"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificacion de la Numeracion de Documento"/>    
+                                </hbox>
+                            </tabpanel>
+                            <!-- Para el mantenimiento -->
+                            <tabpanel>
+                                <div id="div_man_cfgini" >                                 
+                                    <grid id="grd_man_emp" width="980px" height="450px">
+                                        <columns>
+                                            <column width="200px"/>
+                                            <column width="240px"/>
+                                            <column width="120px"/>  
+                                            <column width="330px"/>                                                                                  
+                                        </columns>
+                                        <rows>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="CORRELATIVO :"/> 
+                                                    <span class="colorRojo">*</span>                                                   
+                                                </cell>
+                                                <textbox id="txt_correlativo" width="80px" maxlength="4" disabled="true" tooltiptext="Define el correlativo de numeración del documento"/>
+                                                <cell align="right" valign="bottom"  >
+                                                    <label value="ESTADO :  " />
+                                                </cell>
+                                                <checkbox id="chk_estado"  checked="true" disabled="true" label="ACTIVO" tooltiptext="Define el estado de numeración del documento">
+                                                    <attribute name="onCheck">
+                                                        chk_estado.setLabel(chk_estado.isChecked()?"ACTIVO":"INACTIVO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>     
+                                            <row> 
+                                                <cell align="right" valign="botton">
+                                                    <label value="TIPO DOCUMENTO : " />
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <combobox id="cb_tipodoc" readonly="true" disabled="true" tooltiptext="Seleccione tipo de documento">
+                                                    <template name="model">    
+                                                        <comboitem label="${each.tipdoc_des}" value="${each.tipdoc_key}"/>                                                                                                      
+                                                    </template>           
+                                                </combobox>
+                                                <cell align="right" valign="bottom"  >
+                                                    <label value="NOTA E/S : " />
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <combobox id="cb_notes" readonly="true" disabled="true" tooltiptext="Seleccione una Nota E/S" width="315px">
+                                                    <template name="model">    
+                                                        <comboitem label="${each.desGui}" value="${each.codigo}"/>                                                                                                      
+                                                    </template>
+                                                </combobox>
+                                            </row>                                                                                                                                                                                                                                                                                                     
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="NUMERO DE SERIE :"/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_numserie" disabled="true" maxlength="3" width="40px" tooltiptext="Define la numeración de serie"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="DESCRIPCION :"/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_descripcion" width="160px"  disabled="true" tooltiptext="Define la descripción de serie"/>                                    
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="NRO ITEMS :"/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <intbox id="txt_nroitems" width="160px" maxlength="2" disabled="true" tooltiptext="Define número de items para la impresión"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="NOMBRE REPORTE :"/>
+                                                </cell>
+                                                <textbox id="txt_nomreporte" disabled="true" width="160px" tooltiptext="Define el nombre del reporte"/>
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                </div>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window>
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

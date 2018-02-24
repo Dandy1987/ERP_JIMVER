@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center> 
+            <div width="100%" sclass="cuerpo-main">
+                <window id="w_periodo" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                    <tabbox id="tabbox_procesoperiodo"  apply="org.me.gj.controller.planillas.informes.ControllerInfPagosCruce">
+                        <tabs>
+                            <tab id="tab_lista" label="REPORTE"/>
+                        </tabs>                                       
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="987px" height="380px" open="true" closable="false">
+                                    <hbox align="center">
+                                        <space width="400px" height="100px"/>                                        
+                                        <cell align="right" valign="center">
+                                            <label value="PERIODO :"/>
+                                        </cell>
+                                        <space width="5px"/>
+                                        <cell align="right" valign="center">
+                                            <textbox id="txt_periodo" width="60px" disabled="true" maxlength="8" tooltiptext="Periodo en Proceso" />
+                                        </cell>
+                                    </hbox>
+                                    
+                                    
+                                    <separator height="20px" />
+                                    <hbox align="center">                                        
+                                        <space width="440px" />
+                                        <label value="Exportar"/>
+                                        <toolbarbutton id="tbbtn_excel" image="/images/iconos_menu/planillas/exportarxls.png" tooltiptext="Exportar a Excel" />
+                                    </hbox>
+                                </groupbox>
+                            </tabpanel>                        
+                        </tabpanels>     
+                    </tabbox>     
+                </window>
+            </div>  
+        </center> 
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>              
+</zk>
+

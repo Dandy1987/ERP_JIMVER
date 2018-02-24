@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>     
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_infregasi" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir"/>   
+                        <label value="REPORTE DE MARCADO DE ASISTENCIA" sclass="titulo_mant" style="margin-left:225px;"/>
+                    </toolbar>                        
+                    <tabbox id="tabbox_infregasi" ctrlKeys="^a#f8#f10" apply="org.me.gj.controller.planillas.informes.ControllerRegistroAsis">
+                        <tabs>
+                            <tab id="tab_infregasi" label="LISTADO DE TRABAJADORES" />
+                        </tabs>
+                        
+                        <tabpanels>
+                            
+                            <!--LISTA-->
+                            <tabpanel>
+                                <div id="div_lst_infregasi" align="center">
+                                    <groupbox width="987px" height="95px" open="true" closable="false" >
+                                        <caption label="Opciones de Busqueda en bloque" style="text-align:left;"/>
+                                        <hbox align="center">                                                   
+                                            <space width="30px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="SUCURSAL :"/>
+                                            </cell>
+                                            <combobox id="cb_sucursal" width="120px" tooltiptext="Seleccione periodo" readonly="true">
+                                                <template name="model">
+                                                    <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="15px"/>
+                                            <label value="FECHA INICIAL : "/>
+                                            <datebox id="d_fecini" maxlength="10" readonly="true" width="85px" disabled="false" format="dd/MM/yyyy"  tooltiptext="Define la Fecha Inicial" style="text-align: center;"/>
+                                            <space width="15px"/>
+                                            <label value="FECHA FINAL : "/> 
+                                            <datebox id="d_fecfin" maxlength="10" readonly="true" width="85px" disabled="false" format="dd/MM/yyyy"  tooltiptext="Define la Fecha Final" style="text-align: center;"/>
+                                             <space width="15px"/>
+                                            <checkbox id="chk_forant" label="FORMATO ANTIGUO" style="font-weight: bold;"/>
+                                        </hbox>
+                                        <space height="10" />
+                                        <hbox>
+                                            <cell align="left" width="65px">
+                                                <label value="AREA :"/>
+                                            </cell>
+                                            <textbox id="txt_codarea" maxlength="9" width="80px" focus="false" tooltiptext="Código de Personal" style="text-align:center;"/>
+                                            <space height="15px"/>                                         
+                                            <textbox id="txt_desarea" disabled="true" width="200px" focus="false" tooltiptext="Descripción de Personal"/>
+                                            <textbox id="txt_codarea1" visible="false"/>
+                                            <space width="25px"/>
+                                            <cell align="left" width="75px">
+                                                <label value="PERSONAL :"/>
+                                            </cell>
+                                          
+                                 
+                                            <textbox id="txt_pidpersonal" maxlength="9"  width="80px" style="text-align:right" tooltiptext="Código de personal"/>
+                                            <textbox id="txt_pidpersonal1" visible="false" />
+                                            <space width="8px"/>
+                                            <textbox id="txt_pdespersonal" maxlength="150" disabled="true" width="200px" style="text-aling:left" tooltiptext="Descripción de personal"/>
+                                             
+                                             <space width="15px"/>
+                                            <button id="btn_consultar" label="Consultar" sclass="botones" />
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="25px"/>
+                                    <div id="div_leftListbox" align="left">
+                                        <listbox id="lst_asistencia" mold="paging" pageSize="16" width="987px" height="405px">
+                                            <listhead>
+                                                <listheader label="CODIGO" width="130px" align="center"/>
+                                                <listheader label="APELLIDOS Y NOMBRES" align="left"/>
+                                                <listheader label="AREA" width="150px" /> 
+                                                <listheader label="C.H." width="100px" align="center" tooltiptext="Codigo de horario"/>
+                                                <listheader label="HORARIO" width="200px" align="center"/>
+                                                <listheader width="40px" align="center">
+                                                    <checkbox id="chk_selecAll"/>
+                                                </listheader> 
+                                            </listhead>
+                                            <template name="model">
+                                                <listitem>
+                                                    <listcell label="${each.id_per}"/>
+                                                    <listcell label="${each.des_per}"/>
+                                                    <listcell label="${each.des_area}"/>
+                                                    <listcell label="${each.plcodhor}"/>
+                                                    <listcell label="${each.deshor}"/>
+                                                    <listcell>
+                                                        <checkbox forward="onCheck=lst_asistencia.onSeleccion"  checked="${each.valSelec}"/>
+                                                    </listcell>
+                                                </listitem>
+                                            </template>
+                                        </listbox>
+                                    </div>                                                                         
+                                    <space height="5px"/>
+                                </div>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>
+

@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north height="27px" sclass="arriba-main">
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_almacenes" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)" />
+                        <label value="ALMACENES" sclass="titulo_mant" style="margin-left:250px;font-size:14px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_almacenes" ctrlKeys="#f10" apply="org.me.gj.controller.logistica.mantenimiento.ControllerAlmacenes">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO" >
+                                <attribute name="onSelect">
+                                    if (lst_almacenes.getSelectedIndex() == -1)
+                                    {
+                                    tab_lista.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_alm" >
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda" />
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+                                                <label value="FILTRO:"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una Opcion">
+                                                <comboitem label=" "/>
+                                                <comboitem label="CODIGO"/>
+                                                <comboitem label="ALMACEN"/>
+                                                <comboitem label="DIRECCION"/>
+                                                <comboitem label="TIPO DE ALMACEN"/>
+                                                <comboitem label="ALTURA"/>
+                                                <comboitem label="ANCHO"/>
+                                                <comboitem label="LARGO"/>
+                                                <attribute name="onSelect">
+                                                    txt_busqueda.setDisabled(false);
+                                                </attribute>
+                                            </combobox>
+                                            <space width="2px"/>
+                                            <textbox id="txt_busqueda" width="400px" value="%%" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" tooltiptext="Ingresa un Valor para su Busqueda"/>          
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="ESTADO:" id="lbl_estado"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una Opción" width="110px">
+                                                <comboitem label="ACTIVO"/>
+                                                <comboitem label="INACTIVO"/>
+                                                <comboitem label=" "/>       
+                                            </combobox>
+                                            <space width="10px"/>
+                                            <button id="tbbtn_btn_buscar" label="Buscar" sclass="botones"/> 
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <listbox id="lst_almacenes" mold="paging" pageSize="18" width="985px" height="460px">
+                                        <listhead>
+                                            <listheader label="COD" width="50px" align="center"/>
+                                            <listheader label="ALMACEN" width="215px"/>
+                                            <listheader label="DIRECCION"/>
+                                            <listheader label="TIPO" width="150px" align="center"/>
+                                            <listheader label="ALTO" width="70px" align="center"/>
+                                            <listheader label="ANCHO" width="70px" align="center"/>
+                                            <listheader label="LARGO" width="70px" align="center"/>
+                                            <listheader label="EST" width="25px" align="center"/>
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.alm_id}"/>
+                                                <listcell label="${each.alm_des}"/>
+                                                <listcell label="${each.alm_direcc}"/>
+                                                <listcell label="${each.alm_tipdes}" style="text-align:left;"/>
+                                                <listcell label="${each.salm_alt}" style="text-align:right;"/>
+                                                <listcell label="${each.salm_anc}" style="text-align:right;"/>
+                                                <listcell label="${each.salm_lar}" style="text-align:right;"/>
+                                                <listcell>
+                                                    <checkbox checked="${each.valor}" disabled="true"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <space height="5px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador del Almacen"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación del Almacen"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó el Almacen"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación del Almacen"/>   
+                                    </hbox>
+                                </div>    
+                            </tabpanel>
+                            <tabpanel>
+                                <div id="div_man_alm" >
+                                    <grid id="grd_man_alm" width="600px" >
+                                        <columns>
+                                            <column width="100px"/>
+                                            <column width="500px"/>
+                                        </columns>
+                                        <rows> 
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ID:" />
+                                                </cell>
+                                                <textbox id="txt_almid" disabled="true" maxlength="4" width="50px" tooltiptext="Define el Código de Almacen, Máximo 4 caracteres"/> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_almest" disabled="true" tooltiptext="Define el Estado del Almacen"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ALMACEN: " />
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <textbox id="txt_almdes" disabled="true" width="450px" maxlength="50" tooltiptext="Define la Descripción del Almacen, Máximo 50 caracteres"/> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="DIRECCION:" />
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_almdirecc" disabled="true" width="450px" maxlength="50" tooltiptext="Define la Dirección del Almacen, Máximo 50 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="TIPO: " />
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <combobox id="cb_almtip" readonly="true" disabled="true" width="400px" tooltiptext="Define el Tipo de Almacen, Máximo 40 caracteres">
+                                                    <template name="model">
+                                                        <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                    </template>
+                                                </combobox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center0">
+                                                    <label value="ANCHO: "/>
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <cell colspan="2">
+                                                    <doublebox id="txt_almanc" disabled="true" width="50px" maxlength="6" style="text-align:right;" locale="en_US" format="##0.00" tooltiptext="Define el ancho de almacen, máximo 8 caracteres"/>
+                                                    <label value=" mt"/>
+                                                </cell>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="LARGO: "/>
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <cell colspan="2">
+                                                    <doublebox id="txt_almlar" disabled="true" width="50px" maxlength="6" style="text-align:right;" locale="en_US" format="##0.00" tooltiptext="Define el largo de almacen, máximo 8 caracteres"/>
+                                                    <label value=" mt"/>
+                                                </cell>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ALTO: "/>
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <cell colspan="2">
+                                                    <doublebox id="txt_almalt" disabled="true" width="50px" maxlength="6" style="text-align:right;" locale="en_US" format="##0.00" tooltiptext="Define el alto de almacen, máximo 8 caracteres"/>
+                                                    <label value=" mt"/>
+                                                </cell>
+                                            </row>
+                                            <!--<row>
+                                                <cell align="right" valign="center">
+                                                    <label value="REPORTE:" />
+                                                </cell>
+                                                <textbox id="txt_almnomrep" disabled="true" width="270px" maxlength="25" tooltiptext="Define el Nombre del Reporte a Utilizar, Máximo 25 caracteres "/>
+                                            </row>-->
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ORDEN: " />
+                                                </cell>
+                                                <spinner value="0" id="sp_almord" disabled="true" width="50px" constraint="min 0; max 999" maxlength="3" tooltiptext="Define el Orden de Busqueda del Almacen"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="" />
+                                                </cell>
+                                                <cell valign="center">                                  
+                                                    <checkbox id="chk_almdef" checked="false" disabled="true"  label="DEFAULT" tooltiptext="Define si es el Almacen por Defecto a Utilizar"/> 
+                                                    <space width="20px"/>
+                                                    <checkbox id="chk_almvta" checked="false" disabled="true" label="VENTAS" tooltiptext="Define si es un Almacen para la Venta"/> 
+                                                    <space width="20px"/>
+                                                    <checkbox id="chk_almcom" checked="false" disabled="true" label="COMPRAS" tooltiptext="Indicador de Almacen por Defecto para Compras"/>
+                                                </cell>
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                </div>    
+                            </tabpanel>
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south height="25px" border="0">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>    
+</zk>

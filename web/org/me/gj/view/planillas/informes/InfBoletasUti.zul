@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center> 
+            <div width="100%" sclass="cuerpo-main">
+                <window id="w_boluti" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                    <tabbox id="tabbox_boluti"  apply="">
+                        <tabs>
+                            <tab id="tab_boluti" label="BOLETA DE PARTICIPACION DE UTILIDADES"/>
+                        </tabs>
+                   
+                        <tabpanels>
+                            <tabpanel>
+                                
+                                <groupbox width="987px" open="true" closable="false" style="text: center;">
+                                    <space height="30px"/>
+                                    
+                                    <hbox align="center">
+                                        <space width="239px"/>
+                                        <radiogroup Id="rg_periodo" onCheck="true">
+                                            <radio label="PERIODO ACTUAL"/>
+                                            <space width="258px"/>
+                                            <radio label="PERIODO ANTERIOR"/>
+                                        </radiogroup>
+                                    </hbox>
+                                    
+                                    <space height="20px"/>
+                                    
+                                    <hbox align="center">
+                                        <space width="244px"/>
+                                        <cell align="left" width="70px">
+                                            <label value="PERIODO : "/>
+                                        </cell>
+                                        <space width="5px"/>
+                                        <combobox id="cb_periodo" width="120px" tooltiptext="Seleccione periodo" readonly="true" placeholder="-seleccione-"/>
+                                    </hbox>
+                                    
+                                    <space height="20px"/>
+                                    
+                                    <hbox align="center">
+                                        <space width="244px"/>
+                                        <cell align="left" width="70px">
+                                            <label value="SUCURSAL : "/>
+                                        </cell>
+                                        <space width="5px"/>
+                                        <combobox id="cb_sucursal" width="120px" tooltiptext="Seleccione periodo" readonly="true" placeholder="-seleccione-"/>
+                                    </hbox>
+                                    
+                                    <space height="20px"/>
+                                    
+                                    <hbox align="center">
+                                        <space width="239px"/>
+                                        <radiogroup Id="rg_tiporep" onCheck="true">
+                                            <radio label="DETALLADO"/>
+                                            <space width="285px"/>
+                                            <radio label="RESUMEN"/>
+                                        </radiogroup>
+                                    </hbox>
+                                    
+                                    <space height="20px"/>
+                                    
+                                    <div id="div_01" align="center">
+                                        <hbox align="center">
+                                            <cell align="left" width="70px">
+                                                <label value="PERSONAL :"/>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <textbox id="txt_codper" maxlength="5" readonly="false" width="35px" focus="false" tooltiptext="Código de Personal" style="text-align: center;"/>
+                                            <textbox id="txt_desper" maxlength="5" readonly="true" width="350px" focus="false" disabled="true" tooltiptext="Descripcion de Personal" />
+                                        </hbox>
+                                    </div>
+                                    
+                                    <space height="20px"/>
+                                    
+                                    <hbox align="center" >
+                                        <space width="244px"/>
+                                        <cell align="left" width="280px">
+                                            <label value="FECHA DE PRESENTACION DE DECLARACION JURADA : "/>
+                                        </cell>
+                                        <datebox id="db_fechapdj" maxlength="10" readonly="true" width="85px" disabled="false" format="dd/MM/yyyy" style="text-align: center;" />
+                                    </hbox>
+                                    
+                                    <space height="20px"/>
+                                    
+                                    <hbox align="center" >
+                                        <space width="244px"/>
+                                        <cell align="left" width="160px">
+                                            <label value="FECHA DE PAGO DE UTILIDAD : "/>
+                                        </cell>
+                                        <space width="117px"/>
+                                        <datebox id="db_fechapu" maxlength="10" readonly="true" width="85px" disabled="false" format="dd/MM/yyyy" style="text-align: center;" />
+                                    </hbox>
+                                    
+                                    <space height="20px"/>
+                                    
+                                    <div id="div_03" align="center">
+                                        <hbox align="center">
+                                            <button id="btn_aceptar" label="Consultar" sclass="botones"/>
+                                        </hbox>
+                                    </div>
+                                    
+                                    <space height="30px"/>
+                                    
+                                </groupbox>
+                                
+                            </tabpanel>
+                        </tabpanels>     
+                      
+                    </tabbox>     
+                </window>
+            </div>  
+        </center> 
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>              
+</zk>

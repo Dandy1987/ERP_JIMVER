@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<div id="d_pie" sclass="abajo-main">
+        <toolbar mold="panel" align="center">
+            Empresa : 
+            <label value="${sessionScope.usuariosCredential.empresa}"/>
+            <space width="10px"/>
+            Sucursal : 
+            <label value="${sessionScope.usuariosCredential.sucursal}"/>
+            <space width="410px"/>
+            Jimver ERP -
+            Designed and Developed Grupo Jimenez 2013
+        </toolbar>
+</div>

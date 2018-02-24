@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_per" title="CONSTANTE EN BLOQUE" border="normal" width="720px"
+            apply="org.me.gj.controller.componentes.ControllerLovConstanteBloque"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <groupbox width="695px" height="125px" open="true" closable="false">
+                <caption label="Opciones de Busqueda" />
+                
+                <hbox align="center">
+                    <space width="15px"/>
+                    <cell align="right" valign="center">
+                        <label value="PERIODO:"/>                                                 
+                    </cell>
+                    <space width="2px"/>
+                    <textbox id="txt_periodo"  disabled="true"  width="72px"/> 
+                    <space width="5px"/>                        
+                    <cell align="left" valign="center">
+                        <label value="SUCURSAL :"/>
+                    </cell>
+                    <combobox id="cb_fsucursal" width="120px" tooltiptext="Seleccione sucursal" readonly="true">
+                        <template name="model">
+                            <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                        </template>
+                    </combobox>
+                    <space width="35px"/>
+                     <cell align="right" valign="center">
+                        <label value="AREA :"/>
+                    </cell>
+                    <combobox id="cb_area" width="190px" tooltiptext="Seleccione área" readonly="true">
+                        <template name="model">
+                            <comboitem label="${each.area_des}" value="${each.area_id}"/>
+                        </template>
+                    </combobox>    
+                </hbox> 
+                <space width="5px"/>
+                <hbox align="center">
+                    <space width="150px"/>                        
+                    <radiogroup id="rbg_indica">
+                        <radio label="CONSTANTE" value="0" tooltiptext="Constante"/>
+                        <space width="65px"/>
+                        <radio label="CONS. MENSUAL" value="1" tooltiptext="Constante Mensual"/>
+                    </radiogroup> 
+                    <space width="15px"/>
+                    <button id="btn_consultar" label="Consultar" sclass="botones"/>
+                    <button id="btn_procesar" label="Procesar" sclass="botones"/>
+                </hbox> 
+                <space width="5px"/>
+                <hbox align="center">  
+                    <space width="15px"/>
+                    <cell align="right" width="center">
+                        <label value="CONCEPTO :"/>
+                    </cell>
+                    <space width="5px"/>
+                    <textbox id="txt_codcon" maxlength="3"  width="18px" tooltiptext="Código de concepto de personal"/>
+                    <space width="8px"/>
+                    <textbox id="txt_descon" maxlength="70" disabled="true" width="333px"  tooltiptext="Descripción de concepto de personal"/>
+                    <space width="30px"/>
+                    
+                    <cell align="right" valign="center">
+                        <label value="VALOR :" />
+                    </cell>
+                    <doublebox id="d_valor" style="text-align:right;" width="70px"  maxlength="8" tooltiptext="Ingrese valor"/>
+                    <space width="5px"/>
+                    
+                </hbox>
+            </groupbox>
+            <separator height="12px"/>    
+            <listbox id="lst_bloque" mold="paging" pageSize="13" width="700px" height="350px">
+                <listhead>
+                    <listheader label="CODIGO" width="115px" align="center"/>
+                    <listheader label="TRABAJADOR" width="370px" align="center"/>
+                    <!-- <listheader label="APELLIDO MATERNO" width="210px" align="center"/>
+                    <listheader label="NOMBRES" width="240px" align="center"/>-->
+                    <listheader label="MONTO" width="180px" align="center"/>
+                    <!-- <listheader label="CONSTANTES" width="140px" align="center"/>
+                    <listheader label="MENSUALES" width="140px" align="center"/>-->
+                    <!--<listheader label="EST" width="30px" align="center"/>-->
+                    <listheader>
+                        <checkbox id="chk_selecAll"/>
+                    </listheader>
+                </listhead>
+                <template name="model">	
+                    <listitem>
+                        <listcell label="${each.codigo_vista}"/>
+                        <listcell label="${each.paterno} ${each.materno} ${each.nombre}" style="text-align:left;"/>
+                        <!--<listcell label="${each.materno}" style="text-align:left;"/>-->
+                        <listcell label="${each.valor_concepto}" style="text-align:right;"/>
+                        <!--<listcell label="${each.area}" style="text-align:left;"/>-->
+                        <!--<listcell label="${each.}"/>
+                        <listcell label="${each.}"/>-->
+                        <listcell>
+                            <checkbox forward="onCheck=lst_bloque.onSeleccion"  checked="${each.valSelec}"/>
+                        </listcell>  
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk>

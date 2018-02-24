@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="stylesheet" type="text/css" href="/css/detect1024.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>   
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north> 
+        <center> 
+            <div sclass="cuerpo-main" >
+                <window id="w_regAsistencia" width="100%" height="100%" border="none" closable="true"  >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo(F2)" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)" />   
+                        <label value="ASISTENCIA" sclass="titulo_mant" style="margin-left:225px;"/>
+                    </toolbar>  
+                    <zscript>
+                        int countNum = 10;
+                        void restart() {
+                        countNum = 10;
+                        pm.value = 0;
+                        timer.start();
+                        }
+                    </zscript>
+                    <div id="div_center" align="center" apply="org.me.gj.controller.planillas.procesos.ControllerRegAsistencia">
+                        
+                        <space height="45px"/>
+                        
+                        <div id="div_spacing">
+                            <!--RECIBE EL VALOR DEL TIMER Y LA COLOCA EN EL LABEL PORQUE TIENE DE NOMBRE EL ID DEL LABEL-->
+                            <label id="now" sclass="label-user"/>
+                        </div>
+                        
+                        <space height="40px"/>         
+                                                               
+                        <hbox align="center">
+                            <cell align="left" valign="center" width="250px">
+                                <label value="Tipo de Registro : "  style="font-size:18px;"  sclass="caja-user" />
+                            </cell>
+                            <radiogroup id = "rbg_indicardor"> 
+                                <radio label="INGRESO" value="1"/>
+                                <space width="5px"/>
+                                <radio label="SAL. REFRI" value="2"/>
+                                <space width="5px"/>
+                                <radio label="ING. REFRI" value="3"/> 
+                                <space width="5px"/> 
+                                <radio label="SALIDA" value="4"/>
+                            </radiogroup>
+                        </hbox>
+                        
+                        <space height="40px"/>
+
+                        <hbox align="center">
+                            <cell align="left" valign="center" width="250px">
+                                <label value="Codigo de Personal : "  style="font-size:18px;"  sclass="caja-user" />
+                            </cell>
+                            <space width="2px"/>
+                            <textbox id="txt_codigo" instant="true" style="font-size:18px;" maxlength="8" width="180px" sclass="caja-user" placeholder="Ingrese dni"/>
+                            <space width="94px"/>
+                        </hbox>
+                        
+                        <space height="50px"/>
+                        
+                        <hbox align="center">
+                            <listbox id="lst_regAsistencia" width="600px" height="230px" mold="paging" pageSize="13">
+                                <listhead>
+                                    <listheader label="DNI" width="80px" align="center"/>
+                                    <listheader label="NOMBRES Y APELLIDOS" align="left"/>
+                                    <listheader label="HORA" width="150px" align="center"/>
+                                </listhead>
+                                <template name="model">
+                                    <listitem>
+                                        <listcell label="${each.dni}" style="text-align:center;"/>
+                                        <listcell label=" ${each.nombres}" style="text-align:left;"/>
+                                        <listcell label="${each.hor_reg}" style="text-align:center"/>
+                                    </listitem>
+                                </template>
+                            </listbox>
+                        </hbox>
+                        
+                        <!--JavaScript: TOMA LA HORA ACTUAL Y LA COLOCA EN UNA VARIABLE     NOW    QUE ES EL ID DE UN LABEL EL CUAL SERA EL QUE LO MUESTRE-->
+                        <timer id="timer"  delay="1000" repeats="true">
+                            <attribute name="onTimer">
+                                     <![CDATA[             
+                                        java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("EEEE dd/MM/yyyy - HH:mm:ss aa");
+                                        String value = "";
+                                        value = sdf.format(new Date());
+                                        now.setValue(value);
+                                     ]]>
+                            </attribute>
+                        </timer>
+                        
+                    </div>
+                </window>
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>
+
+</zk>

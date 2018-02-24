@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center>
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_kardex" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" disabled="true" />   
+                        <label value="REPORTE DE KARDEX" sclass="titulo_mant" style="margin-left:410px;"/>
+                    </toolbar>
+                    <!--<tabbox id="tabbox_ordcompxprov" apply="org.me.gj.controller.logistica.informes.ControllerKardex">
+                <tabs>
+                    <tab id="tab_listakardex" label="LISTA"/>
+                </tabs>
+                <tabpanels>
+                    <tabpanel>-->
+                    <div align="center" apply="org.me.gj.controller.logistica.informes.ControllerKardex">
+                        <separator height="10px"/>
+                        <groupbox width="985px" closable="false" style="background-color:#FFFFFF">
+                            <caption label="BUSQUEDA DE KARDEX" style="text-align:left;"/>
+                            <separator height="5px"/>
+                            <hbox align="center">
+                                <cell align="right" valign="center">
+                                    <label value="DESDE:"/>
+                                </cell>
+                                <datebox id="d_fecini" readonly="true" width="80px" onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="Fecha de emisión Inicial de la Factura proveedor"/> 
+                                <space width="5px"/>
+                                <cell align="right" valign="center">
+                                    <label value="HASTA:"/>
+                                </cell>
+                                <datebox id="d_fecfin" readonly="true" width="80px" onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="Fecha de emisión Final de la Factura proveedor"/> 
+                                <space width="5px"/>
+                                <cell align="right" valign="center">
+                                    <label value="PROVEEDOR:"/>
+                                </cell>
+                                <!--<bandbox id="cb_proveedor" mold="rounded" autodrop="true" readonly="true" disabled="false" width="215px">  
+                                    <bandpopup>
+                                        <vbox>
+                                            <space height="5px"/>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center">
+                                                    <label value="PROVEEDOR:"/>
+                                                </cell>
+                                                <textbox id="txt_proveedor" maxlength="50" width="420px" value="%%"/>
+                                            </hbox>
+                                            <space height="5px"/>
+                                            <listbox id="lst_proveedor" width="620px" mold="paging" pageSize="7">
+                                                <listhead>
+                                                    <listheader label="ID" width="60px"  />
+                                                    <listheader label="PROVEEDOR" />
+                                                </listhead>
+                                                <template name="model">
+                                                    <listitem>
+                                                        <listcell label="${each.prov_id}"/>
+                                                        <listcell label="${each.prov_razsoc}"/>
+                                                    </listitem>
+                                                </template>
+                                            </listbox>
+                                        </vbox>
+                                    </bandpopup>
+                                </bandbox>-->
+                                <textbox id="txt_provid" width="52px" maxlength="8"  tooltiptext="Define el código del Proveedor, máximo 8 caracteres"  />
+                                <textbox id="txt_provrazsoc" width="305px" maxlength="80"  disabled="true" tooltiptext="Define la Razon Social del Proveedor, máximo 80 caracteres"/>                                              
+                                <space width="5px"/>
+                                <cell align="right" valign="center">
+                                    <label value="ALMACEN:"/>
+                                </cell>
+                                <!--<bandbox id="cb_almacen" mold="rounded" autodrop="true"  readonly="true" disabled="false" width="215px" >  
+                                    <bandpopup>
+                                        <listbox id="lst_almacen" width="190px" mold="paging">
+                                            <listhead>
+                                                <listheader label="ID" width="35px"  />
+                                                <listheader label="ALMACEN" width="155px"  />
+                                            </listhead>
+                                            <template name="model">
+                                                <listitem>
+                                                    <listcell label="${each.alm_id}"/>
+                                                    <listcell label="${each.alm_des}"/>
+                                                </listitem>
+                                            </template>
+                                        </listbox>
+                                    </bandpopup>
+                                </bandbox>-->
+                                <intbox id="txt_almid" maxlength="4" width="28px" format="0000" tooltiptext="Codigo del Almacen"/> 
+                                <textbox id="txt_almdes" maxlength="50" disabled="true" width="150px" tooltiptext="Define la Descripcion del almacen Ingresado"/>
+                            </hbox>
+                            <space height="10px"/>
+                            <hbox>
+                                <hbox>
+                                    <groupbox width="120px" closable="false" height="95px">
+                                        <caption label="DETALLE"/>
+                                        <radiogroup id="rbg_detalle" >
+                                            <vbox>
+                                                <separator height="5px"/>
+                                                <radio label="DETALLADO" checked="true"/>
+                                                <radio label="RESUMIDO"/>
+                                            </vbox>
+                                        </radiogroup>
+                                    </groupbox>
+                                </hbox>
+                                <separator width="5px"/>
+                                <hbox>
+                                    <groupbox width="120px" closable="false" height="95px">
+                                        <caption label="PRODUCTOS"/>
+                                        <radiogroup id="rbg_productos" >
+                                            <vbox>
+                                                <radio label="PRODUCTO"/>
+                                                <radio label="RANGO"/>
+                                                <radio label="TOTALIZADO"/>
+                                            </vbox>
+                                        </radiogroup>
+                                    </groupbox>
+                                </hbox>
+                                <separator width="5px"/>
+                                <hbox>
+                                    <groupbox width="590px" closable="false" height="95px">
+                                        <caption label="DATOS"/>
+                                        <separator height="10px"/>
+                                        <hbox>
+                                            <cell align="right" valign="center" width="90px">
+                                                <label value="PRODUCTO INI : "/>
+                                            </cell>
+                                            <textbox id="txt_prodidp"  width="60px" maxlength="9" disabled="true" tooltiptext="Define el código del producto, máximo 9 caracteres"/>
+                                            <textbox id="txt_proddesp" width="400px" maxlength="60" disabled="true" tooltiptext="Define la descripción del producto, máximo 60 caracteres"/>
+                                        </hbox>
+                                        <separator height="5px"/>
+                                        <hbox>
+                                            <cell align="right" valign="center" width="90px">
+                                                <label value="PRODUCTO FIN : "/>
+                                            </cell>
+                                            <textbox id="txt_prodidf" disabled="true" width="60px" maxlength="9" tooltiptext="Define el código del producto, máximo 9 caracteres"/>
+                                            <textbox id="txt_proddesf" width="400px" maxlength="60" disabled="true" tooltiptext="Define la descripción del producto, máximo 60 caracteres"/>
+                                        </hbox>
+                                    </groupbox>
+                                </hbox>
+                                <separator width="2px"/>
+                                <cell align="right" valign="center">
+                                    <button id="btn_consultar" label="Consultar" sclass="botones"/>
+                                </cell>
+                            </hbox>
+                        </groupbox>
+                        <space height="5px"/>
+                        <listbox id="lst_kardex" width="985px" fixedLayout="true" height="345px" mold="paging" pageSize="12">
+                            <!--<frozen columns="2"/>-->   
+                            <auxhead>
+                                <auxheader label="DATOS" colspan="3" style="text-align: center;" />
+                                <auxheader label="MOVIMIENTO" colspan="2" style="text-align: center;" />
+                                <auxheader label="STOCK ACTUAL" colspan="2" style="text-align: center;" />
+                                <auxheader label="INFORMACION DE LA NOTA E/S" colspan="3" style="text-align: center;" />
+                                <auxheader label="REFERENCIA" colspan="2" style="text-align: center;" />
+                                <auxheader label="CLIENTE" colspan="2" style="text-align: center;" />
+                            </auxhead>
+                            <listhead>
+                                <listheader label="FECHA"  width="60px" align="center"/>
+                                <listheader label="HORA"  width="50px" align="center"/>
+                                <listheader label="TIP"  width="25px" align="center"/>
+                                        
+                                <listheader label="ENT"  width="55px" align="center"/>
+                                <listheader label="FRA"  width="45px" align="center"/>
+                                        
+                                <listheader label="ENT"  width="55px" align="center"/>
+                                <listheader label="FRA"  width="45px" align="center"/>
+                                        
+                                <listheader label="ID"  width="30px" align="center"/>
+                                <listheader label="DESCRIPCION"  width="200px"/>
+                                <listheader label="NRO NOTA" width="70px" align="center" />
+                                        
+                                <listheader label="TIP" width="25px" align="center"/>
+                                <listheader label="NUMERO" width="92px" align="center"/>
+                                        
+                                <listheader label="ID" width="70px" align="center"/>
+                                <listheader label="RAZON SOCIAL" align="center"/>
+                            </listhead>
+                            <template name="model">
+                                <listitem>
+                                    <listcell label="${each.gui_sfecha}"/>
+                                    <listcell label="${each.gui_hora}"/>
+                                    <listcell label="${each.tip_mov}"/>
+                                            
+                                    <listcell label="${each.movent}" style="text-align: right;"/>
+                                    <listcell label="${each.movfra}" style="text-align: right;"/>
+                                            
+                                    <listcell label="${each.stkent}" style="text-align: right;"/>
+                                    <listcell label="${each.stkfra}" style="text-align: right;" />
+                                            
+                                    <listcell label="${each.gui_tip}"/> 
+                                    <listcell label="${each.gui_des}"/>  
+                                    <listcell label="${each.gui_nro}"/>                         
+                                            
+                                    <listcell label="${each.tip_doc}"/>  
+                                    <listcell label="${each.nro_doc}" style="text-align: right;"/> 
+                                                                    
+                                    <listcell label="${each.kar_cliid}"/> 
+                                    <listcell label="${each.kar_clides}" style="text-align: left;"/> 
+                                </listitem>
+                            </template>
+                        </listbox>
+                        <space height="8px"/>
+                        <hbox align="center">
+                            <space width="5px"/>
+                            <cell align="right" valign="center" width="100px">                                            
+                                <label value="PRODUCTO :"/>
+                            </cell>
+                            <textbox id="txt_prodid" disabled="true" width="60px" maxlength="9" tooltiptext="Define el código del producto, máximo 9 caracteres"/>
+                            <textbox id="txt_proddes" width="400px" maxlength="60" disabled="true" tooltiptext="Define la descripción del producto, máximo 60 caracteres"/>    
+                            <space width="5px"/>
+                            <cell align="right" valign="center">                                            
+                                <label value="UND.PRE :"/>
+                            </cell>
+                            <doublebox id="txt_undpre" width="30px" maxlength="5" disabled="true" style="text-align: right;" tooltiptext="Define la Unidad de Presentación del producto, máximo 60 caracteres"/>    
+                            <space width="5px"/>
+                            <cell align="right" valign="center">
+                                <label value="STOCK INICIAL :"/>
+                            </cell>
+                            <intbox id="txt_stkinie" disabled="true" tooltiptext="Define el Stock Entero Inicial" width="70px" placeholder="ENTERO" style="color: red; background-color: yellow; text-align: right;"/>
+                            <intbox id="txt_stkinif" disabled="true" tooltiptext="Define el Stock Fraccion Inicial" width="70px" placeholder="FRACCION" style="color: red; background-color: yellow; text-align: right;"/>                                    
+                        </hbox>
+                        <space height="5px"/>
+                        <hbox align="center">
+                            <space width="5px"/>
+                            <cell align="right" valign="center" width="100px">
+                                <label value="TOTAL ENTRADAS :"/>
+                            </cell>
+                            <doublebox id="txt_etotent" disabled="true" tooltiptext="Define el Total Entradas Entero" width="70px" placeholder="ENTERO" style="color: red; background-color: yellow; text-align: right;"/>
+                            <doublebox id="txt_etotfra" disabled="true" tooltiptext="Define el Total Entradas Fraccion" width="70px" placeholder="FRACCION" style="color: red; background-color: yellow; text-align: right;"/>
+                            <space width="70px"/>
+                            <cell align="right" valign="center">
+                                <label value="TOTAL SALIDAS :"/>
+                            </cell>
+                            <doublebox id="txt_stotent" disabled="true" tooltiptext="Define el Total Salidas Entero" width="70px" placeholder="ENTERO" style="color: red; background-color: yellow; text-align: right;"/>
+                            <doublebox id="txt_stotfra" disabled="true" tooltiptext="Define el Total Salidas Fraccion" width="70px" placeholder="FRACCION" style="color: red; background-color: yellow; text-align: right;"/>
+                            <space width="95px"/>
+                            <cell align="right" valign="center">
+                                <label value="STOCK ACTUAL :"/>
+                            </cell>
+                            <intbox id="txt_stkacte" disabled="true" tooltiptext="Define el Stock Actual Entero" width="70px" placeholder="ENTERO" style="color: red; background-color: yellow; text-align: right;"/>
+                            <intbox id="txt_stkactf" disabled="true" tooltiptext="Define el Stock Actual Fraccion" width="70px" placeholder="FRACCION" style="color: red; background-color: yellow; text-align: right;"/>
+                        </hbox>
+                    </div>
+                    <!--</tabpanel>
+                        </tabpanels>
+                    </tabbox>-->         
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

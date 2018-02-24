@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicialSeguridad"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main"  >
+            <include src="/plantillas/MenuAdm.zul"/>
+        </north>
+        <center>
+            <div sclass="cuerpo-main" >
+                <window id="w_usuarios" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%" >
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" disabled="true" />      
+                        <label value="MANTENIMIENTO DE USUARIOS" sclass="titulo_mant" style="margin-left:247px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_usuarios" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerUsuarios">
+                        <tabs>
+                            <tab id="tab_listausuarios" label="LISTA"/>
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_usuarios.getSelectedIndex() == -1)
+                                    {
+                                    tab_listausuarios.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="987px" open="true" closable="false">
+                                    <caption label="Opciones de búsqueda"/>
+                                    <hbox>
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una opción">
+                                            <comboitem label=" "/>
+                                            <comboitem label="ID"/>
+                                            <comboitem label="NOMBRE"/>
+                                            <comboitem label="APELLIDOS"/>
+                                            <comboitem label="NICK"/>
+                                            <comboitem label="AREA"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <separator/>
+                                        <textbox id="txt_busqueda" width="400px" value = "%%" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                        <space width="2px"/>
+                                        <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una opción" width="110px">
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+                                        <space width="10px"/>
+                                        <button id="btn_buscar" label="Buscar" sclass="botones"/> 
+                                    </hbox>
+                                </groupbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_usuarios" mold="paging" pageSize="20" width="985px" height="490px">
+                                    <listhead>
+                                        <listheader label="ID" width="70px"/>
+                                        <listheader label="NOMBRE" width="220px"/>
+                                        <listheader label="APELLIDOS" width="200px"/>
+                                        <listheader label="NICK" width="145px"/>
+                                        <listheader label="AREA" width="160px"/>
+                                        <listheader label="TIPO" width="160px"/>
+                                        <listheader label="EST" width="30px"/>
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.usu_id}"/>
+                                            <listcell label="${each.usu_nom}"/>
+                                            <listcell label="${each.usu_ape}"/>
+                                            <listcell label="${each.usu_nick}"/>
+                                            <listcell label="${each.usu_area}"/>
+                                            <listcell label="${each.usu_rol}"/>
+                                            <listcell >
+                                                <checkbox checked="${each.valor}" disabled="true"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                            </tabpanel>
+                            <tabpanel>
+                                <hlayout>
+                                    <div id="div_man_usu" >
+                                        <grid id="grd_man_usu" width="900px">
+                                            <columns>
+                                                <column width="85px"/>
+                                                <column width="345px"/>
+                                            </columns>
+                                            <rows>
+                                                <row>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="ESTADO:" />
+                                                    </cell>
+                                                    <checkbox id="chk_estado" checked="true" disabled="true" label="Activo" tooltiptext="Define el estado del usuario">
+                                                        <attribute name="onCheck">
+                                                            if(chk_estado.isChecked())
+                                                            chk_estado.setLabel("Activo");
+                                                            else
+                                                            chk_estado.setLabel("Inactivo");
+                                                        </attribute>
+                                                    </checkbox>   
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="SITUACION:" />
+                                                    </cell>
+                                                    <checkbox id="chk_situacion"  disabled="true" label="Desbloqueado" tooltiptext="Define la situación del usuario" >
+                                                        <attribute name="onCheck">
+                                                            if(chk_situacion.isChecked())
+                                                            chk_situacion.setLabel("Bloqueado");
+                                                            else
+                                                            chk_situacion.setLabel("Desbloqueado");
+                                                        </attribute>
+                                                    </checkbox>    
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="ID:"/>
+                                                    </cell>
+                                                    <intbox id="txt_id" disabled="true" maxlength="5" tooltiptext="Define el código del usuario, máximo 5 caracteres"/>  
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="NOMBRES:" />
+                                                    </cell>
+                                                    <textbox id="txt_nombres" disabled="true" width="250px" maxlength="30" tooltiptext="Define los nombres de usuario, máximo 30 caracteres"/> 
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="APELLIDOS:" />
+                                                    </cell>
+                                                    <textbox id="txt_apellidos" disabled="true" width="250px" maxlength="30" tooltiptext="Define los apellidos del usuarios, máximo 30 caracteres"/> 
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="LOGIN:" />
+                                                    </cell>
+                                                    <textbox id="txt_login" disabled="true" width="250px" maxlength="15" tooltiptext="Define el login del usuario, máximo 15 caracteres"/>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="PASSWORD:" />
+                                                    </cell>
+                                                    <textbox id="txt_password" type="password" disabled="true" width="250px" maxlength="15" tooltiptext="Define la contraseña del usuario, máximo 15 caracteres"/>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="EMAIL:" />
+                                                    </cell>
+                                                    <textbox id="txt_email" disabled="true" width="300px" maxlength="40" tooltiptext="Define el e-mail del usuario, máximo 40 caracteres"/>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="DNI:" />
+                                                    </cell>
+                                                    <textbox  id="txt_dni" disabled="true" width="250px" maxlength="8" tooltiptext="Define el DNI del usuario, mínimo 8 caracteres"/>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="ROL:" />
+                                                    </cell>
+                                                    <combobox id="cb_rol" disabled="true" readonly="true" selectedIndex="-1" tooltiptext="Define el rol del usuario">
+                                                        <template name="model">
+                                                            <comboitem label="${each.rol_des}" value="${each.rol_id}"/>
+                                                        </template>
+                                                    </combobox>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="center">
+                                                        <label value="IMAGEN:" />
+                                                    </cell>
+                                                    <hbox align="botton">
+                                                        <textbox id="txt_imagen" disabled="true" width="250px" maxlength="30" readonly="true" tooltiptext="Define la imagen del usuario"/>
+                                                        <toolbarbutton id="tbbtn_btn_imagen" image="/images/iconos/buscar.png" 
+                                                                       tooltiptext="Buscar Imagen" upload="true" disabled="true"/>   
+                                                    </hbox>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="AREA:" />
+                                                    </cell>
+                                                    <combobox id="cb_area" disabled="true" width="250px" readonly="true" tooltiptext="Define el área del usuario">
+                                                        <comboitem label="DEP. SISTEMAS"/>
+                                                        <comboitem label="DEP. CONTABILIDAD"/>
+                                                    </combobox>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="PREGUNTA:" />
+                                                    </cell>
+                                                    <combobox id="cb_pregunta" disabled="true" width="320px" readonly="true" tooltiptext="Define la pregunta secreta del usuario">
+                                                        <template name="model">
+                                                            <comboitem label="${each.preg_des}" value="${each.preg_id}"/>
+                                                        </template>
+                                                    </combobox>
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom">
+                                                        <label value="RESPUESTA" />
+                                                    </cell>
+                                                    <textbox id="txt_respuesta" disabled="true" width="250px" maxlength="50" tooltiptext="Define la respuesta del usuario, máximo 50 caracteres"/>
+                                                </row>
+                                            </rows>
+                                        </grid>
+                                    </div>
+                                    <space width="80px"/>
+                                    <div id="img_foto" style="width : 353px ; height : 405px" />
+                                    <!-- width="353px" height="405px"  -->
+                                </hlayout>
+                            </tabpanel>
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south border="0">
+            <include src="/plantillas/modulos/PieSeguridad.zul"/>
+        </south>
+    </borderlayout>     
+</zk>

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_admnotrec" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_aprobar" image="/images/iconos/aprobar.png"  tooltiptext="Aprobar Nota de Recojo" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_rechazar" image="/images/iconos/rechazar.png" tooltiptext="Rechazar Nota de Recojo" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir Nota de Recojo" disabled="true" />  
+                        <label value="APROBAR NOTAS DE RECOJO" sclass="titulo_mant" style="margin-left:320px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_notinter" apply="org.me.gj.controller.logistica.procesos.ControllerAdmNotaRecojo">
+                        <tabs>
+                            <tab id="tab_listanotrecauto" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_notreccab.getSelectedIndex() == -1)
+                                    {
+                                    tab_listanotrecauto.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="980px" closable="false">
+                                    <caption label="BUSQUEDA DE NOTA DE RECOJO"/>
+                                    <vbox>
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+                                                <label value="VENDEDOR:"/>
+                                            </cell>
+                                            <textbox id="txt_ven_id" maxlength="4" width="32px" focus="true" tooltiptext="Define el Codigo de Vendedor, maximo 4 caracteres"/>
+                                            <textbox id="txt_ven_apenom" maxlength="50" width="340px" disabled="true" tooltiptext="Define el nombre del vendedor, maximo 50 caracteres"/>
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="CLIENTE:"/>
+                                            </cell>
+                                            <textbox id="txt_cli_id" maxlength="10" width="70px" tooltiptext="Define el Codigo del Cliente, maximo 10 caracteres"/>
+                                            <textbox id="txt_cli_razsoc" maxlength="100" width="360px" disabled="true" tooltiptext="Define el nombre del Cliente, maximo 100 caracteres"/>
+                                        </hbox>
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+                                                <label value="FECHA INICIAL:"/>
+                                            </cell>
+                                            <datebox id="d_fecini" width="80px" onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="Fecha de emision Inicial de la Nota de Recojo"/> 
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="FECHA FINAL:"/>
+                                            </cell>
+                                            <datebox id="d_fecfin" width="80px" onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="Fecha de emision Final de la Nota de Recojo"/> 
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="SITUACION"/>
+                                            </cell>
+                                            <combobox id="cb_situacion" width="150px" tooltiptext="Estado de la Nota de Recojo" readonly="true">
+                                                <comboitem label="TODO" value="134"/>
+                                                <comboitem label="INGRESADO" value="100"/>
+                                                <comboitem label="EN TRANSITO" value="030"/> 
+                                                <comboitem label="RECHAZADO" value="004"/> 
+                                            </combobox>
+                                            <space width="5px"/>
+                                            <button id="btn_buscarrec"  sclass="botones" label="Consultar" tooltiptext="Consultar Notas de Recojo"/>
+                                        </hbox>
+                                    </vbox>
+                                </groupbox>
+                                <space height="5px"/>
+                                <listbox id="lst_notreccab" mold="paging" pageSize="17" width="985px" height="437px">
+                                    <listhead>
+                                        <listheader label="NROINT" width="65px"/>
+                                        <listheader label="FECENT"  width="65px"/>
+                                        <listheader label="IDCLI"  width="70px"/>
+                                        <listheader label="CLIENTE" width="200px"/>
+                                        <listheader label="IDVEN" width="40px"/>
+                                        <listheader label="VENDEDOR" width="200px"/>
+                                        <listheader label="# NES ENT." width="90px"/>
+                                        <listheader label="SITUACION" width="80px"/>
+                                        <listheader label="MOTIVO" width="140px"/>       
+                                        <listheader>
+                                            <checkbox id="chk_selecAll"/>
+                                        </listheader>                                 
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem value="${each}">
+                                            <listcell label="${each.nr_id}"/>
+                                            <listcell label="${each.nr_sfecent}"/>
+                                            <listcell label="${each.cli_id}"/>
+                                            <listcell label="${each.cli_razsoc}"/>
+                                            <listcell label="${each.nr_svend}"/>
+                                            <listcell label="${each.ven_nom}"/>
+                                            <listcell label="${each.nr_notaent}"/>
+                                            <listcell label="${each.dessituacion}"/>
+                                            <listcell label="${each.mcam_des}"/>
+                                            <listcell >
+                                                <checkbox forward="onCheck=lst_notreccab.onSeleccion" checked="${each.valSelec}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Nota de Recojo"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creacion de la Nota de Recojo"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modifico la Nota de Recojo"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificacion de la Nota de Recojo"/>    
+                                </hbox>
+                            </tabpanel> 
+                            <tabpanel>
+                                <div >
+                                    <groupbox closable="false" width="985px">
+                                        <caption label="DATOS NOTA DE RECOJO" />    
+                                        <vbox >
+                                            <hbox align="center"> 
+                                                <cell align="right" valign="botton">
+                                                    <label value="# REGISTRO"/>
+                                                </cell>
+                                                <textbox id="txt_nr_id" width="61px" maxlength="10" disabled="true" tooltiptext="Define el Codigo de la Nota de Recojo, Maximo 10 caracteres"/>                                    
+                                                <space/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="F. EMISION: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <datebox id="d_nr_fecemi" width="80px" disabled="true" onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="fecha de emision de la Nota de Recojo"/> 
+                                                <space/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="F. ENTREGA: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <datebox id="d_nr_fecent" width="80px" disabled="true" onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="fecha de recepcion de la Nota de Recojo"/> 
+                                                <space/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="M. CAMBIO: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>                                                    
+                                                <textbox id="txt_nr_motcamid" disabled="true" width="22px" maxlength="3" tooltiptext="Define el codigo del Motivo de Cambio, Maximo 3 caracteres"/>
+                                                <textbox id="txt_nr_motcamdes"  maxlength="50" width="366px" disabled="true" tooltiptext="Define la descripcion del Motivo de cambio, Maximo 50 caracteres"/>
+                                            </hbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="botton">
+                                                    <label value="CLIENTE: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_cli_iddet" width="62px" disabled="true" maxlength="10" tooltiptext="Define el codigo del Cliente, Maximo 10 caracteres"/>
+                                                <textbox id="txt_cli_razsocdet" maxlength="100" width="370px" disabled="true" tooltiptext="Define la Razon Social del cliente, Maximo 100 caracteres"/>
+                                                <space/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="DIRECCION: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <longbox id="txt_clidir_id" maxlength="10" width="20px" disabled="true" tooltiptext="Define el codigo de la Direccion del Cliente"/>
+                                                <textbox id="txt_clidir_direcc" maxlength="120" width="348px" disabled="true" tooltiptext="Define la Descripcion de la Direccion, Maximo 120 Caracteres"/>
+                                            </hbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="botton">
+                                                    <label value="ZONA: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_zon_id" width="50px" disabled="true" readonly="true" maxlength="8" tooltiptext="Define el codigo de la zona, Maximo 8 caracteres"/>
+                                                <textbox id="txt_zon_des" maxlength="50" width="156px" disabled="true" tooltiptext="Define la Descripcion de la Zona , Maximo 50 caracteres"/>
+                                                <space/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="TRANSPORTE: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_nr_transid" maxlength="4" width="30px" readonly="true" disabled="true" tooltiptext="Define el codigo del Transporte, Maximo 4 caracteres"/>
+                                                <textbox id="txt_nr_transdes" maxlength="50" width="166px" disabled="true" tooltiptext="Define la Descripcion del Transporte, Maximo 50 Caracteres"/>
+                                                <space/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="VENDEDOR: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_nr_venid" maxlength="4" width="30px" readonly="true" disabled="true" tooltiptext="Define el codigo del Vendedor, Maximo 4 caracteres"/>
+                                                <textbox id="txt_sup_id" visible="false"/>
+                                                <textbox id="txt_nr_vennom" maxlength="50" width="268px" disabled="true" tooltiptext="Define el nombre del Vendedor, Maximo 50 Caracteres"/>
+                                            </hbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="botton">
+                                                    <label value="HORARIO: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_nr_horid" maxlength="4" width="20px" readonly="true" disabled="true" tooltiptext="Define el codigo del Horario, Maximo 4 caracteres "/>
+                                                <textbox id="txt_nr_hordes" maxlength="50" width="180px" disabled="true" tooltiptext="Define la Descripcion del Horario, Maximo 50 Caracteres"/>
+                                                <space/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="# REGISTRO:"/>
+                                                </cell> 
+                                                <textbox id="txt_nr_registro" maxlength="10" disabled="true" width="80px" tooltiptext="Define el numero de Registro, Maximo 10 caracteres"/>
+                                                <space/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="# NOTA E/S"/>
+                                                </cell>
+                                                <textbox id="txt_nr_notaent" width="90px" disabled="true" maxlength="10" tooltiptext="Define el Numero de Nota para la Nota de Recojo, Maximo 10 caracteres"/>
+                                            </hbox>
+                                        </vbox>
+                                    </groupbox>
+                                    <separator height="10px"/>
+                                    <hbox>
+                                        <vbox>
+                                            <listbox id="lst_notrecdet" width="960px" height="330px" vflex="true">
+                                                <listhead >
+                                                   <listheader label="DOC" width="30px" />
+                                                    <listheader label="TIPDOC" width="80px" />
+                                                    <listheader label="DOCREF"  width="105px" />
+                                                    <listheader label="IDPROD" width="70px"/>
+                                                    <listheader label="PRODUCTO" width="402px"/>
+                                                    <listheader label="UMAN"  width="45px"/>
+                                                    <listheader label="UPRE" width="45px" />
+                                                    <listheader label="ENTERO" width="55px" />
+                                                    <listheader label="FRACCION" width="65px" />
+                                                    <listheader label="TOTAL" width="60px" />
+                                                </listhead>	
+                                                <template name="model">
+                                                    <listitem>
+                                                        <listcell label="${each.nrd_tipdoc}"/>
+                                                        <listcell label="${each.nrd_tipdocdes}"/>
+                                                        <listcell label="${each.nrd_docref}"/>
+                                                        <listcell label="${each.pro_id}"/>
+                                                        <listcell label="${each.pro_desdes}"/>
+                                                        <listcell label="${each.pro_unimancom}"/>
+                                                        <listcell label="${each.pro_presmincom}" style="text-align: right;"/>
+                                                        <listcell label="${each.nrd_cantent}" style="text-align: right;"/>
+                                                        <listcell label="${each.nrd_cantfrac}" style="text-align: right;"/>
+                                                        <listcell label="${each.nrd_canttot}" style="text-align: right;"/>
+                                                    </listitem>
+                                                </template>
+                                            </listbox>
+                                        </vbox>
+                                        <toolbar id="tb_transacciones_ordcomp" width="30px" height="330px" >
+                                            <space height="90px"/>
+                                            <toolbarbutton id="tbbtn_btn_nuevonotrec" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true" />
+                                            <space height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_editarnotrec" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true" />            
+                                            <space height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_eliminarnotrec" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true" />
+                                            <space height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_guardarnotrec" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                                            <space height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_deshacernotrec" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                                        </toolbar>
+                                    </hbox>
+                                    <space height="2px"/>
+                                    <groupbox closable="false" width="985px">
+                                        <caption label="DATOS DEL PRODUCTO" />
+                                        <vbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="botton">
+                                                    <label value="PRODUCTO: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_nrd_prodid" disabled="true" width="60px" maxlength="9" tooltiptext="Define el Codigo del producto, Maximo 9 caracteres"/>
+                                                <textbox id="txt_nrd_proddes" width="380px" maxlength="60" disabled="true" tooltiptext="Define la descripcion del producto, Maximo 60 caracteres"/>
+                                                <space/> 
+                                                <cell align="right" valign="botton">
+                                                    <label value="CANT. ENTERO: "/>
+                                                </cell> 
+                                                <intbox id="txt_nrd_entero" width="85px" constraint="no negative" style="text-align: right;"  disabled="true" maxlength="4" tooltiptext="Ingrese la Cantidad Entera, Maximo 4 caracteres"/>
+                                                <space/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="CANT. FRACCION: "/>
+                                                </cell> 
+                                                <intbox id="txt_nrd_fraccion" width="85px" constraint="no negative" style="text-align: right;"  disabled="true" maxlength="4" tooltiptext="Ingrese la Cantidad Fraccion, Maximo 4 caracteres"/>
+                                               
+                                            </hbox>
+                                            <hbox align="center">                                            
+                                                <cell align="right" valign="botton">
+                                                    <label value="TIP. DOC: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <combobox id="cb_nrd_tipdoc" readonly="true" width="150px" disabled="true" tooltiptext="Define el Tipo de Documento de Referencia" >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.tipdoc_des}" value="${each.tipdoc_key}"/>                                                                                                      
+                                                    </template>                                               
+                                                </combobox>     
+                                                <space/>     
+                                                <cell align="right" valign="botton">
+                                                    <label value="DOC. REF: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                
+                                                <textbox id="txt_nrd_serie" maxlength="4" width="33px" disabled="true" placeholder="Serie" tooltiptext="Define el Numero de Serie de Referencia, maximo 4 caracteres"/>
+                                                <textbox id="txt_nrd_doc" maxlength="8" width="75px" disabled="true" placeholder="Documento" tooltiptext="Define el Numero de Documento de Referencia, maximo 8 caracteres"/>
+                                                <space/>     
+                                                <cell align="right" valign="botton">
+                                                    <label value="GLOSA:"/>
+                                                </cell>
+                                                <textbox id="txt_nrd_glosanotrec" maxlength="50" disabled="true" width="425px" tooltiptext="Define la Glosa de la Nota de Recojo, Maximo 50 Caracteres"/>
+                                          
+                                            </hbox>
+                                        </vbox>
+                                    </groupbox>
+                                </div>
+                            </tabpanel>                           
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

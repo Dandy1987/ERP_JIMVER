@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InfKardexDet_subreport" language="groovy" pageWidth="792" pageHeight="612" columnWidth="792" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="d38d9e78-1ec5-421e-8be1-ddc86a8fe13b">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="KAR_KEY" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="MAC" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select t.emp_id empid,t.suc_id sucid,t.kar_key,t1.kar_item karitem,t1.fecha fecha,t1.hora hora,t1.tip_mov tip, nvl(trunc(decode(t1.tip_mov,'E',t1.cante,'S',t1.cants)/t.pro_undpre),0) movent, nvl(mod(decode(t1.tip_mov,'E',t1.cante,'S',t1.cants),t.pro_undpre),0) movfra,nvl(trunc(t1.canttot/t.pro_undpre),0) stkent, nvl(mod(t1.canttot,t.pro_undpre),0) stkfra,  t1.nes_tip idnotaes,t1.nes_des desnotaes,t1.nes_nro nronotaes,t1.tip_doc tipdoc,t1.nro_doc nrodoc,t1.cstunitot,t1.csttot,t1.cli_id,t.prov_id prov_id,t.prov_razsoc prov_razsoc ,
+decode(t1.nes_tip,'001',t.prov_id,t1.cli_id) provcli_idrep,decode(t1.nes_tip,'001',t.prov_razsoc,t1.cli_razsoc) provcli_razsocrep,
+t.pro_id pro_id,t.pro_des pro_des, t.pro_undpre pro_undpre,t1.det_mac det_mac,decode(t1.tip_mov,'E',t1.cstunitot*t1.cante,t1.cstunitot*t1.cants) tot_mov  from tkardex_cab t, tkardex_det t1 where t.emp_id=t1.emp_id and t.suc_id=t1.suc_id and t.kar_key=t1.kar_key and t1.kar_key=$P{KAR_KEY} and t1.det_mac=$P{MAC} order by t.emp_id,t.suc_id,t1.kar_item]]>
+	</queryString>
+	<field name="EMPID" class="java.math.BigDecimal"/>
+	<field name="SUCID" class="java.math.BigDecimal"/>
+	<field name="KAR_KEY" class="java.math.BigDecimal"/>
+	<field name="KARITEM" class="java.math.BigDecimal"/>
+	<field name="FECHA" class="java.sql.Timestamp"/>
+	<field name="HORA" class="java.lang.String"/>
+	<field name="TIP" class="java.lang.String"/>
+	<field name="MOVENT" class="java.math.BigDecimal"/>
+	<field name="MOVFRA" class="java.math.BigDecimal"/>
+	<field name="STKENT" class="java.math.BigDecimal"/>
+	<field name="STKFRA" class="java.math.BigDecimal"/>
+	<field name="IDNOTAES" class="java.lang.String"/>
+	<field name="DESNOTAES" class="java.lang.String"/>
+	<field name="NRONOTAES" class="java.lang.String"/>
+	<field name="TIPDOC" class="java.lang.String"/>
+	<field name="NRODOC" class="java.lang.String"/>
+	<field name="CSTUNITOT" class="java.math.BigDecimal"/>
+	<field name="CSTTOT" class="java.math.BigDecimal"/>
+	<field name="CLI_ID" class="java.lang.String"/>
+	<field name="PROV_ID" class="java.lang.String"/>
+	<field name="PROV_RAZSOC" class="java.lang.String"/>
+	<field name="PROVCLI_IDREP" class="java.lang.String"/>
+	<field name="PROVCLI_RAZSOCREP" class="java.lang.String"/>
+	<field name="PRO_ID" class="java.lang.String"/>
+	<field name="PRO_DES" class="java.lang.String"/>
+	<field name="PRO_UNDPRE" class="java.math.BigDecimal"/>
+	<field name="DET_MAC" class="java.lang.String"/>
+	<field name="TOT_MOV" class="java.math.BigDecimal"/>
+	<variable name="cosuni_det" class="java.lang.String"/>
+	<variable name="totalmov_det" class="java.lang.String"/>
+	<variable name="total_det" class="java.lang.String"/>
+	<group name="PRO_ID">
+		<groupExpression><![CDATA[$F{PRO_ID}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="23ff18ba-f87b-4afa-b78f-9a7b062336f3" x="14" y="3" width="42" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="c216a15f-f682-4fc9-b519-d008a25ac575" x="56" y="3" width="20" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IDNOTAES}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="84153eaa-a7f4-4dfe-a039-eb5576527e94" x="76" y="3" width="87" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DESNOTAES}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4e9a8ecd-9bdb-4a3c-a31e-34c1b464a4b6" x="211" y="3" width="52" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRODOC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="5626e5f1-849e-4843-839e-fd5eafcbe40b" x="467" y="3" width="50" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STKENT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7a4e7a6a-0cd0-4055-a79a-7674a89ebe48" x="517" y="3" width="50" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STKFRA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="d51a9655-52d1-47cc-bb84-7051d1320179" x="367" y="3" width="50" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MOVENT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="49d7e074-592e-432f-a209-4a264c0cb31f" x="417" y="3" width="50" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MOVFRA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="23fb5b50-0772-44f8-9af6-97a21fe2ef4d" x="163" y="3" width="48" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRONOTAES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="29dfb1d9-2782-439a-b5fa-534d57bf894f" x="630" y="3" width="65" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CSTUNITOT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="917dd78b-442f-43c0-935e-c1e1a16c47d9" x="695" y="3" width="65" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CSTTOT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bc55791c-8d4b-4c10-979f-75afec2809be" x="570" y="3" width="60" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOT_MOV}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="34e97094-85ff-4fb2-8eba-94ed1294b915" x="263" y="3" width="38" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROVCLI_IDREP}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ea7743a1-83c2-472d-9168-da9fbec03ce0" x="301" y="3" width="66" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROVCLI_RAZSOCREP}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

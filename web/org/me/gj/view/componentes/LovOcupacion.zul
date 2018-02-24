@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_ocupacion" title="BÚSQUEDA DE OCUPACIÓN POR DESCRIPCIÓN" border="normal" width="438px"
+            apply="org.me.gj.controller.componentes.ControllerLovOcupacion"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="OCUPACIÓN :" />
+                </cell>
+                <textbox id="txt_busqueda_ocupacion" value="%%" width="335px" focus="true" maxlength="80" tooltiptext="Ingrese la ocupación"/>
+            </hbox>
+            <listbox id="lst_ocupacion" mold="paging" pageSize="13" width="410px">
+                <listhead>
+                    <listheader label="ID" width="50px" align="center"/>
+                    <listheader label="OCUPACIÓN"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.ocup_id}"/>
+                        <listcell label="${each.ocup_des}"/>                        
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk>

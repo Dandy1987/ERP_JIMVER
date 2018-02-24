@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?taglib uri="http://www.zkoss.org/dsp/web/core" prefix="c"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%"  >
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuFacturacion.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_guiasremision" width="100%" height="100%" border="none" closable="true" ctrlKeys="@n@m@e@g@d@i#f2#f4#f7#f10#f9#f8" >
+                    <toolbar id="tb_transacciones"  width="99.75%"  >
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)" disabled="true"/>            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Anular (F7)" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)"  disabled="true"/>   
+                        <label value="LISTADO DE GUIAS DE REMISIÓN" sclass="titulo_mant" style="margin-left:240px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_guiasremision" apply="org.me.gj.controller.facturacion.informes.ControllerRepGuiasRemision" >
+                        <tabs>
+                            <tab id="tab_listaGuiaRemision" label="LISTA"/>
+                            <tab id="tab_mantenimientoGuiaRemision" label="MANTENIMIENTO">    
+                                <!--<attribute name="onSelect">
+                                    if (lst_guiasremision.getSelectedIndex() == -1)
+                                    {
+                                    tab_listaGuiaRemision.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>-->                            
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <hbox>
+                                    <groupbox width="988px" open="true" closable="false">
+                                        <caption label="BUSQUEDA"/>
+                                        <vbox>                                            
+                                            <hbox align="center">
+                                                <cell align="right" valign="center">
+                                                    <space width="280px"/>
+                                                    <label value="PERIODO :"/>
+                                                </cell>
+                                                <combobox id="cb_periodo"  readonly="true" width="70px" >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.per_periodo}" value="${each.per_id}"/>                                                                                                      
+                                                    </template>                                                
+                                                </combobox>
+                                                <space width="10px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="FECHA :"/>
+                                                </cell>                                   
+                                                <datebox id="d_filtro_fecha" onCreate="self.value = new Date();" maxlength="10" width="85px" format="dd/MM/yyyy"/>    
+                                                <space width="10px"/>
+                                                <button id="btn_procesar"  sclass="botones" label="PROCESAR" />
+                                            </hbox> 
+                                        </vbox> 
+                                    </groupbox>                                                                        
+                                </hbox>                                
+                                <separator height="5px"/>
+                                <listbox id="lst_guiasremision" mold="paging" pageSize="17" width="984px" height="460px" >
+                                    <listhead>
+                                        <listheader label="NRO.GUIA"  width="100px" style="text-align: center;"/>
+                                        <listheader label="TIPO"  width="100px" style="text-align: center;"/> 
+                                        <listheader label="ID"  width="60px" style="text-align: center;"/> 
+                                        <listheader label="TRANSPORTE" style="text-align: center;"/>
+                                        <listheader label="FEC.EMI" width="90px" style="text-align: center;"/>
+                                        <listheader label="FE.ENVIO"  width="90px" style="text-align: center;"/>                                       
+                                        <listheader label="ESTADO"  width="100px" style="text-align: center;"/> 
+                                        <listheader label="" width="35px"/>
+                                        <listheader label="" width="35px"/>
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.pcab_nroped}"/>
+                                            <listcell label="${each.s_fecemi}"/>
+                                            <listcell label="${each.cli_id}" style="text-align: right;"/>
+                                            <listcell label="${each.cli_des}"/>
+                                            <listcell label="${each.con_id}"/>
+                                            <listcell label="${each.pcab_situacion_des}"/>
+                                            <listcell label="${each.pcab_motrec_des}" />
+                                            <listcell label="${each.s_totped}" style="text-align: right;"  />
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el usuario creador"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la fecha de adición"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el usuario que modificó"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la fecha de modificación"/>   
+                                </hbox>
+                            </tabpanel>                                          
+                            <!-- Panel Tab Mantenimiento -->                                                  
+                            <tabpanel>
+                                <div >
+                                    <groupbox style="background-color:#FFFFFF" closable="false" width="725px" >
+                                        <caption label="DATOS" />
+                                        <vbox align="rigth">
+                                            <hbox align="center">
+                                                <space width="6px"/> 
+                                                <cell align="right" valign="botton">
+                                                    <label value="SUCURSAL:"/>  
+                                                </cell>
+                                                <combobox id="cb_sucursal" width="130px" disabled="true" readonly="true" tooltiptext="Define la sucursal de la empresa">
+                                                    <template name="model">    
+                                                        <comboitem label="${each.tab_subdes}"  value="${each.tab_id}"  />                                                                                                      
+                                                    </template>                                                
+                                                </combobox>               
+                                                <space width="23px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="FEC.EMISION: "/>
+                                                </cell>                                     
+                                                <datebox id="d_fecemi" maxlength="10" width="80px" format="dd/MM/yyyy" disabled="true" onCreate="self.value = new Date();" tooltiptext="Fecha de emisión"/>                                                 
+                                                <space width="5px"/> 
+                                                <cell align="right" valign="botton">
+                                                    <label value="FEC.ENTREGA: "/>
+                                                </cell>                                     
+                                                <datebox id="d_fecent" maxlength="10" width="80px" format="dd/MM/yyyy" disabled="true" onCreate="self.value = new Date();" tooltiptext="Fecha de entrega"/>                                                 
+                                                <space width="35px"/> 
+                                                <cell align="right" valign="botton">    
+                                                    <label value="RUC:"/> 
+                                                </cell>                                               
+                                                <textbox id="txt_ruc" width="90px" maxlength="10" disabled="true" tooltiptext="Define el Numero de ruc, máximo 11 caracteres"/>                                                                                                                               
+                                            </hbox>
+                                            <hbox align="center">
+                                                <space width="32px"/> 
+                                                <cell align="right" valign="botton">
+                                                    <label value="TIPO:"/>  
+                                                </cell>
+                                                <space width="5px"/>
+                                                <combobox id="cb_tipo" width="100px" tooltiptext="Define el tipo de venta" disabled="true" readonly="true">
+                                                    <template name="model">    
+                                                        <comboitem label="${each.tab_subdes}"  value="${each.tab_id}"  />                                                                                                      
+                                                    </template>                                                
+                                                </combobox>               
+                                                <space width="2px"/>
+                                                <cell align="right" valign="botton">    
+                                                    <label value="SERIE:"/> 
+                                                </cell>                                               
+                                                <textbox id="txt_serie" width="35px" maxlength="10" disabled="true" tooltiptext="Define el número de serie, máximo 10 caracteres"/>                                                                                   
+                                                <space width="2px"/>
+                                                <cell align="right" valign="botton">    
+                                                    <label value="N°GUIA:"/> 
+                                                </cell>                                               
+                                                <textbox id="txt_nroguia" width="71px" maxlength="5" disabled="true" tooltiptext="Define el número de guía, máximo 5 caracteres"/>                                                                                   
+                                                <space width="20px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="MOT.TRAS: "/>
+                                                </cell>
+                                                <textbox id="txt_mottras_id" width="30px" disabled="true" maxlength="4" tooltiptext="Define el código del motivo de traslado, máximo 4 caracteres"/>
+                                                <textbox id="txt_mottras_des" maxlength="70" width="200px" disabled="true" tooltiptext="Define la descripción del motivo de traslado, máximo 70 caracteres"/>
+                                            </hbox>
+                                            <hbox align="center">
+                                                <space width="28px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="TRANS: "/>
+                                                </cell>
+                                                <longbox id="txt_trans_id" maxlength="4" width="30px" disabled="true" tooltiptext="Define el código del trasnporte, máximo 4 caracteres"/>
+                                                <textbox id="txt_trans_des" maxlength="80" width="110px" disabled="true" tooltiptext="Define la descripción del transporte, máximo 80 caracteres"/>
+                                                <space width="5px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="TRANS.PLACA: "/>
+                                                </cell>
+                                                <textbox id="txt_transplaca" width="60px" maxlength="8" disabled="true" tooltiptext="Define el número de placa del trasnporte, máximo 8 caracteres"/>
+                                                <space width="34px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="MARCA: "/>
+                                                </cell>
+                                                <textbox id="txt_transmarca" width="60px" maxlength="20" disabled="true" tooltiptext="Define la marca del vehiculo, Máximo 20 caracteres"/>
+                                                <space width="5px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="CONS.INSCRI: "/>
+                                                </cell>
+                                                <textbox id="txt_consinscri" maxlength="30" readonly="true" width="90px" disabled="true"/>
+                                            </hbox>
+                                            <hbox align="center">
+                                                <space width="22px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="CHOFER: "/>
+                                                </cell>
+                                                <textbox id="txt_chofer_id" maxlength="4" width="35px" disabled="true" tooltiptext="Define el código del chofer, máximo 4 caracteres"/>
+                                                <textbox id="txt_chofer_des" maxlength="50" width="261px" disabled="true" tooltiptext="Define el nombre del chofer, máximo 50 caracteres"/>
+                                                <space width="21px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="CHOF.RUC:"/>
+                                                </cell> 
+                                                <textbox id="txt_choferruc" maxlength="10" disabled="true" width="70px" tooltiptext="Define el día de visita del vendedor"/>
+                                                <space width="2px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="CHOF.BREV:"/>
+                                                </cell> 
+                                                <textbox id="txt_choferbrev" maxlength="10" disabled="true" width="90px" tooltiptext="Define el número de brevete del chofer"/>
+                                            </hbox>
+                                            <hbox align="center">
+                                                <space width="26px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="GLOSA: "/>
+                                                </cell>
+                                                <textbox id="txt_glosa" width="305px" maxlength="150" disabled="true" tooltiptext="Define la glosa, máximo 150 caracteres"/>
+                                                <space width="10px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="REFERENCIA: "/>
+                                                </cell>
+                                                <textbox id="txt_referencia" width="155px" maxlength="250" disabled="true" tooltiptext="Define el número de referencia"/>
+                                            </hbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="botton">
+                                                    <label value="PTO.PARTIDA: "/>
+                                                </cell>
+                                                <textbox id="txt_ptopartida" width="240px" maxlength="150" disabled="true" tooltiptext="Define el punto de partida, máximo 150 caracteres"/>
+                                                <space width="65px"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="PTO.LLEGADA: "/>
+                                                </cell>
+                                                <textbox id="txt_ptollegada" width="240px" maxlength="150" disabled="true" tooltiptext="Define el punto de llegada, máximo 150 caracteres"/>
+                                            </hbox>
+                                        </vbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <hbox>                                        
+                                        <listbox id="lst_guiasremision_detalle" width="690px" height="340px" > 
+                                            <listhead>
+                                                <listheader label="CODIGO" width="100px" style="text-align: center;" />
+                                                <listheader label="DESCRIPCION" style="text-align: center;"/>                                                                                     
+                                                <listheader label="CANTIDAD"  width="150px" style="text-align: center;"/>                                                
+                                                <listheader label=""  width="35px" style="text-align: center;"/>
+                                            </listhead>	    
+                                            <template name="model">
+                                                <listitem>
+                                                    <listcell label="${each.pro_id}"/>
+                                                    <listcell label="${each.pdet_prodes}"/>                                                                                                      
+                                                    <listcell label="${each.pdet_ent}" style="text-align: right;" />                                                    
+                                                    <listcell label="${each.pdet_frac}" style="text-align: right;" />
+                                                </listitem>
+                                            </template>                                                             
+                                        </listbox>
+                                        <toolbar id="tb_transacciones_notcamb" width="25px" height="338px" >
+                                            <separator height="55px"/>
+                                            <toolbarbutton id="tbbtn_btn_nuevopro" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (ALT+N)" disabled="true" />                                            
+                                            <!--<separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_editarpro" image="/images/iconos/editar.png"  tooltiptext="Editar (ALT+M)" disabled="true" />-->                                                        
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_eliminarpro" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (ALT+E)" disabled="true" />                                            
+                                            <!--<separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_guardarpro" image="/images/iconos/guardar.png" tooltiptext="Guardar (ALT+G)" disabled="true" />                                            
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_deshacerpro" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (ALT+D)" disabled="true" />-->
+                                        </toolbar>
+                                    </hbox>
+                                    <separator height="5px"/>
+                                    <hbox align="right">
+                                        <cell align="right" valign="center">
+                                            <label value="TOTAL DE DOCUMENTOS:"/>
+                                        </cell>                                                                                                                                              
+                                        <textbox id="txt_totdoc" maxlength="10" width="80px" disabled="true"/>
+                                    </hbox> 
+                                </div>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

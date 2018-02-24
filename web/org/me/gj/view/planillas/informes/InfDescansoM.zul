@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>     
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>  
+            <div width="100%" sclass="cuerpo-main">
+                <window id="w_desc" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                        <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)"/>
+                        <label value="REPORTE DESCANSO MEDICO" sclass="titulo_mant" style ="margin-left: 245px;"/>
+                    </toolbar>
+                    
+                    <tabbox id="tabbox_desc"  apply="org.me.gj.controller.planillas.informes.ControllerInfDescansoM">
+                        <tabs>
+                            <tab id="tab_desc" />
+                        </tabs>
+                        
+                        <tabpanels>
+                            <tabpanel>
+                                
+                                <groupbox width="987px" open="true" closable="false" style="text: center;">
+                                    <space height="30px"/>
+                                    <hbox align="center">
+                                        <space width="230px"/>
+                                        <cell align="left" valign="center">
+                                            <label value="AÑO :"/>
+                                            <span class="colorRojo">*</span>
+                                        </cell>
+                                        <space width="15px"/>
+                                        <textbox id="txt_periodo" style="text-align:right;" maxlength="4" width="80px" tooltiptext="Define el año a ver, maximo 4 caracteres"/> 
+										<space width="15px"/>
+                                        <combobox id="cb_tipodescanso" readonly="true" placeholder="---seleccione Opcion----" tooltiptext="Seleccione una Opcion" >
+                                            <comboitem label="TODOS"/>
+                                            <comboitem label="SEGURO"/>
+                                            <comboitem label="PARTICULAR"/>
+                                                
+          
+                                        </combobox>   
+                                    </hbox>
+                                    
+                                    <space height="20px"/>
+                                    
+                                    <div id="div_01" align="center">
+                                        <hbox align="center">
+                                            <cell align="left" valign="center">
+                                                <label value="PERSONAL :"/>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <textbox id="txt_codigo" maxlength="15" readonly="false"  width="80px" tooltiptext="Código de personal"/>
+                                            <textbox id="txt_codigo1" visible="false"/>
+                                            <textbox id="txt_apenom" maxlength="150"   width="360px" disabled="true" tooltiptext="Apellidos y Nombre(s) de personal"/>                                         
+                                            <space width="10px"/>
+                                           
+                                        </hbox>
+                                    </div>
+                                    
+                                  
+                                    
+                                </groupbox>
+                                
+                            </tabpanel>
+                        </tabpanels>     
+                                            
+                    </tabbox>
+                </window>
+            </div>  
+        </center> 
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>              
+</zk>
+

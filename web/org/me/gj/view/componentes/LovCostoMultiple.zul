@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_ccostos" title="BUSQUEDA DE CENTRO COSTOS" border="normal" width="438px"
+            apply="org.me.gj.controller.componentes.ControllerLovCostoMultiple"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="C. COSTOS :" />
+                </cell>
+                <textbox id="txt_busqueda_costos" instant="true"  width="335px" focus="true" maxlength="80" tooltiptext="Ingrese el Centro Costos"/>
+            </hbox>
+            <listbox id="lst_costo" mold="paging" pageSize="13" width="410px">
+                <listhead>
+                    <listheader label="ID" width="50px" align="center"/>
+                    <listheader label="C. COSTOS"/>
+                    <listheader width="25px">
+                        <checkbox id="chk_selecAll"/>
+                    </listheader>
+                    <!--<listheader label="NOMBRES" width="200px"/>-->
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.costo_cod}"/>
+                        <listcell label="${each.costo_des}"/>                        
+                        <listcell>
+                            <checkbox forward="onCheck=lst_costo.onSeleccion"  checked="${each.valSelec}"/>
+                        </listcell>       
+                    </listitem>
+                </template>
+            </listbox>
+            <button label="ACEPTAR" id="btn_aceptar" sclass="botones"/>
+        </vlayout>
+    </window>
+</zk>

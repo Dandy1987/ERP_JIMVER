@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_horario" title="BUSQUEDA DE HORARIOS" border="normal" width="390px"
+            apply="org.me.gj.controller.componentes.ControllerLovHorario"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="DESCRIPCION :" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="280px" focus="true" maxlength="45" tooltiptext="Ingrese la descripcion del Horario"/>
+            </hbox>
+            <listbox id="lst_horario" mold="paging" pageSize="13" width="360px">
+                <listhead>
+                    <listheader label="ID" width="40px" align="center"/>
+                    <listheader label="HORARIO" width="320px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.tab_subdir}"/>
+                        <listcell label="${each.tab_subdes}"/>
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk>

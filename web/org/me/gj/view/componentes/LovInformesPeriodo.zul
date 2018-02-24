@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_periodo" title="BUSQUEDA" border="normal" width="438px"
+            apply="org.me.gj.controller.componentes.ControllerInformesPeriodo"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+    
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="TIPO DE PLANILLA : "/>
+                </cell>
+                <space width="2px"/>
+                <combobox id="cb_tipPeriodo" readonly="true" width="200px" tooltiptext="Seleccione una Opcion">
+                    <template name="model">
+                        <comboitem label = "${each.tab_descri}" value = "${each.tab_id}"/>
+                    </template>
+                </combobox>
+                <button id="btn_consultar" label="BUSCAR" sclass="botones"/>
+            </hbox>
+            <listbox id="lst_periodo" mold="paging" pageSize="13" width="410px">
+                <listhead>
+                    <listheader label="PERIODO" width="70px" align="center"/>
+                    <listheader label="DESCRIPCION"/>
+                     <listheader width="25px">
+                        <checkbox id="chk_selecAll"/>
+                    </listheader>
+                    <!--<listheader label="VALOR"/>-->
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.perPag_id}"/>
+                        <listcell label="${each.perPag_desc}"/> 
+                         <listcell>
+                            <checkbox forward="onCheck=lst_periodo.onSeleccion"  checked="${each.valSelec}"/>
+                        </listcell> 
+                    </listitem>
+                </template>
+            </listbox>
+             <button label="ACEPTAR" id="btn_aceptar" sclass="botones"/>
+        </vlayout>
+
+    </window>
+</zk>

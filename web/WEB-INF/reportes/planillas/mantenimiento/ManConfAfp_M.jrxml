@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ManUniMan_M" language="groovy" pageWidth="1060" pageHeight="636" columnWidth="1046" leftMargin="7" rightMargin="7" topMargin="7" bottomMargin="7" uuid="ccb7ed49-48c3-46dc-a10d-f80b25422c9b">
+	<property name="ireport.zoom" value="2.200000000000001"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="usuario" class="java.lang.String">
+		<defaultValueExpression><![CDATA["GREYES"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_WHERE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["select t.*,r.tabla_descri,pack_tplcfgafp.DESCRIPCION(t.plafp_apori) apori,pack_tplcfgafp.DESCRIPCION(t.plafp_apodes) apodes,pack_tplcfgafp.DESCRIPCION(t.plafp_comori) comori,pack_tplcfgafp.DESCRIPCION(t.plafp_comdes) comdes,pack_tplcfgafp.DESCRIPCION(t.plafp_priori) priori,pack_tplcfgafp.DESCRIPCION(t.plafp_prides) prides,pack_tplcfgafp.DESCRIPCION(t.plafp_mixori) mixori,pack_tplcfgafp.DESCRIPCION(t.plafp_mixdes) mixdes from tplcfgafp t,tpltablas1 r where  t.plafp_id = r.tabla_id and    r.tabla_cod = '00005' order by t.plppag_id desc,t.plafp_id"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{P_WHERE}]]>
+	</queryString>
+	<field name="EMP_ID" class="java.math.BigDecimal"/>
+	<field name="PLPPAG_ID" class="java.lang.String"/>
+	<field name="PLAFP_ID" class="java.lang.String"/>
+	<field name="PLAFP_APOBL" class="java.math.BigDecimal"/>
+	<field name="PLAFP_APORI" class="java.lang.String"/>
+	<field name="PLAFP_APODES" class="java.lang.String"/>
+	<field name="PLAFP_COMFIJ" class="java.math.BigDecimal"/>
+	<field name="PLAFP_COMORI" class="java.lang.String"/>
+	<field name="PLAFP_COMDES" class="java.lang.String"/>
+	<field name="PLAFP_PRISEG" class="java.math.BigDecimal"/>
+	<field name="PLAFP_PRIORI" class="java.lang.String"/>
+	<field name="PLAFP_PRIDES" class="java.lang.String"/>
+	<field name="PLAFP_TOPSEG" class="java.math.BigDecimal"/>
+	<field name="PLAFP_IDCTA" class="java.lang.String"/>
+	<field name="PLAFP_ESTADO" class="java.math.BigDecimal"/>
+	<field name="PLAFP_COMMIX" class="java.math.BigDecimal"/>
+	<field name="PLAFP_MIXORI" class="java.lang.String"/>
+	<field name="PLAFP_MIXDES" class="java.lang.String"/>
+	<field name="PLAFP_USUADD" class="java.lang.String"/>
+	<field name="PLAFP_FECADD" class="java.sql.Timestamp"/>
+	<field name="PLAFP_PCADD" class="java.lang.String"/>
+	<field name="PLAFP_USUMOD" class="java.lang.String"/>
+	<field name="PLAFP_FECMOD" class="java.sql.Timestamp"/>
+	<field name="PLAFP_PCMOD" class="java.lang.String"/>
+	<field name="TABLA_DESCRI" class="java.lang.String"/>
+	<field name="APORI" class="java.lang.String"/>
+	<field name="APODES" class="java.lang.String"/>
+	<field name="COMORI" class="java.lang.String"/>
+	<field name="COMDES" class="java.lang.String"/>
+	<field name="PRIORI" class="java.lang.String"/>
+	<field name="PRIDES" class="java.lang.String"/>
+	<field name="MIXORI" class="java.lang.String"/>
+	<field name="MIXDES" class="java.lang.String"/>
+	<variable name="tot" class="java.lang.String" incrementType="Report" calculation="Count">
+		<variableExpression><![CDATA[$V{tot}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="46" splitType="Stretch">
+			<textField>
+				<reportElement uuid="802bfce8-5f2f-4abf-ab34-4b5b4ec68dca" x="1009" y="7" width="21" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="false" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="754416d6-40f3-4667-bd96-52a852947d62" x="19" y="20" width="130" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[MANCONFAFP_M.JASPER]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="b37d99eb-8007-4420-b0d3-b0857917d695" x="958" y="20" width="72" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7" isBold="false" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="39264b5c-f9f3-4c37-a165-0e67ccc8f078" x="978" y="7" width="28" height="10"/>
+				<textElement>
+					<font fontName="SansSerif" size="7" isBold="false" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[PAG:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4062cdda-cd8b-4c85-8888-c3700c646ed6" x="19" y="33" width="130" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm:ss">
+				<reportElement uuid="7b928a72-54a1-49b6-8256-bb714f91d943" x="958" y="33" width="72" height="10"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="7" isBold="false" pdfEncoding="Cp1250" isPdfEmbedded="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="604d291a-456d-4ab9-ab90-4ba701076c41" x="164" y="20" width="777" height="10"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CONFIGURACION DE AFP]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="37" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="96a693f4-8005-46ae-aa57-da6c725c36a8" x="19" y="25" width="1011" height="9"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="96a693f4-8005-46ae-aa57-da6c725c36a8" x="19" y="2" width="1011" height="9"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b1db3d9-e572-4933-b690-d4fed10f2612" x="19" y="13" width="70" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[PERIODO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="102" y="13" width="83" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="197" y="13" width="180" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[AFP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="390" y="13" width="180" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[CTA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement uuid="8874cf92-4b52-4db2-be80-da3756f35d6e" x="19" y="0" width="70" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PLPPAG_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="900a6b01-1ea4-4abf-9d4f-54b8d80cbfe0" x="102" y="0" width="83" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PLAFP_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0a622404-e7e5-4776-990b-c4fe4602b740" x="197" y="0" width="180" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TABLA_DESCRI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1ab199b6-e0af-4592-a7ce-9fe275227a48" x="390" y="0" width="180" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PLAFP_IDCTA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="5be848f2-9b7f-4fc6-9e48-c1458a10e4c1" x="19" y="16" width="130" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[TOTAL REGISTROS:]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="33d4713f-456e-45e8-ba7f-b9008b834fe3" x="214" y="16" width="100" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="96a693f4-8005-46ae-aa57-da6c725c36a8" x="19" y="6" width="1011" height="9"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

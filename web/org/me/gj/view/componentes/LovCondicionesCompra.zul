@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_condiciones_compra" title="BUSQUEDA DE CONDICIONES DE COMPRA" border="normal" width="440px"
+            apply="org.me.gj.controller.componentes.ControllerLovCondicionesCompra"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hlayout>
+                <cell align="right" valign="bottom">
+                    <label value="DESCRIPCION:" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="300px" focus="true" maxlength="45" tooltiptext="Ingrese los nombres del supervisor, Máximo 50 caracteres"/>
+            </hlayout>
+            <listbox id="lst_condiciones_compra" mold="paging" pageSize="13" width="410px">
+                <listhead>
+                    <listheader label="CODIGO" width="110px"/>
+                    <listheader label="DESCRIPCION" width="300px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.conId}"/>
+                        <listcell label="${each.conDes}"/>
+                    </listitem>
+                </template>
+            </listbox>
+            
+        </vlayout>
+    </window>
+</zk>

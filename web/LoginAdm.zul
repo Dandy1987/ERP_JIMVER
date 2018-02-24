@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos_login.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <hbox vflex="1" hflex="1" align="center" pack="center">
+        <vlayout>
+            <div id="div_loginadm" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerLogin" style="border: 2px solid #0080C8;border-radius: 15px;">
+                <grid id="grd_logins" width="400px" height="auto">
+                    <rows>
+                        <row >
+                            <cell colspan="2" valign="bottom" align="middle">
+                                <image src="/images/logos/jimver.png"/>
+                            </cell>
+                        </row>
+                    </rows>
+                </grid>
+                <grid id="grd_loginadm" sclass="grilla"  width="400px" height="auto">
+                    <rows>
+                        <row>
+                            <cell sclass="celda" width="150px">
+                                <label value="USUARIO :" />
+                            </cell>
+                            <textbox id="txt_adm" focus="true" maxlength="8" placeholder="Usuario"  sclass="caja-user-adm" tooltiptext="Login del Administrador" width="150px"/> 
+                        </row>
+                        <row>
+                            <cell sclass="celda">
+                                <label value="CONTRASEÑA :" />
+                            </cell>
+                            <textbox id="txt_passadm"   type="password" placeholder="Contraseña" sclass="caja-password-adm" maxlength="16" tooltiptext="Contraseña del Administrador" width="150px"/>
+                        </row>
+                        <row>
+                            <cell sclass="celda">
+                                <button id="btn_captcha" image="/images/login/reload.png" onClick="cap1.randomValue();" width="24px" height="24px" />
+                            </cell>
+                            <bw.captcha id="cap1" >
+                                <attribute name="onCreate"><![CDATA[
+                                    cap1.setBgColor(0x666666);
+                                    cap1.setFontColor(0x00FF00);
+                                    cap1.setFontBgColor(0x55AA55);
+                                    cap1.setLineColor(0xFFFF00);
+                                    ]]>
+                                </attribute>
+                            </bw.captcha>
+                        </row>
+                        <row>
+                            <cell sclass="celda">
+                                <label value="ESCRIBA LA PALABRA : "/>
+                            </cell>
+                            <textbox id="txt_captcha"  maxlength="5" sclass="caja-captcha" placeholder="Codigo Catpcha" tooltiptext="Ingrese Codigo Captcha" />
+                        </row> 
+                        <row > 
+                            <cell colspan="2" sclass="celdaCentrada">
+                                <button id="btn_login" label="Acceder" sclass="botones"/>
+                            </cell>
+                        </row>
+                        <row > 
+                            <cell colspan="2"  sclass="celdaCentrada">
+                                <label id="lbl_tipologin" value="ADM" visible="false"/>
+                            </cell>
+                        </row>
+                        <row > 
+                            <cell  colspan="2" sclass="celdaCentrada">
+                                <a href="/Login.zul" sclass="login-hiperlink">
+                                    <label id="lbl_sistema" value="Iniciar Sesión al Sistema"/>    
+                                </a>
+                            </cell>
+                        </row>
+                        <row > 
+       
+                        </row>
+                    </rows>
+                </grid>
+            </div>    
+        </vlayout>
+    </hbox>
+</zk>
+

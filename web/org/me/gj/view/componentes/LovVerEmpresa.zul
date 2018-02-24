@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_empresa" title="EMPRESA Y SUCURSAL DONDE LABORA" border="normal" width="680px"
+            apply="org.me.gj.controller.componentes.ControllerLovVerEmpresa"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+          
+            <listbox id="lst_empresa" width="680px">
+                <listhead>
+                    <listheader label="EMPRESA" width="300px" align="center"/>
+                    <listheader label="SUCURSAL" width="110px" align="left"/>
+                     <listheader label="FECHA CESE"  align="center"/>
+                      <listheader label="MOTIVO"  align="center"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.emp_des}" style="text-align:left;"/>
+                        <listcell label="${each.suc_id_des}" style="text-align:left;"/>  
+                        <listcell label="${each.s_plfecces}" style="text-align:center;"/>  
+                        <listcell label="${each.plcesemot}" style="text-align:left;"/>                        
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk>

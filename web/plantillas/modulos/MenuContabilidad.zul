@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <div id="menu_contabilidad" align="center" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerLogin" >
+        <separator sclass="z-separator-hor" /> 
+        <menubar id="mod_contabilidad" width="100%" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerPrivilegios">
+            <menu id="men_mantenimiento" label="Mantenimiento" width="90px" >
+                <menupopup>
+                    <menuitem id="smen1_apeanio" label="Apertura Año Contable" image="/images/iconos_menu/proveedores.png"  href="/org/me/gj/view/contabilidad/mantenimiento/ApeAnio.zul"/>                    
+                    <menuitem id="smen1_placon" label="Plan Contable" image="/images/iconos_menu/proveedores.png"  href="#"/>                    
+                    <menuitem id="smen1_tabsun" label="Tablas Sunat" image="/images/iconos_menu/proveedores.png"  href="#"/>                    
+                    <menuitem id="smen1_tipvou" label="Voucher" image="/images/iconos_menu/proveedores.png"  href="#"/>                                        
+                    <menuitem id="smen1_tipdoc" label="Tipo de Documento" image="/images/iconos_menu/proveedores.png"  href="/org/me/gj/view/contabilidad/mantenimiento/ManTipDoc.zul"/>       
+                    <menuitem id="smen1_cencos" label="Centro de Costos" image="/images/iconos_menu/proveedores.png"  href="#"/>                    
+                    <menuitem id="smen1_tipcam" label="Tipo de Cambio" image="/images/iconos_menu/proveedores.png"  href="#"/>                    
+                    <menuitem id="smen1_TipoExistencia" label="Tipo de Existencia" image="/images/iconos_menu/ubicaciones.png" href="/org/me/gj/view/contabilidad/mantenimiento/ManTipExi.zul" />                     
+                    
+                    <menu id="smen1_configuracion"  label="Configuracion" image="/images/iconos_menu/precios.png" >
+                        <menupopup>
+                            <menuitem id="smen2_regcom" label="Registro de Compras" image="/images/iconos_menu/precios_compra.png"  href="#"/>
+                            <menuitem id="smen2_regven" label="Registro de Ventas" image="/images/iconos_menu/precios_venta.png" href="#"/>      
+                        </menupopup>
+                    </menu>
+                    
+                    <menu id="smen1_analisis"  label="Analisis" image="/images/iconos_menu/precios.png" >
+                        <menupopup>
+                            <menuitem id="smen2_anacli" label="Clientes" image="/images/iconos_menu/precios_compra.png"  href="#"/>
+                            <menuitem id="smen2_anapro" label="Proveedores" image="/images/iconos_menu/precios_venta.png" href="#"/>      
+                            <menuitem id="smen2_anaper" label="Personal" image="/images/iconos_menu/precios_venta.png" href="#"/>      
+                            <menuitem id="smen2_anahon" label="Honorarios" image="/images/iconos_menu/precios_venta.png" href="#"/>      
+                        </menupopup>
+                    </menu>
+                </menupopup>
+            </menu>
+            <menu id="men_procesos" label="Procesos" width="90px" >
+                <menupopup>
+                    <menuitem id="smen1_notes" label="Generar Nota E/S" image="/images/iconos_menu/articulos.png"  />                                            
+                </menupopup>
+            
+            </menu>
+            <menu id="men_informes" label="Informes" width="90px" ></menu>
+            <menu id="men_utilitarios" label="Utilitarios" width="90px" >
+                <menupopup>
+                    <menu id="smen1_Cierre"  label="Cierre" image="/images/iconos_menu/precios.png" >
+                        <menupopup>
+                            <menuitem id="smen2_ciemen" label="Cierre Mensual" image="/images/iconos_menu/precios_compra.png"  href="#"/>
+                            <menuitem id="smen2_ciedia" label="Cierre Diario" image="/images/iconos_menu/precios_venta.png" href="#"/>      
+                        </menupopup>
+                    </menu>
+                </menupopup>
+            </menu>
+            <menu id="men_ayuda" label="Ayuda" width="90px" ></menu>
+            <menuitem  width="100px" />
+            <menuitem label="Bienvenido:  ${sessionScope.usuariosCredential.nombre}"/>
+            <menuitem label="Menu Principal" href="/Main.zul" />
+            <menuitem label="Cerrar Sesión" id="btn_logout"/>
+        </menubar>
+    </div>
+</zk>

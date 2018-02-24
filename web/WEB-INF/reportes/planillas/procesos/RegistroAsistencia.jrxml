@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RegistroAsistencia" language="groovy" pageWidth="864" pageHeight="842" columnWidth="824" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="ea8120ad-fc62-4089-bc6e-329521306fc6">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_EMPRESA" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_SUCURSAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_CODIGO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["47009564"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_INICIO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["26/09/2017"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_FIN" class="java.lang.String">
+		<defaultValueExpression><![CDATA["26/09/2017"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_FLAG" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="plsql">
+		<![CDATA[{call codijisa.pack_planilla_regAsistencia.reporte_regAsistencia($P{P_EMPRESA},$P{P_SUCURSAL},$P{P_CODIGO},$P{P_INICIO},
+$P{P_FIN},$P{ORACLE_REF_CURSOR})}]]>
+	</queryString>
+	<field name="TIPODOC" class="java.lang.String"/>
+	<field name="DNI" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="FECHA" class="java.lang.String"/>
+	<field name="HORA" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="EMPRESA" class="java.lang.String"/>
+	<field name="SUCURSAL" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="eb23129e-fb73-4db2-9381-f940aa4a835a" mode="Opaque" x="333" y="0" width="295" height="40" forecolor="#0033FF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE ASISTENCIA]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="59793f33-4b32-4266-824a-1a026e53b03d" x="696" y="0" width="128" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm.ss a">
+				<reportElement uuid="b91d4ab8-e766-4ede-97ae-dc99ba159898" x="696" y="20" width="128" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="73b322e2-2333-43ea-8ce8-8726b471d5f2" x="100" y="0" width="233" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{EMPRESA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="25f05759-637b-437a-ab5b-97f473389b3d" x="100" y="20" width="233" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SUCURSAL}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a2945080-59ff-4820-bb8b-516bf30f90b9" x="0" y="0" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[EMPRESA :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3172a95c-2743-4bc4-9e9f-0bb940334e74" x="0" y="20" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[SUCURSAL :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e8d955b0-6330-4a56-800c-51821274e59d" x="628" y="0" width="68" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[FECHA :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b470ff98-3edb-4568-9966-a9e5216a4f98" x="628" y="20" width="68" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[HORA :]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4cde94bc-b314-4a7a-be4f-9b264fa1359a" x="0" y="42" width="824" height="1"/>
+			</line>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="2bbb2fe4-adc5-4110-b42b-ccb8238d0629" x="0" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[DNI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="091a1de3-7cbb-44e9-9249-5a44b48896ae" x="100" y="0" width="428" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[                        NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5538e42c-6084-41c7-85a6-7bebac62bacf" x="528" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a2589d31-ba16-4b36-88a8-cb336eaf41be" x="628" y="0" width="68" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[HORA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="421b09c6-a66a-4659-bc3d-521c37795b46" x="696" y="0" width="128" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[TIPO]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="0bb283ec-ae7d-490f-9c7e-8c4ded365a11" x="0" y="20" width="824" height="1"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement uuid="b01b456a-bff4-4a21-8815-93967999a008" x="0" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DNI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9e0c56af-4de4-4b2c-9610-2339fea27a8a" x="100" y="0" width="428" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f90b8535-29fb-4cf2-880c-2e7a4b9dd20f" x="528" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e81fa9d9-82ed-47a8-a8d3-17a3e5734e37" x="628" y="0" width="68" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{HORA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5c0c5035-8014-4834-a8b1-0b0766139f53" x="696" y="0" width="128" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TIPO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

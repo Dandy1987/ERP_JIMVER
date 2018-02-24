@@ -1,0 +1,456 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north height="27px" sclass="arriba-main">
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_proveedores" ctrlKeys="#f2#f4#f7#f10#f9#f8" width="100%" height="100%" 
+                        border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo(F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar(F4)" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar(F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar(F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer(F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir(F8)" />   
+                        <label value="MANTENIMIENTO DE PROVEEDORES" sclass="titulo_mant" style="margin-left:200px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_proveedores" ctrlKeys="#f10" apply="org.me.gj.controller.logistica.mantenimiento.ControllerProveedores">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (!tab_lista.isDisabled())
+                                    {
+                                    if (lst_proveedores.getSelectedIndex() == -1) 
+                                    {
+                                    tab_lista.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla");   
+                                    }
+                                    }
+                                    
+                                </attribute>
+                            </tab>
+                            <tab id="tab_otros" label="OTROS">
+                                <attribute name="onSelect">
+                                    if (!tab_lista.isDisabled()){
+                                    if (lst_proveedores.getSelectedIndex() == -1) 
+                                    {
+                                    tab_lista.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla");   
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_prov" >
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda" />
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+                                                <label value="FILTRO:"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una Opción">
+                                                <comboitem label=" "/>
+                                                <comboitem label="ID"/>
+                                                <comboitem label="RAZON SOCIAL"/>
+                                                <comboitem label="DIRECCION"/>
+                                                <comboitem label="RUC"/>
+                                                <attribute name="onSelect">
+                                                    txt_busqueda.setDisabled(false);
+                                                </attribute>
+                                            </combobox>
+                                            <space width="2px"/>
+                                            <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="ESTADO:" id="lbl_estado"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una Opción" width="110px">
+                                                <comboitem label="ACTIVO"/>
+                                                <comboitem label="INACTIVO"/>
+                                                <comboitem label=" "/>       
+                                            </combobox>
+                                            <space width="10px"/>
+                                            <button id="tbbtn_btn_buscar" label="Buscar" sclass="botones"/>
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <listbox id="lst_proveedores" mold="paging" pageSize="17" width="985px" height="458px">
+                                        <auxhead>
+                                            <auxheader colspan="4">
+                                                <textbox id="txtid" instant="true" width="48px"/>
+                                                <textbox id="txtrazsoc" instant="true" width="374px"/>
+                                                <textbox id="txtdireccion" instant="true" width="420px"/>
+                                                <textbox id="txtruc" instant="true" width="76px"/>
+                                                <!--<textbox id="txtest" instant="true" width="20px"/>-->
+                                            </auxheader>
+                                        </auxhead>
+                                        <listhead>
+                                            <listheader label="ID" width="60px" align="center"/>
+                                            <listheader label="RAZON SOCIAL" width="384px"/>
+                                            <listheader label="DIRECCION" />
+                                            <listheader label="RUC" width="85px" align="center"/>
+                                            <listheader label="EST" width="25px"/>
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.prov_id}"/>
+                                                <listcell label="${each.prov_razsoc}"/>
+                                                <listcell label="${each.prov_dir}"/>
+                                                <listcell label="${each.prov_ruc}"/>
+                                                <listcell >
+                                                    <checkbox checked="${each.val}" disabled="true"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <space height="5px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador del Proveedor"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación del Proveedor"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó el Proveedor"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación del Proveedor"/>   
+                                    </hbox>
+                                </div>    
+                            </tabpanel>
+                            <tabpanel>
+                                <div id="div_man_prov">
+                                    <hbox>
+                                        <groupbox width="600px" height="450px" open="true" closable="false">
+                                            <caption label="DATOS GENERALES" />
+                                            <vbox >
+                                                <hbox align="center">
+                                                    <cell align="right" valign="center" width="100px">
+                                                        <label value="ESTADO:" />
+                                                    </cell>
+                                                    <checkbox id="chk_prov_est" disabled="true" tooltiptext="Define el Estado del Proveedor"/> 
+                                                </hbox>
+                                                <space height="3px"/>
+                                                <hbox align="center">
+                                                    <cell align="right" valign="center" width="100px">
+                                                        <label value="ID:" />
+                                                    </cell>
+                                                    <longbox id="txt_provkey" disabled="true" format="00000000" maxlength="8" width="100px" tooltiptext="Define el Código del Proveedor, Máximo 8 caracteres"/>
+                                                </hbox>
+                                                <space height="3px"/>
+                                                <hbox align="center">
+                                                    <cell align="right" valign="center" width="100px">
+                                                        <label value="RUC: " />
+                                                        <span class="colorRojo">*</span>   
+                                                    </cell>
+                                                    <longbox id="txt_provruc" disabled="true" width="100px" maxlength="11" tooltiptext="Define el Ruc del Proveedor, Máximo 11 caracteres"/> 
+                                                </hbox>
+                                                <space height="3px"/>
+                                                <hbox align="center">
+                                                    <cell align="right" valign="center" width="100px">
+                                                        <label value="RUC EXTRANJERO:" />
+                                                    </cell>
+                                                    <longbox id="txt_provrucext" disabled="true" width="100px" value="0"  maxlength="15" tooltiptext="Define el Ruc Extranjero del Proveedor, Máximo 15 caracteres"/> 
+                                                </hbox>
+                                                <space height="3px"/>
+                                                <hbox align="center">
+                                                    <cell align="right" valign="center" width="100px">
+                                                        <label value="SIGLAS: " />
+                                                        <span class="colorRojo">*</span>   
+                                                    </cell>
+                                                    <textbox id="txt_provsiglas" disabled="true" width="220px" maxlength="20" tooltiptext="Define las SIGLAS del Proveedor, Máximo 20 caracteres"/> 
+                                                </hbox>
+                                                <space height="3px"/>
+                                                <hbox align="center">
+                                                    <cell align="right" valign="center" width="100px">
+                                                        <label value="RAZON SOCIAL: " />
+                                                        <span class="colorRojo">*</span>   
+                                                    </cell>
+                                                    <textbox id="txt_provrazsoc" disabled="true" width="420px" maxlength="60" tooltiptext="Define la Razón Social del Proveedor, Máximo 60 caracteres"/> 
+                                                </hbox>
+                                                <space height="3px"/>
+                                                <hbox align="center">
+                                                    <cell align="right" valign="center" width="100px">
+                                                        <label value="TIPO: " />
+                                                        <span class="colorRojo">*</span>   
+                                                    </cell>
+                                                    <combobox id="cbx_provtip"  readonly="true" disabled="true" width="140px" tooltiptext="Define el Tipo de Proveedor">
+                                                        <comboitem label="BIENES" value="1"/>
+                                                        <comboitem label="SERVICIOS" value="2"/>
+                                                    </combobox>
+                                                </hbox>
+                                                <space height="3px"/>
+                                                <hbox align="center">
+                                                    <cell align="right" valign="center" width="100px">
+                                                        <label value="DIRECCION: " />
+                                                        <span class="colorRojo">*</span>   
+                                                    </cell>
+                                                    <textbox id="txt_provdir" disabled="true" width="420px" maxlength="60" tooltiptext="Define la Direccion del Proveedor, Máximo 60 caracteres"/> 
+                                                </hbox>
+                                                <space height="3px"/> 
+                                                <hbox align="center">
+                                                    <cell align="right" valign="center" width="100px">
+                                                        <label value="CLAVE:" />
+                                                    </cell>
+                                                    <textbox id="txt_provcla" type="password" disabled="true" width="100px" maxlength="15" tooltiptext="Define la Clave del Proveedor, Máximo 15 caracteres"/> 
+                                                </hbox>
+                                                <space height="3px"/> 
+                                                <hbox align="center">
+                                                    <cell align="right" valign="center" width="100px">
+                                                        <label value="WEB:" />
+                                                    </cell>
+                                                    <textbox id="txt_provweb" disabled="true" width="420px" maxlength="50" tooltiptext="Define la WEB del Proveedor, Máximo 50 caracteres"/> 
+                                                </hbox>
+                                                <space height="3px"/>  
+                                                <hbox align="center">
+                                                    <cell align="right" valign="center" width="100px">
+                                                        <label value="COND. DE PAGO: " />
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <combobox id="cbx_provcond" readonly="true" disabled="true" width="140px" tooltiptext="Define el Tipo de Condición de Pago">
+                                                        <template name="model">
+                                                            <comboitem label="${each.conDes}" value="${each.conKey}"/>
+                                                        </template>
+                                                    </combobox>
+                                                </hbox>
+                                                <space height="3px"/> 
+                                                <hbox align="center">
+                                                    <cell align="right" valign="center" width="100px">
+                                                        <label value="REPORTE:" />
+                                                    </cell>
+                                                    <textbox id="txt_provnom_rep" disabled="true" maxlength="25" width="220px" tooltiptext="Define el Reporte del Proveedor, Máximo 25 caracteres"/> 
+                                                </hbox>
+                                                <space height="3px"/>  
+                                                <hbox align="center">
+                                                    <cell align="right" valign="center" width="100px">
+                                                        <label value="ORDEN: " /> 
+                                                    </cell>
+                                                    <spinner id="spi_provord" disabled="true" width="50px" value="0" 
+                                                             constraint="min 0; max 999" maxlength="3"
+                                                             tooltiptext="Define el Orden de Busqueda del Proveedor"/>
+                                                </hbox>
+                                            </vbox>
+                                        </groupbox>
+                                        <groupbox width="200px" open="true" closable="false">
+                                            <caption label="CLIENTE DE SUNAT" />
+                                            <vbox spacing="10PX">  
+                                                <checkbox id="chk_normal" label="NORMAL" disabled="true" tooltiptext="Proveedor Normal"/>
+                                                <checkbox id="chk_retencion" label="RETENCION" disabled="true" tooltiptext="Proveedor con Retención"/>
+                                                <checkbox id="chk_bcliente" label="BUEN CLIENTE" disabled="true" tooltiptext="Proveedor Buen Cliente"/>
+                                                <checkbox id="chk_percepcion" label="PERCEPCION" disabled="true" tooltiptext="Proveedor con Percepción"/>
+                                                <checkbox id="chk_detraccion" label="DETRACCION" disabled="true" checked="true" tooltiptext="Proveedor con Detracción"/>
+                                                <checkbox id="chk_relacionado" label="PROV.RELACIONADO" disabled="true" tooltiptext="Proveedor Relacionado"/>
+                                            </vbox>
+                                        </groupbox>
+                                    </hbox>
+                                </div>   
+                            </tabpanel>
+                            <tabpanel>
+                                <groupbox width="988px" open="true" closable="false">
+                                    <caption label="CONTACTO" />
+                                    <toolbar id="tb_contacto"  width="99.5%">
+                                        <toolbarbutton id="tbbtn_btn_nuevoc" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true"/>
+                                        <toolbarbutton id="tbbtn_btn_editarc" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true"/>            
+                                        <toolbarbutton id="tbbtn_btn_eliminarc" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true"/>
+                                        <toolbarbutton id="tbbtn_btn_guardarc" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                                        <toolbarbutton id="tbbtn_btn_deshacerc" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                                    </toolbar>
+                                    <hbox>
+                                        <vbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="ESTADO:" />
+                                                </cell>
+                                                <checkbox id="chk_prov_con" checked="false" disabled="true" label="ACTIVO" tooltiptext="Define el Estado del Almacen">
+                                                    <attribute name="onCheck">
+                                                        chk_prov_con.setLabel(chk_prov_con.isChecked()?"ACTIVO":"INACTIVO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </hbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="CODIGO:" />
+                                                </cell>
+                                                <intbox id="txt_procon_id" disabled="true" maxlength="5" width="70px" tooltiptext="Define el Código del Contacto del Proveedor, Máximo 5 caracteres"/>
+                                            </hbox>
+                                            <space height="2px"/> 
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="NOMBRES: " />
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <textbox id="txt_procon_nom" disabled="true" width="240px" maxlength="30" tooltiptext="Define los Nombres del Contacto del Proveedor, Máximo 30 caracteres"/> 
+                                            </hbox>
+                                            <space height="2px"/>
+                                            <hbox align="center">    
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="APELLIDOS: " />
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <textbox id="txt_procon_ape" disabled="true" width="240px" maxlength="30" tooltiptext="Define los Apellidos del Contacto del Proveedor, Máximo 30 caracteres"/> 
+                                            </hbox>
+                                            <space height="2px"/>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="E-MAIL: " />
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <textbox id="txt_procon_ema" disabled="true" width="240px" maxlength="40" tooltiptext="Define el E-mail del Contacto del Proveedor, Máximo 40 caracteres"/> 
+                                            </hbox>
+                                            <space height="2px"/>
+                                            <hbox align="center">    
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="CARGO:" />
+                                                </cell>
+                                                <textbox id="txt_procon_cargo" disabled="true" width="240px" maxlength="50" tooltiptext="Define el Cargo del Contacto del Proveedor, Máximo 50 caracteres"/> 
+                                            </hbox>
+                                            <space height="2px"/>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="SUCURSAL:" />
+                                                </cell>
+                                                <textbox id="txt_procon_suc" disabled="true" width="120px" maxlength="50" tooltiptext="Define la Sucursal del Contacto del Proveedor, Máximo 50 caracteres"/> 
+                                            </hbox>
+                                            <space height="2px"/>
+                                            <hbox align="center"> 
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="TELEFONO-1: " />
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <longbox id="txt_procon_telf1" disabled="true" width="120px" maxlength="15" tooltiptext="Define El 1er Telefono del Contacto del Proveedor, Máximo 15 caracteres"/> 
+                                            </hbox>
+                                            <space height="2px"/>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="TELEFONO-2:" />
+                                                </cell>
+                                                <longbox id="txt_procon_telf2" disabled="true" width="120px" maxlength="15" tooltiptext="Define El 2do Telefono del Contacto del Proveedor, Máximo 15 caracteres"/> 
+                                            </hbox>   
+                                        </vbox>
+                                        <space width="3px"/>
+                                        <div width="500px">
+                                            <listbox id="lst_prov_cont" width="640px" vflex="true" height="210px">
+                                                <listhead>
+                                                    <listheader label="NOMBRES" width="125px"/>
+                                                    <listheader label="APELLIDOS" width="125px"/>
+                                                    <listheader label="E-MAIL" width="225px"/>
+                                                    <listheader label="TELEF-1" width="80px"/>
+                                                    <listheader label="TELEF-2" width="85px"/>
+                                                </listhead>	
+                                                <template name="model">
+                                                    <listitem>
+                                                        <listcell label="${each.procon_nom}"/>
+                                                        <listcell label="${each.procon_ape}"/>
+                                                        <listcell label="${each.procon_ema}"/>
+                                                        <listcell label="${each.procon_telef1}"/>
+                                                        <listcell label="${each.procon_telef2}"/>
+                                                    </listitem>
+                                                </template>
+                                            </listbox>
+                                        </div>
+                                    </hbox>
+                                </groupbox>   
+                                <space height="10px"/>
+                                <groupbox width="988px" height="240px" open="true" closable="false">
+                                    <caption label="TELEFONOS" />
+                                    <toolbar id="tb_telefonos"  width="99.5%">
+                                        <toolbarbutton id="tbbtn_btn_nuevot" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true"/>
+                                        <toolbarbutton id="tbbtn_btn_editart" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true"/>            
+                                        <toolbarbutton id="tbbtn_btn_eliminart" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true"/>
+                                        <toolbarbutton id="tbbtn_btn_guardart" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true"/>
+                                        <toolbarbutton id="tbbtn_btn_deshacert" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true"/>
+                                    </toolbar>
+                                    <hbox>
+                                        <vbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="ESTADO:" />
+                                                </cell>
+                                                <checkbox id="chk_prov_det" checked="false" disabled="true" label="ACTIVO" tooltiptext="Define el Estado del Telefono del Proveedor">
+                                                    <attribute name="onCheck">
+                                                        chk_prov_det.setLabel(chk_prov_det.isChecked()?"ACTIVO":"INACTIVO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </hbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="CODIGO:" />
+                                                </cell>
+                                                <intbox id="txt_prodet_id" disabled="true" maxlength="5" width="70px"  tooltiptext="Define el Codigo del Telefono del Proveedor, Máximo 5 caracteres"/>
+                                            </hbox>
+                                            <space height="2px"/>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="TELEFONO: " />
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <longbox id="txt_prodet_tel" disabled="true" width="120px" maxlength="15" tooltiptext="Define el Telefono del Proveedor, Máximo 15 caracteres"/> 
+                                            </hbox>
+                                            <space height="2px"/>
+                                            <hbox align="center">    
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="CELULAR: " />
+                                                    <span class="colorRojo">*</span>   
+                                                </cell>
+                                                <longbox id="txt_prodet_cel" disabled="true" width="120px" maxlength="15" tooltiptext="Define el Celular del Proveedor, Máximo 15 caracteres"/> 
+                                            </hbox>
+                                            <space height="2px"/>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" width="75px">
+                                                    <label value="FAX: " />
+                                                    <span class="colorRojo">*</span>                                                    
+                                                </cell>
+                                                <longbox id="txt_prodet_fax" disabled="true" width="120px" maxlength="15" tooltiptext="Define El Fax del Proveedor, Máximo 15 caracteres"/> 
+                                            </hbox>     
+                                        </vbox>
+                                        <space width="123px"/>
+                                        <div width="500px">
+                                            <listbox id="lst_prov_det" width="640px" height="150px" vflex="true">
+                                                <listhead>
+                                                    <listheader label="TELEFONO" width="213px"/>
+                                                    <listheader label="CELULAR" width="213px"/>
+                                                    <listheader label="FAX" width="214px"/>
+                                                </listhead>	
+                                                <template name="model">
+                                                    <listitem>
+                                                        <listcell label="${each.prodet_tel}"/>
+                                                        <listcell label="${each.prodet_cel}"/>
+                                                        <listcell label="${each.prodet_fax}"/>
+                                                    </listitem>
+                                                </template>
+                                            </listbox>
+                                        </div>
+                                    </hbox>
+                                </groupbox>    
+                            </tabpanel>
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south height="25px" border="0">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>    
+</zk>
+

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuContabilidad.zul"/>
+        </north>
+        <center>
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_marca" width="100%" height="100%" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%" >
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" onClick='alert("Imprimir")' />          
+                        <label value="MANTENIMIENTO DE TIPO DE EXISTENCIA" sclass="titulo_mant" style="margin-left:209px;"/>
+                    </toolbar>
+               
+                    <tabbox id="tabbox_texistencia" apply="org.me.gj.controller.contabilidad.mantenimiento.ControllerTipExistencia">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_texistencia.getSelectedIndex() == -1)
+                                    {
+                                    tab_lista.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_texistencia" >
+                                    <groupbox width="750px" open="false">
+                                        <caption label="Opciones de Busqueda"/>
+                                        <hbox>
+                                            <space/>
+                                            <combobox id="cb_busqueda" readonly="true" placeholder="---seleccione Opcion----">
+                                                <comboitem label="CODIGO"/>
+                                                <comboitem label="DESCRIPCION"/>
+                                                <comboitem label="COD_SUNAT"/>
+                                                <attribute name="onSelect">
+                                                    txt_busqueda.setDisabled(false);
+                                                </attribute>
+                                            </combobox>
+                                            <separator/>
+                                            <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda"/>
+                                            <toolbarbutton id="tbbtn_btn_buscar" image="/images/iconos/buscar.png" tooltiptext="Buscar" />            
+                                            <separator width="20px"/>
+                                            <cell align="right" valign="botton">
+                                                <label value="ACTIVO:" id="lbl_estado"/>
+                                            </cell>
+                                            <checkbox id="chk_busest" checked="true">
+                                                <attribute name="onCheck">
+                                                    if(chk_busest.isChecked())
+                                                    lbl_estado.setValue("ACTIVO");
+                                                    else
+                                                    lbl_estado.setValue("INACTIVO");
+                                                </attribute>
+                                            </checkbox>
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="10px"/>
+                                    <listbox id="lst_texistencia" model="@{div_lst_texistencia$composer.lst_texistencia}" mold="paging" pageSize="13" width="480px">
+                                        <listhead>
+                                            <listheader label="ID" width="50px" align="center"/>
+                                            <listheader label="DESCRIPCION" width="270px"/>
+                                            <listheader label="COD_SUNAT" width="100px" align="center"/>
+                                          
+                                            <listheader label="ESTADO" width="60px" align="center"/>
+                                
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.tab_id}"/>
+                                                <listcell label="${each.tab_subdes}"/>
+                                                <listcell label="${each.tab_tip}"/>
+                                               
+                                                <listcell >
+                                                    <checkbox checked="${each.val}" disabled="true"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                </div>    
+                            </tabpanel>
+                            <tabpanel>
+                                <div id="div_man_texistencia" >
+                                    <grid id="grd_man_texistencia" width="580px">
+                                        <columns>
+                                            <column width="100px"/>
+                                            <column width="320px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>
+                                                <intbox id="txt_tabcod" disabled="true" visible="false"  value="7"/>
+                                    
+                                                <checkbox id="chk_tabest"  checked="false" disabled="true" label="Activo" tooltiptext="Define el Estado del tipo de existencia"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="ID:" visible="TRUE" />
+                                                </cell>
+                                                <intbox id="txt_tabid" disabled="true" maxlength="4" visible="TRUE" tooltiptext="Define el Codigo del Tipo de Existencia, Máximo 4 caracteres"/> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="DESCRIPCION:" />
+                                                </cell>
+                                                <textbox id="txt_tabsubdes" disabled="true" width="300px" maxlength="250" visible="TRUE" tooltiptext="Define la Descripcion del Tipo de Existencia, Máximo 270 caracteres"/> 
+                                            </row>
+                                            
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="CODIGO SUNAT:" />
+                                                </cell>
+                                                <spinner id="spi_tabtip" disabled="true" width="50px"  constraint="min 0" value="0" tooltiptext="Define el Codigo del Tipo de Existencia Sunat"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="bottom">
+                                                    <label value="REPORTE:" />
+                                                </cell>
+                                                <textbox id="txt_tabnomrep" disabled="true" width="200px" maxlength="25" tooltiptext="Define el Nombre del Reporte , Máximo 25 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <textbox id="txt_tabdes" disabled="true" visible="false"  value="TIPO EXISTENCIA"/>
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                </div>    
+                            </tabpanel>
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+        
+    </borderlayout> 
+</zk>

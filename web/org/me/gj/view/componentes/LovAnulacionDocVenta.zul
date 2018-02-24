@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:w="client">
+    <window id="w_lov_anulaciondoc" title="PROCESO DE ANULACION" border="normal" width="770px"
+            height="230px" position="center,center" closable="true"
+            apply="org.me.gj.controller.componentes.ControllerLovAnulaDoc"
+            action="show: slideDown;hide: slideUp"> 
+        <!--<hlayout>-->
+        <div >
+            <vbox>
+                <space width="5px"/>
+                <hbox align="right">
+                    <space width="290px"/>
+                    <label value="ANULACION DE DOCUMENTOS" />
+                </hbox>
+                <hbox align="right">
+                    <space width="220px"/>
+                    <groupbox width="280px" height="60px" closable="false"  >
+                        <caption label="TIPO"/>
+                        <radiogroup id="rbg_tipo" >
+                            <space width="30px"/>
+                            <radio label="DEL DIA" checked="true" />
+                            <space width="40px"/>
+                            <radio label="DEVOLUCION"/>
+                        </radiogroup>
+                    </groupbox>
+                </hbox>
+                <space height="10px"/>
+                <hbox align="right">
+                    <space width="20px"/>
+                    <label value="FECHA GUIA:"/>
+                    <datebox id="d_fecguia" maxlength="10" readonly="true" width="80px" onCreate="self.value = new Date()" disabled="false" format="dd/MM/yyyy" tooltiptext="Define la Fecha de Creación de la Nota de Cambio"/>  
+                    <space width="10px"/>
+                    <label value="HORA:"/>
+                    <datebox id="d_hora" maxlength="10" readonly="true" width="80px" onCreate="self.value = new Date()" disabled="false" format="hh/mm/ss a" tooltiptext="Define la Fecha de Creación de la Nota de Cambio"/>  
+                    <space width="5px"/>
+                    <cell align="right" valign="center" >
+                        <label value="GUIA:"/>
+                    </cell>
+                    <space width="5px"/>
+                    <combobox id="cb_notaes" readonly="true" width="230px" tooltiptext="Seleccione Nota E/S">
+                        <template name="model">    
+                            <comboitem label="${each.desGui}" value="${each.idGui}"/>                                                                                                      
+                        </template>                                                
+                    </combobox>
+                    <space width="5px"/>
+                    <cell align="right" valign="center" >
+                        <label value="SERIE:"/>
+                    </cell>
+                    <combobox id="cb_serie" readonly="true" width="60px"  tooltiptext="Seleccione la Serie de la Guia">
+                        <template name="model">                                                                                                 
+                            <comboitem label="${each.num_ser}" value="${each.num_ser}"/>                                                                                                      
+                        </template>                                               
+                    </combobox> 
+                </hbox>
+                <space height="2px"/>
+                <hbox align="right">
+                    <space width="20px"/>
+                    <cell align="right" valign="center">
+                        <label value="F.ANU" id="lbl_anu"/>
+                    </cell>
+                    <checkbox id="chk_fecanu" checked="false"/>
+                    <space width="10px"/>
+                    <datebox id="d_fecguia2" maxlength="10" readonly="true" width="80px" onCreate="self.value = new Date()" disabled="false" format="dd/MM/yyyy" tooltiptext="Define la Fecha de Creación de la Nota de Cambio"/>  
+                    <space width="2px"/>
+                    <label value="MOTIVO:"/>                                                                                                                                              
+                    <textbox id="txt_idmot" maxlength="3" width="40px" tooltiptext="Código del Supervisor máximo 4 caracteres"/>
+                    <textbox id="txt_desmot" maxlength="60" width="200px"  tooltiptext="Nombre del Supervisor" disabled="true"/>
+                    <space height="2px"/>
+                    <button id="btn_procesar" label="Procesar" sclass="botones"/>
+                    <button id="btn_cancelar" label="Cancelar" sclass="botones"/>
+                </hbox>                             
+            </vbox>
+        </div>
+        <!--</hlayout>-->
+    </window>
+</zk>
+

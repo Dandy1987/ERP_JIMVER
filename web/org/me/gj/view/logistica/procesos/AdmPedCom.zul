@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_admpedcom" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_aprobar" image="/images/iconos/aprobar.png"  tooltiptext="Generar Orden de Compra" />         
+                        <toolbarbutton id="tbbtn_btn_rechazar" image="/images/iconos/rechazar.png" tooltiptext="Rechazar Pedido de Compra" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir"  />   
+                        <label value="ADMINISTRAR PEDIDO DE COMPRA" sclass="titulo_mant" style="margin-left:290px;"/>
+                    </toolbar>
+                  
+                    <tabbox id="tabbox_pedcom" >
+                        <tabs>
+                            <tab id="tab_listaPedCom" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_admpedcom.getSelectedIndex() == -1)
+                                    {
+                                    tab_listaPedCom.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>        
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_admpedcom" apply="org.me.gj.controller.logistica.procesos.ControllerAdmPedCom">
+                                    <groupbox width="988px" closable="false" >
+                                        <caption label="BUSCAR PEDIDO DE COMPRA"/>
+                                        <hbox align="center">                                                                                                           
+                                            <cell align="right" valign="center">
+                                                <label value="# PEDIDO:"/>
+                                            </cell>
+                                            <textbox id="txt_filtro_ped" maxlength="10" width="65px" focus="true" tooltiptext="Define el Código de pedido, máximo 10 caracteres"/>
+                                            <space width="5px"/> 
+                                            <cell align="right" valign="center">
+                                                <label value="PROVEEDOR:"/>
+                                            </cell>
+                                            <textbox id="txt_provid" maxlength="8" width="50px" focus="true" tooltiptext="Define el Codigo de proveedor, máximo 9 caracteres"/>
+                                            <textbox id="txt_provdes" maxlength="50" width="300px" disabled="true" tooltiptext="Define la descripción del proveedor, máximo 50 caracteres"/>
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="DESDE:"/>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <datebox id="d_fecini" width="85px" onCreate="self.value = new Date()" maxlength="10" format="dd/MM/yyyy" tooltiptext="Fecha de Emisión Inicial del Pedido de Compra"/> 
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="HASTA:"/>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <datebox id="d_fecfin" width="85px" onCreate="self.value = new Date()" maxlength="10" format="dd/MM/yyyy" tooltiptext="Fecha de Emisión Final del Pedido de Compra"/>
+                                            <space width="5px"/>
+                                            <button id="btn_buscarordenes"  sclass="botones" label="Consultar" tooltiptext="Consultar Pedidos de Compra"/>
+                                        </hbox>
+                                    </groupbox>
+                                    <space height="5px"/>
+                                    <listbox id="lst_admpedcom" mold="paging" pageSize="18" width="984px" height="460px">
+                                        <listhead>
+                                            <listheader label="# PEDIDO" width="70px" align="center"/>
+                                            <listheader label="FEC.EMI"  width="70px" align="center"/>
+                                            <listheader label="FEC.RECEP"  width="70px" align="center"/>                                        
+                                            <listheader label="FEC.CADU"  width="70px" align="center"/> 
+                                            <listheader label="PROVEEDOR" width="75px" align="center"/>
+                                            <listheader label="RAZON SOCIAL"/>
+                                            <listheader label="COND. COMPRA" width="140px"/>                                        
+                                            <listheader label="SITUACION" width="80px"/>                                        
+                                            <listheader label="TOTAL" width="90px" align="right"/>
+                                            <listheader width="25px">
+                                                <checkbox id="chk_selecAll"/>
+                                            </listheader>   
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.pedcom_id}"/>
+                                                <listcell label="${each.pedcom_sfecemi}"/>
+                                                <listcell label="${each.pedcom_sfecrec}"/>                                    
+                                                <listcell label="${each.pedcom_sfeccad}"/>
+                                                <listcell label="${each.prov_id}"/>
+                                                <listcell label="${each.prov_razsoc}"/>
+                                                <listcell label="${each.con_des}"/>
+                                                <listcell label="${each.pedcom_sitdes}"/>                                                
+                                                <listcell label="${each.pedcom_stotal}" style="text-align: right;"/>
+                                                <listcell>
+                                                    <checkbox forward="onCheck=lst_admpedcom.onSeleccion"  checked="${each.valSelec}"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox> 
+                                    <space height="5px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Orden de Compra"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación de la Orden de Compra"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó la Orden de Compra"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación de la Orden de Compra"/>   
+                                    </hbox>
+                                </div>                  
+                            </tabpanel>  
+                            <!-- Panel Tab Mantenimiento -->                                                  
+                            <tabpanel>
+                                <div >
+                                    <groupbox style="background-color:#FFFFFF" closable="false" width="985px">
+                                        <caption label="DATOS DE CABECERA - PEDIDO DE COMPRA" />
+                                        <vbox>
+                                            <!-- Pestaña de Mantenimiento de Pedido de Compra  -->
+                                            <hbox align="center">                                           
+                                                <!-- Numero de Pedido de Compra -->     
+                                                <label value="# PEDIDO:"/>                                                
+                                                <textbox id="txt_nropedcom" width="70px" maxlength="10" disabled="true" tooltiptext="Define el Numero del Pedido de Compra, máximo 10 caracteres"/>                                                                                    
+                                                <space width="5px"/>                                                
+                                                <!-- Periodo del Pedido de Compra -->                 
+                                                <label value="PERIODO: "/>
+                                                <span class="colorRojo">*</span>                                                  
+                                                <combobox id="cb_cabecera_periodo" width="70px" disabled="true" readonly="true" tooltiptext="Define el Periodo de Emisión de Pedido de Compra">
+                                                    <template name="model">    
+                                                        <comboitem label="${each.per_periodo}"  value="${each.per_id}"  />                                                                                                      
+                                                    </template>                                                
+                                                </combobox>                                            
+                                                <space width="5px"/>                                                                                                
+                                                <!-- Fecha de Emision del Pedido de Compra -->
+                                                <label value="F. EMISION: "/>
+                                                <span class="colorRojo">*</span>                                       
+                                                <datebox id="d_fecemi" width="85px" format="dd/MM/yyyy" disabled="true" tooltiptext="Fecha de Emisión del Pedido de Compra" onCreate="self.value = new Date();" />                                                 
+                                                <space width="5px"/>                                                
+                                                <!-- Fecha de Recepcion del Pedido de Compra -->
+                                                <label value="F. RECEPCION: "/>
+                                                <span class="colorRojo">*</span>                  
+                                                <datebox id="d_fecrec" width="85px" format="dd/MM/yyyy" disabled="true" tooltiptext="Fecha de Recepción del Pedido de Compra"/> 
+                                                <space width="5px"/>                                                                                                
+                                                <!-- Fecha de Caducidad del Pedido de Compra -->                                                                                                    
+                                                <label value="F. CADUCIDAD: "/>
+                                                <span class="colorRojo">*</span>                
+                                                <datebox id="d_feccad" width="85px" format="dd/MM/yyyy" disabled="true" tooltiptext="Fecha de Caducidad del Pedido de Compra"/>                                                                                                 
+                                                <space width="33px"/>                                                
+                                                <!-- Estado del Pedido de Compra -->
+                                                <label value="ESTADO:"/>                                                                                                                                              
+                                                <textbox id="txt_est" width="85px" maxlength="9" disabled="true" tooltiptext="Estado del Pedido de Compra" value="ACTIVO"  />                                                
+                                            </hbox>
+                                            
+                                            <hbox align="center">
+                                                <!-- Proveedor al que se emite el Pedido de Compra -->
+                                                <label value="PROVEEDOR: "/>
+                                                <span class="colorRojo">*</span>                                                                                                
+                                                <textbox id="txt_proidman" width="60px" maxlength="8" disabled="true" tooltiptext="Define el código del Proveedor, máximo 8 caracteres"  />
+                                                <textbox id="txt_prodesman" width="430px" maxlength="60"  disabled="true" tooltiptext="Define la Razon Social del Proveedor, máximo 60 caracteres"/>                                              
+                                                <space width="5px"/>                                                
+                                                <!-- Moneda con el que se emitio el Pedido de Compra -->
+                                                <label value="MONEDA: "/>
+                                                <span class="colorRojo">*</span>  
+                                                <combobox id="cb_monpedcom" width="184px" tooltiptext="Define la Moneda del Pedido de Compra" disabled="true" readonly="true"    >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.tab_subdes}"  value="${each.tab_id}"  />                                                                                                      
+                                                    </template>                                                
+                                                </combobox>
+                                                <space width="19px"/>                                                
+                                                <!-- Tipo de Cambio con el que se emitio el Pedido de Compra -->
+                                                <label value="T. CAMBIO: "  />
+                                                <doublebox id="db_tipcam" width="37px" format="##.000" locale="en_US" maxlength="6" disabled="true" tooltiptext="Define Tipo de Cambio con el que se emitio el Pedido de Compra" />                                                                                                                                                                                        
+                                            </hbox>
+                                            
+                                            <hbox align="center">
+                                                <!-- Lista de Precio de Compra con la que se emite el Pedido de Compra -->
+                                                <label value="LISTA PRECIOS: "/>
+                                                <span class="colorRojo">*</span>                                                                                                
+                                                <textbox id="txt_lisprecom" width="30px" maxlength="4" disabled="true" tooltiptext="Define el código de la Lista de Precio de Compra, máximo 4 caracteres"  />
+                                                <textbox id="txt_lisprecomdes" width="262px" maxlength="50" disabled="true" tooltiptext="Define la descripción de la Lista de Precio de Compra, máximo 50 caracteres"/>                                                                                                                                                                                                                                             
+                                                <space width="5px"/>
+                                                <!-- Condicion de Compra con la que se emite el Pedido de Compra -->
+                                                <label value="CONDICION DE COMPRA: "/>
+                                                <span class="colorRojo">*</span>                                                                                                
+                                                <textbox id="txt_forid" width="22px" maxlength="3" disabled="true" tooltiptext="Define el código de la Condición de Compra, máximo 3 caracteres"  />
+                                                <textbox id="txt_fordes" width="205px" maxlength="50" disabled="true" tooltiptext="Define la descripción de la Condición de Compra, máximo 50 caracteres"/>                                                                                                                                                                                                                                             
+                                                <space width="28px"/>                                                
+                                                <!-- Situacion del Pedido de Compra -->
+                                                <label value="SITUACION: "/>                                                                                                                                                
+                                                <textbox id="txt_situacion" width="82px" disabled="true" tooltiptext="Define la situación del Pedido de Compra, máximo 9 caracteres" maxlength="9" value="INGRESADO"  />                                                                                               
+                                            </hbox>
+                                            
+                                            <hbox align="center">
+                                                <!-- Almacen de Origen desde donde se emite el Pedido de Compra -->
+                                                <label value="ALMACEN DE ORIGEN: "/>
+                                                <span class="colorRojo">*</span>                                                  
+                                                <combobox id="cb_alm_origen" width="341px" tooltiptext="Almacen de Origen" disabled="true" readonly="true"   >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.alm_des}"  value="${each.alm_id}"  />                                                                                                      
+                                                    </template>                                                
+                                                </combobox>                                                                                                                                                   
+                                                <space width="24px"/>
+                                                <!-- Almacen de Destino de la Mercaderia o Punto de Llegada de la Mercaderia -->
+                                                <label value="ALMACEN DE DESTINO: "/>
+                                                <span class="colorRojo">*</span>                                                                                                    
+                                                <combobox id="cb_alm_destino" width="341px" tooltiptext="Almacen de Destino" disabled="true" readonly="true"    >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.alm_des}"  value="${each.alm_id}"  />                                                                                                      
+                                                    </template>                                                
+                                                </combobox>                                                                                                                                                
+                                            </hbox>
+                                                
+                                            <hbox align="center">
+                                                <!-- Glosa del Pedido de Compra --> 
+                                                <label value="GLOSA: "/>                                                                                                                                                
+                                                <textbox id="txt_glosa" width="428px" maxlength="50" disabled="true" tooltiptext="Define la glosa del Pedido de Compra, máximo 50 caracteres"/>
+                                                <space width="5px"/>
+                                                <!-- Lugar de Entrega --> 
+                                                <label value="LUGAR DE ENTREGA:"/>                                                                                                                                                
+                                                <textbox id="txt_lugent" width="358px" maxlength="50" disabled="true" tooltiptext="Define el lugar de Entrega, máximo 50 caracteres"  />
+                                            </hbox>
+                                        </vbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <hbox>                                        
+                                        <listbox id="lst_admpedidocompra_detalle" width="950px" height="302px" > <!-- pageSize="13" -->
+                                            <frozen columns="2"></frozen>
+                                            <listhead>
+                                                <listheader label="IDPROD" width="61px"  />
+                                                <listheader label="DESCRIPCION"  width="270px"/>  <!-- 249px -->                                                                                      
+                                                <listheader label="CANT"  width="66px"/>                                                
+                                                <listheader label="UNI"  width="30px"/> 
+                                                <listheader label="PRECIO" width="65px"/>
+                                                <listheader label="V.VENTA" width="80px"/>
+                                                <listheader label="V.EXON" width="80px"/>
+                                                <listheader label="DSCTO" width="53px"/>
+                                                <listheader label="V.DSCTO" width="80px"/>                                            
+                                                <listheader label="V.IMPTO" width="80px"/>
+                                                <listheader label="TOTAL" width="85px"/>
+                                                <listheader label="PESO" width="80px"/>
+                                                <listheader label="UNI" width="30px"/>
+                                                <listheader label="VOL" width="80px"/>
+                                                <listheader label="UNI" width="30px"/>
+                                            </listhead>	    
+                                            <template name="model">
+                                                <listitem>
+                                                    <listcell label="${each.pro_id}"/>
+                                                    <listcell label="${each.pro_des}"/>                                                                                                       
+                                                    <listcell label="${each.pedcom_scanped}" style="text-align: right;" />                                                    
+                                                    <listcell label="${each.pro_unimanven}" style="text-align: center;" /> 
+                                                    <listcell label="${each.pedcom_preuni}" style="text-align: right;" />
+                                                    <listcell label="${each.pedcom_svalafe}" style="text-align: right;" />
+                                                    <listcell label="${each.pedcom_svalexo}" style="text-align: right;" />
+                                                    <listcell label="${each.pedcom_pordes}" style="text-align: right;" />
+                                                    <listcell label="${each.pedcom_svaldes}" style="text-align: right;" />
+                                                    <listcell label="${each.pedcom_svalimp}" style="text-align: right;" />
+                                                    <listcell label="${each.pedcom_svaltot}" style="text-align: right;" />
+                                                    <listcell label="${each.pro_spesotot}" style="text-align: right;" />
+                                                    <listcell label="${each.pro_peso_unidadtot}" style="text-align: center;" />
+                                                    <listcell label="${each.pro_svoltot}" style="text-align: right;" />
+                                                    <listcell label="${each.pro_vol_unidadtot}" style="text-align: center;" /> 
+                                                </listitem>
+                                            </template>
+                                            <listfoot>
+                                                <listfooter>  
+                                                    <label id="l_total1" value="" />
+                                                </listfooter>
+                                                <listfooter>  
+                                                    <label id="l_total2" value="" />
+                                                </listfooter>
+                                                <listfooter>  
+                                                    <label id="l_total3" value="" />
+                                                </listfooter>
+                                                <listfooter>  
+                                                    <label id="l_total4" value="" />
+                                                </listfooter>
+                                                <listfooter>  
+                                                    <label id="l_total5" value="TOTALES" />
+                                                </listfooter>
+                                                <listfooter width="80px">                                                      
+                                                    <doublebox id="txt_totvalafe" width="70px" maxlength="9"  locale="en_US" format="##,##0.00" disabled="true" style="text-align: right;" />
+                                                </listfooter>
+                                                <listfooter width="80px">                                                      
+                                                    <doublebox id="txt_totvalexo" width="70px" maxlength="9"  locale="en_US" format="##,##0.00" disabled="true" style="text-align: right;" />
+                                                </listfooter>
+                                                <listfooter width="53px">                                                      
+                                                    <doublebox id="txt_totpordes" width="46px" maxlength="9"  locale="en_US" format="##,##0.00" disabled="true" style="text-align: right;" />
+                                                </listfooter>
+                                                <listfooter width="80px">                                                      
+                                                    <doublebox id="txt_totvaldes" width="70px" maxlength="9"  locale="en_US" format="##,##0.00" disabled="true" style="text-align: right;" />
+                                                </listfooter>
+                                                <listfooter width="80px">                                                      
+                                                    <doublebox id="txt_totvalimp" width="70px" maxlength="9"  locale="en_US" format="##,##0.00" disabled="true" style="text-align: right;" />
+                                                </listfooter>
+                                                <listfooter width="80px">                                                      
+                                                    <doublebox id="txt_totpreven" width="70px" maxlength="9"  locale="en_US" format="##,##0.00" disabled="true" style="text-align: right;" />
+                                                </listfooter>
+                                                
+                                                <listfooter width="80px">                                                      
+                                                    <doublebox id="txt_totpeso" width="70px" maxlength="9"  locale="en_US" format="##,##0.00" disabled="true" style="text-align: right;" />
+                                                </listfooter>
+                                                <listfooter width="80px">                                                      
+                                                    <label id="l_total7" value="" />
+                                                </listfooter>
+                                                <listfooter width="80px">                                                      
+                                                    <doublebox id="txt_totvolumen" width="70px" maxlength="9"  locale="en_US" format="##,##0.00" disabled="true" style="text-align: right;" />
+                                                </listfooter>
+                                                <listfooter width="80px">                                                      
+                                                    <label id="l_total8" value="" />
+                                                </listfooter>
+                                            </listfoot>
+                                                                                                                    
+                                        </listbox>
+                                        <toolbar id="tb_transacciones_pedcom" width="25px" height="300px" >
+                                            <separator height="55px"/>
+                                            <toolbarbutton id="tbbtn_btn_nuevopc" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (ALT+N)" disabled="true" />                                            
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_editarpc" image="/images/iconos/editar.png"  tooltiptext="Editar (ALT+M)" disabled="true" />                                                        
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_eliminarpc" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (ALT+E)" disabled="true" />                                            
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_guardarpc" image="/images/iconos/guardar.png" tooltiptext="Guardar (ALT+G)" disabled="true" />                                            
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_deshacerpc" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (ALT+D)" disabled="true" />
+                                        </toolbar> 
+                                    </hbox>                                    
+                                    <groupbox style="background-color:#FFFFFF" closable="false" width="985px">
+                                        <caption label="DATOS DEL DETALLE - PEDIDO DE COMPRA" />
+                                        <vbox>
+                                            <hbox align="center">         
+                                                <label value="ID : " />
+                                                <intbox id="txt_pedcomdet_key"  width="15px" maxlength="3" disabled="true" tooltiptext="Define el número de operación del detalle"  />                                                
+                                                <space/>
+                                                <label value="PRODUCTO : " />
+                                                <span class="colorRojo">*</span>
+                                                <textbox id="txt_proid"  width="60px" maxlength="9" disabled="true" tooltiptext="Define el código del producto, máximo 9 caracteres"  />                                                
+                                                <textbox id="txt_prodes" width="415px" maxlength="100" disabled="true" tooltiptext="Define la descripción del producto, máximo 100 caracteres"/>
+                                                <space width="30px"/>
+                                                <label value="PESO U.: " />
+                                                <doublebox id="txt_pesounit" width="50px" maxlength="8" disabled="true" locale="en_US" format="##,##0.00" style="text-align: right;"  tooltiptext="Define el peso unitario"  />                                                                                            
+                                                <textbox id="txt_peso_und" width="25px" maxlength="3" disabled="true" tooltiptext="Define la descripción del peso unitario" />                                            
+                                                <space width="30px"/>
+                                                <label value="VOL. U.: " />
+                                                <doublebox id="txt_voluunit" width="50px" maxlength="9" disabled="true" locale="en_US" format="##,##0.00" style="text-align: right;"  tooltiptext="Define el volumen unitario"  />                                                                                            
+                                                <textbox id="txt_vol_und" width="25px" maxlength="3" disabled="true" tooltiptext="Define la descripcion del volumen unitario" />                                            
+                                            </hbox>    
+                                            <hbox align="center">    
+                                                <label value="CANT.: " />
+                                                <span class="colorRojo">*</span>
+                                                <doublebox id="txt_canent" width="62px" maxlength="9" disabled="true" locale="en_US" format="##,##0.##" style="text-align: right;"  tooltiptext="Define la cantidad entera del producto"  />                                            
+                                                <space/>
+                                                <label value="P. UNIT.:" />
+                                                <doublebox id="txt_precom" width="50px" maxlength="10" disabled="true" locale="en_US" format="##,##0.00" style="text-align: right;"  tooltiptext="Define el precio unitario del producto"  />                                            
+                                                <space/>
+                                                <label value="UND. VTA.:" />
+                                                <textbox id="txt_prounimanven" width="45px" maxlength="10" disabled="true" style="text-align: right;"  tooltiptext="Define la unidad de venta del producto"  />                                            
+                                                <space/>                                                
+                                                <label value="V. AFECTO:" />
+                                                <doublebox id="txt_valafe" width="90px" maxlength="10" disabled="true" locale="en_US" format="##,##0.00" style="text-align: right;"  tooltiptext="Define el valor afecto del producto"  />
+                                                <space/>
+                                                <label value="V. EXO.:" />
+                                                <doublebox id="txt_valexo" width="90px" maxlength="10" disabled="true" locale="en_US" format="##,##0.00" style="text-align: right;"  tooltiptext="Define el valor exonerado del producto"  />
+                                                <space/>
+                                                <label value="% DSCTO: "/>
+                                                <span class="colorRojo">*</span>
+                                                <doublebox id="txt_pordes" width="45px" maxlength="4" disabled="true" locale="en_US" format="##,##0.00" style="text-align: right;"  tooltiptext="Define el porcentaje de descuento del producto"  />
+                                                <space/>
+                                                <label value="V. DSCTO:" />
+                                                <doublebox id="txt_valdes" width="80px" maxlength="10" disabled="true" locale="en_US" format="##,##0.00" style="text-align: right;"  tooltiptext="Define el valor del descuento del producto"  />
+                                            </hbox>
+                                            <hbox align="center">
+                                                
+                                                <label value="% IGV:" />
+                                                <doublebox id="txt_porimp" width="30px" maxlength="2" disabled="true" locale="en_US" format="##,##0.00" style="text-align: right;"  tooltiptext="Define el porcentaje de igv del producto"  />
+                                                <space/>
+                                                <label value="V. IGV:" />
+                                                <doublebox id="txt_valimp" width="75px" maxlength="10" disabled="true" locale="en_US" format="##,##0.00" style="text-align: right;"  tooltiptext="Define el valor del igv del producto"  />
+                                                <space/>
+                                                <label value="P. VENTA:" />
+                                                <doublebox id="txt_preven" width="80px" maxlength="10" disabled="true" locale="en_US" format="##,##0.00" style="text-align: right;"  tooltiptext="Define el precio de venta del producto"  />
+                                                <space/>
+                                                <label value="UBIC.ALMACEN:" />                                            
+                                                <textbox id="txt_pedubi" width="29px"  maxlength="4" disabled="true" tooltiptext="Define el código del Ubicacion máximo 4 caracteres"  />
+                                                <textbox id="txt_peddes" width="135px" maxlength="60"  disabled="true" tooltiptext="Define la descripcion de la Ubicacion, máximo 30 caracteres"/>                                              
+                                                <space/>
+                                                <label value="GLOSA" />                                            
+                                                <textbox id="txt_pedcomglo" width="260px" maxlength="70" disabled="true" tooltiptext="Define la glosa del producto"/>                                             
+                                            </hbox>
+                                        </vbox>                                          
+                                    </groupbox>
+                                </div>
+                            </tabpanel>                       
+                        </tabpanels>
+                    </tabbox>
+                    
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

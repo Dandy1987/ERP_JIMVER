@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_telefono" title="MANTENIMIENTO DE TELEFONOS" border="normal" width="600px"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp"
+            apply="org.me.gj.controller.componentes.ControllerLovTelefonos">
+        <grid width="600px">
+            <columns>
+                <column width="200px"/>
+                <column width="400px"/>
+            </columns>
+            <rows>
+                <row>
+                    <cell align="right" valign="botton">
+                        <label value="TELEFONO-1:"/>
+                    </cell>
+                    <cell>
+                        <longbox id="txt_telef1" disabled="false" maxlength="15" width="280px" tooltiptext="Define el Telefono-1 del Cliente"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell align="right" valign="botton">
+                        <label value="TELEFONO-2:"/>
+                    </cell>
+                    <cell>
+                        <longbox id="txt_telef2" disabled="false" maxlength="15" width="280px" tooltiptext="Define el Telefono-2 del Cliente"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell align="right" valign="botton">
+                        <label value="MOVIL:"/>
+                    </cell>
+                    <cell>
+                        <longbox id="txt_movil" disabled="false" maxlength="15" width="280px" tooltiptext="Define el Movil del Cliente"/>
+                    </cell>     
+                </row>
+                <row>
+                    <cell valign="botton">
+                        
+                    </cell>
+                    <cell valign="botton">
+                        <button id="btn_aceptar" label="Aceptar" sclass="botones" width="70px"/>
+                        <button id="btn_cancelar" label="Cancelar" sclass="botones" width="70px"/>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+        <separator height="2px" style=" background: gray;" /> 
+    </window>
+</zk>
+

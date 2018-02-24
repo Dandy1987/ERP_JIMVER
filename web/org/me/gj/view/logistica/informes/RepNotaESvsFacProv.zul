@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_reporNotaESvsFacprov" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png" tooltiptext="Nuevo" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar" disabled="true"/>            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" disabled="true" />   
+                        <label value="INFORME DE NOTA DE E/S VS FACTURA X PROVEEDOR" sclass="titulo_mant" style="margin-left:180px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_notaesxprov" apply="org.me.gj.controller.logistica.informes.ControllerNotaESvsFacProv">
+                        <tabs>
+                            <tab id="tab_listanotaes" label="LISTA"/>
+                            <tab id="tab_detalle" label="DETALLE">
+                                <attribute name="onSelect">
+                                    if (lst_notaesxprov.getSelectedIndex() == -1)
+                                    {
+                                    tab_listanotaes.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="985px" closable="false" style="background-color:#FFFFFF">
+                                    <caption label="DATOS DE BUSQUEDA"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="PERIODO:"/>
+                                        </cell>
+                                        <combobox id="cb_periodo" width="70px" tooltiptext="Define el periodo de la Nota E/S vs Factura" readonly="true">
+                                            <template name="model">
+                                                <comboitem label="${each.per_periodo}" value="${each.per_periodo}"/>
+                                            </template>
+                                        </combobox>
+                                        <space width="10px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="PROVEEDOR:"/>
+                                        </cell>
+                                        <textbox id="txt_provid" maxlength="8" width="50px" focus="true" tooltiptext="Define el Código del Proveedor, Máximo 8 caracteres"/>
+                                        <textbox id="txt_provdes" maxlength="60" width="350px" disabled="true" tooltiptext="Define la Razón Social del Proveedor, Máximo 60 caracteres"/>
+                                        <space width="5px"/>
+                                        <!--</hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center">-->
+                                        <cell align="right" valign="center">
+                                            <label value="DESDE:"/>
+                                        </cell>
+                                        <datebox id="d_fecini" width="80px" maxlength="10" onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="Fecha de emisión Inicial de la Nota E/S vs Factura"/> 
+                                        <space width="10px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="HASTA:"/>
+                                        </cell>
+                                        <datebox id="d_fecfin" width="80px" maxlength="10" onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="Fecha de emisión Final de la Nota E/S vs Factura"/> 
+                                        <space width="10px"/>
+                                        <button id="btn_buscarnotavsfac"  sclass="botones" label="Consultar" tooltiptext="Consultar Nota E/S vs Factura"/>  
+                                    </hbox>
+                                    
+                                </groupbox>
+                                <space height="5px"/>
+                                <listbox id="lst_notaesxprov" mold="paging" pageSize="18" width="984px" height="480px">
+                                    <listhead>                                    
+                                        <listheader label="PROV" width="60px" align="center"/>
+                                        <listheader label="RAZON SOCIAL"/>
+                                        <listheader label="CANT" width="50px" align="center"/>
+                                        <listheader label="V. AFECTO" width="90px" align="center"/>
+                                        <listheader label="V. INAFEC" width="90px" align="center"/>
+                                        <listheader label="V. EXONE" width="90px" align="center"/>
+                                        <listheader label="V. IGV" width="80px" align="center"/>
+                                        <listheader label="V. TOTAL" width="100px" align="center"/>                                          
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.provid}"/>
+                                            <listcell label="${each.provrazsoc}"/>
+                                            <listcell label="${each.cant}" style="text-align: right;"/>
+                                            <listcell label="${each.svafecto}" style="text-align: right;"/>
+                                            <listcell label="${each.svinafecto}" style="text-align: right;"/>
+                                            <listcell label="${each.svexonerado}" style="text-align: right;"/>
+                                            <listcell label="${each.svimpto}" style="text-align: right;"/>
+                                            <listcell label="${each.svtotal}" style="text-align: right; background-color: #BEF781;color: #2E2E2E;"/>                                                                                       
+                                        </listitem>
+                                    </template>
+                                    <listfoot>
+                                        <listfooter>  
+                                            <label id="l_total1" value="" />
+                                        </listfooter>
+                                        <listfooter>  
+                                            <label id="l_total2" value="TOTALES :" />
+                                        </listfooter>
+                                        <listfooter>  
+                                            <doublebox id="txt_totcant" width="40px" maxlength="15" locale="en_US" format="##,##0"  disabled="true" style="text-align: right;" />
+                                        </listfooter>
+                                        <listfooter>  
+                                            <doublebox id="txt_totafec" width="82px" maxlength="15" locale="en_US" format="##,##0.00"  disabled="true" style="text-align: right;" />
+                                        </listfooter>
+                                        <listfooter>                                                      
+                                            <doublebox id="txt_totinafec" width="82px" maxlength="15" locale="en_US" format="##,##0.00"  disabled="true" style="text-align: right;" />
+                                        </listfooter>
+                                        <listfooter>                                                      
+                                            <doublebox id="txt_totexo" width="82px" maxlength="15" locale="en_US" format="##,##0.00"  disabled="true" style="text-align: right;" />
+                                        </listfooter>
+                                        <listfooter>                                                      
+                                            <doublebox id="txt_totigv" width="72px" maxlength="15" locale="en_US" format="##,##0.00"  disabled="true" style="text-align: right;" />
+                                        </listfooter>
+                                        <listfooter>                                                      
+                                            <doublebox id="txt_totventa" width="92px" maxlength="15" locale="en_US" format="##,##0.00"  disabled="true" />
+                                        </listfooter>
+                                    </listfoot>
+                                </listbox> 
+                            </tabpanel>
+                            <tabpanel>
+                                <listbox id="lst_notescab" mold="paging" pageSize="20" width="985px" height="520px">
+                                    <listhead>
+                                        <listheader label="TIP"  width="30px" align="center"/>
+                                        <listheader label="NOTA E/S" width="280px"/>
+                                        <listheader label="# NOTA E/S"  width="70px" align="center"/>
+                                        <listheader label="FEC.EMI" width="65px" align="center"/>
+                                        <listheader label="# ORDEN" width="70px" align="center"/>
+                                        <listheader label="RAZON SOCIAL"/>
+                                        <listheader label="CLIENTE" width="70px" align="center"/>
+                                        <listheader label="TOTAL" width="100px" align="center"/>
+                                        <listheader label="EST" width="25px"/>                                        
+                                    </listhead>
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.nescab_tipnotaes}"/>
+                                            <listcell label="${each.notaes}"/>
+                                            <listcell label="${each.nescab_id}"/>
+                                            <listcell label="${each.fecha}"/>
+                                            <listcell label="${each.ord_compra}"/>
+                                            <listcell label="${each.nescab_provrazsoc}"/>
+                                            <listcell label="${each.nescab_cliid}"/>
+                                            <listcell label="${each.svtotal}" style="text-align: right; background-color: #BEF781;color: #2E2E2E;"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>		
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Nota E/S vs Factura"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación de la Nota E/S vs Factura"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó la Nota E/S vs Factura"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación de la Nota E/S vs Factura"/>    
+                                </hbox> 
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>         
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>
+
+

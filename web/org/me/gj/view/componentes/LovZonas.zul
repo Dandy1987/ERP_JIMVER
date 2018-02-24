@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_zonas" title="BUSQUEDA DE ZONAS" border="normal" width="950px"
+            apply="org.me.gj.controller.componentes.ControllerLovZonas"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="ZONA :" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="450px" focus="true" maxlength="45" tooltiptext="Ingrese la descripción del ubigeo"/>
+            </hbox>
+            <listbox id="lst_buszon" mold="paging" pageSize="13" width="925px">
+                <listhead>
+                    <listheader label="ID ZONA" width="60px" align="center"/>
+                    <listheader label="ZONA"/>
+                    <listheader label="VENDEDOR" width="280px"/>
+                    <!--<listheader label="VENDEDOR" width="290px"/>-->
+                    <listheader label="ID UBI" width="45px" align="center"/>
+                    <listheader label="UBIGEO" width="270px"/>
+                    <!--<listheader label="ID.P" width="30px"/>
+                    <listheader label="POSTAL" width="150px"/>-->
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.zon_id}"/>
+                        <listcell label="${each.zon_des}"/>
+                        <listcell label="${each.zon_idven}-${each.zon_apenom}"/>
+                        <!--<listcell label="${each.zon_apenom}"/>-->
+                        <listcell label="${each.zon_ubiid}"/>
+                        <listcell label="${each.zon_ubides}"/>
+                        <!--<listcell label="${each.zon_postid}"/>
+                        <listcell label="${each.zon_postdes}"/>-->
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk>

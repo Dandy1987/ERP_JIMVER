@@ -1,0 +1,382 @@
+/*ESTILO GENERAL PARA TODOS*/
+
+body {
+    width: 1000px;
+    height: 668px;
+    margin: 0 auto;
+    font-family: "Arial";
+    font-size: 10px;    
+    /* color: yellow; */
+    vertical-align: middle;
+    background-image: url(../images/fondo/bg_jimver.jpg); 
+}
+/**FIN**/
+/**********************IMAGENES**********************/
+.imagenes {
+    cursor: pointer;
+}
+/**FIN**/
+/*****************FORMULARIO PRINCIPAL*****************/
+/**PLANTILLAS**/
+.arriba-main , .abajo-main {
+    background-image: url(../images/main/fondo_azul.png);
+    color:white;  
+}
+.cuerpo-main {
+    background-image: url(../images/fondo/bg_rayas.png); 
+    height: 618px;        
+}
+/**FIN DE PLANTILLAS**/
+.z-separator-hor{
+    height: 2px;    
+}
+.z-menuitem-btn{
+    padding-right: 50px;
+}
+
+.resaltar{
+    color: #ff0000 !important;
+    background-color: gold;
+    font-weight : bold;
+}
+
+/**PARA EL TITULO DE LOS MANTENIMIENTOS**/
+.titulo_mant {
+    text-align: center;
+    font-weight:bold;
+    font-size:15px;
+    font-family: "Arial";
+    /*color:#0080C8;*/
+    color:#FFFFFF;
+}
+
+
+tr.z-listfoot td.z-listfooter {
+    padding: 0px 0px 0px 0px;
+}
+/* , .z-listfooter-cnt , .z-listfooter */
+.z-tab-text ,.z-listheader-cnt ,.z-listheader  {
+    font-family: "Arial";
+    font-size: 11px;
+    text-transform:uppercase;
+}
+/**FIN DE TITULO**/
+/**FORMULARIO**/
+
+.z-textbox , .z-longbox , .z-combobox-inp , .z-caption-cnt , .z-datebox-inp , .z-intbox  , .z-decimalbox , .z-doublebox, .z-listcell-cnt  {
+    font-family: "Arial";
+    font-size: 11px;
+    text-transform:uppercase;
+    border-radius: 5px;
+}
+.z-textbox:hover , .z-longbox:hover , .z-combobox-inp:hover , .z-datebox-inp:hover , .z-intbox:hover , .z-decimalbox:hover ,
+.z-doublebox:hover, .z-combobox:hover, .z-spinner:hover, .z-listcell-cnt:hover {
+    background-color: #A1D9F7;
+    color: #3E3D3D !important;
+    font-weight : bold;
+}
+/**FIN DE FORMULARIO**/
+/**FORMULARIO INHABILITADO**/
+.z-combobox-inp, .z-combobox-disd{
+    opacity: 3.5;
+    color: #3E3D3D !important;
+}
+.z-spinner-inp, .z-spinner-disd, .z-spinner-text-disd{
+    opacity: 3.5;
+    color: #3E3D3D !important;
+}
+
+.z-textbox-disd, .z-decimalbox-disd, .z-intbox-disd, .z-longbox-disd, .z-doublebox-disd,
+.z-textbox-disd *, .z-decimalbox-disd *, .z-intbox-disd *, .z-longbox-disd *, .z-doublebox-disd *{
+    color: rgb(170, 170, 170) !important;
+}
+.z-textbox-disd, .z-decimalbox-disd, .z-intbox-disd, .z-longbox-disd, .z-doublebox-disd {
+    opacity: 3.5;
+    color: #3E3D3D !important;
+}
+.z-datebox-disd,
+.z-datebox-focus .z-datebox-disd,
+.z-timebox-disd,
+.z-timebox-focus .z-timebox-disd {
+    opacity: 3.5;
+}
+.z-datebox-text-disd, .z-timebox-text-disd {
+    opacity: 3.5;
+    color: #3E3D3D !important;
+}
+/**FIN DE FORMULARIO**/
+/**ESTILO PERSONALIZADO**/
+.botones {
+    display: inline-block;
+    zoom: 1; 
+    display: inline;
+    vertical-align: baseline;
+    margin: 0 2px;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font: 11px/100% Arial;
+    padding: .5em 2em .55em;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    background-color: #0080C8;
+}
+.botones:hover {
+    background-color: #A1D9F7;
+    color: #0080C8;
+}
+/**FIN DE ESTILO PERSONALIZADO**/
+/**GRID**/
+
+
+
+div .z-grid {
+    border: 0px solid rgb(207, 207, 207);
+    overflow: hidden;
+    background-color: white;
+    border-radius: 15px;
+}
+tr.z-grid-odd td.z-row-inner, tr.z-grid-odd .z-cell, tr.z-grid-odd {
+    background: none repeat scroll 0% 0% rgb(247, 247, 247);
+}
+tr.z-grid-odd td.z-row-inner, tr.z-grid-odd .z-cell {
+    background-color: white;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;
+    border-left: 1px solid white;
+}
+/**FIN DE GRID**/
+/**LISTAS**/
+
+
+tr.seld,td.seld,tr.z-listitem-seld {
+    background-image:none ;
+    background: #82D8F6;
+    background-color : #82D8F6;
+}
+
+tr.overseld,td.overseld,tr.z-listitem-over,tr.z-listitem-over-seld
+{ 
+    background-image: none; 
+    background-color: #A1D9F7;
+}
+/* ,  div.z-listfooter-cnt */
+div.z-listfooter-cnt, div.z-listcell-cnt, div.z-listheader-cnt  {
+    font-family: arial;
+    font-size: 11px;
+}
+/* , div.z-listfooter-cnt */
+div.z-listheader-cnt, div.z-listbox-header div.z-auxheader-cnt  {
+    font-weight: bold;
+    font-size: 11px;
+    padding: 8px 5px 7px;
+    background-color: #0080C8;
+    color: white;
+}
+
+div.z-listbox-body .z-listcell, div.z-listbox-footer .z-listfooter {
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+div.z-listbox-body .z-listcell {
+    padding: 0px;
+}
+/* , div.z-listfooter-cnt */
+div.z-listheader-cnt, div.z-listbox-header div.z-auxheader-cnt  {
+    background-color: rgb(0, 128, 200);
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    padding: 2px;
+    padding-top: px;
+    padding-right-value: 2px;
+    padding-bottom: 3;
+    padding-left-value: 2px;
+    padding-left-ltr-source: physical;
+    padding-left-rtl-source: physical;
+    padding-right-ltr-source: physical;
+    padding-right-rtl-source: physical;
+}
+
+/**FIN DE LISTAS****/
+/**MESSAGEBOX ***/
+/**boton del messagebox**/
+.z-messagebox-btn 
+{
+    display: inline-block;
+    zoom: 1;
+    display: inline;
+    vertical-align: baseline;
+    margin: 0 2px;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font: 11px/100% Arial;
+    padding: .5em 2em .55em;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    background-color: #0080C8;
+}
+.z-messagebox-btn:hover 
+{
+    background-color: #A1D9F7;
+}
+/**imagen de informacion del messagebox**/
+.z-msgbox-information {
+    background-image: url("../images/login/messagebox/information_24_24.png");
+}
+/**boton del messagebox**/
+.z-messagebox-btn.z-button .z-button-cm 
+{
+    background-image: none;
+    color: white; 
+    font-weight : bolder; 
+}
+/**texto del messagebox**/
+//
+.z-messagebox .z-label {
+    font-family: arial;
+    font-size: 12px;
+    color: rgb(54, 54, 54);
+}
+/**cuerpo del messagebox**/
+.z-messagebox-window .z-window-modal-cnt, .z-messagebox-window .z-window-highlighted-cnt {
+    padding: 17px 17px 15px;
+    background-color: white;
+}
+/**contorno del messagebox**/
+.z-window-embedded-hl, .z-window-modal-hl, .z-window-highlighted-hl, .z-window-overlapped-hl, .z-window-popup-hl {
+    background-color : #0080C8 ; 
+    background-image:none;
+    padding-left: 6px;
+}
+/**contornos del cuerpo del messagebox**/
+.z-window-modal-cl, .z-window-highlighted-cl, .z-window-overlapped-cl {
+    background-color : #0080C8; 
+    background-image:none;
+    padding-left: 6px;
+}
+.z-window-modal-cr, .z-window-highlighted-cr, .z-window-overlapped-cr {
+    background-color : #0080C8; 
+    background-image:none;
+    padding-left: 6px;
+}
+.z-window-modal-br, .z-window-highlighted-br, .z-window-overlapped-br {
+    background-color : #0080C8; 
+    background-image:none;
+    padding-left: 6px;
+}
+.z-window-modal-tr, .z-window-highlighted-tr, .z-window-overlapped-tr, .z-window-popup-tr {
+    background-color : #0080C8; 
+    background-image:none;
+    padding-left: 6px;
+}
+.z-window-embedded-hr, .z-window-modal-hr, .z-window-highlighted-hr, .z-window-overlapped-hr, .z-window-popup-hr {
+    background-color : #0080C8; 
+    background-image:none;
+    padding-left: 6px;
+}
+.z-window-embedded-header, .z-window-modal-header, .z-window-popup-header, .z-window-highlighted-header, .z-window-overlapped-header {
+    color: white;
+    padding-top: 3px;
+    padding-bottom: 6px;
+    background-color : #0080C8; 
+    background-image:none;
+}
+/**FIN DE MESSAGEBOX**/
+/**TOLLBAR**/
+.z-toolbar {
+    border-color: #C5C5C5;
+    border-style: solid;
+    border-width: 0 0 1px;
+    display: block;
+    padding: 2px;
+    background: repeat-x 0 -1px #EEEEEE;
+    background-color: #0080C8
+}
+/**FIN DE TOLLBAR**/
+/**TABS**/
+
+.z-tab .z-tab-text 
+{
+    color: #0080C8;
+    cursor: pointer;
+    font-family: arial;
+    font-size: 10px;
+    font-weight : bold;
+    padding: 4px 14px;
+    white-space: nowrap;
+}
+
+.z-tabpanel, .z-tabbox-ver .z-tabpanels-ver {
+    border-color: rgb(225, 225, 225);
+    border-width: 0px;
+    border-style: solid;
+}
+/**FIN DE TABS**/
+/**MENU**/
+.z-menubar-hor,.z-menubar-ver {
+    position : relative;
+    display: block;
+    padding : 0px 0;
+    background: #0080C8 repeat-x 0 0;
+}
+.z-menubar-hor .z-menu,.z-menubar-hor .z-menuitem,.z-menubar-hor .z-menu-btn,.z-menubar-hor .z-menuitem-btn,
+.z-menubar-hor span,.z-menubar-hor a,.z-menubar-hor div,
+.z-menubar-ver .z-menu,.z-menubar-ver .z-menuitem,.z-menubar-ver .z-menu-btn,.z-menubar-ver .z-menuitem-btn,
+.z-menubar-ver span,.z-menubar-ver a,.z-menubar-ver div,
+.z-menu-cnt, .z-menuitem-cnt {
+    font-weight:normal;
+    white-space: nowrap;
+    font-family: arial;
+    color: white;
+    font-size: 11px;
+}
+/**FIN DE MENU**/
+/**GROUP BOX**/
+.z-groupbox-header span.z-caption-cnt, .z-groupbox-title-cnt {
+    display: inline-block;
+    background-color: #0080C8;
+    background-image: url(../images/login/medio.png);
+    color: white;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+/**FIN DE GROUP BOX**/
+/**RADIOBUTTON - LABEL**/
+ .z-label , .z-radio-cnt, .z-checkbox-cnt, .z-loading {
+    font-family: arial;
+    font-size: 10px;
+    font-weight: normal;
+}
+
+.colorRojo{
+    color: red;
+    font-size: 50px;
+}
+/**FIN DE RADIOBUTTON**/
+//.z-label,
+/*
+.z-label {
+    font-family: "Arial";
+    //font-family: arial;
+    font-size: 8px;
+    font-weight: bold;
+}
+*/

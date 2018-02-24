@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_repartidor" title="BUSQUEDA DE REPARTIDORES" border="normal" width="560px"
+            apply="org.me.gj.controller.componentes.ControllerLovRepartidor"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hlayout>
+                <cell align="right" valign="bottom">
+                    <label value="DESCRIPCION:" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="300px" focus="true" maxlength="50" tooltiptext="Ingrese los apellidos y nombres  del repartidor, Máximo 50 caracteres"/>
+            </hlayout>
+            <listbox id="lst_busrep" mold="paging" pageSize="13" width="530px">
+                <listhead>
+                    <listheader label="CODIGO" width="80px"/>
+                    <listheader label="APELLIDOS Y NOMBRES" width="450px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.rep_id}"/>
+                        <listcell label="${each.s_nomcompleto}"/>
+                    </listitem>
+                </template>
+            </listbox>
+            
+        </vlayout>
+    </window>
+</zk>
+ 

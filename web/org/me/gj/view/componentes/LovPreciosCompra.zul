@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_precios" title="Busqueda de Precios Productos por Proveedor" border="normal" width="435px"
+            apply="org.me.gj.controller.componentes.ControllerLovPreciosCompra"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hlayout>
+                <cell align="right" valign="bottom">
+                    <label value="DESCRIPCION:" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="250px" focus="true" maxlength="45" tooltiptext="Ingrese la Descripcion del Producto"/>
+            </hlayout>
+            <listbox id="lst_buspre" mold="paging" pageSize="13" width="410px">
+                <listhead>
+                    <listheader label="CODIGO" width="110px"/>
+                    <listheader label="DESCRIPCION" width="300px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.pro_id}"/>
+                        <listcell label="${each.pro_des}"/>
+                    </listitem>
+                </template>
+            </listbox>
+            
+        </vlayout>
+    </window>
+</zk>

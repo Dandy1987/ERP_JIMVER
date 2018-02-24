@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+
+    <borderlayout sclass="complex-layout" height="100%">
+        <north height="27px" sclass="arriba-main">
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center> 
+            <div sclass="cuerpo-main" >
+                <window id="w_util" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f10#f8#f9">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)" />            
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)" />
+                        <label value="PARTICIPACIÓN DE UTILIDADES" sclass="titulo_mant" style="margin-left:229px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_util" ctrlKeys="#f10" apply="org.me.gj.controller.planillas.mantenimiento.ControllerUtil" >
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO" >
+                                <attribute name="onSelect">
+                                    if (lst_util.getSelectedIndex() == -1) {
+                                    tab_lista.setSelected(true);
+                                    Messagebox.show("Por favor, seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <!--<groupbox width="985px" open="true" closable="false">
+                                    <hbox align="center">
+                                        <toolbarbutton id="tbbtn_excel" image="/images/iconos_menu/estadisticas/exportarxls.png" tooltiptext="Exportar a Excel" />                                        
+                                    </hbox>                             
+                                </groupbox>
+                                <separator height="5px"/>-->
+                                <div id="div_lst_util" >
+                                   
+                                    <listbox id="lst_util" mold="paging" pageSize="18" width="985px" height="500px"><!--  height="460px" -->
+                                        <listhead>
+                                            <listheader label="EJER" width="50px" align="center"/>
+                                            <listheader label="PART. LEGAL" align="center"/>
+                                            <listheader label="TOTAL REMUN." width="180px" align="center"/>
+                                            <listheader label="T. DIAS LAB." width="180px" align="center"/>
+                                            <listheader label="FAC. REMUN." width="190px" align="center"/>
+                                            <listheader label="FAC. TPO. LAB" width="180px" align="center"/>
+                                            <listheader label="ACT." width="35px" align="center"/>
+                                        </listhead>
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.pUtil_id}"/>
+                                                <listcell label="${each.s_pUtil_parLeg}" style="text-align:right;"/>
+                                                <listcell label="${each.s_pUtil_totRem}" style="text-align:right;"/>
+                                                <listcell label="${each.s_pUtil_totDiasLab}" style="text-align:right;"/>
+                                                <listcell label="${each.s_pUtil_facRem}" style="text-align:right;"/>
+                                                <listcell label="${each.s_pUtil_facTpoLab}" style="text-align:right;"/>
+                                                <listcell>
+                                                    <checkbox checked="${each.pUtil_valor}" disabled="true"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <space height="5px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuAdd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Utilidad"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="dt_fecAdd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación de la Utilidad"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuMod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modifico la Utilidad"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="dt_fecMod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación del Almacen"/>   
+                                    </hbox>
+                                </div>    
+                            </tabpanel>
+                            <tabpanel>
+                                <div id="div_man_util" >
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <grid id="grd_man_util">
+                                            <columns>
+                                                <column width="250px"/>
+                                                <column width="250px"/>
+                                                <column width="170px"/>
+                                                <column />
+                                            </columns>
+                                            <rows> 
+                                                <!-- Fila 1 -->
+                                                <row align="right">
+                                                    <hbox align="center" />
+                                                    <hbox align="center" />                                                    
+                                                    <hbox align="center">
+                                                        <label value="ACTIVO ?:"/>
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <checkbox id="chk_manAct" disabled="true" tooltiptext="Define el Estado de la Participación de Utilidad"/>
+                                                    </hbox>
+                                                </row>
+                                                <!-- Fila 2 -->
+                                                <row align="right">
+                                                    <hbox align="center">
+                                                        <label value="EJERCICIO : " />
+                                                        <span class="colorRojo">*</span>
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <combobox id="cb_manEjer" readonly="true" width="100px" disabled="true" tooltiptext="Define el Ejercicio">
+                                                            <template name="model">
+                                                                <comboitem label = "${each.pUtil_id}" value = "${each.pUtil_id}" />
+                                                            </template>
+                                                        </combobox>
+                                                    </hbox>
+                                                    <hbox align="center">
+                                                        <label value="PARTICPACIÓN LEGAL : " />
+                                                        <span class="colorRojo">*</span>
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <doublebox id="db_manPartLegal" width="120px" disabled="true" style="text-align: right;" locale="en_US" format="###,###,##0.00"  maxlength="20" ctrlKeys="#DEL" tooltiptext="Define el Valor de Participación Legal"  />
+                                                    </hbox>
+                                                </row>
+                                                <!-- Fila 3 -->
+                                                <row align="right">
+                                                    <hbox align="center" width = "131px">
+                                                        <label value="TOTAL REMUNERACIÓN : " />
+                                                        <span class="colorRojo">*</span>   
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <doublebox id="db_manTotalRemun" width="200px" disabled="true" style="text-align: right;" locale="en_US" format="###,###,##0.00"  maxlength="20" ctrlKeys="#DEL" tooltiptext="Define el Valor del Total Remuneración"  />
+                                                    </hbox>
+                                                    <hbox align="center" width = "139px">
+                                                        <label value="FACTOR REMUNERACIÓN : " />
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <doublebox id="db_manFacRemu" width="200px" disabled="true" style="text-align: right;" maxlength="18"  locale="en_US" format="0.00000000" tooltiptext="Define el Factor de Remuneración"  />
+                                                    </hbox>
+                                                </row>
+                                                <!-- Fila 4 -->
+                                                <row align="right">
+                                                    <hbox align="center" width = "144px">
+                                                        <label value="TOTAL DÍAS LABORADOS : " />
+                                                        <span class="colorRojo">*</span>   
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <doublebox id="db_manTotalDiasLab" width="200px"  disabled="true" style="text-align: right;" locale="en_US" format="###,###,##0.00" maxlength="20" ctrlKeys="#DEL" tooltiptext="Define el Total de Días Laborados"  />
+                                                    </hbox>
+                                                    <hbox align="center" width = "157px">
+                                                        <label value="FACTOR TIEMPO LABORADO : " />
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <doublebox id="db_manFacTiemLab" width="200px"  disabled="true" style="text-align: right;" maxlength="18"  locale="en_US" format="0.00000000" tooltiptext="Define el Factor Tiempo Laborado"  />
+                                                    </hbox>
+                                                </row>
+                                            </rows>
+                                        </grid>
+                                    </groupbox>
+                                </div>    
+                            </tabpanel>
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south height="25px" border="0">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>    
+</zk>

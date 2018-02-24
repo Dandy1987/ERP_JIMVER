@@ -1,0 +1,257 @@
+/*ESTILO GENERAL PARA TODOS*/
+body {    
+    margin: 0 auto;
+    font-family: "Arial";
+    font-size: 11px;    
+    color: #585858;
+    vertical-align: middle;
+    background-image: url(../images/fondo/bg_jimver.jpg); 
+}
+/**FIN**/
+/***********************************FORMULARIO DE LOGIN*******************************/
+/*LOGO DE JIMVER POSICIONADO EN GRID*/
+.login-logo {
+    background-image: url(../images/login/jimver.png);
+    color: white;
+}
+/*LABEL,TEXTO,LINK,COMBO*/
+.login-hiperlink {
+    text-decoration: none;
+    font-weight : bold;
+    color: #0080C8;
+}
+.login-mensaje {
+    color: #0080C8;
+    font-weight : bold;
+}
+.login-minuscula {
+    font-family: "Arial";
+    font-size: 11px;
+} 
+.z-combobox-inp {
+    width: 112px;
+}
+.celda{
+    vertical-align: middle;
+    text-align: right;
+}
+.celdaCentrada{
+    vertical-align: middle;
+    text-align: center; 
+}
+.caja-captcha{
+    padding-left: 2px;
+    text-transform:uppercase;
+    border-radius: 5px;
+}
+.caja-user{
+    background: url(../images/login/login.png) no-repeat scroll 0% 0% rgb(241, 241, 241);
+    padding-left: 20px;
+    text-transform:uppercase;
+    border-radius: 5px;
+}
+.caja-user-adm {
+    background: url(../images/login/login_adm/user_adm.png) no-repeat scroll 0% 0% rgb(241, 241, 241);
+    padding-left: 20px;
+    text-transform:uppercase;
+    border-radius: 5px;
+}
+.caja-user:hover ,.caja-password:hover,.caja-captcha:hover ,.combo-empresa:hover, .combo-sucursal:hover, .caja-user-adm:hover{
+    background-color: #A1D9F7;
+    color: #0080C8;
+    /*font-weight : bold;*/
+}
+.caja-password{
+    background: url(../images/login/password.png) no-repeat scroll 0% 0% rgb(241, 241, 241);
+    padding-left: 20px;
+    text-transform:uppercase;
+    border-radius: 5px;
+}
+.caja-password-adm{
+    background: url(../images/login/login_adm/pass_adm.png) no-repeat scroll 0% 0% rgb(241, 241, 241);
+    padding-left: 20px;
+    text-transform:uppercase;
+    border-radius: 5px;
+}
+.combo-empresa{
+
+    background: no-repeat scroll 0% 0% rgb(241, 241, 241);
+    /*padding-left: 20px;*/
+    text-transform:uppercase;  
+    border-radius: 5px;
+}
+.combo-sucursal{
+    background: no-repeat scroll 0% 0% rgb(241, 241, 241);
+    /*padding-left: 20px;*/
+    text-transform:uppercase; 
+    border-radius: 5px;
+}
+/*ESTILO PARA BOTON DE LOGIN*/
+.botones {
+    display: inline-block;
+    zoom: 1; /* zoom and *display = ie7 hack for display:inline-block */
+    display: inline;
+    vertical-align: baseline;
+    margin: 0 2px;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font: 11px/100% Arial;
+    padding: .5em 2em .55em;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    background-color: #0080C8;
+}
+.botones:hover {
+    background-color: #A1D9F7;
+    color: #0080C8;
+}
+/***********************************FORMULARIO DE LOGIN*******************************/
+/**********************ESTILO PARA GRID DEL LOGIN*********************/
+div .z-grid {
+    border: 2px solid #0080C8;
+    overflow: hidden;
+    background-color: white;
+    border-radius: 15px;
+}
+/**FONDO**/
+tr.z-grid-odd td.z-row-inner, tr.z-grid-odd .z-cell, tr.z-grid-odd {
+    background: none repeat scroll 0% 0% rgb(247, 247, 247);
+}
+tr.z-grid-odd td.z-row-inner, tr.z-grid-odd .z-cell {
+    background-color: white;
+    border-top: 1px solid white;
+    border-bottom: 1px solid white;;
+    border-left: 1px solid white;;
+}
+/******************************FIN DE GRID****************************/
+/***************************MESSAGEBOX *******************************/
+/**boton del messagebox**/
+.z-messagebox-btn 
+{
+    display: inline-block;
+    zoom: 1;
+    display: inline;
+    vertical-align: baseline;
+    margin: 0 2px;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font: 11px/100% Arial;
+    padding: .5em 2em .55em;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    background-color: #0080C8;
+}
+.z-messagebox-btn:hover 
+{
+    background-color: #A1D9F7;
+}
+/**imagen de informacion del messagebox**/
+.z-msgbox-information {
+    background-image: url("../images/login/messagebox/information_24_24.png");
+}
+/**boton del messagebox**/
+.z-messagebox-btn.z-button .z-button-cm 
+{
+    background-image: none;
+    color: white; 
+    font-weight : bolder; 
+}
+/**texto del messagebox**/
+.z-messagebox .z-label {
+    font-family: arial;
+    font-size: 12px;
+    color: rgb(54, 54, 54);
+}
+/**cuerpo del messagebox**/
+.z-messagebox-window .z-window-modal-cnt, .z-messagebox-window .z-window-highlighted-cnt {
+    padding: 17px 17px 15px;
+    background-color: white;
+}
+/**contorno del messagebox**/
+.z-window-embedded-hl, .z-window-modal-hl, .z-window-highlighted-hl, .z-window-overlapped-hl, .z-window-popup-hl {
+    background-color : #0080C8 ; 
+    background-image:none;
+    padding-left: 6px;
+}
+/**contornos del cuerpo del messagebox**/
+.z-window-modal-cl, .z-window-highlighted-cl, .z-window-overlapped-cl {
+    background-color : #0080C8; 
+    background-image:none;
+    padding-left: 6px;
+}
+.z-window-modal-cr, .z-window-highlighted-cr, .z-window-overlapped-cr {
+    background-color : #0080C8; 
+    background-image:none;
+    padding-left: 6px;
+}
+.z-window-modal-br, .z-window-highlighted-br, .z-window-overlapped-br {
+    background-color : #0080C8; 
+    background-image:none;
+    padding-left: 6px;
+}
+.z-window-modal-tr, .z-window-highlighted-tr, .z-window-overlapped-tr, .z-window-popup-tr {
+    background-color : #0080C8; 
+    background-image:none;
+    padding-left: 6px;
+}
+.z-window-embedded-hr, .z-window-modal-hr, .z-window-highlighted-hr, .z-window-overlapped-hr, .z-window-popup-hr {
+    background-color : #0080C8; 
+    background-image:none;
+    padding-left: 6px;
+}
+.z-window-embedded-header, .z-window-modal-header, .z-window-popup-header, .z-window-highlighted-header, .z-window-overlapped-header {
+    color: white;
+    padding-top: 3px;
+    padding-bottom: 6px;
+    background-color : #0080C8; 
+    background-image:none;
+}
+/*******************FIN DE MESSAGEBOX*********************/
+/************************NOTIFICACION DE VALIDACIONES***********************/
+/**CUERPO DE MENSAJE DE NOTIFICACION**/
+.z-notification-info .z-notification-cl {
+    background-image: url("../images/login/messagebox/information_16_16.png");
+    border: 1px solid white;
+}
+.z-notification .z-notification-cl {
+    position: relative;
+    padding: 15px 15px 15px 55px;
+    border-radius: 10px 10px 10px 10px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.35);
+    background-color: #0080C8;
+}
+.z-notification-ref .z-notification-cl, .z-notification-ref .z-notification-cnt {
+    width: 150px;
+    height: 20px;
+}
+/**FLECHA DE MENSAJE DE NOTIFICACION**/
+.z-notification .z-notification-pointer {
+    position: absolute;
+    display: none;
+    width: 0px;
+    height: 0px;
+    border: 10px solid transparent;
+}
+.z-notification-info .z-notification-pointer-l {
+    border-right-color: #0080C8;
+}
+/**************************FIN DE NOTIFICACION****************************/
+
+
+

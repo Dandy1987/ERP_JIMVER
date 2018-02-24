@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:w="client">
+    <window id="w_lov_nodespacho" title="MERCADERÍA NO DESPACHADA" border="normal" width="320px"
+            height="140px" position="center,center" closable="true"
+            apply="org.me.gj.controller.componentes.ControllerLovConsoMercaNoDesp"
+            action="show: slideDown;hide: slideUp">
+        <div >
+            <vbox>
+                <space height="5px"/> 
+                <hbox align="right">
+                    <label value="FEC.INICIAL: "/>
+                    <datebox id="d_fecini" maxlength="10" readonly="true" width="90px" format="dd/MM/yyyy" />  
+                    <space width="2px"/>
+                    <label value="FEC.FIN: "/>
+                    <datebox id="d_fecfin" maxlength="10" readonly="true" width="90px" format="dd/MM/yyyy" /> 
+                </hbox>
+                <space height="1px"/> 
+                <hbox align="right">
+                    <cell align="right" valign="center" >
+                        <label value="LISTA PRECIO REF:"/>
+                    </cell>
+                    <combobox id="cb_listaprecioref" readonly="true" width="195px"  tooltiptext="Selecciona el horario">
+                        <template name="model">                                                                                                 
+                            <comboitem label="${each.lp_des}" value="${each.lp_id}"/>                                                                                                      
+                        </template>                                               
+                    </combobox> 
+                </hbox>
+                <space height="1px"/> 
+                <hbox align="right">
+                    <cell align="right" valign="center" >
+                        <label value="EXCEL:"/>
+                    </cell>
+                    <checkbox id="chk_excel" />
+                    <space width="10px"/>
+                    <button id="btn_aceptar" label="ACEPTAR" sclass="botones"/>
+                    <button id="btn_cancelar" label="CANCELAR" sclass="botones"/>
+                </hbox>                             
+            </vbox>
+        </div>
+    </window>
+</zk>
+

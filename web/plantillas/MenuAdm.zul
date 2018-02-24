@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <div align="center" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerLogin" >
+        <separator sclass="z-separator-hor" /> 
+        <menubar id="menubar" width="100%">
+            <menu label="Mantenimiento" width="90px" >
+                <menupopup>
+                    <menuitem label="Configuracion Inicial" image="/images/iconos_menu_adm/confini.png" href="/org/me/gj/view/seguridad/mantenimiento/ManCfgInicial.zul" />     
+                    <menuitem label="Menus" image="/images/iconos_menu_adm/menu.png" href="/org/me/gj/view/seguridad/mantenimiento/ManMen.zul"/>
+                    <menuitem label="Usuarios" image="/images/iconos_menu_adm/usuario.png" href="/org/me/gj/view/seguridad/mantenimiento/ManUser.zul"/>
+                    <menuitem label="Preguntas" image="/images/iconos_menu_adm/preguntas.png" href="/org/me/gj/view/seguridad/mantenimiento/ManPreg.zul"/>
+                    <menuitem label="Accesos" image="/images/iconos_menu_adm/accesos.png" href="/org/me/gj/view/seguridad/mantenimiento/ManAcc.zul" /> 
+                    <menuitem label="Empresas" image="/images/iconos_menu_adm/empresa.png" href="/org/me/gj/view/seguridad/mantenimiento/ManEmp.zul"/>
+                    <menuitem label="Sucursales" image="/images/iconos_menu_adm/sucursal.png" href="/org/me/gj/view/seguridad/mantenimiento/ManSuc.zul"/>                    
+                    <menuitem label="Numeracion" image="/images/iconos_menu_adm/numeracion.png" href="/org/me/gj/view/seguridad/mantenimiento/ManNum.zul"/>                    
+                </menupopup>
+            </menu>
+            <menu label="Procesos" width="90px" ></menu>
+            <menu label="Informes" width="90px" ></menu>
+            <menu label="Utilitarios" width="90px" ></menu>
+            <menu label="Ayuda" width="90px" ></menu>  
+            <menuitem  width="100px" />
+            <menuitem label="Bienvenido:  ${sessionScope.usuariosCredential.nombre}"/>
+            <!--<menuitem label="Menu Principal" href="/org/me/gj/view/seguridad/Seguridad.zul" />-->
+            <menuitem label="Menu Principal" href="/Main.zul" />
+            <menuitem label="Cerrar Sesión" id="btn_logout"/>
+        </menubar>
+    </div>
+</zk>

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>
+               <div width="100%" sclass="cuerpo-main">
+            <window id="w_confplanilla" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                <toolbar id="tb_bancos"  width="99.75%">
+                    <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" />
+                    <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar (F4)"/>            
+                    <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)"/>
+                    <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" disabled="true" tooltiptext="Guardar (F10)" />
+                    <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" disabled="true" tooltiptext="Deshacer (F9)"/>
+                    <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" disabled="true" tooltiptext="Imprimir (F8)"/>   
+                    <label value="CONFIGURACION PLANILLA" sclass="titulo_mant" style="margin-left:260px;"/>
+                </toolbar>
+                <tabbox id="tabbox_conf" apply="org.me.gj.controller.planillas.mantenimiento.ControllerConfPlanilla">          
+                    <tabs>
+                        <tab id="tab_lista" label="LISTA"/>
+                        <tab id="tab_mantenimiento" label="MANTENIMIENTO"/>
+                
+                    </tabs>  
+                    <tabpanels>
+                        <tabpanel>
+                         
+                            <groupbox width="987px" open="true" closable="false">
+                                <caption label="Opciones de Busqueda" />
+                                <hbox align="center">
+                                    <!--<space width="130px"/>
+                                    <cell align="right" valign="center">
+                                        <label value="CODIGO: "/>
+                                    </cell>
+                                    <space width="2px"/>-->
+                                    <cell align="right" valign="center">
+                                        <label value="FILTRO:"/>
+                                    </cell>
+                                    <space width="2px"/>
+                                    <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una Opción">
+                                        <comboitem label=" "/>
+                                        <comboitem label="CORRELATIVO"/>
+                                        <comboitem label="DESCRIPCIÓN"/>
+                                               
+                                        <!--  <attribute name="onSelect">
+                                            txt_busqueda.setDisabled(false);
+                                        </attribute>-->
+                                    </combobox>
+                                    <space width="2px"/>
+                                    <textbox id="txt_busqueda" maxlength="70" width="200px"  style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese codigo a buscar"/>      
+                                    <space width="10px"/>
+                                    <button id="btn_buscar" label="Buscar" sclass="botones"/> 
+                                </hbox>
+                                
+                            </groupbox>
+                            <groupbox width="987px" open="true" closable="false">
+                                <hbox align="center">  
+                                    <space width="100px" height="100px"/> 
+                                    <listbox  id = "lst_lista" mold="paging" pageSize="18" width="800px" height="450px">
+                                
+                                        <listhead>
+                                    
+                                            <listheader label="CODIGO" width="200px"  align="center"/>
+                                            <listheader label="CONSTANTE" width="200px" align="center"/>  
+                                            <listheader label="DESCRIPCION"  align="center"/>
+                                       
+                                        </listhead>  
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.codigo}"/>
+                                                <listcell label="${each.constante}"/>
+                                                <listcell label="${each.des_const}" style="text-align:left;"/>
+                                            
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                </hbox>
+                            </groupbox>  
+                            <separator height="10px"/> 
+                            <hbox align="center">
+                                <cell align="right" valign="center">                                            
+                                    <label value="USU. ADD:"/>
+                                </cell>
+                                <textbox id="txt_usua" maxlength="15" style="text-align:left;" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador"/>   
+                                <cell align="right" valign="center">
+                                    <space width="85px"  />
+                                    <label value="FEC. ADD:"/>
+                                </cell>
+                                <datebox id="d_fec" maxlength="10" style="text-align:right;"  readonly="true" width="137px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación"/>  
+                                <cell align="right" valign="center">
+                                    <space width="95px"  />
+                                    <label value="USU. MOD:"/>
+                                </cell>
+                                <textbox id="txt_usumo" maxlength="15"  style="text-align:left;" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó"/>   
+                                <cell align="right" valign="center">
+                                    <space width="95px"  />
+                                    <label value="FEC. MOD:"/>
+                                </cell>
+                                <datebox id="d_fecmo" maxlength="10" style="text-align:right;"  readonly="true" width="137px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación"/>   
+                            </hbox>
+                        </tabpanel>
+                        
+                        <tabpanel>
+                            <groupbox width="987px" height="380px" open="true" closable="false"> 
+                           
+                                <hbox align="center">
+                                    <space width="380px" height="100px"/>    
+                                    <cell align="right" valign="center">
+                                        <label value="CODIGO:"/>
+                                    </cell>
+                                    <textbox id="txt_codigo" disabled="true" maxlength="3" width="100px" tooltiptext="Define el código de banco"/> 
+                                </hbox>
+                                <hbox align="center"> 
+                                    <space width="380px"/>   
+                                    <cell align="left" width="65px">
+                                        <label value="CONCEPTO :"/>
+                                    </cell>
+                                    <radiogroup id="rbg_indicador_principal">
+                                        <radio label="CONSTANTE" value="0" tooltiptext="Constante"/>
+                                        <radio label="CONSTANTE MENSUAL" value="1" tooltiptext="Constante Mensual"/>
+                                        <radio label="FUNCION" value="2" tooltiptext="Funcion"/>
+                                    </radiogroup>
+                                </hbox>
+                                <space width="15px"/>    
+                                <hbox align="center">
+                                    <space width="380px" height="20px"/>   
+                                    <cell align="right" valign="center">
+                                        <label value="CONSTANTE:" />
+                                    </cell>
+                                    <textbox id="txt_constante" disabled="true" maxlength="3" width="100px" tooltiptext="Define el código de banco"/> 
+                                    <space width="8px"/>
+                                    <textbox id="txt_descon" maxlength="70" disabled="true" width="333px"  tooltiptext="Descripción de concepto de personal"/>      
+                                </hbox>
+                            </groupbox>
+                            
+                            
+                             
+                        </tabpanel>                          
+                    </tabpanels>
+                </tabbox>
+            </window>    
+               </div>                                               			
+        </center>
+       
+   
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>
+</zk>

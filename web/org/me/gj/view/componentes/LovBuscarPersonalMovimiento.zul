@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_per" title="BUSQUEDA DE PERSONAL" border="normal" width="470px"
+            apply="org.me.gj.controller.componentes.ControllerLovBuscarPersonalMovimiento"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="PERSONAL :" />
+                </cell>
+                <textbox id="txt_busqueda_per" value="%%" width="335px" focus="true" maxlength="80" tooltiptext="Ingrese codigo de Personal"/>
+            </hbox>
+            <listbox id="lst_per" mold="paging" pageSize="13" width="470px">
+                <listhead>
+                    <listheader label="ID" width="90px" align="center"/>
+                    <listheader label="PERSONAL" width="240px" align="center"/>
+                    <listheader label="SUCURSAL" width="130px" align="center"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.plidper}" style="text-align:center"/>
+                        <listcell label="${each.pldesper}" style="text-align:left;"/>
+                        <listcell label="${each.suc_id_des}" style="text-align:left"/>                         
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk>

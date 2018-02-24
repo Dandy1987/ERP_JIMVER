@@ -1,0 +1,102 @@
+/*ESTILO GENERAL PARA TODOS*/
+body {
+    width: 1000px;
+    height: 668px;
+    margin: 0 auto;
+    font-family: "Arial";
+    font-size: 11px;    
+    color: #585858;
+    vertical-align: middle;
+    background-image: url(../images/fondo/bg_jimver.jpg); 
+}
+/**FIN**/
+/**********************IMAGENES**********************/
+.imagenes {
+    cursor: pointer;
+}
+/**FIN**/
+/*****************FORMULARIO PRINCIPAL*****************/
+/**PLANTILLAS**/
+.arriba-main , .abajo-main {
+    background-image: url(../images/main/fondo_azul.png);
+    color:white; 
+    height: 25px;
+       
+}
+.cuerpo-main {
+    background-image: url(../images/fondo/bg_rayas.png); 
+    height: 618px;
+}
+.z-label {
+    font-family: "Arial";
+    font-size: 11px;
+}
+/**FIN DE PLANTILLAS**/
+/*****************MENU*****************/
+.z-menubar-hor,.z-menubar-ver {
+    position : relative;
+    display: block;
+    padding : 2px 0;
+    background: #0080C8 repeat-x 0 0;
+}
+.z-menubar-hor .z-menu,.z-menubar-hor .z-menuitem,.z-menubar-hor .z-menu-btn,.z-menubar-hor .z-menuitem-btn,
+.z-menubar-hor span,.z-menubar-hor a,.z-menubar-hor div,
+.z-menubar-ver .z-menu,.z-menubar-ver .z-menuitem,.z-menubar-ver .z-menu-btn,.z-menubar-ver .z-menuitem-btn,
+.z-menubar-ver span,.z-menubar-ver a,.z-menubar-ver div,
+.z-menu-cnt, .z-menuitem-cnt {
+    font-weight:normal;
+    white-space: nowrap;
+    font-family: arial;
+    color: white;
+    font-size: 11px;
+}
+/**************FIN DE MENU*****************/
+/************ESTILO PARA IMAGENES DE LOS MODULOS ************/
+.details-holder
+{
+    position: relative;
+    margin: 5px 40px 50px 40px;
+}
+.show-details img
+{
+    opacity: 0.8;
+    width: 128px;
+    height: 128px;
+}
+.show-details:hover img
+{
+    position: relative;
+    opacity: 1;
+    z-index: 99;    
+}
+.img-info
+{
+    padding: 140px 0px 0px 0px;
+    position: absolute;
+    z-index: 20;
+    top: -10px;
+    left: -10px;
+    width: 150px;
+    height: 30px;    
+    background-color: #A1D9F7;
+    color:#0080C8; 
+    text-align: center;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0px 10px 5px -6px #333333;
+    -webkit-transition: 0.5s Ease;
+    -moz-transition: 0.5s Ease;
+    -o-transition: 0.5s Ease;
+    transition: 0.5s Ease;
+    opacity: 0;
+
+}
+.show-details:hover .img-info
+{
+    opacity:1;    
+}
+/************FIN DE ESTILO IMAGENES DE LOS MODULOS ************/
+
+
+
+

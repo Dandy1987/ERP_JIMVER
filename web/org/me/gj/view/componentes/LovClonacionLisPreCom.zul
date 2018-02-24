@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:w="client">
+    <window id="w_lov_clonacionlpcompra" title="CLONACION DE LISTA DE PRECIOS" border="normal" width="680px"
+            height="320px" position="center,center" closable="true"
+            apply="org.me.gj.controller.componentes.ControllerLovClonacionLPCompra"
+            action="show: slideDown;hide: slideUp"> 
+        <div >
+            <grid width="650px">
+                <columns>
+                    <column width="120px"/>
+                    <column width="500px"/>
+                </columns>
+                <rows>
+                    <row>
+                        <cell align="right" valign="center">
+                            <label value="ESTADO:"/>
+                        </cell>
+                        <checkbox id="chk_lpcest" disabled="true" checked="true" tooltiptext="Define el Estado de la Lista de Precios de Compra"/>
+                    </row>
+                    <row>
+                        <cell align="right" valign="botton">
+                            <label value="PROVEEDOR: "/>
+                            <span class="colorRojo">*</span>  
+                        </cell>                                                                                                                                                                                                                                          
+                        <hbox> 
+                            <textbox id="txt_provid" width="60px" maxlength="8" disabled="true" tooltiptext="Codigo del Proveedor, Maximo 8 caracteres"  />
+                            <textbox id="txt_provdes" width="400px" maxlength="60"  disabled="true" tooltiptext="Razon Social del Proveedor, Maximo 60 caracteres"/>                                              
+                        </hbox>                                                
+                    </row>
+                    <row>
+                        <cell align="right" valign="center">
+                            <label value="LISTA: "/>
+                            <span class="colorRojo">*</span>  
+                        </cell>
+                        <textbox id="txt_lpcdes" disabled="true" maxlength="50" width="400px" tooltiptext="Define el Nombre de la lista de Precio de compra, Máximo 50 caracteres"/>
+                    </row>
+                    <row>
+                        <cell align="right" valign="center">
+                            <label value="DESC.GENERAL(%): "/>
+                        </cell>
+                        <doublebox id="db_descgen" disabled="true" maxlength="6" width="200px" locale="en_US" format="##0.###" tooltiptext="Define el descuento general de la lista de precio, Máximo 10 caracteres"/>
+                    </row>
+                    <row>
+                        <cell align="right" valign="center">
+                            <label value="DESC.FINANCIERO(%): "/>
+                        </cell>
+                        <doublebox id="db_descfinan" disabled="true" maxlength="6" width="200px" locale="en_US" format="##0.###" tooltiptext="Define el descuento financiero de la lista de precio, Máximo 10 caracteres"/>
+                    </row>
+                    <row>
+                        <cell align="right" valign="center">
+                            <label value="REPORTE:"/>
+                        </cell>
+                        <textbox id="txt_lpcnomrep" disabled="true" maxlength="25" width="225px" tooltiptext="Define el Reporte de la lista de Precio de compra, Máximo 25 caracteres"/>
+                    </row>
+                    <row>
+                        <cell align="right" valign="center">
+                            <label value="ORDEN: "/>
+                        </cell>
+                        <spinner id="sp_lpcord" value="0" disabled="true" width="50px" constraint="min 0" tooltiptext="Define el orden de la Lista de Precios"/>
+                    </row>
+                    <row>
+                        <button id="btn_clonar" label="Clonar" sclass="botones"/>
+                        <button id="btn_cancelar" label="Cancelar" sclass="botones"/>
+                    </row>
+                </rows>
+            </grid>
+        </div>
+    </window>
+</zk>
+

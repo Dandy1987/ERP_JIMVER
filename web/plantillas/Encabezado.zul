@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<div apply="org.me.gj.controller.seguridad.mantenimiento.ControllerLogin"  > <!--  if="${not sessionScope.usuariosCredential.anonymous}"  -->
+    <menubar width="100%" height="22px">
+        <menuitem label="Bienvenido:  ${sessionScope.usuariosCredential.nombre}"/>
+        <menuitem label="Cerrar Sesión" id="btn_logout" />    <!--  if="${not sessionScope.usuariosCredential.anonymous}"  -->
+    </menubar>
+</div>

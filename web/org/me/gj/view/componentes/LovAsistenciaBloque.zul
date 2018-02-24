@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_asist" title="CONSTANTE EN BLOQUE" border="normal" width="980px"
+            apply="org.me.gj.controller.componentes.ControllerLovAsistenciaBloque"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+     
+        <vlayout>
+            <hbox>
+                <vbox>
+                    <hbox>
+                        <listbox id="lst_bloque" mold="paging" pageSize="19" width="486px" height="460px">
+                            <listhead>
+                                <listheader label="DÍA"  align="center"/>
+                                <listheader label="ASISTENCIA"  align="center"/>
+                                <listheader label="FECHA"  align="center"/>    
+                            </listhead>	
+                            <template name="model">
+                                <listitem>    
+                                    <listcell label="${each.sfec_asisdias}" style="${each.asistencia eq 'FALTA' ? 'background: red  ; font-weight: bold; color: white;' : '' 
+                                                                                                       or each.asistencia eq 'VACACIONES'? 'background : turquoise; font-weight: bold; color: white;' : '' or each.asistencia eq 'PRE NATAL'? 'background : pink; font-weight: bold; color: white;' : '' 
+                                                                                                       or each.asistencia eq 'POST NATAL'? 'background : yellow; font-weight: bold; color: black;' : '' or each.asistencia eq 'LIC. C. GOCE'? 'background : lime; font-weight: bold; color: white;' : ''
+                                                                                                       or each.asistencia eq 'LIC. S. GOCE'? 'background : green; font-weight: bold; color: white;' : '' or each.asistencia eq 'COMPENSACION'? 'background : blue; font-weight: bold; color: white;' : ''
+                                                                                                       or each.asistencia eq 'DESC. MEDICO'? 'background : plum; font-weight: bold; color: white;' : '' or each.asistencia eq 'DESC. M. SUBSIDIO'? 'background : silver; font-weight: bold; color: white;' : '' 
+                                                                                                       or each.asistencia eq 'LIC. PATERNIDAD'? 'background : orange; font-weight: bold; color: white;' : '' or each.asistencia eq 'LIC. ENF. TERMINAL'? 'background : fuchsia; font-weight: bold; color: white;' : ''  }"/>
+                                                            
+                                    <listcell label="${each.asistencia}" style="${each.asistencia eq 'FALTA' ? 'background: red   ; font-weight: bold; color: white;' : '' 
+                                                                                                        or each.asistencia eq 'VACACIONES'? 'background : turquoise; font-weight: bold; color: white;' : '' or each.asistencia eq 'PRE NATAL'? 'background : pink; font-weight: bold; color: white;' : '' 
+                                                                                                        or each.asistencia eq 'POST NATAL'? 'background : yellow; font-weight: bold; color: black;' : '' or each.asistencia eq 'LIC. C. GOCE'? 'background : lime; font-weight: bold; color: white;' : ''  
+                                                                                                        or each.asistencia eq 'LIC. S. GOCE'? 'background : green; font-weight: bold; color: white;' : '' or each.asistencia eq 'COMPENSACION'? 'background : blue; font-weight: bold; color: white;' : ''
+                                                                                                        or each.asistencia eq 'DESC. MEDICO'? 'background : plum; font-weight: bold; color: white;' : '' or each.asistencia eq 'DESC. M. SUBSIDIO'? 'background : silver; font-weight: bold; color: white;' : ''  
+                                                                                                        or each.asistencia eq 'LIC. PATERNIDAD'? 'background : orange; font-weight: bold; color: white;' : '' or each.asistencia eq 'LIC. ENF. TERMINAL'? 'background : fuchsia; font-weight: bold; color: white;' : '' }"/><!--${each.asistencia}-->
+                                                            
+                                    <listcell label="${each.sfec_asis}" style="${each.asistencia eq 'FALTA' ? 'background: red   ; font-weight: bold; color: white;' : '' 
+                                                                                                         or each.asistencia eq 'VACACIONES'? 'background : turquoise; font-weight: bold; color: white;' : '' or each.asistencia eq 'PRE NATAL'? 'background : pink; font-weight: bold; color: white;' : '' 
+                                                                                                         or each.asistencia eq 'POST NATAL'? 'background : yellow; font-weight: bold; color: black;' : '' or each.asistencia eq 'LIC. C. GOCE'? 'background : lime; font-weight: bold; color: white;' : ''
+                                                                                                         or each.asistencia eq 'LIC. S. GOCE'? 'background : green; font-weight: bold; color: white;' : '' or each.asistencia eq 'COMPENSACION'? 'background : blue; font-weight: bold; color: white;' : ''
+                                                                                                         or each.asistencia eq 'DESC. MEDICO'? 'background : plum; font-weight: bold; color: white;' : '' or each.asistencia eq 'DESC. M. SUBSIDIO'? 'background : silver; font-weight: bold; color: white;' : '' 
+                                                                                                         or each.asistencia eq 'LIC. PATERNIDAD'? 'background : orange; font-weight: bold; color: white;' : '' or each.asistencia eq 'LIC. ENF. TERMINAL'? 'background : fuchsia; font-weight: bold; color: white;' : '' }"/><!--${each.sfec_asis}-->
+                                </listitem>
+                            </template>
+                        </listbox>
+                    </hbox>
+                    <space height="1px"/>
+                    <groupbox width="486px" height="30px" open="true" closable="false" style="text-align: center; color: blue;">
+                        <textbox id="txt_periodo" disabled="false" width="100px" style="text-align: center;"/>
+                        <space width="5px"/>
+                        <textbox id="txt_asistencia" disabled="false" width="120px" style="text-align: center;"/>
+                        <space width="5px"/>
+                        <datebox id="d_fecact" maxlength="25" readonly="true" width="150px" disabled="true" format="EEEEEEEEE dd/MM/yyyy" style="text-align: center;" />
+                    </groupbox>
+                </vbox>
+                <vbox>
+                <groupbox width="486px" height="140px" open="true" closable="false">
+                    <groupbox width="475px" height="40px" open="true" closable="false">
+                       <!-- <caption label="INTERVALO DE FECHAS"/>-->
+                        <label value="FEC. INI:"/>
+                        <space width="5px"/>
+                        <datebox id="d_fecini" maxlength="25" disabled="true" readonly="true" width="150px"  format="dd/MM/yyyy" style="text-align: center;" />
+                        <space width="55px"/>
+                        <label value="FEC. FIN:"/>
+                        <space width="5px"/>
+                        <datebox id="d_fecfin" maxlength="25" disabled="true" readonly="true" width="150px"  format="dd/MM/yyyy" style="text-align: center;" />
+                    </groupbox>
+                    <space width="20px"/>
+                    <radiogroup Id="rbg_asisgen">
+                        <hbox>
+                            <radio Id="rb_0" label="Asistió (0)" value = "0" disabled="true"/>
+                            <space width = "45px"/>
+                            <textbox style="background: white;" width="20px" disabled="true" readonly="true"/>
+                                                        
+                            <space width = "100px"/>
+                            <!-- <button label="GUARDAR" id="btn_guardar" class="botones"/>  -->
+                            <!--<radio Id="rb_5" label="Lic. C. Goce (5)" value = "5" disabled="true" /> 
+                            <space width = "70px"/>
+                            <textbox style="background: lime;" width="20px" disabled="true" readonly="true"/>	-->
+                        </hbox>
+                        <space width="50px"/>
+                                                               
+                      <!--  <hbox>
+                            <radio Id="rb_1" label="Falta (1)" value = "1" disabled="true"/>
+                            <space width = "55px"/>
+                            <textbox style="background: red;" width="20px" disabled="true" readonly="true"/>
+                                                        
+                            <space width = "100px"/>
+                                                        
+                            <radio Id="rb_6" label="Lic. S Goce (6)" value = "6" disabled="true"/>
+                            <space width = "73px"/>
+                            <textbox style="background: green;" width="20px" disabled="true" readonly="true"/>
+                                                        	
+                        </hbox>
+                                                    
+                        <space width="50px"/>-->
+                                                               
+                        <hbox>
+                            <radio Id="rb_2" label="Vacaciones (2)" value = "2" disabled="true"/>
+                            <space width = "20px"/>
+                            <textbox style="background: turquoise;" width="20px" disabled="true" readonly="true"/>
+                                                        
+                            <space width = "100px"/>
+                                                        
+                            <radio Id="rb_7" label="Compensacion (7)" value = "7" disabled="true"/>
+                            <space width = "60px"/>
+                            <textbox style="background: blue;" width="20px" disabled="true" readonly="true"/>
+                                                        	
+                        </hbox>
+                                                    
+                       <!-- <space width="50px"/>
+                                                               
+                        <hbox>
+                            <radio Id="rb_3" label="Pre Natal (3)" value = "3" disabled="true"/>
+                            <space width = "35px"/>
+                            <textbox style="background: pink;" width="20px" disabled="true" readonly="true"/>
+                                                        
+                            <space width = "100px"/>
+                                                        
+                            <radio Id="rb_8" label="Desc. Medico (8)" value = "8" disabled="true"/>
+                            <space width = "66px"/>
+                            <textbox style="background: plum;" width="20px" disabled="true" readonly="true"/>
+                                                        	
+                        </hbox>
+                                                    
+                        <space width="50px"/>
+                                                               
+                        <hbox>
+                            <radio Id="rb_4" label="Post Natal (4)" value = "4" disabled="true"/>
+                            <space width = "30px"/>
+                            <textbox style="background: yellow;" width="20px" disabled="true" readonly="true"/>	
+                                                        
+                            <space width = "100px"/>
+                                                        
+                            <radio Id="rb_9" label="Desc. M. Subsidio (9)" value = "9" disabled="true"/>
+                            <space width = "46px"/>
+                            <textbox style="background: silver;" width="20px" disabled="true" readonly="true"/>
+                                                        	
+                        </hbox>
+                                                    
+                        <space width="50px"/>
+                                                               
+                        <hbox>
+                            <radio Id="rb_11" label="Lic. Paternidad (A)" value = "10" disabled="true"/>
+                            <space width = "7px"/>
+                            <textbox style="background: orange;" width="20px" disabled="true" readonly="true"/>		
+                                                        
+                            <space width = "98px"/>
+                                                        
+                                <radio Id="rb_12" label="Lic. Enfermedad Terminal (B)" value = "11" disabled="true"/>
+                                <space width = "13px"/>
+                                <textbox style="background: fuchsia;" width="20px" disabled="true" readonly="true"/>	
+                            </hbox>-->
+                                                    
+                        </radiogroup>
+                    </groupbox>
+                    <textbox id="txt_lovfalta" visible="false"/>
+                    <textbox id="txt_lovliccgoce" visible="false"/>
+                    <textbox id="txt_lovlicsgoce" visible="false"/>
+                    <textbox id="txt_lovdesmedico" visible="false"/>
+                    <textbox id="txt_lovlicenfermedad" visible="false"/>
+                    <textbox id="txt_lovpaternidad" visible="false"/>
+                
+                    <listbox id="lst_asistenciagen" mold="paging"  pageSize="18" width="985px" height="214px">
+                        <frozen columns="2"/>
+                        <listhead>
+                            <listheader width="25px">
+                                <checkbox id="chk_selecAll"/>
+                            </listheader>          
+                            <listheader label="PERIODO" width="60px" align="center"/>
+                            <listheader label="CODIGO" width="70px" align="center"/>
+                            <listheader label="APELLIDOS Y NOMBRES"  align="left"/>
+                            <listheader label="AREA" width="150px" align="left"/>
+                            <listheader label="CH" width="35px" align="center"/>
+                            <listheader label="HORARIO" width="90px" align="center"/>
+                            <listheader label="F. INGRESO" width="90px" align="center"/>
+                            <listheader label="F. CESE" width="90px" align="center"/>
+                             
+                        </listhead>
+                        <template name="model">	
+                            <listitem>
+                                <listcell>
+                                    <checkbox forward="onCheck=lst_asistenciagen.onSeleccion"  checked="${each.valSelec}"/>
+                                </listcell>    
+                                <listcell label="${each.periodo}"/>
+                                <listcell label="${each.id_per}"/>
+                                <listcell label="${each.des_per}"/>
+                                <listcell label="${each.des_area}"/>
+                                <listcell label="${each.plcodhor}"/>
+                                <listcell label="${each.deshor}"/>
+                                <listcell label="${each.sper_fecing}"/>
+                                <listcell label="${each.sper_fecces}"/>
+                                 
+                            </listitem>
+                        </template>
+                    </listbox>
+                                    
+                </vbox>
+           
+            </hbox>    
+ 
+        </vlayout>
+     
+     
+     
+     
+    </window>   
+
+</zk>

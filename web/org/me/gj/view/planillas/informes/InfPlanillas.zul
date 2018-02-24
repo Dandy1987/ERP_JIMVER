@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>  
+            <div width="100%" sclass="cuerpo-main">
+                <window id="w_planillas" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png" disabled="true" tooltiptext="Nuevo (F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  disabled="true" tooltiptext="Editar (F4)"/>            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" disabled="true" tooltiptext="Eliminar (F7)"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" disabled="true" tooltiptext="Guardar (F10)" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" disabled="true" tooltiptext="Deshacer (F9)"/>
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)"/>   
+                        <!-- <label value="BOLETA DE PAGO" sclass="titulo_mant" style="margin-left:225px;"/>-->
+                    </toolbar>  
+                    <tabbox id="tabbox_planillas"  apply="org.me.gj.controller.planillas.informes.ControllerInfPlanillas">
+                        <tabs>
+                            <tab id="tab_planillas" label="PLANILLA PERSONAL"/>
+                            <tab id="tab_planillastotal" label="PLANILLA TOTAL"/>
+                        </tabs>
+                                       
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="987px" open="true" closable="false" style="text: center;">
+                                    <space height="30px"/>
+                                    
+                                    <hbox align="center">
+                                        <space width="314px"/>
+                                        <radiogroup Id="rg_periodo" onCheck="true">
+                                            <radio label="PERIODO ACTUAL"/>
+                                            <space width="115px"/>
+                                            <radio label="PERIODO ANTERIOR"/>
+                                        </radiogroup>
+                                    </hbox>
+                                    <space height="20px"/>
+                                    <hbox align="center">
+                                        <space width="319px"/>
+                                        <cell align="left" width="70px">
+                                            <label value="PERIODO : "/>
+                                        </cell>
+                                        <space width="5px"/>
+                                        <textbox id="txt_periodo" placeholder="PRESIONE ENTER" disabled="true" maxlength="8" width="118px" tooltiptext="Define el Período de Planilla"/> 
+                                        <space width="5px"/>
+                                        <span class="colorRojo">
+                                            <label value="AAAAMMTP" />
+                                        </span>
+                                    </hbox>
+                                    <space height="20px"/>
+                                    <hbox align="center">
+                                        <space width="319px"/>
+                                        <cell align="left" width="70px">
+                                            <label value="SUCURSAL : "/>
+                                        </cell>
+                                        <space width="5px"/>
+                                        <combobox id="cb_sucursal" width="120px" tooltiptext="Seleccione periodo" readonly="true" placeholder="-seleccione-">
+                                            <template name="model">
+                                                <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                            </template>
+                                        </combobox>
+                                        
+                                    </hbox>
+                                    <space height="20px"/>
+                                    <hbox align="center">
+                                        <space width="319px"/>
+                                        <cell align="left" width="80px">
+                                            <label value="AREA :"/>
+                                        </cell>
+                                        <textbox id="txt_codarea" maxlength="9"  placeholder="ENTER" width="80px" focus="false" tooltiptext="Código de Personal" style="text-align:center;"/>
+                                        <textbox id="txt_desarea" disabled="true" width="180px" focus="false" tooltiptext="Descripción de Personal"/>
+                                        <textbox id="txt_codarea1" visible="false"/>
+                                    </hbox>
+                                    <space height="20px"/>
+                                    <groupbox>
+                                        <caption label="Seleccione una opcion para visualizar impresion :"/>
+                                        <div id="div_01" align="center">
+                                            <hbox align="center">
+                                                <radiogroup Id="rg_tiporep">
+                                                    <radio label="TODOS" value="1"/>
+                                                    <space width="66px"/>
+                                                    <radio label="NORMAL" value="2"/>
+                                                    <space width="66px"/>
+                                                    <radio label="VACACIONES" value="3"/>
+                                                </radiogroup>
+                                            </hbox>
+                                        </div>  
+                                    </groupbox>                             
+                                    <space height="20px"/>
+                                    <hbox align="center">
+                                        <space width="315px"/>
+                                        <checkbox  class="input-group-addon" id="chk_cabecera" disabled="false" label="IMPRIMIR CABECERA" />
+                                    </hbox>
+                                    
+                                    <groupbox closable="false">
+                                        <caption label="Mostrar reporte ordenado por:"/> 
+                                        <hbox align="center">
+                                            <space width="239px"/>
+                                            <radiogroup id="rg_order" onCheck="true">
+                                                <radio label="AREA" value="1"/>
+                                                <space width="146px"/>
+                                                <radio label="APELLIDOS" value="2"/>
+                                                <space width="127px"/>
+                                                <radio label="CODIGO" value="3"/>
+                                            </radiogroup>
+                                        </hbox>
+                                    </groupbox>
+                                    
+                                    <space height="20px"/>
+                    
+                                    
+                                    <space height="30px"/>
+                                    
+                                </groupbox>
+                                
+                            </tabpanel>
+                            <tabpanel>
+                                <groupbox width="987px" open="true" closable="false" style="text: center;">
+                                    <space height="30px"/>
+                                    
+                                    <hbox align="center">
+                                        <space width="314px"/>
+                                        <radiogroup Id="rg_periodototal" onCheck="true">
+                                            <radio label="PERIODO ACTUAL"/>
+                                            <space width="115px"/>
+                                            <radio label="PERIODO ANTERIOR"/>
+                                        </radiogroup>
+                                    </hbox>
+                                    <space height="20px"/>
+                                    <hbox align="center">
+                                        <space width="319px"/>
+                                        <cell align="left" width="70px">
+                                            <label value="PERIODO : "/>
+                                        </cell>
+                                        <space width="5px"/>
+                                        <textbox id="txt_periodototal" placeholder="PRESIONE ENTER" disabled="true" maxlength="8" width="118px" tooltiptext="Define el Período de Planilla"/> 
+                                        <space width="5px"/>
+                                        <span class="colorRojo">
+                                            <label value="AAAAMMTP" />
+                                        </span>
+                                    </hbox>
+                                    <space height="20px"/>
+                                    <hbox align="center">
+                                        <space width="319px"/>
+                                        <cell align="left" width="70px">
+                                            <label value="SUCURSAL : "/>
+                                        </cell>
+                                        <space width="5px"/>
+                                        <combobox id="cb_sucursaltotal" width="120px" tooltiptext="Seleccione periodo" readonly="true" placeholder="-seleccione-">
+                                            <template name="model">
+                                                <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                            </template>
+                                        </combobox>
+                                        
+                                    </hbox>
+                                    <space height="20px"/>
+                                    <hbox align="center">
+                                        <space width="319px"/>
+                                        <cell align="left" width="80px">
+                                            <label value="AREA :"/>
+                                        </cell>
+                                        <textbox id="txt_codareatotal" maxlength="9"  placeholder="ENTER" width="80px" focus="false" tooltiptext="Código de Personal" style="text-align:center;"/>
+                                        <textbox id="txt_desareatotal" disabled="true" width="180px" focus="false" tooltiptext="Descripción de Personal"/>
+                                        <textbox id="txt_codarea1total" visible="false"/>
+                                    </hbox>
+                                    <space height="20px"/>
+                                    <groupbox>
+                                        <caption label="Seleccione una opcion para visualizar impresion :"/>
+                                        <div id="div_01total" align="center">
+                                            <hbox align="center">
+                                                <radiogroup Id="rg_tiporeptotal">
+                                                    <radio label="TODOS" value="1"/>
+                                                    <space width="66px"/>
+                                                    <radio label="NORMAL" value="2"/>
+                                                    <space width="66px"/>
+                                                    <radio label="VACACIONES" value="3"/>
+                                                </radiogroup>
+                                            </hbox>
+                                        </div>  
+                                    </groupbox>                             
+                                    
+                                    
+                               
+                                    
+                                </groupbox>
+                            </tabpanel>
+                        
+                        </tabpanels>
+                        
+                    </tabbox>     
+                </window>
+            </div>  
+        </center> 
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>              
+</zk>
+

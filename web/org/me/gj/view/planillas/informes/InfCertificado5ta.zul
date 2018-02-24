@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center> 
+            <div width="100%" sclass="cuerpo-main">
+                <window id="w_cert5ta" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                    <tabbox id="tabbox_cert5ta"  apply="">
+                        <tabs>
+                            <tab id="tab_cert5ta" label="CERTIFICADO DE RETENCIONES DE QUINTA CATEGORIA"/>
+                        </tabs>
+                        
+                        <tabpanels>
+                            <tabpanel>
+                                
+                                <groupbox width="987px" open="true" closable="false" style="text: center;">
+                                    <space height="30px"/>
+                                    <hbox align="left">
+                                        <space width="178px"/>
+                                        <cell align="left" valign="center">
+                                            <label value="PERIODO :"/>
+                                        </cell>
+                                        <space width="15px"/>
+                                        <textbox id="txt_periodo" disabled="true" maxlength="6" width="80px" tooltiptext="Define el Período de Pago Máximo 6 caracteres"/> 
+                                        <space width="5px"/>
+                                        <span class="colorRojo">
+                                            <label value="AAAAMMTP" />
+                                        </span>
+                                    </hbox>
+                                    
+                                    <space height="20px"/>
+                                    
+                                    <div id="div_01" align="center">
+                                        <hbox align="center">
+                                            <cell align="left" valign="center">
+                                                <label value="PERSONAL :"/>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <textbox id="txt_codper" maxlength="5" readonly="false" width="35px" focus="false" tooltiptext="Código de Personal" style="text-align: center;"/>
+                                            <textbox id="txt_desper" maxlength="5" readonly="true" width="350px" focus="false" disabled="true" tooltiptext="Descripcion de Personal" />
+                                            <space width="10px"/>
+                                            <cell align="left" valign="center">
+                                                <label value="FECHA :"/>
+                                            </cell>
+                                            <datebox id="db_fecha" maxlength="10" readonly="true" width="85px" disabled="false" format="dd/MM/yy" style="text-align: center;" />
+                                        </hbox>
+                                    </div>
+                                    
+                                    <space height="20px"/>
+                                    
+                                    <div id="div_03" align="center">
+                                        <hbox align="left">
+                                            <button id="btn_aceptar" label="Aceptar" sclass="botones"/>
+                                        </hbox>
+                                    </div>
+                                    
+                                    <space height="30px"/>
+                                    
+                                </groupbox>
+                                
+                            </tabpanel>
+                        </tabpanels>     
+                                            
+                    </tabbox>
+                </window>
+            </div>  
+        </center> 
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>              
+</zk>
+

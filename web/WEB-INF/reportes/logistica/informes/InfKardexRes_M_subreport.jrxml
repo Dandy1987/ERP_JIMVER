@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InfKardexRes_M_subreport" language="groovy" pageWidth="1060" pageHeight="636" columnWidth="1060" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="66886693-0d63-4202-88b5-c0ee37b29dc1">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="MAC" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="KAR_KEY" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select t1.*,t.pro_undpre pro_undpre,round(round(t1.cante*t.pro_undpre,0)/t.pro_undpre,0) cante_e,mod(round(t1.cante*t.pro_undpre,0),t.pro_undpre) cante_f,round(round(t1.cants*t.pro_undpre,0)/t.pro_undpre,0) cants_e,mod(round(t1.cants*t.pro_undpre,0),t.pro_undpre) cants_f from tkardex_cab t, tkardex_det t1
+where t.emp_id=t1.emp_id and t.suc_id=t1.suc_id and t.kar_key=t1.kar_key and t1.kar_key=$P{KAR_KEY} and t1.det_mac=$P{MAC} order by t.emp_id,t.suc_id,t1.kar_item]]>
+	</queryString>
+	<field name="EMP_ID" class="java.math.BigDecimal"/>
+	<field name="SUC_ID" class="java.math.BigDecimal"/>
+	<field name="KAR_KEY" class="java.math.BigDecimal"/>
+	<field name="KAR_ITEM" class="java.math.BigDecimal"/>
+	<field name="FECHA" class="java.sql.Timestamp"/>
+	<field name="HORA" class="java.lang.String"/>
+	<field name="NES_TIP" class="java.lang.String"/>
+	<field name="NES_DES" class="java.lang.String"/>
+	<field name="NES_NRO" class="java.lang.String"/>
+	<field name="TIP_MOV" class="java.lang.String"/>
+	<field name="TIP_DOC" class="java.lang.String"/>
+	<field name="NRO_DOC" class="java.lang.String"/>
+	<field name="CLI_ID" class="java.lang.String"/>
+	<field name="CLI_RAZSOC" class="java.lang.String"/>
+	<field name="CANTE" class="java.math.BigDecimal"/>
+	<field name="CSTINIE" class="java.math.BigDecimal"/>
+	<field name="CSTUNIE" class="java.math.BigDecimal"/>
+	<field name="CANTS" class="java.math.BigDecimal"/>
+	<field name="CSTINIS" class="java.math.BigDecimal"/>
+	<field name="CSTUNIS" class="java.math.BigDecimal"/>
+	<field name="CANTTOT" class="java.math.BigDecimal"/>
+	<field name="CSTTOT" class="java.math.BigDecimal"/>
+	<field name="CSTUNITOT" class="java.math.BigDecimal"/>
+	<field name="DET_MAC" class="java.lang.String"/>
+	<field name="PRO_UNDPRE" class="java.math.BigDecimal"/>
+	<field name="CANTE_E" class="java.math.BigDecimal"/>
+	<field name="CANTE_F" class="java.math.BigDecimal"/>
+	<field name="CANTS_E" class="java.math.BigDecimal"/>
+	<field name="CANTS_F" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement uuid="fcceb616-42db-491c-a9b5-84f9e3437450" x="19" y="0" width="43" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NES_TIP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="30fb5d70-17be-4024-be5e-8d9d195c1c39" x="701" y="0" width="85" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTS_E}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="27a44e7a-ea17-4665-bfa1-d38cff5475d6" x="439" y="0" width="85" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTE_F}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="580503ad-ff02-4582-a39c-fbc239957632" x="62" y="0" width="234" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NES_DES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1ebca70b-64b1-47a0-a743-b79f1f7b4bf9" x="354" y="0" width="85" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTE_E}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="91210b63-3901-4ec3-9bce-7cce5c4b6ea6" x="786" y="0" width="85" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CANTS_F}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

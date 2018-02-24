@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_movimiento" title="BUSQUEDA DE PERSONAL ACTIVO" border="normal" width="510px"
+            apply="org.me.gj.controller.componentes.ControllerLovInformesMovimiento"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="PERSONAL :" />
+                </cell>
+                <textbox id="txt_busqueda_per" value="%%" width="335px" focus="true" maxlength="80" tooltiptext="Ingrese codigo de Personal"/>
+            </hbox>
+            <listbox id="lst_movimiento" mold="paging" pageSize="13" width="495px">
+                <listhead>
+                    <listheader label="ID" width="90px" align="center"/>
+                    <listheader label="PERSONAL" width="240px" align="center"/>
+                    <listheader label="SUCURSAL" width="130px" align="center"/>
+                    <listheader width="25px">
+                        <checkbox id="chk_selecAll"/>
+                    </listheader>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.plidper}" style="text-align:center"/>
+                        <listcell label="${each.pldesper}" style="text-align:left;"/>
+                        <listcell label="${each.suc_id_des}" style="text-align:left"/>                         
+                       <listcell>
+                            <checkbox forward="onCheck=lst_movimiento.onSeleccion"  checked="${each.valSelec}"/>
+                        </listcell>                    
+                    </listitem>
+                </template>
+            </listbox>
+            <button label="ACEPTAR" id="btn_aceptar" sclass="botones"/>
+        </vlayout>
+    </window>
+</zk>

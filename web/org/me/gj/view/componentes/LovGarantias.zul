@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_garantia" title="MANTENIMIENTO DE GARANTIAS" border="normal" width="600px"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp"
+            apply="org.me.gj.controller.componentes.ControllerLovGarantias">
+        <grid width="600px">
+            <columns>
+                <column width="100px"/>
+                <column width="200px"/>
+                <column width="100px"/>
+                <column width="200px"/>
+            </columns>
+            <rows>
+                <row>
+                    <cell align="right" valign="botton">
+                        <label value="GARANTIA:"/>
+                    </cell>
+                    <combobox id="cb_gar_garantia" readonly="true" placeholder="---seleccione Opcion----" tooltiptext="Seleccione una Opcion" width="150px">
+                        <comboitem value="1" label="AVAL"/>
+                        <comboitem value="2" label="HIPOTECA"/>
+                        <comboitem value="3" label="LETRA"/>
+                        <comboitem value="4" label="OTROS"/>
+                        <comboitem value="5" label="PAGARE"/>
+                    </combobox>
+                    <cell align="right" valign="botton">
+                        <label value="MONTO:"/>
+                    </cell>
+                    <longbox id="txt_gar_monto" maxlength="11" width="145px" tooltiptext="Monto de Garantia, maximo 11 caracteres" />          
+                </row>
+                <row>
+                    <cell align="right" valign="botton">
+                        <label value="OBSERVACION:"/>
+                    </cell>
+                    <cell colspan="3">
+                        <textbox id="txt_gar_obs" maxlength="60" width="445px" tooltiptext="Observacion de Garantia, maximo 60 caracteres" /> 
+                    </cell>         
+                </row>
+                <row>
+                    <cell align="right" valign="botton">
+                    </cell>
+                    <cell valign="botton">
+                        <button id="btn_aceptar" label="Aceptar" sclass="botones" width="70px"/>
+                        <button id="btn_cancelar" label="Cancelar" sclass="botones" width="70px"/>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+    </window>
+    
+</zk>

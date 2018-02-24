@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuDistribucion.zul"/>
+        </north>
+        <center> 
+            <div width="100%" sclass="cuerpo-main">
+                <window id="w_manrepartidores" ctrlKeys="#f2#f4#f7#f10#f9#f8" width="100%" height="100%" border="none" closable="true">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)"  />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar (F4)" />                 
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png"  tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png"  tooltiptext="Imprimir (F8)"  />             
+                        <label value="MANTENIMIENTO DE REPARTIDOR" sclass="titulo_mant" style="margin-left:229px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_repartidores" apply="org.me.gj.controller.distribucion.mantenimiento.ControllerRepartidor">
+                        <tabs  >
+                            <tab id="tab_listarepartidores" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                               <attribute name="onSelect">
+                                    if (lst_repartidor.getSelectedIndex() == -1)
+                                    {
+                                    tab_listarepartidores.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <!-- Para el Listado -->
+                            <tabpanel>
+                                <groupbox width="985px" closable="false">
+                                    <caption label="Opciones de Busqueda"/>
+                                     <hbox align="center">
+                                         <space width="10px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO :"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true"  tooltiptext="Seleccione una Opcion">
+                                            <comboitem label=" "/>
+                                            <comboitem label="CODIGO"/>
+                                            <comboitem label="APELLIDOS Y NOMBRES"/>
+                                            <comboitem label="DNI"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <separator/>
+                                        <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                        <space width="10px"/>
+                                        <cell align="right" valign="botton">
+                                            <label value="ESTADO :" id="lbl_estado"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busest" readonly="true" tooltiptext="Seleccione una Opcion" width="110px">
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+                                        <space width="10px"/>
+                                        <button id="btn_buscar" sclass="botones" label="Consultar" tooltiptext="Buscar" />  
+                                    </hbox>
+                                </groupbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_repartidor"  mold="paging" pageSize="18" width="985px" height="457px">
+                                    <listhead>
+                                        <listheader label="CODIGO" width="60px" align="center"/>
+                                        <listheader label="APELLIDOS Y NOMBRES" width="320px"/>
+                                        <listheader label="DIRECCION"/>
+                                        <listheader label="TELEFONO" width="80px" align="center"/>
+                                        <listheader label="DNI" width="80px" align="center"/>
+                                        <listheader label="EST" width="25px"/>
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.rep_id}"/>
+                                            <listcell label="${each.s_nomcompleto}"/>
+                                            <listcell label="${each.rep_direcc}"/>
+                                            <listcell label="${each.rep_telef}"/>
+                                            <listcell label="${each.rep_dni}"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="10"  readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador del Repartidor"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creacion del Repartidor"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modifico del Repartidor"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificacion del Repartidor"/>    
+                                </hbox>
+                            </tabpanel> 
+                            <!-- Para el Mantenimiento -->
+                            <tabpanel>
+                                <div >
+                                    <grid width="980px">
+                                            <columns>
+                                                <column width="106px"/>
+                                                <column width="200px"/>
+                                                <column width="115px"/>
+                                                <column width="200px"/>
+                                                <column width="110px"/>
+                                                <column width="240px"/>
+                                            </columns>
+                                        <rows>
+                                            <row>                 
+                                                <cell align="right" valign="botton">
+                                                    <label value="ID:"/>
+                                                </cell>
+                                                <textbox id="txt_repid" disabled="true" tooltiptext="Define el Codigo del repartidor, Maximo 4 digitos "/>                                    
+                                                <cell align="right" valign="botton">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_repest" disabled="true" checked="true" label="ACTIVO" tooltiptext="Define el Estado del repartidor">
+                                                    <attribute name="onCheck">
+                                                        if(chk_repest.isChecked())
+                                                        chk_repest.setLabel("ACTIVO");
+                                                        else
+                                                        chk_repest.setLabel("INACTIVO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="APE.PATERNO: "/>
+                                                    <span class="colorRojo">*</span>	
+                                                </cell>
+                                                <textbox id="txt_repapepat" disabled="true" maxlength="20" width="180px" tooltiptext="Define el apellido paterno del repartidor, Maximo 20 caracteres"/>
+                                                 <cell align="right" valign="botton">
+                                                    <label value="APE.MATERNO: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_repapemat" disabled="true" maxlength="20" width="180px" tooltiptext="Define el apellido materno del repartidor, Maximo 20 caracteres"/>
+                                            
+                                             	<cell align="right" valign="botton">
+                                                    <label value="NOMBRE: "/>
+                                                    <span class="colorRojo">*</span>	
+                                                </cell>
+                                                <textbox id="txt_repnom" disabled="true" maxlength="20" width="180px" tooltiptext="Define el nombre del repartidor, Maximo 20 caracteres"/>
+                                            </row>                                            
+                                            <row>                                            	
+                                                <cell align="right" valign="botton">
+                                                    <label value="DIRECCION:"/>
+                                                     <span class="colorRojo">*</span>	
+                                                </cell>
+                                                <cell colspan="6">
+                                                <textbox id="txt_repdirecc" disabled="true" maxlength="50" width="805px" tooltiptext="Define la direccion de vivienda del repartidor, Maximo 50 caracteres"/>
+                                            </cell>
+                                            </row>
+                                            <row>    
+                                             <cell align="right" valign="botton">
+                                                    <label value="DNI:"/>
+                                                    <span class="colorRojo">*</span>	
+                                                </cell>
+                                                <textbox id="txt_repdni" disabled="true" maxlength="8" width="180px" tooltiptext="Define el DNI del repartidor, Maximo 8 caracteres"/>
+                                                                                        	
+                                            	 <cell align="right" valign="botton">
+	                                                <label value="FEC. NAC:"/>
+	                                                  <span class="colorRojo">*</span>	
+	                                             </cell>
+	                                             <datebox id="dt_repfecnac" disabled="true" maxlength="10" format="dd/MM/yyyy" tooltiptext="Define la fecha de nacimiento del repartidor"/>
+	                        
+                                             	<cell align="right" valign="botton">
+                                                    <label value="TELEFONO :"/>
+                                                    <span class="colorRojo">*</span>	
+                                                </cell>
+                                                <textbox id="txt_reptelef" disabled="true" maxlength="9" width="180px" tooltiptext="Define el telefono del repartidor, Maximo 9 caracteres"/>
+
+                                           </row>
+                                        </rows>
+                                    </grid>
+                                </div>
+                            </tabpanel>     
+                        </tabpanels>
+                    </tabbox>   
+                </window>
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

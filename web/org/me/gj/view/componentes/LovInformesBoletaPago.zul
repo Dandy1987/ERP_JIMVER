@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+     <!--<window id="w_lov_movimiento" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">-->
+   <window id="w_lov_movimiento" title="BUSQUEDA DE PERSONAL" border="normal" width="600px"
+            apply="org.me.gj.controller.componentes.ControllerLovInformesBoletaPago"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+               <!-- <toolbar id="tb_transacciones"  width="99.75%">
+                         <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)"/>            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" disabled="true" tooltiptext="Guardar (F10)" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" disabled="true" tooltiptext="Deshacer (F9)"/>
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)"/>   
+                        <label value="CONCEPTOS DE PERSONAL" sclass="titulo_mant" style="margin-left:225px;"/>
+                    </toolbar> -->  
+       <!-- <tabbox id="tabbox_movlinea" apply="org.me.gj.controller.componentes.ControllerLovInformesBoletaPago">-->
+         <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="PERSONAL :" />
+                </cell>
+                <textbox id="txt_busqueda_per" value="%%" width="335px" focus="true" maxlength="80" tooltiptext="Ingrese codigo de Personal"/>
+            </hbox>
+            <listbox id="lst_movimiento" mold="paging" pageSize="13" width="560px">
+                <listhead>
+                    <listheader label="ID" width="90px" align="center"/>
+                    <listheader label="PERSONAL" width="240px" align="center"/>
+                    <listheader label="SUCURSAL" width="80px" align="center"/>
+                    <listheader label="AREA" width="120px" align="center"/>
+                    <listheader width="25px">
+                        <checkbox id="chk_selecAll"/>
+                    </listheader>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.plidper}" style="text-align:center"/>
+                        <listcell label="${each.pldesper}" style="text-align:left;"/>
+                        <listcell label="${each.suc_id_des}" style="text-align:left"/>     
+                         <listcell label="${each.plarea_des}" style="text-align:left"/>                      
+                       <listcell>
+                            <checkbox forward="onCheck=lst_movimiento.onSeleccion"  checked="${each.valSelec}"/>
+                        </listcell>                    
+                    </listitem>
+                </template>
+            </listbox>
+            <button label="ACEPTAR" id="btn_aceptar" sclass="botones"/>
+       </vlayout>
+       <!-- </tabbox>-->
+    </window>
+</zk>

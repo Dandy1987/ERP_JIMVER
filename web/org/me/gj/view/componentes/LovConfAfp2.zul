@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_Conf2" title="BUSQUEDA DE CONCEPTOS POR DESCRIPCIÓN" border="normal" width="438px"
+            apply="org.me.gj.controller.componentes.ControllerLovConAfp2"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="CONCEPTO :" />
+                </cell>
+                <textbox id="txt_busqueda_2" value="%%" width="335px" focus="true" maxlength="80" tooltiptext="Ingrese el Regimen Pensionario"/>
+            </hbox>
+            <listbox id="lst_Conf2" mold="paging" pageSize="13" width="410px">
+                <listhead>
+                    <listheader label="ID" width="50px" align="center"/>
+                    <listheader label="DESCRIPCION "/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.concep_id}"/>
+                        <listcell label="${each.concep_des}"/>                        
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk>

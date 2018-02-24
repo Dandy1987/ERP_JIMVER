@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<?page id="Man-Sup"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuFacturacion.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_mansup" ctrlKeys="#f2#f4#f7#f10#f9#f8" width="100%" height="100%" border="none" closable="true">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)"  />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar (F4)" />                 
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png"  tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png"  tooltiptext="Imprimir (F8)"  />             
+                        <label value="MANTENIMIENTO DE SUPERVISORES" sclass="titulo_mant" style="margin-left:229px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_supervisores" ctrlKeys="#f2#f4#f7#f10#f9#f8" apply="org.me.gj.controller.facturacion.mantenimiento.ControllerSupervisores">
+                        <tabs  >
+                            <tab id="tab_listasupervisores" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_sup.getSelectedIndex() == -1)
+                                    {
+                                    tab_listasupervisores.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <!-- Para el Listado -->
+                            <tabpanel>
+                                <groupbox width="985px" closable="false">
+                                    <caption label="Opciones de Busqueda"/>
+                                     <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true"  tooltiptext="Seleccione una Opcion">
+                                            <comboitem label=" "/>
+                                            <comboitem label="ID"/>
+                                            <comboitem label="APELLIDOS Y NOMBRES"/>
+                                            <comboitem label="DNI"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <separator/>
+                                        <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                        <separator width="20px"/>
+                                        <cell align="right" valign="botton">
+                                            <label value="ESTADO:" id="lbl_estado"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busest" readonly="true" tooltiptext="Seleccione una Opción" width="110px">
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+                                        <separator width="20px"/>
+                                        <button id="tbbtn_btn_buscar" sclass="botones" label="Consultar" tooltiptext="Buscar" />            
+                                    </hbox>
+                                </groupbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_sup"  mold="paging" pageSize="18" width="985px" height="460px">
+                                    <listhead>
+                                        <listheader label="ID" width="40px" align="center"/>
+                                        <listheader label="APELLIDOS Y NOMBRES" width="360px"/>                  
+                                        <listheader label="DNI" width="70px" align="center"/>
+                                        <listheader label="TELEFONO FIJO" width="90px" align="center"/>
+                                        <listheader label="DIRECCION" width="400px"/>                                     
+                                        <listheader label="EST" width="25px"/>                                  
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.sup_id}"/>
+                                            <listcell label="${each.sup_apenom}"/>
+                                            <listcell label="${each.sup_dni}"/>
+                                            <listcell label="${each.sup_telf}"/>
+                                            <listcell label="${each.sup_direcc}"/>  
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="10"  readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador del Supervisor"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación del Supervisor"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó del Supervisor"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación del Supervisor"/>    
+                                </hbox>
+                            </tabpanel> 
+                            <!-- Para el Mantenimiento -->
+                            <tabpanel>
+                                <div >
+                                    <grid width="980px">
+                                        <columns>
+                                            <column width="130px"/>
+                                            <column width="340px"/>
+                                            <column width="80px"/>
+                                            <column width="390px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>                 
+                                                <cell align="right" valign="botton">
+                                                    <label value="ID:"/>
+                                                </cell>
+                                                <textbox id="txt_supid" disabled="true" tooltiptext="Define el Codigo del supervisor, Maximo 4 digitos "/>                                    
+                                                <cell align="right" valign="botton">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_supest" disabled="true" checked="true" label="ACTIVO" tooltiptext="Define el Estado del supervisor">
+                                                    <attribute name="onCheck">
+                                                        if(chk_supest.isChecked())
+                                                        chk_supest.setLabel("ACTIVO");
+                                                        else
+                                                        chk_supest.setLabel("INACTIVO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="APELLIDOS NOMBRES:"/>
+                                                    <span class="colorRojo">*</span> 
+                                                </cell>
+                                                <textbox id="txt_supapenom" disabled="true" maxlength="40" width="300px" tooltiptext="Define el nombre y apellido del supervisor, Máximo 50 caracteres"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="IND. CIERRE:"/>
+                                                </cell>
+                                                <checkbox id="chk_flagcie" disabled="true" checked="true" label="ACTIVO" tooltiptext="Define el indicador de cierre el supervisor">
+                                                    <attribute name="onCheck">
+                                                        if(chk_flagcie.isChecked())
+                                                        chk_flagcie.setLabel("ACTIVO");
+                                                        else
+                                                        chk_flagcie.setLabel("INACTIVO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="DNI:"/>
+                                                    <span class="colorRojo">*</span> 
+                                                </cell>
+                                                <textbox id="txt_supdni" disabled="true" maxlength="8" width="225px" tooltiptext="Define el DNI del supervisor, Máximo 8 caracteres"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="DIRECCION:"/>
+                                                    <span class="colorRojo">*</span> 
+                                                </cell>
+                                                <textbox id="txt_supdirecc" disabled="true" maxlength="40" width="300px" tooltiptext="Define la direccion de vivienda del supervisor, Máximo 50 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="TELEFONO FIJO:"/>
+                                                </cell>
+                                                <longbox id="txt_suptelef" disabled="true" maxlength="9" tooltiptext="Define el telefono fijo del supervisor, Máximo 9 caracteres"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="TEL.MOVIL:"/>
+                                                </cell>
+                                                <longbox id="txt_supmovil" disabled="true" maxlength="9" tooltiptext="Define el telefono movil del supervisor, Máximo 9 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="FEC. NACIMIENTO:"/>
+                                                    <span class="colorRojo">*</span> 
+                                                </cell>
+                                                <datebox id="dt_supfecnac" disabled="true" maxlength="10" format="dd/MM/yyyy" tooltiptext="Define la fehca de nacimiento del supervisor"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="SUP. APOYO:"/>
+                                                </cell>
+                                                <hbox>
+                                                    <textbox id="txt_supidapo" maxlength="4"  width="58px" disabled="true" tooltiptext="Define el Codigo del supervisor que apoya, Maximo 4 digitos"/>
+                                                    <!-- descripcion auxiliar-->
+                                                    <textbox id="txt_supapenomapo" disabled="true" maxlength="50" width="300px" tooltiptext="Define el nombre y apellido del supervisor que sera apoyado, Máximo 50 caracteres"/>
+                                                </hbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="REPORTE:"/>
+                                                </cell>
+                                                <textbox id="txt_supnomrep" disabled="true" width="200px" maxlength="30" tooltiptext="Define nombre del reporte de supervisor, Máximo 30 caracteres"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ORDEN:"/>
+                                                </cell>
+                                                <spinner id="sp_supord" value="0" disabled="true" constraint="min 0; max 999" maxlength="3" tooltiptext="Define el orden del supervisor"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="CODIGO WAP:"/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_suppssw" type="password" disabled="true" maxlength="15" tooltiptext="Define el codigo de ingreso al wap para un Supervisor, Máximo 15 caracteres"/>
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                </div>
+                            </tabpanel>     
+                        </tabpanels>
+                    </tabbox>   
+                </window>
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

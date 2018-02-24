@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Report_DescansoMedico" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7ccdc249-f64d-4a2a-bfdf-822b4bc0bc55">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="empresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="periodo" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ccodemp" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ctipodescanso" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString language="plsql">
+		<![CDATA[{call codijisa.pack_tpersonal.p_reportDMedico($P{empresa},$P{periodo},$P{ccodemp},$P{ctipodescanso},$P{ORACLE_REF_CURSOR})}]]>
+	</queryString>
+	<field name="CODIGO" class="java.lang.String"/>
+	<field name="ENERO" class="java.lang.String"/>
+	<field name="FEBRERO" class="java.lang.String"/>
+	<field name="MARZO" class="java.lang.String"/>
+	<field name="ABRIL" class="java.lang.String"/>
+	<field name="MAYO" class="java.lang.String"/>
+	<field name="JUNIO" class="java.lang.String"/>
+	<field name="JULIO" class="java.lang.String"/>
+	<field name="AGOSTO" class="java.lang.String"/>
+	<field name="SEPTIEMBRE" class="java.lang.String"/>
+	<field name="OCTUBRE" class="java.lang.String"/>
+	<field name="NOVIEMBRE" class="java.lang.String"/>
+	<field name="DICIEMBRE" class="java.lang.String"/>
+	<field name="TOTAL_DIAS" class="java.lang.String"/>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<title>
+		<band height="71" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="278c5a07-fcfa-4fad-b6d9-1d345ebb0805" x="0" y="1" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<text><![CDATA[REPORTE DESCANSO MEDICO]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement uuid="e7e43467-1f96-4e0e-b9bf-db24e65560a2" x="292" y="21" width="263" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="938d3d0c-6ff4-42df-bb9c-c379f887f04a" x="0" y="21" width="292" height="20"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="16a048bf-8494-4961-a1fa-a551008aea13" x="0" y="50" width="52" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b37a5926-a4dd-46ce-859d-8a1f00eefe4a" mode="Opaque" x="188" y="50" width="26" height="20" backcolor="#FFFF33"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[ENE.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4fd9aca1-f41e-4a44-b991-046017df60f0" mode="Opaque" x="214" y="50" width="26" height="20" forecolor="#000000" backcolor="#FF9900"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[FEB.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="cc18285b-fe46-4706-a06f-e21ec1c01eca" mode="Opaque" x="240" y="50" width="26" height="20" backcolor="#FF0000"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[MAR.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ed7f4df9-651f-4692-bc46-c0d198da8b19" mode="Opaque" x="266" y="50" width="26" height="20" backcolor="#666600"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[ABR.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="10f40414-95e4-4112-a5c3-83683238acea" mode="Opaque" x="292" y="50" width="26" height="20" backcolor="#00FFCC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[MAY.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c4ef2ed8-4aa5-475d-b7c4-11cc78927d72" mode="Opaque" x="318" y="50" width="26" height="20" backcolor="#0033FF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[JUN.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ed1a9e7b-61df-412b-9995-8f9df4b11572" mode="Opaque" x="344" y="50" width="26" height="20" backcolor="#999999"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[JUL.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ef7b48c9-a515-413e-9470-0445d3a6321e" mode="Opaque" x="370" y="50" width="26" height="20" backcolor="#CCFFCC"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[AGO.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4eeeee6a-ff01-41e1-ba59-f661efc65847" mode="Opaque" x="396" y="50" width="26" height="20" backcolor="#FF9966"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[SEP.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4d3de6a8-049c-4239-936b-5a91cde05579" mode="Opaque" x="422" y="50" width="26" height="20" backcolor="#33CCFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[OCT.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="909624b9-883a-41cd-9968-52fa0765dd6c" mode="Opaque" x="448" y="50" width="26" height="20" backcolor="#9900FF"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[NOV.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="71641fc5-5221-4d9b-aa21-c75adbb405d0" mode="Opaque" x="474" y="50" width="26" height="20" backcolor="#CCFF00"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[DIC.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a0ba2d66-5676-4ed2-94b6-e2c74719db5e" x="500" y="50" width="55" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<text><![CDATA[TOTAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="554dddf7-4923-4cb2-b4a4-0e3f3cd894b5" x="52" y="50" width="136" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[NOMBRE]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="dd1e6988-8449-4044-8e18-c37787d71a68" x="0" y="70" width="555" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="dd1e6988-8449-4044-8e18-c37787d71a68" x="0" y="49" width="555" height="1"/>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="7fdaad69-a17d-4af7-a438-98c51f0195e7" x="0" y="0" width="52" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CODIGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f3a326d9-5c23-4f43-bbf4-35873e164228" x="188" y="0" width="26" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ENERO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="471a2331-36df-4d3e-8bd2-d2dacf795780" x="214" y="0" width="26" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FEBRERO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8cf9e634-39b2-4202-b23c-c4fe8cc88d65" x="240" y="0" width="26" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{MARZO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cd2f6828-421c-4e9d-80bc-b4f2660b0877" x="266" y="0" width="26" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ABRIL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4cdef6c6-329a-4606-ac16-bef6cff66832" x="292" y="0" width="26" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{MAYO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b62e5f7d-7751-402b-b4e4-694343ccf0c2" x="318" y="0" width="26" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JUNIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="965fa7b3-f0a0-40a1-bf34-b5e96038d458" x="344" y="0" width="26" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{JULIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1080f469-bc80-4cfb-ab41-2161036c2cce" x="370" y="0" width="26" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{AGOSTO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3fd19542-fb86-4a01-83c1-2eaec8e731b9" x="396" y="0" width="26" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{SEPTIEMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d1b0b5c7-117e-49f3-87d4-a50e888bc304" x="422" y="0" width="26" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{OCTUBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="12dea913-842a-4f0a-a72b-afb1f3eefda8" x="448" y="0" width="26" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOVIEMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="391e382d-33d7-4a00-9564-996ad730d0b9" x="474" y="0" width="26" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{DICIEMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c1ccafa1-c8a4-4623-83ac-f05d77c13f50" x="500" y="0" width="55" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TOTAL_DIAS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8ad701c1-7e55-40ba-a603-31a8da195f5e" x="52" y="0" width="136" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

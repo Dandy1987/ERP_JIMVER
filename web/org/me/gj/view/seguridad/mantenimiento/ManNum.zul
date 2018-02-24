@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicialSeguridad"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/MenuAdm.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_mangui" width="100%" height="100%" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" disabled="true" />            
+                        <label value="MANTENIMIENTO DE NUMERACIONES" sclass="titulo_mant" style="margin-left:247px;"/>
+                    </toolbar>               
+                    <tabbox id="tabbox_numeracion" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerNumeracion">
+                        <tabs  >
+                            <tab id="tab_listanumeracion" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_numeracion.getSelectedIndex() == -1)
+                                    {
+                                    tab_listanumeracion.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="987px" open="true" closable="false">
+                                    <caption label="Opciones de Busqueda"/>   
+                                    <hbox>
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una Opcion">
+                                            <comboitem label=" "/>
+                                            <comboitem label="ID NUM."/>
+                                            <comboitem label="NUMERACION"/>
+                                            <comboitem label="ID GUIA"/>
+                                            <comboitem label="GUIA"/>
+                                            <comboitem label="SERIE"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <separator/>
+                                        <textbox id="txt_busqueda" width="400px" value="%%" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                        <space width="2px"/>
+                                        <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una Opción" width="110px">
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+                                        <space width="10px"/>
+                                        <button id="btn_buscar" label="Buscar" sclass="botones"/>
+                                    </hbox>
+                                </groupbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_numeracion" mold="paging" pageSize="20" width="985px" height="490px">
+                                    <listhead>
+                                        <listheader label="ID NUM." width="50px"/>
+                                        <listheader label="SERIE" width="70px"/>
+                                        <listheader label="NUMERACION"/>
+                                        <listheader label="CORRELATIVO" width="90px"/>
+                                        <listheader label="ID GUIA" width="90px"/>
+                                        <listheader label="GUIA" width="280px"/>
+                                        <listheader label="EST" width="30px"/>
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.num_id}"/>
+                                            <listcell label="${each.num_ser}"/>
+                                            <listcell label="${each.num_des}"/>
+                                            <listcell label="${each.num_cor}"/>
+                                            <listcell label="${each.num_gui}"/>
+                                            <listcell label="${each.num_guides}"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                            </tabpanel> 
+                            <tabpanel>
+                                <div >
+                                    <grid width="900px">
+                                        <columns>
+                                            <column width="120px"/>
+                                            <column width="320px"/>
+                                            <column width="120px"/>
+                                            <column width="320px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ELIJA UNA OPCION:"/>
+                                                </cell>
+                                                <radiogroup id="rb_grupo">
+                                                    <radio label="Numeracion" id="rb_numeracion" checked="true" disabled="true"/>
+                                                    <radio label="Serie" id="rb_serie" disabled="true" />
+                                                </radiogroup> 
+                                                <cell align="right" valign="botton">
+                                                    <label value="CODIGO"/>
+                                                </cell>
+                                                <intbox id="txt_numid" disabled="true" maxlength="4" tooltiptext="Define el código de la numeracion, máximo 4 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="EMPRESA:"/>
+                                                </cell>
+                                                <combobox id="cb_empresa" disabled="true" readonly="true" width="300px" tooltiptext="Define la empresa" >
+                                                    <template name="model">
+                                                        <comboitem label="${each.emp_des}" value="${each.emp_id}"/>
+                                                    </template>
+                                                </combobox>
+                                                <cell align="right" valign="botton">
+                                                    <label value="SUCURSAL:"/>
+                                                </cell>
+                                                <combobox id="cb_sucursal" disabled="true" readonly="true" width="300px" tooltiptext="Define la sucursal" >
+                                                    <template name="model">
+                                                        <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                                    </template>
+                                                </combobox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="DESCRIPCIÓN:"/>
+                                                </cell>
+                                                <textbox id="txt_descripcion" disabled="true" maxlength="80" width="300px" tooltiptext="Define la descripción de la numeración, máximo 80 caracteres"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_estado" checked="true" label="ACTIVO" disabled="true" tooltiptext="Define el estado de la numeración">
+                                                    <attribute name="onCheck">
+                                                        chk_estado.setLabel(chk_estado.isChecked()?"ACTIVO":"INACTIVO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="TIPO"/>
+                                                </cell>
+                                                <combobox id="cb_tipo" disabled="true" readonly="true" width="300px" tooltiptext="Define de módulo al que pertenece la numeracion" >
+                                                    <comboitem label="LOGISTICA" value="L"/>
+                                                    <comboitem label="CUENTAS POR COBRAR" value="X"/>
+                                                    <comboitem label="DISTRIBUCION" value="D"/>
+                                                    <comboitem label="FACTURACION" value="F"/>
+                                                    <comboitem label="CUENTAS POR PAGAR" value="P"/>
+                                                    <comboitem label="BANCOS" value="B"/>
+                                                    <comboitem label="CAJA" value="C"/>
+                                                    <comboitem label="CONTABILIDAD" value="O"/>
+                                                    <comboitem label="PLANILLAS" value="A"/>
+                                                    <comboitem label="SEGURIDAD" value="S"/>
+                                                    <comboitem label="FINANZAS" value="Z"/>
+                                                    <comboitem label="ESTADISTICAS" value="E"/>
+                                                </combobox>
+                                                <cell align="right" valign="botton">
+                                                    <label value="CORRELATIVO:"/>
+                                                </cell>
+                                                <intbox id="txt_correlativo" disabled="true" maxlength="9" tooltiptext="Define el correlativo, máximo 9 caracteres"/>
+                                            </row>
+                                            <!--DATOS UNICOS SOLO PARA NUMERACIO DE SERIES-->
+                                            <row>
+                                                <cell id="c_ser" align="right" valign="botton" visible="false">
+                                                    <label value="Nº SERIE:"/>
+                                                </cell>
+                                                <intbox id="txt_numserie" visible="false" disabled="true" maxlength="3" tooltiptext="Define el número de serie, máximo 3 caracteres"/>
+                                                <cell  id="c_gui" align="right" valign="botton" visible="false">
+                                                    <label value="GUIA:"/>
+                                                </cell>
+                                                <combobox id="cb_codigo" visible="false" disabled="true" readonly="true" width="300px" tooltiptext="Define la guía">
+                                                    <template name="model">
+                                                        <comboitem label="${each.desGui}" value="${each.idGui}"/>
+                                                    </template>
+                                                </combobox>
+                                            </row>
+                                            <row>
+                                                <cell id="c_tipgui" align="right" valign="botton" visible="false">
+                                                    <label value="TIPO GUIA:"/>
+                                                </cell>
+                                                <combobox id="cb_tipguia" visible="false" disabled="true" readonly="true" selectedIndex="-1" tooltiptext="Define el tipo de guía">
+                                                    <comboitem label="GUIA DE VENTA" value="S"/>
+                                                    <comboitem label="NO VENTA" value="N"/>
+                                                </combobox>
+                                                <cell id="c_relgui" align="right" valign="botton" visible="false">
+                                                    <label value="RELACION GUIA:"/>
+                                                </cell>
+                                                <combobox id="cb_cliprov" visible="false" disabled="true" readonly="true" width="300px" tooltiptext="Define la relación de guía">
+                                                    <template name="model">
+                                                        <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                    </template>
+                                                </combobox> 
+                                            </row>
+                                            <row>
+                                                <cell id="c_salalm" align="right" valign="botton" visible="false" >
+                                                    <label value="SALIDA ALMACEN:"/>
+                                                </cell>
+                                                <combobox id="cb_salalm" visible="false" disabled="true"  readonly="true" selectedIndex="-1" tooltiptext="Define la salida de almacen">
+                                                    <comboitem label="" value=""/>
+                                                    <comboitem label="POR ALMACEN" value="U"/>
+                                                    <comboitem label="TODOS LOS ALMACENES" value="T"/>
+                                                </combobox>
+                                                <cell id="c_tipven" align="right" valign="botton" visible="false">
+                                                    <label value="TIPO DE VENTA:"/>
+                                                </cell>
+                                                <combobox id="cb_tipven" visible="false" disabled="true" readonly="true" width="300px" tooltiptext="Define el tipo de venta">
+                                                    <template name="model">
+                                                        <comboitem label="${each.desVen}" value="${each.idVen}"/>
+                                                    </template>
+                                                </combobox>
+                                            </row>
+                                            <row>
+                                                <cell id="c_comp" align="right" valign="botton" visible="false">
+                                                    <label value="GUIA COMPRA:"/>
+                                                </cell>
+                                                <checkbox id="chk_comp" visible="false" checked="true" label="SI" disabled="true" tooltiptext="Indicador que define la guía de compra">  
+                                                    <attribute name="onCheck">
+                                                        chk_comp.setLabel(chk_comp.isChecked()?"SI":"NO");
+                                                    </attribute>
+                                                </checkbox>
+                                                <cell id="c_cost" align="right" valign="botton" visible="false">
+                                                    <label value="COSTEO:"/>
+                                                </cell>
+                                                <checkbox id="chk_cost" visible="false" checked="true" label="SI" disabled="true" tooltiptext="Indicador que define costeo de numeración">
+                                                    <attribute name="onCheck">
+                                                        chk_cost.setLabel(chk_cost.isChecked()?"SI":"NO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell id="c_almori" align="right" valign="botton" visible="false">
+                                                    <label value="ALMACEN ORIGEN:"/>
+                                                </cell>
+                                                <combobox id="cb_almori" visible="false" disabled="true" readonly="true" width="300px" tooltiptext="Define el almacen de origen">
+                                                    <template name="model">
+                                                        <comboitem label="${each.alm_des}" value="${each.alm_key}"/>
+                                                    </template>
+                                                </combobox>
+                                                <cell id="c_almdes" align="right" valign="botton" visible="false">
+                                                    <label value="ALMACEN DESTINO:"/>
+                                                </cell>
+                                                <combobox id="cb_almdes" visible="false" disabled="true" readonly="true" width="300px" tooltiptext="Define el almacen destino">
+                                                    <template name="model">
+                                                        <comboitem label="${each.alm_des}" value="${each.alm_key}"/>
+                                                    </template>
+                                                </combobox>
+                                            </row>
+                                            <row>
+                                                <cell id="c_nomrep" align="right" valign="botton" visible="false">
+                                                    <label value="REPORTE:"/>
+                                                </cell>
+                                                <textbox id="txt_nomrep" visible="false" disabled="true" maxlength="25" tooltiptext="Define el nombre de reporte, máximo 25 caracteres"/>
+                                            </row>
+                                        </rows>                       
+                                    </grid>
+                                </div>
+                            </tabpanel>     
+                        </tabpanels>
+                    </tabbox>   
+                </window>
+            </div>
+    
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/modulos/PieSeguridad.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

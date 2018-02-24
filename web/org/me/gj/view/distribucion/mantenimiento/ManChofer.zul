@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuDistribucion.zul"/>
+        </north>
+        <center>
+            <div width="100%" sclass="cuerpo-main">
+                <window id="w_manchoferes" ctrlKeys="#f2#f4#f7#f10#f9#f8" width="100%" height="100%" border="none" closable="true">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)"  />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar (F4)" />                 
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png"  tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png"  tooltiptext="Imprimir (F8)"  />             
+                        <label value="MANTENIMIENTO DE CHOFERES" sclass="titulo_mant" style="margin-left:229px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_choferes" apply="org.me.gj.controller.distribucion.mantenimiento.ControllerChofer">
+                        <tabs  >
+                            <tab id="tab_listachoferes" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_chofer.getSelectedIndex() == -1)
+                                    {
+                                    tab_listachoferes.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <!-- Para el Listado -->
+                            <tabpanel>
+                                <groupbox width="985px" closable="false">
+                                    <caption label="Opciones de Busqueda"/>
+                                    <hbox align="center">
+                                        <space width="10px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO :"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true"  tooltiptext="Seleccione una Opcion">
+                                            <comboitem label=" "/>
+                                            <comboitem label="CODIGO"/>
+                                            <comboitem label="RAZON SOCIAL"/>
+                                            <comboitem label="DNI"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <separator/>
+                                        <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la búsqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                        <space width="10px"/>
+                                        <cell align="right" valign="botton">
+                                            <label value="ESTADO :" id="lbl_estado"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busest" readonly="true" tooltiptext="Seleccione una Opcion" width="110px">
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+                                        <separator width="10px"/>
+                                        <button id="btn_buscar" sclass="botones" label="Consultar" tooltiptext="Buscar" />  
+                                    </hbox>
+                                </groupbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_chofer"  mold="paging" pageSize="18" width="985px" height="457px">
+                                    <listhead>
+                                        <listheader label="CODIGO" width="60px" align="center"/>
+                                        <listheader label="RAZON SOCIAL" width="320px"/>
+                                        <listheader label="DIRECCION"/>
+                                        <listheader label="TELEFONO" width="80px" align="center"/>
+                                        <listheader label="RUC" width="90px" align="center"/>
+                                        <listheader label="EST" width="25px"/>                                  
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.chof_id}"/>
+                                            <listcell label="${each.chof_razsoc}"/>
+                                            <listcell label="${each.chof_direcc}"/>
+                                            <listcell label="${each.chof_telef}"/>
+                                            <listcell label="${each.chof_ruc}"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="10"  readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador del Chofer"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación del Chofer"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modifico al Chofer"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación del Chofer"/>    
+                                </hbox>
+                            </tabpanel> 
+                            <!-- Para el Mantenimiento -->
+                            <tabpanel>
+                                <div >
+                                    <grid width="980px">
+                                        <columns>
+                                            <column width="120px"/>
+                                            <column width="200px"/>
+                                            <column width="100px"/>
+                                            <column width="200px"/>
+                                            <column width="100px"/>
+                                            <column width="255px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>                 
+                                                <cell align="right" valign="botton">
+                                                    <label value="ID:"/>
+                                                </cell>
+                                                <textbox id="txt_chofid" disabled="true" tooltiptext="Define el Código del chofer, Máximo 4 digitos "/>                                    
+                                                <cell align="right" valign="botton">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_chofest" disabled="true" checked="true" label="ACTIVO" tooltiptext="Define el Estado del chofer">
+                                                    <attribute name="onCheck">
+                                                        if(chk_chofest.isChecked())
+                                                        chk_chofest.setLabel("ACTIVO");
+                                                        else
+                                                        chk_chofest.setLabel("INACTIVO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="APE.PATERNO: "/>
+                                                    <span class="colorRojo">*</span>	
+                                                </cell>
+                                                <textbox id="txt_chofapepat" disabled="true" maxlength="20" width="180px" tooltiptext="Define el apellido paterno del chofer, Máximo 20 caracteres"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="APE.MATERNO: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_chofapemat" disabled="true" maxlength="20" width="180px" tooltiptext="Define el apellido materno del chofer, Máximo 20 caracteres"/>
+                                            
+                                                <cell align="right" valign="botton">
+                                                    <label value="NOMBRE: "/>
+                                                    <span class="colorRojo">*</span>	
+                                                </cell>
+                                                <textbox id="txt_chofnom" disabled="true" maxlength="20" width="180px" tooltiptext="Define el nombre del chofer, Máximo 20 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="RAZON SOCIAL: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <cell colspan="6">
+                                                    <textbox id="txt_chofrazsoc" disabled="true" maxlength="60" width="780px" tooltiptext="Define la razón social del chofer, Máximo 60 caracteres"/>
+                                                </cell>
+                                            </row>
+                                            <row>                                            	
+                                                <cell align="right" valign="botton">
+                                                    <label value="DIRECCION:"/>
+                                                    <span class="colorRojo">*</span>	
+                                                </cell>
+                                                <cell colspan="6">
+                                                    <textbox id="txt_chofdirecc" disabled="true" maxlength="50" width="780px" tooltiptext="Define la dirección de vivienda del chofer, Máximo 50 caracteres"/>
+                                                </cell>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="TIPO DOC: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <combobox id="cb_tipodoc" disabled="true" readonly="true" width="180px" tooltiptext="Define el Tipo de Documento de Identidad">
+                                                    <template name="model">
+                                                        <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                    </template> 
+                                                </combobox> 
+                                                
+                                                <cell align="right" valign="botton">
+                                                    <label value="DNI u Otros:"/>
+                                                    <span class="colorRojo">*</span>	
+                                                </cell>
+                                                <textbox id="txt_chofdni" disabled="true" width="180px" maxlength="15" tooltiptext="Define el DNI u Otros del chofer, Máximo 15 caracteres"/>
+                                               
+                                                <cell align="right" valign="botton">
+                                                    <label value="RUC: "/>
+                                                </cell>
+                                                <textbox id="txt_chofruc" disabled="true" maxlength="11" width="180px" tooltiptext="Define el nombre del chofer, Máximo 11 caracteres"/>
+                                            </row>                                          
+                                            <row> 
+                                                <cell align="right" valign="botton">
+                                                    <label value="FEC. NAC:"/>
+                                                    <span class="colorRojo">*</span>	
+                                                </cell>
+                                                <datebox id="dt_choffecnac" disabled="true" maxlength="10" format="dd/MM/yyyy" tooltiptext="Define la Fecha de Nacimiento del Chofer"/>
+	                        
+                                                <cell align="right" valign="botton">
+                                                    <label value="TELEFONO :"/>
+                                                    <span class="colorRojo">*</span>	
+                                                </cell>
+                                                <textbox id="txt_choftelef" disabled="true" maxlength="9" width="180px" tooltiptext="Define el teléfono del Chofer, Máximo 9 caracteres"/>
+
+                                                <cell align="right" valign="botton">
+                                                    <label value="BREVETE:"/>
+                                                    <span class="colorRojo">*</span>	
+                                                </cell>
+                                                <textbox id="txt_chofbrevete" disabled="true" maxlength="20" width="180px" tooltiptext="Define el Brevete del Chofer, Máximo 20 caracteres"/>                          
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                </div>
+                            </tabpanel>     
+                        </tabpanels>
+                    </tabbox>   
+                </window>
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

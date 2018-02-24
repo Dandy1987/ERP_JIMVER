@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%" width="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>
+            <div width="100%" sclass="cuerpo-main">
+                <window id="w_uticomis" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                    <tabbox id="tabbox_uticomis" apply="">
+                        
+                        <tabs>
+                            <tab id="tab_uticomis"/>
+                        </tabs>
+                        
+                        <tabpanels>
+                            
+                            <tabpanel>
+                                
+                                <groupbox width="987px" open="true" closable="false" style="text: center;">
+                                    <caption label="ENLACE A CONTABILIDAD"/>
+                                    
+                                    <space height="30px"/>
+                                    
+                                    <div id="div_center01" align="center">
+                                    
+                                        <hbox align="center">
+                                            <cell align="left" width="70px">
+                                                <label value="PERIODO : "/>
+                                            </cell>
+                                            <combobox id="cb_periodo" width="150px" tooltiptext="Seleccione Periodo" readonly="true" placeholder="--------Seleccione--------"/>
+                                        </hbox>
+                                    
+                                        <space height="30px"/>
+                                    
+                                        <hbox align="center">
+                                            <cell align="left" width="70px">
+                                                <label value="SUCURSAL : "/>
+                                            </cell>
+                                            <combobox id="cb_sucursal" width="150px" tooltiptext="Seleccione Sucursal" readonly="true" placeholder="--------Seleccione--------"/>
+                                        </hbox>
+                                    
+                                        <space height="30px"/>
+                                    
+                                        <hbox align="center">
+                                            <button id="btn_aceptar" label="Aceptar" sclass="botones"/>    
+                                        </hbox>
+                                    
+                                    </div>
+                                    
+                                    <space height="30px"/>
+                                    
+                                </groupbox>
+                                
+                                <space height="5px"/>
+                                
+                                <groupbox width="987px" open="true" closable="false" style="text: center;">
+                                    <caption label="ENLACE POR CONCEPTOS DESDE ARCHIVO"/>
+                                    
+                                    <space height="30px"/>
+                                    
+                                    <div id="div_center02" align="center">
+                                    
+                                        <hbox align="center">
+                                            <radiogroup id="rg_movdes" onCheck="true">
+                                                <radio label="MOVIMIENTOS EN LINEA"/>
+                                                <space width="145px"/>
+                                                <radio label="DESCUENTOS (CTA CTE)"/>
+                                            </radiogroup>
+                                        </hbox>
+                                    
+                                        <space height="30px"/>
+                                    
+                                        <hbox align="center">
+                                            <cell align="left" width="70px">
+                                                <label value="CONCEPTO : "/>
+                                            </cell>                                      
+                                            <space width="5px"/>
+                                            <textbox id="txt_concepto" maxlength="3" width="20px" tooltiptext="Ingrese código de concepto" value="116" style="text-align: center;"/>
+                                            <textbox id="txt_desconcepto" disabled="true" readonly="true" width="300px" tooltiptext="Descripción del concepto" value="BONIFICACION EXTRAORDINARIA OTRAS EMPRESAS"/>
+                                        </hbox>
+                                    
+                                        <space height="30px"/>
+                                    
+                                        <hbox align="center">
+                                            <button id="btn_cargar" label="Cargar" sclass="botones"/>    
+                                        </hbox>
+                                    
+                                    </div>
+                                    
+                                    <space height="30px"/>
+                                    
+                                </groupbox>
+                                
+                            </tabpanel>
+                            
+                        </tabpanels>                        
+                        
+                    </tabbox>
+                </window>
+            </div>  
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>
+</zk>

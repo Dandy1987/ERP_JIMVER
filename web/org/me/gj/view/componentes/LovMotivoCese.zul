@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_motivoCese" title="MOTIVO CESE" border="normal" width="528px"
+            apply="org.me.gj.controller.componentes.ControllerLovMotivoCese"
+            position="center,center"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center" >
+                <cell align="right" valign="center">
+                    <label value="MOTIVO :"/>
+                    <span class="colorRojo">*</span>
+                </cell>
+            </hbox>
+            <hbox>
+                <combobox id="cb_motivoCeseLov" width="500px" disabled="true" readonly="true" placeholder="------------seleccione opción-------------" tooltiptext="Seleccione tipo documento">
+                    <template name="model">
+                        <comboitem label="${each.tabla_descri}" value="${each.tabla_id}"/>
+                    </template>
+                </combobox>
+            </hbox>
+            <space height="10px"/>
+            <hbox>
+                <cell align="right" valign="center">
+                    <label value="DETALLE :"/>
+                    <span class="colorRojo">*</span>
+                    <label value="(Máx. caracteres 300) :"/>
+                </cell>
+            </hbox>
+            <hbox>
+                <textbox id="txt_ceseDetLov" width="495px" rows="4" maxlength="300" disabled="true" style="resize:none;" />
+            </hbox>
+            <space height="10px"/>
+            <hbox>
+                <cell align="right" valign="center">
+                    <label value="OBSERVACION :"/>
+                    <span class="colorRojo">*</span>
+                    <label value="(Máx. caracteres 300) :"/>
+                </cell>
+            </hbox>
+            <hbox>
+                <textbox id="txt_ceseObsLov" width="495px" rows="4" maxlength="300" disabled="true" style="resize:none;" />
+            </hbox>
+            <hbox>
+                <button id="btn_salir" label="Salir" sclass="botones"/>
+            </hbox>
+        </vlayout>
+    </window>
+</zk>

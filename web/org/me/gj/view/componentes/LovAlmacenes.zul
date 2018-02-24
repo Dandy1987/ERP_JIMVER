@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_almacenes" title="Busqueda de Almacenes" border="normal" width="435px"
+            apply="org.me.gj.controller.componentes.ControllerLovAlmacenes"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hlayout>
+                <cell align="right" valign="bottom">
+                    <label value="DESCRIPCION:" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="328px" focus="true" maxlength="45" tooltiptext="Ingrese la descripcion del Almacen, Máximo 50 caracteres"/>
+            </hlayout>
+            <listbox id="lst_busalm" mold="paging" pageSize="13" width="410px">
+                <listhead>
+                    <listheader label="CODIGO" width="110px"/>
+                    <listheader label="NOMBRE" width="300px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.alm_id}"/>
+                        <listcell label="${each.alm_des}"/>
+                    </listitem>
+                </template>
+            </listbox>
+            
+        </vlayout>
+    </window>
+</zk>

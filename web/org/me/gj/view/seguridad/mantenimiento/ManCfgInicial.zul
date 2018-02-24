@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main"  >
+            <include src="/plantillas/modulos/MenuSeguridad.zul"/>
+        </north>
+        <center>
+            <div sclass="cuerpo-main" >
+                <window id="w_cfgini" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%" >
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" />            
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <label value="MANTENIMIENTO DE CONFIGURACION INICIAL" sclass="titulo_mant" style="margin-left:235px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_cfginicial" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerCfgInicial">
+                        <tabs>
+                            <tab id="tab_listacfginicial" label="LISTA"/>
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_cfgini.getSelectedIndex() == -1)
+                                    {
+                                    tab_listacfginicial.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                            <tab id="tab_firmas" disabled="false" label="FIRMAS">
+                                <attribute name="onSelect">
+                                    if (lst_cfgini.getSelectedIndex() == -1)
+                                    {
+                                    tab_listacfginicial.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_emp" >
+                                    <groupbox width="980px"  open="true" closable="false">
+                                        <caption label="Opciones de Busqueda"/>
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+                                                <label value="FILTRO:"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una Opcion">
+                                                <comboitem label=" "/>
+                                                <comboitem label="ID"/>
+                                                <comboitem label="EMPRESA"/>
+                                                <comboitem label="SUCURSAL"/>
+                                                <attribute name="onSelect">
+                                                    txt_busqueda.setDisabled(false);
+                                                </attribute>
+                                            </combobox>
+                                            <separator/>
+                                            <textbox id="txt_busqueda" width="400px" value="%%" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                            <button id="btn_buscar" sclass="botones" label="Consultar" tooltiptext="Buscar" />            
+                                            <separator width="20px"/>
+                                            
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="10px"/>
+                                    <listbox id="lst_cfgini"  mold="paging" pageSize="13" width="980px" height="450px">
+                                        <listhead>
+                                            <listheader label="ID" width="30px"/>
+                                            <listheader label="EMPRESA" width="350px"/>
+                                            <listheader label="SUCURSAL" width="120px"/>
+                                            <listheader label="SIGLAS" width="100px"/>
+                                            <listheader label="CIERRE MONTO" width="90px"/>
+                                            <listheader label="CIERRE PEDIDO" width="90px"/>
+                                            <listheader label="IGG" width="50px"/>
+                                            <listheader label="IGD" width="50px"/>
+                                            <listheader label="IGS" width="50px"/>
+                                            <listheader label="IGC" width="50px"/>                                              
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.tcfg_id}"/>
+                                                <listcell label="${each.emp_des}"/>
+                                                <listcell label="${each.suc_des}"/>
+                                                <listcell label="${each.emp_sig}"/>
+                                                <listcell label="${each.tcfg_ciemon_des}"/>
+                                                <listcell label="${each.tcfg_cieped_des}"/>
+                                                <listcell label="${each.tcfg_gengui_des}"/>    
+                                                <listcell label="${each.tcfg_gendoc_des}"/>    
+                                                <listcell label="${each.tcfg_regstk_des}"/>    
+                                                <listcell label="${each.tcfg_regcst_des}"/>
+                                                
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                </div>    
+                            </tabpanel>
+                            <tabpanel>
+                                <div id="div_man_cfgini" >
+                                    <grid id="grd_man_emp" width="980px" height="280px">
+                                        <columns>
+                                            <column width="180px"/>
+                                            <column width="300px"/> 
+                                            <column width="180px"/> 
+                                            <column width="300px"/>                                           
+                                        </columns>                                        
+                                        <rows>
+                                            <row>
+                                                <cell align="right"  valign="bottom" >
+                                                    <label value="NRO CONFG. " />
+                                                </cell>
+                                                <textbox id="txt_tcfgkey" width="40px" maxlength="3"  disabled="true" tooltiptext="Numero Correlativo"/>                                                
+                                                <cell  align="right" valign="bottom" >        
+                                                    <label value="MONEDA : " />                                                   
+                                                </cell>
+                                                <combobox id="cb_monedas" readonly="true" tooltiptext="Seleccione una Moneda">
+                                                    <template name="model">    
+                                                        <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>                                                                                                      
+                                                    </template>
+                                                </combobox>
+                                            </row>
+                                            <row>
+                                                <cell align="right"  valign="bottom" >
+                                                    <label value="EMPRESA : " />                                                   
+                                                </cell>
+                                                <combobox id="cb_empresas" readonly="true" disabled="true" tooltiptext="Seleccione una Empresa">
+                                                    <template name="model">    
+                                                        <comboitem label="${each.emp_sig}" value="${each.emp_id}"/>                                                                                                      
+                                                    </template>
+                                                </combobox>                                                
+                                                <cell  align="right" valign="bottom"  >
+                                                    <label value="SUCURSAL : " />                                            
+                                                </cell>
+                                                <combobox id="cb_sucursales" readonly="true" width="163px" disabled="true" tooltiptext="Seleccione Sucursal" >
+                                                    <template name="model">    
+                                                        <comboitem label="${each.suc_des}" value="${each.suc_id}"/>                                                                                                      
+                                                    </template>                                               
+                                                </combobox>                                                
+                                            </row>                                            
+                                            <row>
+                                                <cell align="right" valign="bottom" >
+                                                    <label value="CIERRE DE MONITOREO: " />
+                                                </cell>
+                                                <checkbox id="chk_ciemon"  checked="true" disabled="true" label="ABIERTO" tooltiptext="Verificador de Cierre de Monitoreo">
+                                                    <attribute name="onCheck" >
+                                                        chk_ciemon.setLabel(chk_ciemon.isChecked()?"ABIERTO":"CERRADO");
+                                                    </attribute>
+                                        
+                                                </checkbox> 
+                                                
+                                                <cell align="right" valign="bottom"  >
+                                                    <label value="CIERRE DE PEDIDO :  " />
+                                                </cell>                                                                           
+                                                <checkbox id="chk_cieped"  checked="true" disabled="true" label="ABIERTO" tooltiptext="Verificador de Cierre de Pedido">
+                                                    <attribute name="onCheck">
+                                                        chk_cieped.setLabel(chk_cieped.isChecked()?"ABIERTO":"CERRADO");
+                                                    </attribute>
+                                                </checkbox>                                                                                                                                                                                                                                                                             
+                                            </row>                                            
+                                            <row>
+                                                <cell align="right" valign="bottom" >
+                                                    <label value="MONTO MINIMO DE VENTA : " />                                                    
+                                                </cell>
+                                                <textbox id="txt_mtomin" disabled="true" maxlength="10" tooltiptext="Define el monto minimo de venta"/>  
+                                         
+                                                <cell align="right" valign="bottom" >
+                                                    <label value="TOPE DE PEDIDOS EN EFECTIVO : " />
+                                                   
+                                                </cell>
+                                                <doublebox id="txt_topefe" disabled="true" width="150px" maxlength="10" tooltiptext="Define el tope de pedidos en efectivo"/>                                           
+                                            </row>                                            
+                                            <row>
+                                                <cell align="right" valign="bottom" >
+                                                    <label value="ENLACE DE PLANILLA : " />
+                                                </cell>
+                                                <cell>
+                                                    <textbox id="txt_enpla" disabled="true" width="230px" maxlength="200" tooltiptext="Define enlace de planilla" />                                           
+                                                    <toolbarbutton id="tbbtn_enpla" image="/images/iconos_menu_adm/enlplaple.png" tooltiptext="Buscar directorio para enlace de Planilla" disabled="true" />
+                                                </cell>
+                                                <cell align="right" valign="bottom" >
+                                                    <label value="ENLACE DE PLE : " />                                                   
+                                                </cell>
+                                                <cell>
+                                                    <textbox id="txt_enple" disabled="true" width="230px" maxlength="200" tooltiptext="Define Enlace de libros electronicos ple"/>  
+                                                    <toolbarbutton id="tbbtn_enple" image="/images/iconos_menu_adm/enlplaple.png" tooltiptext="Buscar directorio para enlace de Libros Electronicos" disabled="true" />
+                                                </cell>
+                                            </row>
+                               
+                                            <row>
+                                                <cell align="right" valign="bottom" >
+                                                    <label value="IND. GENERACION DE GUIAS : " />
+                                                </cell> 
+                                                <checkbox id="chk_igg"  checked="true" disabled="true" label="NO" tooltiptext="Indicador de generacion de guias">
+                                                    <attribute name="onCheck">
+                                                        chk_igg.setLabel(chk_igg.isChecked()?"SI":"NO");
+                                                    </attribute>
+                                                </checkbox>
+                                                
+                                                
+                                                <cell align="right" valign="bottom" >
+                                                    <label value="IND. GENERACION DE DOCS : " />
+                                                </cell>
+                                                <checkbox id="chk_igd"  checked="true" disabled="true" label="NO" tooltiptext="Indicador de generacion de docs">
+                                                    <attribute name="onCheck">
+                                                        chk_igd.setLabel(chk_igd.isChecked()?"SI":"NO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                          
+                                            <row>
+                                                <cell align="right" valign="bottom" >
+                                                    <label value="IND. GENERACION DE STOCKS :  " />
+                                                </cell>
+                                                <checkbox id="chk_igs"  checked="true" disabled="true" label="NO" tooltiptext="Indicador de generacion de Stocks">
+                                                    <attribute name="onCheck">
+                                                        chk_igs.setLabel(chk_igs.isChecked()?"SI":"NO");
+                                                    </attribute>
+                                                </checkbox>
+                                                
+                                                <cell align="right" valign="bottom" >
+                                                    <label value="IND. GENERACION DE COSTOS : " />
+                                                </cell> 
+                                                <checkbox id="chk_igc"  checked="true" disabled="true" label="NO" tooltiptext="Indicador de generacion de costos">
+                                                    <attribute name="onCheck">
+                                                        chk_igc.setLabel(chk_igc.isChecked()?"SI":"NO");
+                                                    </attribute>
+                                                </checkbox>
+                                                
+                                            </row>
+                                            <row>
+                                                <cell align="right"  valign="bottom" >
+                                                    <label value="DIA CADUCIDAD: " />
+                                                </cell>
+                                                <intbox id="txt_tcfdiacad"  width="40px" maxlength="2"  disabled="true" tooltiptext="Dias de Caducidad"/>                                                
+                                            </row>                                  
+                                        </rows>                                   
+                                    </grid> 
+                                    <groupbox  style="background-color:#FFFFFF" closable="false" width="980px" height="350" >
+                                        <caption label="ENLACE FACTURA PROVEEDOR" width="405px"/>
+                                        <grid id="grd_man_emp2" width="980px" height="200px">
+                                            <columns>
+                                                <column width="180px"/>
+                                                <column width="280px"/> 
+                                                <column width="200px"/> 
+                                                <column width="300px"/>                                           
+                                            </columns>                                        
+                                            <rows>
+                                                <row>
+                                                    <cell align="right" valign="bottom" >
+                                                        <label value="VOUCHER:"/>
+                                                    </cell>                                                     
+                                                    <!--<combobox id="cb_voucher" width="150px" disabled="true" maxlength="50" readonly="true"  tooltiptext="Enpaque Individual de Venta del Producto, Máximo 50 caracteres">
+                                                        <template name="model">
+                                                            <comboitem label="${each.tab_subdes}" value="${each.tab_subdir}"/>
+                                                        </template>
+                                                        <comboitem label="VOUCHER1" value="1"/>
+                                                        <comboitem label="VOUCHER2" value="2"/>
+                                                    </combobox>-->
+                                                    <intbox id="txt_voucher" disabled="true" maxlength="2" width="100px" tooltiptext="Altura del producto, Máximo 2 caracteres" style="text-align: right;"/>  
+                                                    <cell align="right" valign="bottom" >
+                                                        <label value="CUENTA AFECTO:"/>
+                                                    </cell>                                           
+                                                    <textbox id="txt_ctaafecto" disabled="true" maxlength="6" width="100px" tooltiptext="Altura del producto, Máximo 5 caracteres" style="text-align: right;"/> 
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom" >
+                                                        <label value="CTA. AFECTO FUERA DE MES:"/>
+                                                    </cell>                                                     
+                                                    <textbox id="txt_ctaafectofuerames" disabled="true" maxlength="6" width="100px" tooltiptext="Altura del producto, Máximo 5 caracteres" style="text-align: right;"/>
+                                                    <cell align="right" valign="bottom" >
+                                                        <label value="CTA. EXONERADO/INAFECTO"/>
+                                                    </cell>                                           
+                                                    <textbox id="txt_ctaexoinaf" disabled="true" maxlength="6" width="100px" tooltiptext="Altura del producto, Máximo 5 caracteres" style="text-align: right;"/> 
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom" >
+                                                        <label value="CUENTA IMPUESTO (IGV):"/> 
+                                                    </cell>                                                     
+                                                    <textbox id="txt_ctaimpuesto" disabled="true" maxlength="6" width="100px" tooltiptext="Altura del producto, Máximo 5 caracteres" style="text-align: right;"/>
+                                                    <cell align="right" valign="bottom" >
+                                                        <label value="CUENTA TOTAL:"/>
+                                                    </cell>                                           
+                                                    <textbox id="txt_ctatotal" disabled="true" maxlength="6" width="100px" tooltiptext="Altura del producto, Máximo 5 caracteres" style="text-align: right;"/> 
+                                                </row>
+                                                <row>
+                                                    <cell align="right" valign="bottom" >
+                                                        <label value="RECLAMO AFECTO:"/>
+                                                    </cell>                                                     
+                                                    <textbox id="txt_reclamoafecto" disabled="true" maxlength="6" width="100px" tooltiptext="Altura del producto, Máximo 5 caracteres" style="text-align: right;"/>
+                                                    <cell align="right" valign="bottom" >
+                                                        <label value="RECLAMO EXONERADO/INAFECTO:"/>
+                                                    </cell>                                           
+                                                    <textbox id="txt_reclamoexoinaf" disabled="true" maxlength="6" width="100px" tooltiptext="Altura del producto, Máximo 5 caracteres" style="text-align: right;"/> 
+                                                </row> 
+                                                <row>
+                                                    <cell align="right" valign="bottom" >
+                                                        <label value="RECLAMO DSCTO. DINERO:"/>
+                                                    </cell>                                                     
+                                                    <textbox id="txt_reclamodsctodinero" disabled="true" maxlength="6" width="100px" tooltiptext="Altura del producto, Máximo 5 caracteres" style="text-align: right;"/>
+                                                </row>                      
+                                            </rows>                                   
+                                        </grid>
+                                    </groupbox>
+                                </div>    
+   
+                            </tabpanel>
+                            <tabpanel>
+                                <div id="div_man_cfgfirma" > 
+                                    <hbox>
+                                       
+                                        <cell align="right" valign="center" height="200" >
+                                            <label value="FIRMA:"/>
+                                            <textbox id="txt_firma" readonly="true"  disabled="true" width="350px" maxlength="200" tooltiptext="Define firma" />                                           
+                                            <toolbarbutton id="btn_upload" disabled="true" upload="true" image="/images/iconos_menu_adm/enlplaple.png" tooltiptext="Buscar directorio para firma" />
+                                        </cell>
+                                        <space width="150px"/>
+                                        <div id="img_firma" width="197px" height="252px" style="text-align:center; border:1px solid; "  />
+               
+                                    </hbox>
+ 
+                                </div>
+                            </tabpanel>
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south border="0">
+            <include src="/plantillas/modulos/PieSeguridad.zul"/>
+        </south>
+    </borderlayout>     
+</zk>

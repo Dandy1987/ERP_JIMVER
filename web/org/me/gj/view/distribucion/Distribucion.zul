@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">   
+    <borderlayout sclass="complex-layout" height="100%">
+        <north sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuDistribucion.zul"/>
+        </north>
+        <center >
+             <div sclass="cuerpo-main" >
+            </div>
+        </center>
+        <south height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

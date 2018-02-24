@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <div id="menu_cxc" align="center" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerLogin" >
+        <separator sclass="z-separator-hor" /> 
+        <menubar id="mod_cxc" width="100%" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerPrivilegios">
+            <menu id="men_mantenimiento" label="Mantenimiento" width="90px" >
+                <menupopup>
+                    <!-- 1. CLIENTES -->
+                    <menu id="smen1_clientes" label="Clientes" image="/images/iconos_menu/cxc/clientes.png">
+                        <menupopup>
+                            <!-- 1.1. CATEGORIA DE CLIENTE -->
+                            <menuitem id="smen2_categoriacliente"  label="Categoria de Cliente" image="/images/iconos_menu/cxc/categoria.png" href="/org/me/gj/view/cxc/mantenimiento/ManCategoria.zul"  />                            
+                            <!-- 1.2. MANTENIMIENTO DE CLIENTES -->
+                            <menuitem id="smen2_manclientes" label="Mantenimiento de Clientes" image="/images/iconos_menu/cxc/manclientes.png" href="/org/me/gj/view/cxc/mantenimiento/ManCliente.zul" />
+                        </menupopup>
+                    </menu>
+                    <!-- 2. FORMA DE PAGO -->                                    
+                    <menuitem id="smen1_forpag" label="Forma de Pago" image="/images/iconos_menu/cxc/formapago.png" href="/org/me/gj/view/cxc/mantenimiento/ManForPag.zul" />
+                    <!-- 3. GIRO DE NEGOCIO -->
+                    <menuitem id="smen1_giro" label="Giro de Negocio" image="/images/iconos_menu/cxc/giro.png" href="/org/me/gj/view/cxc/mantenimiento/ManGiro.zul" />
+                    <!-- 4. MONEDA -->
+                    <menuitem id="smen1_moneda" label="Monedas" image="/images/iconos_menu/cxc/moneda.png" href="/org/me/gj/view/cxc/mantenimiento/ManMoneda.zul" />
+                    <!-- 5. POSTAL -->
+                    <menuitem id="smen1_postal" label="Postal" image="/images/iconos_menu/cxc/postal.png" href="/org/me/gj/view/cxc/mantenimiento/ManPostal.zul" />
+                    <!-- 6. TIPO DE CAMBIO -->
+                    <menuitem id="smen1_tipcamb" label="Tipo de Cambio" image="/images/iconos_menu/cxc/tipocambio.png" href="/org/me/gj/view/cxc/mantenimiento/ManTipCam.zul" /><!-- 2. TIPO DE DOCUMENTO DE IDENTIDAD -->
+                    <!-- 2. TIPO DE DOCUMENTO DE IDENTIDAD -->
+                    <menuitem id="smen1_tipodoc" label="Tipo de Documento de Identidad" image="/images/iconos_menu/cxc/tipodocumento.png" href="/org/me/gj/view/cxc/mantenimiento/ManTipoDocumento.zul" />
+                    <!-- 2. UBIGEO -->
+                    <menuitem id="smen1_ubigeo" label="Ubigeo" image="/images/iconos_menu/cxc/ubigeo.png" href="/org/me/gj/view/cxc/mantenimiento/ManUbigeo.zul" />                                       
+                </menupopup>
+            </menu>
+            <!-- MENU PROCESOS -->
+            <menu id="men_procesos" label="Procesos" width="90px" ></menu>
+            <!-- MENU INFORMES -->
+            <menu id="men_informes" label="Informes" width="90px" >
+                <menupopup>
+                    <menuitem id="smen1_consultaxcliente" label="Consulta por Cliente" image="/images/iconos_menu/cxc/cxccliente.png" href="/org/me/gj/view/cxc/informes/ConsultaxCliente.zul" />                
+                    <menuitem id="smen1_consultaxdocumento" label="Consulta por Documento" image="/images/iconos_menu/cxc/cxcdocumento.png" href="/org/me/gj/view/cxc/informes/ConsultaxDocumento.zul" />            
+                    <menuitem id="smen1_carteracliente" label="Carteras de Clientes" image="/images/iconos_menu/cxc/carteracliente.png" href="/org/me/gj/view/cxc/informes/CarteraCliente.zul" />                           
+                </menupopup>            
+            </menu>
+            <!-- MENU UTILITARIOS -->
+            <menu id="men_utilitarios" label="Utilitarios" width="90px" >
+                <menupopup>                
+                    <menuitem id="smen1_ciediacxc" label="Cierre Diario" image="/images/iconos_menu/cxc/cierre_diario.png" href="/org/me/gj/view/cxc/utilitarios/CieDia.zul" />
+                    <menuitem id="smen1_ciemencxc" label="Cierre Mensual" image="/images/iconos_menu/cxc/cierre_mensual.png" href="/org/me/gj/view/cxc/utilitarios/CiePeriodo.zul" />                  
+                </menupopup>
+            </menu>
+            <!-- MENU AYUDA -->
+            <menu id="men_ayuda" label="Ayuda" width="90px" ></menu>
+            <menuitem  width="100px" />
+            <menuitem label="Bienvenido:  ${sessionScope.usuariosCredential.nombre}"/>
+            <menuitem label="Menu Principal" href="/Main.zul" />
+            <menuitem label="Cerrar Sesión" id="btn_logout"/>
+        </menubar>
+    </div>
+</zk>

@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportInformesDescuentos" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1982a94c-d413-4e3a-8357-032fe3252d46">
+	<property name="ireport.zoom" value="2.257895720215111"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_WHERE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[" select t.pltipdoc || t.plnrodoc codigo, t.plapepat || ' ' || t.plapemat || ' ' || t.plnomemp nombres, d.pldc_idconc, pack_planilla_informes.f_descripcion_constante(pldc_idconc) tabla_descri, d.pldc_glosa, d.nro_rec_ie, d.nro_rec_ref, d.pldc_fecmov, sum(to_number(lib.decrypt8(d.pldc_valabo))) abono, sum(to_number(lib.decrypt8(d.pldc_valcar))) cargo, d.emp_id, d.suc_id, t.plapepat,e.emp_des, pack_tpersonal.ftb1_descripcion(dl.plarea, '00003') area from tpersonal t, tpldsctos d, tpldatoslab dl,tempresas e where t.pltipdoc = d.pltipdoc and d.emp_id = dl.emp_id and d.suc_id = dl.suc_id and d.pltipdoc = dl.pltipdoc and d.plnrodoc = dl.plnrodoc and t.plnrodoc = d.plnrodoc and e.emp_id=d.emp_id and e.emp_id=dl.emp_id and e.emp_est=1 and t.plestado = 1 and d.pldc_estado = 1 and dl.plestado_dl = 1 and d.emp_id = 1 group by t.pltipdoc, t.plnrodoc, d.pldc_idconc, d.pldc_glosa, d.nro_rec_ie, d.nro_rec_ref, t.plapepat, t.plapemat, t.plnomemp, d.emp_id, d.suc_id, d.pldc_fecmov, dl.plarea,e.emp_des order by t.plnrodoc"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="USUARIO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[$P!{P_WHERE}]]>
+	</queryString>
+	<field name="CODIGO" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="PLDC_IDCONC" class="java.lang.String"/>
+	<field name="TABLA_DESCRI" class="java.lang.String"/>
+	<field name="PLDC_GLOSA" class="java.lang.String"/>
+	<field name="NRO_REC_IE" class="java.lang.String"/>
+	<field name="NRO_REC_REF" class="java.lang.String"/>
+	<field name="PLDC_FECMOV" class="java.sql.Timestamp"/>
+	<field name="ABONO" class="java.math.BigDecimal"/>
+	<field name="CARGO" class="java.math.BigDecimal"/>
+	<field name="EMP_ID" class="java.math.BigDecimal"/>
+	<field name="SUC_ID" class="java.math.BigDecimal"/>
+	<field name="PLAPEPAT" class="java.lang.String"/>
+	<field name="EMP_DES" class="java.lang.String"/>
+	<field name="AREA" class="java.lang.String"/>
+	<variable name="CargoSuma" class="java.math.BigDecimal" resetType="Group" resetGroup="Trabajador" calculation="Sum">
+		<variableExpression><![CDATA[$F{CARGO}]]></variableExpression>
+	</variable>
+	<variable name="AbonoSuma" class="java.math.BigDecimal" resetType="Group" resetGroup="Trabajador" calculation="Sum">
+		<variableExpression><![CDATA[$F{ABONO}]]></variableExpression>
+	</variable>
+	<group name="Trabajador" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{NOMBRES}]]></groupExpression>
+		<groupHeader>
+			<band height="23">
+				<textField>
+					<reportElement uuid="5904d1cd-0afb-4ae0-ab7d-bff7db10d12e" x="0" y="0" width="40" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CODIGO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="d7b62199-c266-4168-a94a-163062dcb8cf" x="40" y="0" width="138" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="0020f161-4045-43a5-8527-50a89ab648d6" x="0" y="-1" width="555" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="0020f161-4045-43a5-8527-50a89ab648d6" x="0" y="20" width="552" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<textField>
+					<reportElement uuid="5e128d35-0ccc-404d-ba3f-24acf9c876b7" x="333" y="2" width="43" height="11"/>
+					<textElement textAlignment="Right">
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CargoSuma}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="3a7b0a14-1e00-4055-8737-b726c96caff5" x="376" y="2" width="49" height="11"/>
+					<textElement textAlignment="Right">
+						<font size="6"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{AbonoSuma}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="01c94fd3-c23d-4727-8c6b-47bb822361ea" x="333" y="1" width="43" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="e8df8259-ec86-4c24-a74a-add01dff2889" x="375" y="1" width="49" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="da9fd671-5269-4a4b-b31d-f3e8f9728453" x="284" y="2" width="49" height="11"/>
+					<textElement>
+						<font size="6"/>
+					</textElement>
+					<text><![CDATA[Total: ]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="96" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="23a91af5-7cd5-4bd6-a98b-c5ff339986f1" mode="Opaque" x="0" y="62" width="40" height="33" backcolor="#FFFF00"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b331e391-d232-4d0d-9ada-12f70e85ebbc" mode="Opaque" x="41" y="62" width="137" height="33" backcolor="#FFFF00"/>
+				<textElement verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[CONSTANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="86048ff9-a103-480c-8e77-d8f3903444d6" mode="Opaque" x="178" y="62" width="51" height="33" backcolor="#FFFF00"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[N° EGRESO / INGRESO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e58c1a62-914f-4784-8d16-0968ca2cbc9b" mode="Opaque" x="229" y="62" width="55" height="33" backcolor="#FFFF00"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[N° DE REFERENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="618237b5-7ff3-407a-931b-05b2c3fa6758" mode="Opaque" x="284" y="62" width="49" height="33" forecolor="#333333" backcolor="#FFFF00"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b1e34928-5b04-460b-8a41-a1c7ff41f20a" mode="Opaque" x="376" y="61" width="49" height="34" forecolor="#333333" backcolor="#FFFF00"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[REINTE- GROS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8117a21e-6ded-45a6-bf59-0e2761dbb705" mode="Opaque" x="333" y="61" width="43" height="34" forecolor="#333333" backcolor="#FFFF00"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DESCUEN- TOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0a013ad6-4106-41e6-a82b-841ead28266a" mode="Opaque" x="148" y="1" width="407" height="59" forecolor="#0066FF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="12"/>
+				</textElement>
+				<text><![CDATA[REPORTE INFORMES DESCUENTOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="7d983db7-f22d-4696-a880-17b0e2180d5f" x="41" y="39" width="107" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{USUARIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="12a99a67-170f-4e52-885d-556d5dfe073c" x="41" y="19" width="107" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMP_DES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="8da63989-582f-482a-b8ff-f0b7d1315915" mode="Opaque" x="437" y="62" width="118" height="33" backcolor="#FFFF00"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[GLOSA]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="d8cf62c4-e350-4ad2-a369-76219d7b3456" x="0" y="60" width="555" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="8928b0ca-93ea-4a71-8f35-c6310faa3700" x="0" y="19" width="41" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[EMPRESA :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a4b5fabc-56de-4fa0-8006-6c90343d717d" x="0" y="39" width="40" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[USUARIO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="19e7217e-6b68-47ec-926e-86561bfd7b90" mode="Opaque" x="425" y="62" width="12" height="33" forecolor="#000000" backcolor="#FFFF00"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="20">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement uuid="26dd9c93-48ba-4f4d-add1-ccb2b68cdead" x="284" y="0" width="49" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PLDC_FECMOV}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="3156bf52-0b84-4e00-a169-2aab179ed111" x="333" y="0" width="43" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CARGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7ce2c33f-7653-497b-b698-599f5ac728db" x="437" y="0" width="118" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PLDC_GLOSA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7e4e079c-61a6-4539-9a7f-2c5fac1c01aa" x="0" y="0" width="40" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PLDC_IDCONC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="01484c9a-a559-492b-9bb0-24c6af86c314" x="40" y="0" width="138" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TABLA_DESCRI}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="a0985602-6f7c-4ac5-aacb-72230c2b82a4" x="178" y="0" width="51" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRO_REC_IE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="b2370c94-b125-4a32-b820-be3f32572a21" x="229" y="0" width="55" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NRO_REC_REF}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00" isBlankWhenNull="true">
+				<reportElement uuid="9d2b75b9-f1b0-4c2f-964a-20c0e780d56c" x="376" y="0" width="49" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ABONO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="75da228b-7cde-4899-be84-791677f6202a" x="425" y="0" width="12" height="20"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

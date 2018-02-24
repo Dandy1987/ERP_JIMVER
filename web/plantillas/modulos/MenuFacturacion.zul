@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <div id="menu_facturacion" align="center" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerLogin" >
+        <separator sclass="z-separator-hor" /> 
+        <menubar id="mod_facturacion" width="100%" apply="org.me.gj.controller.seguridad.mantenimiento.ControllerPrivilegios">
+            <menu id="men_mantenimiento" label="Mantenimiento" width="90px" >
+                <menupopup>
+                    <menuitem id="smen1_supervisor" label="Supervisores" image="/images/iconos_menu/facturacion/supervisor.png" href="/org/me/gj/view/facturacion/mantenimiento/ManSup.zul"/>
+                    <menuitem id="smen1_vendedores" label="Vendedores" image="/images/iconos_menu/facturacion/vendedor.png" href="/org/me/gj/view/facturacion/mantenimiento/ManVendedores.zul"/>
+                    <menuitem id="smen1_canal" label="Canales" image="/images/iconos_menu/facturacion/canal.png" href="/org/me/gj/view/facturacion/mantenimiento/ManCanal.zul"/>
+                    <menuitem id="smen1_mesa" label="Mesas" image="/images/iconos_menu/facturacion/mesa.png" href="/org/me/gj/view/facturacion/mantenimiento/ManMesa.zul"/>
+                    <menuitem id="smen1_ruta" label="Rutas" image="/images/iconos_menu/facturacion/ruta.png" href="/org/me/gj/view/facturacion/mantenimiento/ManRuta.zul"/>
+                    <menuitem id="smen1_zona" label="Zonas" image="/images/iconos_menu/facturacion/zona.png" href="/org/me/gj/view/facturacion/mantenimiento/ManZona.zul"/>
+                    <!--<menuitem id="smen1_progzon" label="Programacion Zonas" image="/images/iconos_menu/facturacion/programacionzona.png" href="/org/me/gj/view/facturacion/mantenimiento/ManProgZon.zul"/>-->
+                    <menuitem id="smen1_motrec" label="Motivo de Rechazo" image="/images/iconos_menu/facturacion/motivorechazo.png" href="/org/me/gj/view/facturacion/mantenimiento/ManMotRec.zul"/>
+                    <menuitem id="smen1_numdoc" label="Numeración" image="/images/iconos_menu/facturacion/numeracion.png" href="/org/me/gj/view/facturacion/mantenimiento/ManNumeDoc.zul"/>
+                    <menuitem id="smen1_tipoventa" label="Tipo de Venta" image="/images/iconos_menu/facturacion/tipoventa.png" href="/org/me/gj/view/facturacion/mantenimiento/ManTipoVenta.zul"/>
+                    <menuitem id="smen1_provpresu" label="Proveedor Presupuesto" image="/images/iconos_menu/facturacion/tipoventa.png" href="/org/me/gj/view/facturacion/mantenimiento/ManProvPresupuesto.zul"/>
+                </menupopup>
+            </menu>
+            <menu id="men_procesos" label="Procesos" width="90px" >
+                <menupopup>
+                    <menuitem id="smen1_pedven" label="Generar Pedido de Venta" image="/images/iconos_menu/facturacion/generarpedido.png" href="/org/me/gj/view/facturacion/procesos/GenPedVen.zul" />
+                    <menuitem id="smen1_procpedpend" label="Revisar Pedidos Pendientes" image="/images/iconos_menu/facturacion/revisarpedido.png" href="/org/me/gj/view/facturacion/procesos/ProcPedPend.zul" />
+                    <menuitem id="smen1_notesven" label="Generar Nota de Salida - Venta" image="/images/iconos_menu/facturacion/generarnotaes.png" href="/org/me/gj/view/facturacion/procesos/GenNotaesVen.zul" />
+                    <menuitem id="smen1_gendocventa" label="Generar Documentos de Venta" image="/images/iconos_menu/facturacion/generardocumento.png" href="/org/me/gj/view/facturacion/procesos/GenDocVenta.zul" />
+                    <menu id="smen1_anuladocven" label="Anulación - Doc. Venta" image="/images/iconos_menu/facturacion/anulardocumento.png">
+                        <menupopup>
+                            <menuitem id="smen2_anulamanual"  label="Anulación Manual" image="/images/iconos_menu/facturacion/anularmanual.png" href="/org/me/gj/view/facturacion/procesos/AnuManDocVen.zul"  />
+                            <menuitem id="smen2_anulaautomatica"  label="Anulación Automática" image="/images/iconos_menu/facturacion/anularautomatico.png" href="/org/me/gj/view/facturacion/procesos/AnuAutoDocVen.zul"  />
+                            <menuitem id="smen2_anulaautofuerames"  label="Anulación Automática fuera de mes" image="/images/iconos_menu/facturacion/anularfuerademes.png" href="/org/me/gj/view/facturacion/procesos/AnuAutoFmesDocVen.zul"  />
+                            <menuitem id="smen2_anularefacacredito"  label="Anulación Refacturación a crédito" image="/images/iconos_menu/facturacion/anularrefcredito.png" href="/org/me/gj/view/facturacion/procesos/AnuRefAcredDocVen.zul"  />
+                        </menupopup>
+                    </menu>
+                </menupopup>
+            </menu>
+            <menu id="men_informes" label="Informes" width="90px" >
+                <menupopup>
+                    <menu id="smen1_infdocvenfacbol" label="Documentos Venta" image="/images/iconos_menu/facturacion/documentoventa.png">
+                        <menupopup>
+                            <menuitem id="smen2_facturaboleta"  label="Facturas / Boletas" image="/images/iconos_menu/facturacion/documentofactura.png" href="/org/me/gj/view/facturacion/informes/RepDocVenFacBol.zul"  />
+                        </menupopup>
+                    </menu>
+                    <menuitem id="smen1_regrepartidor" label="Registros Repartidor" image="/images/iconos_menu/facturacion/registrorepartidor.png" href="/org/me/gj/view/facturacion/informes/RegRepartidor.zul" />
+                    <menuitem id="smen1_guiasremision" label="Guias de Remisión" image="/images/iconos_menu/facturacion/guiaremision.png" href="/org/me/gj/view/facturacion/informes/GuiasRemision.zul" />
+                    <menuitem id="smen1_consomercaderia" label="Consolidado Mercadería" image="/images/iconos_menu/facturacion/consolidadomercaderia.png" href="/org/me/gj/view/facturacion/informes/ConsolidadoMercaderia.zul" />
+                </menupopup>
+            </menu>
+            <menu id="men_utilitarios" label="Utilitarios" width="90px" >
+                <menupopup>
+                    <menuitem id="smen1_ciediafac" label="Cierre Diario" image="/images/iconos_menu/facturacion/cierre_diario.png" href="/org/me/gj/view/facturacion/utilitarios/CieDia.zul"/>
+                    <menuitem id="smen1_ciemenfac" label="Cierre Mensual" image="/images/iconos_menu/facturacion/cierre_mensual.png"  href="/org/me/gj/view/facturacion/utilitarios/CiePeriodo.zul"/>             
+                </menupopup>
+            </menu>
+            <menu id="men_ayuda" label="Ayuda" width="90px" ></menu>
+            <menuitem  width="100px" />
+            <menuitem label="Bienvenido:  ${sessionScope.usuariosCredential.nombre}"/>
+            <menuitem label="Menu Principal" href="/Main.zul" />
+            <menuitem label="Cerrar Sesión" id="btn_logout"/>
+        </menubar>
+    </div>
+</zk>
+

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ManZonas" language="groovy" pageWidth="612" pageHeight="792" columnWidth="598" leftMargin="7" rightMargin="7" topMargin="7" bottomMargin="7" uuid="ccb7ed49-48c3-46dc-a10d-f80b25422c9b">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="47"/>
+	<property name="ireport.y" value="72"/>
+	<parameter name="usuario" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="empresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_WHERE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["select * from v_listazonas t where t.emp_id=1 and t.suc_id=1 and t.zon_est<>0 order by t.zon_id"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{P_WHERE}]]>
+	</queryString>
+	<field name="ZON_KEY" class="java.math.BigDecimal"/>
+	<field name="ZON_ID" class="java.lang.String"/>
+	<field name="SUC_ID" class="java.math.BigDecimal"/>
+	<field name="EMP_ID" class="java.math.BigDecimal"/>
+	<field name="ZON_DES" class="java.lang.String"/>
+	<field name="ZON_EST" class="java.math.BigDecimal"/>
+	<field name="ZON_IDVEN" class="java.lang.String"/>
+	<field name="ZON_APENOM" class="java.lang.String"/>
+	<field name="ZON_DVIS" class="java.math.BigDecimal"/>
+	<field name="ZON_RUTID" class="java.lang.String"/>
+	<field name="ZON_CANID" class="java.math.BigDecimal"/>
+	<field name="ZON_CANDES" class="java.lang.String"/>
+	<field name="ZON_MESID" class="java.math.BigDecimal"/>
+	<field name="ZON_UBIID" class="java.lang.String"/>
+	<field name="ZON_UBIDES" class="java.lang.String"/>
+	<field name="ZON_PAISID" class="java.lang.String"/>
+	<field name="ZON_PAISDES" class="java.lang.String"/>
+	<field name="ZON_ORD" class="java.math.BigDecimal"/>
+	<field name="ZON_NOMREP" class="java.lang.String"/>
+	<field name="ZON_USUADD" class="java.lang.String"/>
+	<field name="ZON_FECADD" class="java.sql.Timestamp"/>
+	<field name="ZON_USUMOD" class="java.lang.String"/>
+	<field name="ZON_FECMOD" class="java.sql.Timestamp"/>
+	<field name="ZON_POSTID" class="java.math.BigDecimal"/>
+	<field name="ZON_POSTDES" class="java.lang.String"/>
+	<variable name="tot" class="java.lang.String" incrementType="Report" calculation="Count">
+		<variableExpression><![CDATA[$V{tot}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="81" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c8f30a53-d22e-4e36-966a-42764734bd1f" x="10" y="7" width="138" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="604d291a-456d-4ab9-ab90-4ba701076c41" x="180" y="20" width="254" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE ZONAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6b1f3103-dc14-4257-845f-d67545605df1" x="420" y="64" width="168" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION UBIGEO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c289e06b-2312-4760-b605-b508252abc85" x="488" y="10" width="79" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAG:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0fd40718-f392-45a9-a101-94a4007100d9" x="488" y="23" width="100" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1251bc3b-e918-4723-a52c-1ff3c82c28e5" isPrintRepeatedValues="false" x="567" y="10" width="21" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="10" y="61" width="578" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="4062cdda-cd8b-4c85-8888-c3700c646ed6" x="10" y="33" width="138" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm:ss">
+				<reportElement uuid="90af5a26-2a30-4959-84e1-fc414af41b2e" x="488" y="36" width="100" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="754416d6-40f3-4667-bd96-52a852947d62" x="10" y="20" width="138" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[MANZONAS.JASPER]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="10" y="75" width="578" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="8b1db3d9-e572-4933-b690-d4fed10f2612" x="10" y="64" width="45" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18bf61cb-397f-4f8c-9cfe-0eab91437bfc" x="140" y="64" width="40" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID RUTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18bf61cb-397f-4f8c-9cfe-0eab91437bfc" x="180" y="64" width="40" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID VEND.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18bf61cb-397f-4f8c-9cfe-0eab91437bfc" x="220" y="64" width="160" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NOMBRE VENDEDOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18bf61cb-397f-4f8c-9cfe-0eab91437bfc" x="55" y="64" width="85" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ZONA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18bf61cb-397f-4f8c-9cfe-0eab91437bfc" x="380" y="64" width="40" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID UBI.]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c24b94e0-25bd-446e-a774-e3dab460ded3" x="10" y="0" width="45" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZON_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="43befa79-b185-42f6-8581-4ebc601e4bd1" x="55" y="0" width="85" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZON_DES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5a440991-1919-488d-b9d6-1c501399b80b" x="140" y="0" width="40" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZON_RUTID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e0c87a92-2464-4802-a444-91e94d1e7421" x="180" y="0" width="40" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZON_IDVEN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="243540f8-9e24-4b17-926b-841352932429" x="220" y="0" width="160" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZON_APENOM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3a65cfc6-f210-439a-b28b-f516f46d3d0c" x="380" y="0" width="40" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZON_UBIID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="935522aa-79a1-4944-95ee-2e7e000779d0" x="420" y="0" width="168" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ZON_UBIDES}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement uuid="33d4713f-456e-45e8-ba7f-b9008b834fe3" x="160" y="8" width="90" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5be848f2-9b7f-4fc6-9e48-c1458a10e4c1" x="10" y="8" width="140" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL REGISTROS:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="10" y="4" width="578" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

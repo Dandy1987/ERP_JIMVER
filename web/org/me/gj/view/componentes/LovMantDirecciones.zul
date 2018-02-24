@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_mantdireccion" title="MANTENIMIENTO DE DIRECCIONES" border="normal" width="1000px"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp"
+            apply="org.me.gj.controller.componentes.ControllerLovMantDirecciones">
+        <grid width="1000px">
+            <columns>
+                <column width="100px"/>
+                <column width="200px"/>
+                <column width="300px"/>
+                <column width="200px"/>
+                <column width="180px"/>
+            </columns>
+            <rows>
+                <row>
+                    <cell align="right" valign="botton">
+                        <label value="VIA:"/>
+                    </cell>
+                    <combobox id="cb_clidir_idvia" readonly="true" placeholder="---seleccione Opcion----" tooltiptext="Seleccione una Opcion" width="180px">
+                        <comboitem label="(NINGUNO)"/>
+                        <comboitem value="ALM. " label="ALM. ALAMEDA"/>
+                        <comboitem value="AV. " label="AV. AVENIDA"/>
+                        <comboitem value="BL. " label="BL. BLOCK"/>
+                        <comboitem value="CAL. " label="CAL. CALLE"/>
+                        <comboitem value="CAR. " label="CAR. CARRETERA"/>
+                        <comboitem value="CC. " label="CC. CENTRO COMERCIAL"/>
+                        <comboitem value="JR. " label="JR. JIRON"/>
+                        <comboitem value="MDO. " label="MDO. MERCADO"/>
+                        <comboitem value="MLC. " label="MLC. MALECON"/>
+                        <comboitem value="OVL. " label="OVL. OVALO"/>
+                        <comboitem value="PJ. " label="PJ. PASAJE"/>
+                        <comboitem value="PQ. " label="PQ. PARQUE"/>
+                        <comboitem value="PRL. " label="PRL. PROLONGACION"/>
+                        <comboitem value="PZA. " label="PZA. PLAZA"/>
+                    </combobox>      
+                    <cell align="right" valign="botton">
+                        <textbox id="txt_clidir_nomvia" disabled="false" tooltiptext="Define el Nombre de la Via, maximo 50 caracteres" maxlength="50" width="280px"/>                                                                        
+                    </cell>
+                    <combobox id="cb_clidir_signo" readonly="true" placeholder="SELECCIONE.." tooltiptext="Seleccione una Opcion" width="185px">
+                        <comboitem label="(NINGUNO)"/>
+                        <comboitem value="#" label="#"/>
+                        <comboitem value="S/N" label="S/N"/>
+                    </combobox>     
+                    <intbox id="txt_clidir_numvia" maxlength="5" disabled="false" width="160px" tooltiptext="Numero de Via, maximo 5 caracteres"/>        
+                </row>
+                <row>
+                    <cell align="right" valign="botton">
+                        <label value="INTERIOR:"/>
+                    </cell>
+                    <combobox id="cb_clidir_idint" readonly="true" tooltiptext="Seleccione una Opcion" width="180px">
+                        <comboitem label="(NINGUNO)"/>
+                        <comboitem value="DEP. " label="DEP. DEPARTAMENTO"/>
+                        <comboitem value="INT. " label="INT. INTERIOR"/>
+                        <comboitem value="OF. " label="OF. OFICINA"/>
+                        <comboitem value="PIS. " label="PIS. PISO"/>
+                        <comboitem value="PTO. " label="PTO. PUESTO"/>
+                        <comboitem value="ST. " label="ST. STAND"/>
+                        <comboitem value="TDA. " label="TDA. TIENDA"/>
+                    </combobox>      
+                    <cell align="left" valign="botton">
+                        <longbox id="txt_clidir_nroint" disabled="false" tooltiptext="Define el Numero del Interior, maximo 10 caracteres" maxlength="10" width="100px"/>                                                                        
+                    </cell>
+                    <cell align="right" valign="botton">
+                        <label value="MANZANA:"/>   
+                        <textbox id="txt_clidir_mza" maxlength="5" disabled="false" width="70px" tooltiptext="Manzana de la Direccion, maximo 5 caracteres"/>        
+                    </cell>
+                    <cell align="right" valign="botton">
+                        <label value="LOTE:"/>  
+                        <textbox id="txt_clidir_lote" maxlength="5" disabled="false" width="80px" tooltiptext="Lote de la Direccion, maximo 5 caracteres"/>        
+                    </cell>
+                </row>
+                <row>
+                    <cell align="right" valign="botton">
+                        <label value="SEGMENTO:"/>
+                    </cell>
+                    <combobox id="cb_clidir_idseg" readonly="true" tooltiptext="Seleccione una Opcion" width="180px">
+                        <comboitem label="(NINGUNO)"/>
+                        <comboitem value="A.H. " label="A.H. ASENTAMIENTO HUMANO"/>
+                        <comboitem value="ASC. " label="ASC. ASOCIACION"/>
+                        <comboitem value="CAS. " label="CAS. CASERIO"/>
+                        <comboitem value="C.H. " label="C.H. CONJUNTO HABITACIONAL"/>
+                        <comboitem value="COO. " label="COO. COOPERATIVA"/>
+                        <comboitem value="FND. " label="FND. FUNDO"/>
+                        <comboitem value="GRU. " label="GRU. GRUPO"/>
+                        <comboitem value="P.J. " label="P.J. PUEBLO JOVEN"/>
+                        <comboitem value="RES. " label="RES. RESIDENCIAL"/>
+                        <comboitem value="URB. " label="URB. URBANIZACIÓN"/>
+                        <comboitem value="U.V. " label="U.V. UNIDAD VECINAL"/>
+                        <comboitem value="Z.I. " label="Z.I. ZONA INDUSTRIAL"/>
+                    </combobox>      
+                    <cell align="left" valign="botton" colspan="5">
+                        <textbox id="txt_clidir_nomseg" disabled="false" tooltiptext="Define el Nombre del Segmento, maximo 50 caracteres" maxlength="50" width="660px"/>                                                                        
+                    </cell>
+                </row>
+                <row>
+                    <cell align="right" valign="botton">
+                        <label value="REFERENCIA:"/>
+                    </cell>     
+                    <cell align="left" valign="botton" colspan="5">
+                        <textbox id="txt_clidir_referencia" disabled="false" tooltiptext="Define la Referencia de la Direccion maximo 50 caracteres" maxlength="50" width="860px"/>                                                                        
+                    </cell>
+                </row>
+                <row>
+                    <cell align="right" valign="botton">
+                        <label value="DIRECCION:"/>
+                    </cell>     
+                    <cell align="left" valign="botton" colspan="5">
+                        <textbox id="txt_direccion" disabled="false" readonly="true" tooltiptext="Define la Direccion maximo 120 caracteres" maxlength="120" width="860px"/>                                                                        
+                    </cell>
+                </row>
+                <!--<row>
+                    <cell align="right" valign="botton">
+                        <label value="UBIGEO:"/>
+                    </cell>
+                    <cell colspan="3">
+                        <textbox id="txt_clidir_idubigeo"  maxlength="6" width="80px" tooltiptext="Define el Codigo del Ubigeo"/>      
+                        <textbox id="txt_clidir_ubigeo" disabled="true"  width="320px" tooltiptext="Define el Ubigeo"/>  
+                    </cell>
+                    
+                </row>
+                <row>
+                    <cell align="right" valign="botton">
+                        <label value="POSTAL:"/>
+                    </cell>
+                    <cell colspan="3">
+                        <textbox id="txt_clidir_idpost" maxlength="6" width="80px" tooltiptext="Define el Codigo de la Postal"/>      
+                        <textbox id="txt_clidir_postal" disabled="true"  width="320px" tooltiptext="Define la Postal"/>  
+                    </cell>
+                </row>
+                <row>
+                    <cell align="right" valign="botton">
+                        <label value="GIRO:"/>
+                    </cell>
+                    <cell colspan="3">
+                        <textbox id="txt_clidir_idgiro" maxlength="6" width="80px" tooltiptext="Define el Codigo del Giro"/>      
+                        <textbox id="txt_clidir_giro" disabled="true"  width="320px" tooltiptext="Define el giro de Negocio"/>  
+                    </cell>
+                </row>-->
+                <row>
+                    <button id="btn_aceptar" label="Aceptar" sclass="botones" width="70px"/>
+                    <button id="btn_cancelar" label="Cancelar" sclass="botones" width="70px"/>
+                </row>
+            </rows>
+        </grid>
+    </window>
+</zk>

@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuCxc.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_mantipodoc" width="100%" height="100%" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" onClick='alert("Imprimir")' />            
+                        <label value="MANTENIMIENTO TIPO DOCUMENTO" sclass="titulo_mant" style="margin-left:247px;"/>
+                    </toolbar>  
+                    <tabbox id="tabbox_tipdoc" apply="org.me.gj.controller.contabilidad.mantenimiento.ControllerTipDoc">
+                        <tabs>
+                            <tab id="tab_listatipdoc" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_tipdoc.getSelectedIndex() == -1)
+                                    {
+                                    tab_listatipdoc.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="750px" open="false">
+                                    <caption label="Opciones de Busqueda"/>
+                                    <hbox>
+                                        <space/>
+                                        <combobox id="cb_busqueda" readonly="true" placeholder="---seleccione Opcion----">
+                                            <comboitem label="CODIGO"/>
+                                            <comboitem label="DESCRIPCION"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <separator/>
+                                        <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda"/>
+                                        <toolbarbutton id="tbbtn_btn_buscar" image="/images/iconos/buscar.png" tooltiptext="Buscar" />            
+                                        <separator width="20px"/>
+                                        <cell align="right" valign="botton">
+                                            <label value="ACTIVO:" id="lbl_estado"/>
+                                        </cell>
+                                        <checkbox id="chk_busest" checked="true">
+                                            <attribute name="onCheck">
+                                                if(chk_busest.isChecked())
+                                                lbl_estado.setValue("ACTIVO");
+                                                else
+                                                lbl_estado.setValue("INACTIVO");
+                                            </attribute>
+                                        </checkbox>
+                                    </hbox>
+                                </groupbox>
+                                <separator height="10px"/>
+                                <listbox id="lst_tipdoc" mold="paging" pageSize="13" width="480px">
+                                    <listhead>
+                                        <listheader label="ID" width="80px"/>
+                                        <listheader label="DESCRIPCION"/>
+                                        <listheader label="ESTADO" width="80px"/>
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.tipdoc_id}"/>
+                                            <listcell label="${each.tipdoc_des}"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                            </tabpanel> 
+                            <tabpanel>
+                                <div >
+                                    <grid width="470px">
+                                        <columns>
+                                            <column width="120px"/>
+                                            <column width="350px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>                 
+                                                <cell align="right" valign="botton">
+                                                    <label value="CODIGO:"/>
+                                                </cell>
+                                                <textbox id="txt_tipdocid" disabled="true" tooltiptext="Define el Codigo del Tipo de Documento, Maximo 4 Dígitos"/>                                    
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_tipdocest" disabled="true" checked="true" label="ACTIVO" tooltiptext="Define el Estado del Tipo de Documento">
+                                                    <attribute name="onCheck">
+                                                        chk_tipdocest.setLabel(chk_tipdocest.isChecked()?"ACTIVO":"INACTIVO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="DESCRIPCION:"/>
+                                                </cell>
+                                                <textbox id="txt_tipdocdes" disabled="true" maxlength="50" width="300px" tooltiptext="Define la Descripción del Tipo de Documento, Máximo 50 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="CODIGO SUNAT:"/>
+                                                </cell>
+                                                <intbox id="txt_codsun" disabled="true" maxlength="3" width="80px" tooltiptext="Define el codigo otorgado por la sunat, Máximo 3 Digitos"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="MOVIMIENTO CxC:"/>
+                                                </cell>
+                                                <combobox id="cb_movcxc" disabled="true" width="150px" onCreate="self.setSelectedIndex(0)" tooltiptext="Define el tipo de documento">
+                                                    <comboitem label="(NINGUNO)" value=""/>
+                                                    <comboitem label="CARGO" value="C"/> 
+                                                    <comboitem label="ABONO" value="A"/>
+                                                    <comboitem label="CARGO/ABONO" value="CA"/>
+                                                </combobox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="PAGA COMISION:"/>
+                                                </cell>
+                                                <checkbox id="chk_pagcom" disabled="true" label="SI" checked="true" tooltiptext="Define si paga o no paga comision">
+                                                    <attribute name="onCheck">
+                                                        chk_pagcom.setLabel(chk_pagcom.isChecked()?"SI":"NO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ASUME CAJA:"/>
+                                                </cell>
+                                                <checkbox id="chk_asucaj" disabled="true" label="SI" checked="true" tooltiptext="Define si asume o no asume caja">
+                                                    <attribute name="onCheck">
+                                                        chk_asucaj.setLabel(chk_asucaj.isChecked()?"SI":"NO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="APLICA DEBITO:"/>
+                                                </cell>
+                                                <checkbox id="chk_aplideb" disabled="true" label="SI" checked="true" tooltiptext="Define si aplica o no aplica debito">
+                                                    <attribute name="onCheck">
+                                                        chk_aplideb.setLabel(chk_aplideb.isChecked()?"SI":"NO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="REPORTE:"/>
+                                                </cell>
+                                                <textbox id="txt_tipdocnomrep" disabled="true" maxlength="25" width="225px" tooltiptext="Define el nombre de Reporte, Máximo 25 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ORDEN:"/>
+                                                </cell>
+                                                <spinner id="sp_tipdocord" value="0" disabled="true" constraint="min 0" tooltiptext="Define el orden del Tipo de Documento"/>
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                </div>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+    
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>

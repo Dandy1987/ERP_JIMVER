@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north height="27px" sclass="arriba-main">
+            <include src="/plantillas/modulos/menulogistica.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_productos" ctrlKeys="#f2#f4#f7#f10#f9#f8" width="100%" height="100%" 
+                        border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo(F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar(F4)" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar(F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar(F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer(F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir(F8)" />   
+                        <label value="MANTENIMIENTO DE PRODUCTOS" sclass="titulo_mant" style="margin-left:240px;"/>
+                    </toolbar>
+                    
+                    <tabbox id="tabbox_productos" ctrlKeys="#f10" apply="org.me.gj.controller.logistica.mantenimiento.ControllerProductos">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO" >
+                                <attribute name="onSelect">
+                                    if (!tab_lista.isDisabled()){
+                                    if (lst_productos.getSelectedIndex() == -1){
+                                    if(txt_prodes.value==""){
+                                    tab_lista.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla");   
+                                    }
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                            <tab id="tab_otros" label="OTROS"/>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_pro">
+                                    <groupbox width="986px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda" />
+                                        <hbox align="center">
+                                            <cell align="right" valign="botton">
+                                                <label value="FILTRO:"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_busqueda" readonly="true" placeholder="--SELECCIONE--">
+                                                <comboitem label=" "/>
+                                                <comboitem label="ID"/>
+                                                <comboitem label="CODIGO"/>
+                                                <comboitem label="DESCRIPCION"/>
+                                                <comboitem label="PROVEEDOR"/>
+                                                <comboitem label="LINEA"/>
+                                                <comboitem label="CODIGO ORIGEN"/>
+                                                <comboitem label="PESO"/>
+                                                <comboitem label="CLASIFICACION"/>
+                                                <attribute name="onSelect">
+                                                    txt_busqueda.setDisabled(false);
+                                                </attribute>
+                                            </combobox>
+                                            <space width="2px"/>
+                                            <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" />
+                                            <space width="10px"/>
+                                            <cell align="right" valign="botton">
+                                                <label value="ESTADO:" id="lbl_estado"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <checkbox id="chk_busest" checked="true">
+                                                <attribute name="onCheck">
+                                                    if(chk_busest.isChecked())
+                                                    lbl_estado.setValue("ACTIVO");
+                                                    else
+                                                    lbl_estado.setValue("INACTIVO");
+                                                </attribute>
+                                            </checkbox>
+                                            <space width="2px"/>
+                                            <button id="tbbtn_btn_buscar" label="Buscar" sclass="botones"/> 
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <listbox id="lst_productos" mold="paging" pageSize="18" width="986px" height="460px" >
+                                        <listhead>
+                                            <listheader label="ID" width="70px" align="center"/>
+                                            <listheader label="PRODUCTO"/>
+                                            <listheader label="PROVEEDOR" width="270px"/>
+                                            <listheader label="LINEA" width="190px"/>
+                                            <listheader label="PESO" width="46px" align="right"/>
+                                            <listheader label="UNID" width="35px" align="center"/>
+                                            <listheader label="C" width="20px" align="center"/>
+                                            <listheader label="EST" width="25px" align="center"/>
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.pro_id}"/>
+                                                <listcell label="${each.pro_des}"/>
+                                                <listcell label="${each.pro_sigprov}"/> 
+                                                <listcell label="${each.pro_linea}"/>
+                                                <listcell label="${each.pro_peso}"/>
+                                                <listcell label="${each.pro_unipeso}"/>
+                                                <listcell label="${each.pro_clas}"/>
+                                                <listcell>
+                                                    <checkbox checked="${each.valor}" disabled="true"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>                                    
+                                    <space height="5px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador del Producto"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación del Producto"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó el Producto"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación del Producto"/>    
+                                    </hbox>
+                                </div>    
+                            </tabpanel>
+                            <tabpanel>
+                                <div id="div_man_prod">
+                                    <groupbox  style="background-color:#FFFFFF" closable="false" width="988px">
+                                        <!-- Pestaña Datos Generales -->
+                                        <caption label="DATOS GENERALES" />
+                                        <vbox>
+                                            <hbox align="center" >
+                                                <label value="CODIGO :"/>                                                
+                                                <textbox id="txt_proid" width="60px" maxlength="9" disabled="true" tooltiptext="Código del Producto, Máximo 9 caracteres"/>                                                
+                                                <space width="8px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="TIPO :"/> 
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>                                                   
+                                                <combobox id="cb_protip" width="160px" maxlength="50" disabled="true" readonly="true" tooltiptext="Tipo del Producto">
+                                                    <comboitem label="BIEN" value="B"/> 
+                                                    <comboitem label="SERVICIO" value="S"/> 
+                                                </combobox>
+                                                <space width="8px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="CLASIFICACION :"/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>                                                     
+                                                <combobox id="cb_proclas" width="160px" maxlength="50" disabled="true" readonly="true" tooltiptext="Clasificación del Producto">
+                                                    <comboitem label="BONIFICACION" value="B"/>
+                                                    <comboitem label="NORMAL" value="N"/> 
+                                                    <comboitem label="CUPON" value="C"/> 
+                                                    <comboitem label="CANJE" value="J"/> 
+                                                </combobox>                                                                                                
+                                                <space width="8px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="LINEA :"/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell> 
+                                                <textbox id="txt_codlinea" disabled="true" maxlength="3"  width="40px" tooltiptext="Código de la Linea, Máximo 3 caracteres"/>
+                                                <textbox id="txt_deslinea" disabled="true" width="260px" tooltiptext="Descripción de la Linea, Máximo 50 caracteres"/>                                                
+                                            </hbox>
+                                            <hbox align="center" >
+                                                <cell align="right" valign="center">
+                                                    <label value="SUBLINEA :"/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell> 
+                                                <textbox id="txt_codsublinea" disabled="true" maxlength="6" width="38px" tooltiptext="Código de la Sublinea, Maximo 6 caracteres"/>
+                                                <textbox id="txt_dessublinea" disabled="true" width="230px" tooltiptext="Descripción de la Sublinea, Máximo 50 caracteres"/>
+                                                <space width="5px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="MARCA :"/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell> 
+                                                <textbox id="txt_codmarca" disabled="true" maxlength="4" width="25px" tooltiptext="Código de la Linea, Máximo 4 caracteres"/>
+                                                <textbox id="txt_desmarca" disabled="true" width="215px" tooltiptext="Descripción de la Marca, Máximo 50 caracteres"/>                                                   
+                                                <space width="5px"/>
+                                                <!-- Descripcion del Producto -->        
+                                                <cell align="right" valign="center">
+                                                    <label value="ADJETIVO :" />
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>                                                 
+                                                <textbox id="txt_prodescor" width="220px" maxlength="25" disabled="true" tooltiptext="Adjetivo del Producto, Máximo 25 dÍgitos"  /> 
+                                            </hbox>                                                                                                                                
+                                            <hbox align="center" >
+                                                <label value="DESCRIPCION LARGA :"/>
+                                                <textbox id="txt_prodes" width="450px" maxlength="100" disabled="true" tooltiptext="Descripción del Producto, Máximo 100 caracteres"  />                                                                                                
+                                                <space width="40px"/>
+                                                <!-- Indicador para ver si se puede realizar cambio de este Producto -->
+                                                <label value="CAMBIO"/>                                                
+                                                <checkbox id="chk_proafecam" checked="true" disabled="true" tooltiptext="Habilitar para Cambio">                                                    
+                                                </checkbox>   
+                                                <space width="5px"/>
+                                                <!-- Estado del Producto -->
+                                                <label value="ESTADO :"/>                                                
+                                                <checkbox id="chk_proest" checked="true" disabled="true" tooltiptext="Estado del Producto">                                                    
+                                                </checkbox> 
+                                            </hbox>
+                                        </vbox>
+                                    </groupbox>
+                                    <separator height="10px"/>
+                                    <hbox>
+                                        <vbox>
+                                            <groupbox closable="false" style="background-color:#FFFFFF" width="988px">
+                                                <caption label="DATOS DE COMPRA" width="605px"/> 
+                                                <vbox>
+                                                    <hbox align="center" >
+                                                        <cell align="right" valign="center">
+                                                            <label value="PROVEEDOR :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                      
+                                                        <textbox id="txt_provid" disabled="true" width="55px" maxlength="8" tooltiptext="Codigo de Proveedor Máximo 8 caracteres"/>
+                                                        <textbox id="txt_provdes" disabled="true" width="315px" maxlength="50" tooltiptext="Descripción del Proveedor, Máximo 60 caracteres"/>
+                                                        <space width="5px"/>  
+                                                        <cell align="right" valign="center">
+                                                            <label value="COD.ORIGEN :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                     
+                                                        <textbox id="txt_procodori" disabled="true" width="110px" maxlength="15" tooltiptext="Código de origen del Producto, Máximo 15 caracteres"/>
+                                                        <space width="5px"/>
+                                                        <label value="EAN13 :"/>
+                                                        <textbox id="txt_procodean13prov" disabled="true" width="90px" maxlength="15" tooltiptext="Código EAN43 del Producto, Máximo 15 caracteres"/>
+                                                        <space width="5px"/>
+                                                        <label value="EAN14 :"/>
+                                                        <textbox id="txt_procodean14prov" disabled="true" width="90px" maxlength="15" tooltiptext="Código EAN14 del Producto, Máximo 15 caracteres"/>
+                                                    </hbox>
+                                                    <hbox align="center">                                                        
+                                                        <!--<space width="5px"/>  -->
+                                                        <cell align="right" valign="center">
+                                                            <label value="UNIDAD DE MANEJO :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                
+                                                        <combobox id="cb_prounicom" width="120px" disabled="true" readonly="true" maxlength="50"  tooltiptext="Unidad de manejo para la Compra, Máximo 50 caracteres">
+                                                            <template name="model">
+                                                                <comboitem label="${each.tab_subdes}" value="${each.tab_subdir}"/>
+                                                            </template>
+                                                        </combobox>
+                                                        <space width="15px"/>
+                                                        <cell align="right" valign="center">
+                                                            <label value="EMPAQUE INDIVIDUAL :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                        
+                                                        <combobox id="cb_proempprescom" width="120px" disabled="true" readonly="true" maxlength="50"  tooltiptext="Empaque Individual de Compra, Máximo 50 caracteres">
+                                                            <template name="model">
+                                                                <comboitem label="${each.tab_subdes}" value="${each.tab_subdir}"/>
+                                                            </template>
+                                                        </combobox>     
+                                                        <space width="15px"/>
+                                                        <cell align="right" valign="center">
+                                                            <label value="UNIDAD DE PRESENTACION :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                         
+                                                        <intbox id="txt_prouniprescom" width="35px" disabled="true" maxlength="3"  style="text-align: right;" tooltiptext="Unidad presentación de Compra, Máximo 3 caracteres"/>
+                                                        <space width="10px"/>
+                                                        <cell align="right" valign="center">
+                                                            <label value="SIGNO :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>
+                                                        <combobox id="cb_proconv" width="50px" disabled="true" readonly="true"   tooltiptext="Signo de Conversión * o / del Producto, Máximo 1 caracter" style="text-align: center;">
+                                                            <comboitem label="*" value="*"/>
+                                                            <comboitem label="/" value="/"/>                                              
+                                                        </combobox>                                                                                                               
+                                                        <space width="10px"/>
+                                                        <cell align="right" valign="center">
+                                                            <label value="CONVERSION :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                               
+                                                        <intbox id="txt_prounimaster" disabled="true" width="38px" maxlength="5" style="text-align: right;" tooltiptext="Unidad Master de Conversión, Máximo 5 caracteres"/>                                                        
+                                                    </hbox>                                                    
+                                                </vbox>
+                                            </groupbox>
+                                            <separator height="10px"/>
+                                            <groupbox  style="background-color:#FFFFFF" closable="false" width="988px">
+                                                <caption label="DATOS DE VENTA" width="405px"/>
+                                                <vbox>
+                                                    <hbox align="center"> 
+                                                        <cell align="right" valign="center">
+                                                            <label value="UNIDAD DE MANEJO :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                     
+                                                        <combobox id="cb_prouniven" width="100px" disabled="true" readonly="true" maxlength="50" tooltiptext="Unidad de Manejo Para la Venta del Producto, Máximo 50 caracteres">
+                                                            <template name="model">
+                                                                <comboitem label="${each.tab_subdes}" value="${each.tab_subdir}"/>
+                                                            </template>
+                                                        </combobox>
+                                                        <space width="10px"/>
+                                                        <cell align="right" valign="center">
+                                                            <label value="UNIDAD DE PRESENTACION :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                      
+                                                        <intbox id="txt_prounipresven" width="40px" disabled="true" maxlength="3"  style="text-align: right;" tooltiptext="Unidad Presentación de Venta del Producto, Máximo 3 caracteres"/>                                                                                                           
+                                                        <space width="10px"/>
+                                                        <cell align="right" valign="center">
+                                                            <label value="EMPAQUE INDIVIDUAL :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                     
+                                                        <combobox id="cb_proemppresven" width="140px" disabled="true" maxlength="50" readonly="true"  tooltiptext="Enpaque Individual de Venta del Producto, Máximo 50 caracteres">
+                                                            <template name="model">
+                                                                <comboitem label="${each.tab_subdes}" value="${each.tab_subdir}"/>
+                                                            </template>
+                                                        </combobox>   
+                                                        <space width="15px"/>                                        
+                                                        <cell align="right" valign="center">
+                                                            <label value="UNIDAD DE BODEGUERO :"/>
+                                                        </cell>                                                      
+                                                        <intbox id="txt_prounibodegero" width="50px" disabled="true" maxlength="3"  style="text-align: right;" tooltiptext="Unidad Presentación de bodeguero, Máximo 3 caracteres"/>                                                                                                
+                                                    </hbox>
+                                                    <hbox align="center">  
+                                                        <cell align="right" valign="center">
+                                                            <label value="VENTA X FRACCION :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                         
+                                                        <combobox id="cb_profrac" width="100px" disabled="true" maxlength="50" readonly="true"  tooltiptext="Fracción del Producto, Máximo 50 caracteres">
+                                                            <comboitem label="ENTERO" value="E"/>
+                                                            <comboitem label="MEDIO" value="M"/> 
+                                                            <comboitem label="CUARTO" value="C"/> 
+                                                            <comboitem label="TODOS" value="T"/>
+                                                        </combobox>
+                                                        <space width="10px"/> 
+                                                        <cell align="right" valign="center">
+                                                            <label value="STOCK NO FACTURABLE :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                    
+                                                        <intbox id="txt_prostknofact" width="50px" disabled="true" maxlength="5"  style="text-align: right;" tooltiptext="Stock no Facturable, Máximo 5 caracteres"/>
+                                                        <space width="10px"/>
+                                                        
+                                                        <cell align="right" valign="center">
+                                                            <label value="PROCEDENCIA :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                     
+                                                        <combobox id="cb_proprocedencia" width="150px" disabled="true" readonly="true" maxlength="50"  tooltiptext="Procedencia del Producto, Máximo 50 caracteres">
+                                                            <comboitem label="NACIONAL" value="N"/>
+                                                            <comboitem label="IMPORTADO" value="I"/> 
+                                                        </combobox>
+                                                        <space width="10px"/>
+                                                        <cell align="right" valign="center">
+                                                            <label value="ROTACION :"/> 
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                        
+                                                        <combobox id="cb_prorot" width="150px" disabled="true" readonly="true" maxlength="50"  tooltiptext="Rotación del Producto, Máximo 50 caracteres">
+                                                            <comboitem label="NORMAL" value="1"/>
+                                                            <comboitem label="ALTA" value="2"/>
+                                                            <comboitem label="BAJA" value="3"/>
+                                                        </combobox>                                                    
+                                                    </hbox>
+                                                    <hbox align="center">
+                                                        <cell align="right" valign="center">
+                                                            <label value="PESO :"/>  
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                    
+                                                        <doublebox id="txt_propeso" disabled="true" locale="en_US"  format="##0.#" maxlength="5" width="40px" tooltiptext="Peso del producto, Máximo 5 caracteres" style="text-align: right;" />
+                                                        <space width="10px"/>
+                                                        <cell align="right" valign="center">
+                                                            <label value="UNIDAD DE MEDIDA :"/>    
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                      
+                                                        <combobox id="cb_prounimed" disabled="true" readonly="true" maxlength="60" width="152px" tooltiptext="Unidad de Medida, Máximo 50 caracteres">
+                                                            <template name="model">
+                                                                <comboitem label="${each.tab_subdes}" value="${each.tab_subdir}"/>
+                                                            </template>
+                                                        </combobox>
+                                                        <space width="10px"/>
+                                                        <cell align="right" valign="center">
+                                                            <label value="ALTURA :"/>   
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                     
+                                                        <doublebox id="txt_proalt" disabled="true" locale="en_US" format="#0.##" maxlength="5" width="45px" tooltiptext="Altura del producto, Máximo 5 caracteres" style="text-align: right;"/>                                                        
+                                                        <label value="m"/>
+                                                        <space width="10px"/>
+                                                        <cell align="right" valign="center">
+                                                            <label value="ANCHO :"/> 
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                       
+                                                        <doublebox id="txt_proanc" disabled="true" locale="en_US" format="#0.##" maxlength="5" width="45px" tooltiptext="Ancho del producto, Máximo 5 caracteres" style="text-align: right;" />
+                                                        <label value="m"/>
+                                                        <space width="10px"/> 
+                                                        <cell align="right" valign="center">
+                                                            <label value="LARGO :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                      
+                                                        <doublebox id="txt_prolar" disabled="true" locale="en_US" format="#0.##" maxlength="5" width="45px" tooltiptext="Largo del producto, Máximo 5 caracteres" style="text-align: right;" />
+                                                        <label value="m"/>
+                                                        <space width="10px"/>
+                                                        <cell align="right" valign="center">
+                                                            <label value="VOLUMEN :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                    
+                                                        <doublebox id="txt_provol" disabled="true" locale="en_US" format="###0.#####" maxlength="10" width="50px" tooltiptext="Volumen del producto, Máximo 5 caracteres" style="text-align: right;" />
+                                                        <label value="m3"/>
+                                                    </hbox>
+                                                    <hbox>
+                                                        <cell align="right" valign="center">
+                                                            <label value="PROV. CON PRESUPUESTO :"/>
+                                                            <span class="colorRojo">*</span>  
+                                                        </cell>                                                      
+                                                        <textbox id="txt_provpresuid" disabled="true" width="60px" maxlength="5" tooltiptext="Codigo de Proveedor con Presupuesto,  Maximo 5 caracteres"/>
+                                                        <textbox id="txt_provpresudes" disabled="true" width="340px" maxlength="50" tooltiptext="Descripcion Abreviada del Proveedor con Presupuesto, Maximo 50 caracteres"/>
+                                                        <space width="10px"/>  
+                                                    </hbox>   
+ 
+                                                </vbox>
+                                            </groupbox>
+                                            <separator height="10px"/>
+                                            <hbox>
+                                                <vbox>
+                                                    <groupbox closable="false" style="background-color:#FFFFFF" width="720px" >
+                                                        <caption label="DATOS SUNAT"/>
+                                                        <vbox>
+                                                            <hbox align="center">
+                                                                <cell align="right" valign="center">
+                                                                    <label value="TIPO EXISTENCIA :"/>
+                                                                    <span class="colorRojo">*</span>  
+                                                                </cell>                                                      
+                                                                <combobox id="cb_proextsun" width="300px" disabled="true" maxlength="50" readonly="true"  tooltiptext="Tipo de Existencia Sunat, Máximo 50 caracteres">
+                                                                    <template name="model">
+                                                                        <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                                    </template>
+                                                                </combobox>
+                                                                <space width="5px"/>
+                                                                <cell align="right" valign="center">
+                                                                    <label value="UNIDAD DE MEDIDA :"/>
+                                                                    <span class="colorRojo">*</span>  
+                                                                </cell>                                                    
+                                                                <combobox id="cb_promedsun" width="170px" disabled="true" maxlength="50"  readonly="true" tooltiptext="Medida que da la Sunat, Máximo 50 caracteres">
+                                                                    <template name="model">
+                                                                        <comboitem label="${each.tab_subdes}" value="${each.tab_subdir}"/>
+                                                                    </template>
+                                                                </combobox>
+                                                            </hbox>
+                                                            <hbox align="center" >
+                                                                <cell align="right" valign="center">
+                                                                    <label value="IMPUESTO :"/>
+                                                                    <span class="colorRojo">*</span>  
+                                                                </cell> 
+                                                                <space width="20px"/>
+                                                                <combobox id="cb_conimp" disabled="true" readonly="true" maxlength="50" width="150px" tooltiptext="Condición impuesto, Máximo 50 caracteres">
+                                                                    <comboitem label="AFECTO" value="A"/>
+                                                                    <comboitem label="INAFECTO" value="I"/>
+                                                                    <comboitem label="EXONERADO" value="E"/>
+                                                                </combobox>   
+                                                                <space width="15px"/>
+                                                        
+                                                                <cell align="right" valign="center">
+                                                                    <label value="TIPO DE IMPUESTO :"/>
+                                                                    <span class="colorRojo">*</span>  
+                                                                </cell> 
+                                                                <combobox id="cb_proimp" disabled="true" readonly="true" maxlength="50" width="100px" tooltiptext="Codigo impuesto, Máximo 50 caracteres">
+                                                                    <template name="model">
+                                                                        <comboitem label="${each.imp_des}" value="${each.imp_id}"/>
+                                                                    </template>
+                                                                </combobox>
+                                                                <space width="15px"/>
+                                                                <cell align="right" valign="botton">
+                                                                    <label value="AFECTO A PERCEPCION :"/>
+                                                                    <span class="colorRojo">*</span>  
+                                                                </cell>
+                                                                <combobox id="cb_proindperc" width="70px" disabled="true" readonly="true" maxlength="50"  tooltiptext="Define si tiene percepción o no, Máximo 50 caracteres">
+                                                                    <comboitem label=" SI " value="1"/>
+                                                                    <comboitem label=" NO " value="2"/>
+                                                                </combobox>  
+                                                            </hbox>
+                                                        </vbox>
+                                                    </groupbox>
+                                                    <groupbox  closable="false" style="background-color:#FFFFFF" width="720px" height="110px">
+                                                        <caption label="ORDEN DEL PRODUCTO"/>
+                                                        <vbox>
+                                                            <hbox align="center">
+                                                                <label value="Nº KARDEX :"/>
+                                                                <spinner id="sp_proordkar" value="0" disabled="true" constraint="min 0" width="50px" maxlength="4" tooltiptext="Número de kardex, Máximo 4 caracteres"/>
+                                                                <space width="20px"/>                                                    
+                                                                <label value="LISTA DE PRECIO :"/>                                                    
+                                                                <spinner id="sp_prolstpre" value="0" disabled="true" constraint="min 0" width="50px" maxlength="4" tooltiptext="Orden Lista de Precio, Máximo 4 caracteres"/>                                                 
+                                                                <space width="20px"/>                                                    
+                                                                <label value="Nº CONSOLIDADO :"/>                                                    
+                                                                <spinner id="sp_procons" value="0" disabled="true" constraint="min 0" width="50px" maxlength="4" tooltiptext="Número de Consolidado, Máximo 4 caracteres"/>                                                    
+                                                                <space width="20px"/>                                                    
+                                                                <label value="ORDEN :"/>                                                    
+                                                                <spinner id="sp_ord" value="0" disabled="true" constraint="min 0" width="50px" maxlength="4" tooltiptext="Orden del Registro, Máximo 4 caracteres"/>
+                                                            </hbox>                                                             
+                                                            <space height="5px"/>
+                                                            <hbox align="center">                                      
+                                                                <label value="DESCRIPCION COMPUTARIZADA :"/>
+                                                            </hbox> 
+                                                            <hbox align="center">                                                  
+                                                                <textbox id="txt_prodescom" width="560px" maxlength="60" disabled="true" tooltiptext="Descripción del Producto, Máximo 38 caracteres" class="resaltar" />
+                                                                <checkbox id="chk_elegir" checked="true" disabled="true" tooltiptext="Descripcion del Producto Sugerido"/>                                                                                                                                                                                                                                      
+                                                            </hbox>                                               
+                                                        </vbox>
+                                                    </groupbox>
+                                                </vbox>
+                                                <vbox>
+                                                    <groupbox closable="false" style="background-color:#FFFFFF" width="263px" height="190px" >
+                                                        <caption label="DATOS CODIGO DE BARRAS" width="680px"/> 
+                                                        <vbox>
+                                                            <hbox align="center">
+                                                                
+                                                                <cell align="right" valign="botton">
+                                                                    <label value="TIPO :"/>
+                                                                    <span class="colorRojo">*</span>  
+                                                                </cell>
+                                                                <separator height="10px"/>                                                     
+                                                                <combobox id="cb_protipcodbar" disabled="true" readonly="true" maxlength="50" width="200px" tooltiptext="Tipo de Código de Barra">
+                                                                    <comboitem label="CODIGO EAN 13" value="EAN13"/>
+                                                                    <!--<comboitem label="CODIGO EAN 14" value="EAN14"/>-->
+                                                                </combobox>
+                                                            </hbox> 
+                                                            <space height="5px"/>
+                                                            <hbox align="center"> 
+                                                                <div id="img_codigo" width="235px" height="80px" style="text-align:center; border:1px solid; "  />                                                    
+                                                            </hbox>
+                                                        </vbox>                                                
+                                                    </groupbox>
+                                                </vbox>
+                                            </hbox>
+                                        </vbox> 
+                                    </hbox>                                  
+                                </div>    
+                            </tabpanel>
+                            <tabpanel>
+                                <div id="div_lst_otros">
+                                    <hbox>
+                                        <space width="5px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="IMAGEN :"/>
+                                            <span class="colorRojo">*</span> 
+                                        </cell>                                                                                                  
+                                        <textbox id="txt_proimg" width="500px" maxlength="40" disabled="true" readonly="true" tooltiptext="Imagen del Producto, Máximo 40 caracteres"/>
+                                        <toolbarbutton id="tbbtn_btn_imagenpro" image="/images/iconos/buscar.png" tooltiptext="Buscar Imagen Producto" upload="true" disabled="true"/>     
+                                    </hbox>                                                                                                            
+                                    <vbox> 
+                                        <groupbox  style="background-color:#FFFFFF" closable="false" width="988px" height="520px" >
+                                            <caption label="Imagen del Producto - TAMAÑO MAX = 480px X 480px "/>                                
+                                            <div id="img_foto2" width="970px" height="490px">
+                                                <div id="img_foto" class="centrarImagen">
+                                                    
+                                                </div>    
+                                            </div>                                            
+                                        </groupbox>
+                                    </vbox>                                                                                                                          
+                                </div>
+                            </tabpanel>
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south height="25px" border="0">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>           
+</zk>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report5" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="647d5c18-d975-4c44-8599-b0cbe0971e74">
+	<property name="ireport.zoom" value="2.357947691000003"/>
+	<property name="ireport.x" value="232"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="c_idemp" class="java.lang.Integer"/>
+	<parameter name="c_idsuc" class="java.lang.Integer"/>
+	<parameter name="n_tipodoc" class="java.lang.Integer"/>
+	<parameter name="c_nrodoc" class="java.lang.String"/>
+	<queryString language="plsql">
+		<![CDATA[{call codijisa.pack_tplvacgoz.p_listVacPersonal($P{c_idemp},$P{c_idsuc},$P{n_tipodoc},$P{c_nrodoc},$P{ORACLE_REF_CURSOR})
+
+}]]>
+	</queryString>
+	<field name="emp_des" class="java.lang.String"/>
+	<field name="suc_des" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="tabla_descri" class="java.lang.String"/>
+	<field name="Plvg_Fecini" class="java.util.Date"/>
+	<field name="plvg_fecfin" class="java.util.Date"/>
+	<field name="plvg_periodo" class="java.lang.String"/>
+	<field name="plppag_id" class="java.lang.String"/>
+	<field name="dias" class="java.lang.Integer"/>
+	<field name="plvg_glosa" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="14fed33c-fba2-4870-a6e2-cdc43279368d" mode="Transparent" x="180" y="10" width="277" height="40" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Left" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="14" isBold="true" isItalic="false" isUnderline="true" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[CONTROL DE VACACIONES]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e7ddf254-becf-4f2a-801c-0cfd7daeb329" x="11" y="30" width="169" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{suc_des}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7d30529b-11f1-45bb-8efc-6da318e07647" x="11" y="10" width="169" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{emp_des}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="6bf7d736-7a9e-43b7-b450-ea94e000ef46" x="486" y="10" width="69" height="14"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4d20c2b7-530c-4e7f-b246-8b2be8c27252" x="457" y="24" width="29" height="26"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HORA :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e9be7828-62e8-452a-a46c-b9dc6252be45" x="457" y="10" width="29" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Top">
+					<font size="6" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA :]]></text>
+			</staticText>
+			<textField pattern="h.mm a">
+				<reportElement uuid="c1267818-4e6c-4075-98d9-ef7aa4b9118c" x="486" y="24" width="69" height="26"/>
+				<textElement>
+					<font size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="40">
+			<textField>
+				<reportElement uuid="77c02815-8c2b-48bc-861a-aaab0986ede4" x="0" y="0" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="23ee86ac-af11-4339-b762-7488c51eb99b" x="0" y="20" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{tabla_descri}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="4b362406-9916-4eee-b10c-7fb6782f812d" mode="Opaque" x="79" y="1" width="100" height="30" forecolor="#FFFFFF" backcolor="#0099FF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[FECHA FIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f6e1f73-ad8b-4ef3-8d45-d46d2dc4d491" mode="Opaque" x="0" y="1" width="79" height="30" forecolor="#FFFFFF" backcolor="#0099FF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[FECHA INICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fa8cba85-7a00-44ec-8f06-25441d9caa19" mode="Opaque" x="179" y="1" width="89" height="30" forecolor="#FFFFFF" backcolor="#0099FF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[PERIODO GOZADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="afb636ae-9e3f-46d4-afbd-e534fb2651d6" mode="Opaque" x="387" y="1" width="168" height="30" forecolor="#FFFFFF" backcolor="#0099FF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[GLOSA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f0bf7d1a-364d-4d4d-b9a8-6845e104da7c" mode="Opaque" x="268" y="1" width="57" height="30" forecolor="#FFFFFF" backcolor="#0099FF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[DIAS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="667b2b2a-0036-4118-a887-a0a3aeed5352" mode="Opaque" x="325" y="1" width="62" height="30" forecolor="#FFFFFF" backcolor="#0099FF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[PERIODO DE TRABAJO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="a5e3c331-64e4-4e16-8d41-1d5ec23d1c56" x="0" y="0" width="79" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{Plvg_Fecini}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="419194b7-8700-4aa9-b028-561b08e50835" x="79" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{plvg_fecfin}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="b230a7cb-a624-42ba-9ac0-f87c87a36fff" x="325" y="0" width="62" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{plvg_periodo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="34d285fc-4809-4c2a-9e33-407870185f1e" x="180" y="0" width="88" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{plppag_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c7f7acdd-79e8-4d5a-bed7-2d421a45c377" x="268" y="0" width="57" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{dias}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="95308cf5-8f22-44e9-b724-cff829bc2014" x="387" y="0" width="168" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{plvg_glosa}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

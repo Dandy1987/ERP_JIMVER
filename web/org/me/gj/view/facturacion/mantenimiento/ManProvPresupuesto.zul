@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuFacturacion.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_manprovpresu" width="100%" ctrlKeys="#f2#f4#f7#f10#f9#f8" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones" width="99.75%" >
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)"  />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar (F4)" />                 
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png"  tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <label value="MANTENIMIENTO DE PROVEEDOR CON PRESUPUESTO" sclass="titulo_mant" style="margin-left:214px;"/>
+                    </toolbar> 
+                    <tabbox id="tabbox_provpresu"  apply="org.me.gj.controller.facturacion.mantenimiento.ControllerProvPresupuesto">
+                        <tabs>
+                            <tab id="tab_listaprovpresu" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_provpresu.getSelectedIndex() == -1)
+                                    {
+                                    tab_listaprovpresu.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <!-- Para el Listado -->
+                            <tabpanel>                   
+                                <groupbox width="985px" closable="false">
+                                    <caption label="Opciones de Busqueda"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una Opcion">
+                                            <comboitem label=" "/>
+                                            <comboitem label="ID"/>
+                                            <comboitem label="PROVEEDOR"/>
+                                            <comboitem label="DESCRIP. ABREVIADA"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <separator/>
+                                        <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                        <separator width="20px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="ESTADO:" id="lbl_estado"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busest" readonly="true" tooltiptext="Seleccione una Opcion" width="110px">
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+                                        <separator width="20px"/>
+                                        <button id="tbbtn_btn_buscar" sclass="botones" label="Consultar" tooltiptext="Buscar" />
+                                    </hbox>
+                                </groupbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_provpresu" mold="paging" pageSize="18" width="985px" height="460px">
+                                    <listhead>
+                                        <listheader label="ID" width="50px" align="center"/>
+                                        <listheader label="PROVEEDOR" />
+                                        <listheader label="DESCRIPCION" width="300px"/>
+                                        <listheader label="DESCRIP. ABREVIADA" width="200px"/>  
+                                        <listheader label="EST" width="25px"/>
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.provpresu_id}"/>
+                                            <listcell label="${each.provpresu_provdes}"/>
+                                            <listcell label="${each.provpresu_des}"/>
+                                            <listcell label="${each.provpresu_desabre}"/>
+                                            <listcell >
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="10"  readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador del Proveedor con Presupuesto"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creacion del Proveedor con Presupuesto"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modifico el Proveedor con Presupuesto"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificacion del Proveedor con Presupuesto"/>    
+                                </hbox>
+                            </tabpanel>
+                            <!-- Para el mantenimiento -->
+                            <tabpanel>
+                                <div >                                                               	
+                                    <grid width="988px">
+                                        <columns>
+                                            <column width="140px"/>
+                                            <column width="455px"/>
+                                            <column width="135px"/>
+                                            <column width="255px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>                 
+                                                <cell align="right" valign="botton">
+                                                    <label value="ID:"/>
+                                                </cell>
+                                                <textbox id="txt_provpresu" disabled="true" tooltiptext="Define el Codigo del Proveedor con Presupuesto"/>                                    
+                                	
+                                                <cell align="right" valign="botton">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_estado" checked="true" label="ACTIVO" disabled="true" tooltiptext="Define el Estado del Proveedor con Presupuesto">
+                                                    <attribute name="onCheck">chk_estado.setLabel(chk_estado.isChecked()?"ACTIVO":"INACTIVO");</attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ID PROVEEDOR:"/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <hbox>
+                                                    <textbox id="txt_provid" width="60px" maxlength="8" disabled="true" tooltiptext="Define el codigo del Proveedor, maximo 8 caracteres"  />
+                                                    <textbox id="txt_provdes" width="350px" maxlength="60"  disabled="true" tooltiptext="Define la Razon Social del Proveedor, maximo 60 caracteres"/>                                              
+                                                </hbox> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="DESCRIPCION:"/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_descrip" disabled="true" maxlength="50" width="420px" tooltiptext="Define la Descripcion del Proveedor con presupuesto, Maximo 50 caracteres"/>	
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="DESC.ABREVIADA:"/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_desabre" disabled="true" maxlength="25" width="225px" tooltiptext="Define la descripcion abreviada, Maximo 50 caracteres"/>
+                                            </row>
+                                        </rows>
+                                    </grid>                               
+                                </div>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window>
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

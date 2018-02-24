@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_inobsercxc" title="OBSERVACIONES DEL CLIENTE" border="normal" width="640px" height="470px"
+            position="center,center" closable="true" apply="org.me.gj.controller.cxc.informes.ControllerIngObserCxc"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <separator height="10px"/>
+            
+            <hbox align="center">                 
+                <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png"  tooltiptext="Guardar" />
+                 
+                <space width="100px"/>
+                
+                <cell align="right" valign="bottom">
+                    <label value="VER GLOSA:" />
+                     <space width="10px"/>
+                    <combobox id="cb_filtro" readonly="true" tooltiptext="Seleccione una Opcion">                        
+                        <comboitem label="" value="%%"/>
+                        <comboitem label="CLIENTE" value="1"/>
+                        <comboitem label="TRANSACCIONAL" value="2"/>                        
+                    </combobox>
+                </cell>
+               
+            </hbox>
+            <separator height="10px"/> 
+            <listbox id="lst_inobsercxc" mold="paging" pageSize="9" width="605px" height="205px">
+                <listhead>
+                    <listheader label="OP" width="25px"/>
+                    <listheader label="OBSERVACION" width="350px"/>
+                    <listheader label="FECHA Y HORA" width="130px" style="text-align:center"/>
+                    <listheader label="USUARIO" width="100px"/>                   
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.cli_nroope}"/>
+                        <listcell label="${each.cli_observa}"/>
+                        <listcell label="${each.s_cli_fecadd}" style="text-align:center"/>
+                        <listcell label="${each.cli_usuadd}"/>
+                    </listitem>
+                </template>
+            </listbox>
+
+            <separator/>
+             <cell align="right" valign="center">                                            
+                <label value="OBSERVACION:"/>
+                <span class="colorRojo">*</span>
+            </cell>
+            <textbox multiline="true" id="txt_obs" maxlength="1000" disabled="true" width="600px" style="resize: none;" height="100px" tooltiptext="Define las Observacion, Maximo 1000 caracteres"/>
+		    <separator/>               
+            
+            <hbox align="center">
+                <space width="130px"/>
+                <cell align="right" valign="center">                                            
+                    <label value="USU. ADD:"/>
+                </cell>
+                <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Observacion del Cliente"/>   
+                <space width="30px"/>
+                <cell align="right" valign="center">
+                    <label value="FEC. ADD:"/>
+                </cell>        
+                <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creacion de la Observacion del Cliente"/>  
+                <space/>                                 
+            </hbox>            
+        </vlayout>
+    </window>
+</zk>
+

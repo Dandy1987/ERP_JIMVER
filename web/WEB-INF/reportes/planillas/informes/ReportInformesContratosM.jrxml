@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportInformesContratos" language="groovy" pageWidth="1058" pageHeight="841" columnWidth="1018" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="22f58539-6e09-43af-99aa-5cbc0bb8fd37">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_INFORMES" class="java.lang.String">
+		<defaultValueExpression><![CDATA[" select t.par06_pertipdoc||t.par07_pernumdoc codigo,t.id_contrato id_c, t.ct_tipo tipo, t.par06_pertipdoc tipo_doc, t.par07_pernumdoc dni, t.par08_pernom personal, t.par13_conmeses tiempo, t.par14_confecini inicio, t.par15_confecfin fin, p.tabla_descri des_contrato, e.emp_des empresa from tplcontrato t, tpltablas1 p,tpldatoslab d, tempresas e  where t.emp_id = 11 and t.ct_tipo = p.tabla_id and t.par06_pertipdoc=d.pltipdoc  and t.par07_pernumdoc=d.plnrodoc and t.emp_id = e.emp_id and t.emp_id = d.emp_id and p.tabla_cod = '00014' and t.ct_estado = '1' and p.tabla_estado = 1 order by t.id_contrato"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_USUARIO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[$P!{P_INFORMES}]]>
+	</queryString>
+	<field name="CODIGO" class="java.lang.String"/>
+	<field name="ID_C" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="TIPO_DOC" class="java.math.BigDecimal"/>
+	<field name="DNI" class="java.lang.String"/>
+	<field name="PERSONAL" class="java.lang.String"/>
+	<field name="TIEMPO" class="java.math.BigDecimal"/>
+	<field name="INICIO" class="java.sql.Timestamp"/>
+	<field name="FIN" class="java.sql.Timestamp"/>
+	<field name="DES_CONTRATO" class="java.lang.String"/>
+	<field name="EMPRESA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="80" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="e373ccf8-59fe-4f4b-a4a3-701e93d7cb33" x="91" y="22" width="107" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_USUARIO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="244afc83-b760-4f60-84e5-66f3aeb1daeb" x="0" y="22" width="71" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[USUARIO : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fee24d5a-b3d1-4acb-8095-5113f8d2bd85" x="0" y="2" width="71" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[EMPRESA :]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="2da6e88a-0f8b-4651-8383-e00c34fac1c5" x="91" y="2" width="247" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPRESA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="85335e86-9c64-4bf2-b9b2-6096e4887483" x="0" y="70" width="83" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="37935a61-df0b-42ab-bb29-b496a5423e1e" x="172" y="70" width="168" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[PERSONAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5178fadd-8e47-4ad9-876d-d3cea126b0ec" x="944" y="70" width="67" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[TIEMPO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="6700a1fc-683b-4181-b511-74cc59867e94" x="533" y="70" width="406" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[DESCRIPCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="692cca7a-50df-499f-94c4-b05e09fe4421" x="346" y="70" width="86" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[INICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="88be7fe9-9307-49de-a407-5da320e9fb30" x="434" y="70" width="95" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[FIN]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="34a26336-dc2c-43e8-9def-3c8b84e2e580" x="85" y="70" width="85" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement uuid="71bed391-62bd-4e11-8a24-b8c82c21bc12" x="733" y="2" width="271" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a46bfaa1-718b-4c3f-978c-08d9473666c3" mode="Transparent" x="260" y="42" width="555" height="10" forecolor="#0099FF"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE CONTRATOS ]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement uuid="70d63ca1-01f8-4630-9f27-0e355c4b7bfe" x="0" y="0" width="83" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ID_C}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="e4115c35-5af6-4f06-a3e6-1725a52f5744" x="346" y="0" width="86" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INICIO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM/dd/yyyy">
+				<reportElement uuid="8c91bea4-3cb8-4d95-a256-800eed966ade" x="434" y="0" width="95" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FIN}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5e3c0a84-b718-4b1b-9b4e-c90066000d8d" x="85" y="0" width="85" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODIGO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="05475f5c-bb27-4a05-9f4c-cfa908a16b36" x="172" y="0" width="168" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PERSONAL}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="505f70bd-add2-4d68-b0f7-d062859db0cd" x="533" y="0" width="406" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DES_CONTRATO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="993445ef-16da-4f10-9fc3-a0252491afb2" x="944" y="0" width="67" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIEMPO} + "MESES"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="4f4a45b3-b140-475d-9d6a-f059e32d6048" x="968" y="9" width="41" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="e377774e-8818-44ca-8f6a-1445bc84ea4f" x="832" y="9" width="134" height="10"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[PAG.]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+</jasperReport>

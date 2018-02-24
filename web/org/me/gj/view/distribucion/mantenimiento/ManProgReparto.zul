@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuDistribucion.zul"/>
+        </north>
+        <center>
+            <div sclass="cuerpo-main" >
+                <window id="w_manprogreparto" width="100%"  ctrlKeys="#f2#f4#f7#f10#f9#f8" height="100%" border="none" closable="true">
+                    <toolbar id="tb_transacciones" width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)"  />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar (F4)" />                 
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png"  tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png"  tooltiptext="Imprimir (F8)"  />             
+                        <label value="MANTENIMIENTO DE PROGRAMACION DE REPARTO" sclass="titulo_mant" style="margin-left:205px;"/>
+                    </toolbar>  
+                    <tabbox id="tabbox_progreparto" apply="org.me.gj.controller.distribucion.mantenimiento.ControllerProgramacionReparto">
+                        <tabs>
+                            <tab id="tab_listaprogreparto" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_progrepar.getSelectedIndex() == -1)
+                                    {
+                                    tab_listaprogreparto.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_mod" >
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda"/>
+                                        <hbox align="center">
+                                            <space width="230px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="PERIODO: "/>
+                                            </cell>
+                                            <space width="10px"/>
+                                            <combobox id="cb_periodo" readonly="true" width="80px" tooltiptext="Define el Periodo que se Emitio la Programacion de Reparto">
+                                                <template name="model">    
+                                                    <comboitem label="${each.per_periodo}" value="${each.per_id}"/>                                                                                                      
+                                                </template> 
+                                            </combobox>
+                                            <space width="50px"/>
+                                            <cell align="right" valign="botton">
+                                                <label value="FECHA PROG REPARTO: "/>
+                                            </cell>
+                                            <space width="10px"/>
+                                            <datebox id="d_busq_fecprog" width="85px" onCreate="self.value = new Date()" maxlength="10" format="dd/MM/yyyy" tooltiptext="Fecha de Programacion Reparto"/>                                                                                 
+                                            <space width="60px"/>                                                             
+                                            <button id="btn_buscar" label="Buscar" sclass="botones"/>
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <listbox id="lst_progrepar" mold="paging" pageSize="15" width="985px" height="385px">
+                                        <listhead>
+                                            <listheader label="FECHA" align="center" width="65px"/>
+                                            <listheader label="TRANSPORTE"/>
+                                            <listheader label="CHOFER" width="280px"/>
+                                            <listheader label="REPARTIDOR" width="280px"/>
+                                            <listheader label="HORARIO" width="120px"/>                                   
+                                            <listheader label="EST" width="25px"/>
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.s_progrep_fecha}"/>
+                                                <listcell label="${each.progrep_transid}-${each.progrep_transdes}"/>
+                                                <listcell label="${each.progrep_chofdes}"/>                                                                                                
+                                                <listcell label="${each.progrep_repartdes}"/>
+                                                <listcell label="${each.progrep_horades}"/>  
+                                                <listcell>
+                                                    <checkbox disabled="true" checked="${each.valor}"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <separator height="5px"/>
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <hbox align="center">                                         	 
+                                            <space width="300px"/>	
+                                            <cell align="right" valign="botton">
+                                                <label value="FECHA A DUPLICAR"/>
+                                                <span class="colorRojo">*</span>		                                         
+                                            </cell>
+                                            <space width="125px"/>		                                    
+                                            <datebox id="d_fecduplicar"  width="85px" onCreate="self.value = new Date()" maxlength="10" format="dd/MM/yyyy" tooltiptext="Fecha a Duplicar de Programacion de Reparto"/> 
+                                            <space width="50px"/>
+                                            <button id="btn_duplicar" label="Duplicar Dia" sclass="botones"/> 
+                                        </hbox>		                                 
+                                        <hbox align="center">		                                    
+                                            <space width="300px"/>	
+                                            <cell align="right" valign="botton">
+                                                <label value="FECHA NUEVA DE PROG REPARTO."/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <space width="50px"/>
+                                            <datebox id="d_fecnueva"  width="85px" onCreate="self.value = new Date()" maxlength="10" format="dd/MM/yyyy" tooltiptext="Fecha de Nueva de Programacion de Reparto"/>                                 
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="10px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Programacion del Reparto"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creacion de la Programacion del Reparto"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modifico la Programacion del Reparto"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificacion de la Programacion del Reparto"/>   
+                                    </hbox>
+                                </div>
+                            </tabpanel> 
+                            <tabpanel>
+                                <div >                                                               	
+                                    <grid width="988px">
+                                        <columns>
+                                            <column width="140px"/>
+                                            <column width="380px"/>
+                                            <column width="85px"/>
+                                            <column width="378px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>                 
+                                                <cell align="right" valign="botton">
+                                                    <label value="ID:"/>
+                                                </cell>
+                                                <textbox id="txt_progid" disabled="true" tooltiptext="Define de la Codigo de Programacion de Reparto"/>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_estado" checked="true" label="ACTIVO" disabled="true" tooltiptext="Define el estado de la Programacion de Reparto">
+                                                    <attribute name="onCheck">chk_estado.setLabel(chk_estado.isChecked()?"ACTIVO":"INACTIVO");</attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="TRANSPORTE:"/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <hbox>
+                                                    <textbox id="txt_transid" width="30px" maxlength="4" disabled="true" tooltiptext="Define el codigo del Transporte, maximo 4 caracteres"  />
+                                                    <textbox id="txt_transdes" width="300px" maxlength="60"  disabled="true" tooltiptext="Define el nombre del Transporte, maximo 60 caracteres"/>                                              
+                                                </hbox> 
+                                                <cell align="right" valign="botton">
+                                                    <label value="CHOFER:"/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <hbox>
+                                                    <textbox id="txt_chofid" width="30px" maxlength="4" disabled="true" tooltiptext="Define el codigo del Chofer, maximo 4 caracteres"  />
+                                                    <textbox id="txt_chofdes" width="300px" maxlength="60"  disabled="true" tooltiptext="Define el nombre del Chofer, maximo 60 caracteres"/>                                              
+                                                </hbox> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="REPARTIDOR:"/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <hbox>
+                                                    <textbox id="txt_repartid" width="30px" maxlength="4" disabled="true" tooltiptext="Define el codigo del Repartidor, maximo 4 caracteres"  />
+                                                    <textbox id="txt_repartdes" width="300px" maxlength="60"  disabled="true" tooltiptext="Define el nombre del Repartidor, maximo 60 caracteres"/>                                              
+                                                </hbox>
+                                                <cell align="right" valign="center">
+                                                    <label value="HORARIO:"/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <hbox>
+                                                    <textbox id="txt_horid" disabled="true" maxlength="3" width="30px" tooltiptext="Define codigo de Horario de Entrega, maximo 3 caracteres"/>
+                                                    <textbox id="txt_hordes" disabled="true" maxlength="50" width="300px" tooltiptext="Define la descripcion de Horario de Entrega, maximo de 60 caracteres"/>      
+                                                </hbox> 
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="FEC. PROG REPARTO"/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <datebox id="d_fechprogreparto" disabled="true" width="85px" onCreate="self.value = new Date()" maxlength="10" format="dd/MM/yyyy" tooltiptext="Fecha de Programacion de Reparto"/>                                        
+                                            </row>
+                                        </rows>
+                                    </grid>                               
+                                </div>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>    
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>

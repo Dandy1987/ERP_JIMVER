@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportForYear" language="groovy" pageWidth="1728" pageHeight="842" columnWidth="1688" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="08f9829f-098a-49f3-bcca-dc78375aac71">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="764"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="empresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString language="plsql">
+		<![CDATA[{call codijisa.pack_tpersonal.p_ReportFor($P{empresa},$P{ORACLE_REF_CURSOR})}]]>
+	</queryString>
+	<field name="plapepat" class="java.lang.String"/>
+	<field name="plapemat" class="java.lang.String"/>
+	<field name="plnomemp" class="java.lang.String"/>
+	<field name="plnrodoc" class="java.lang.String"/>
+	<field name="pldiremp" class="java.lang.String"/>
+	<field name="plfecing" class="java.lang.String"/>
+	<field name="plarea_des" class="java.lang.String"/>
+	<field name="plidcargo_des" class="java.lang.String"/>
+	<field name="suc_id_des" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="cda243ba-da8e-49c5-a202-8190a84939c3" x="0" y="59" width="168" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[APELLIDO PATERNO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fc215c23-4472-4608-b9a4-d9bb701ff07a" x="168" y="59" width="172" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[APELLIDO MATERNO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5f188a31-3ac3-4113-965d-c2fda99797d0" x="340" y="59" width="185" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="a66e8c9f-80b8-4fca-a3a6-5fe497bc6fcc" x="525" y="59" width="138" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[N° DOCUMENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e68b102c-9559-483a-8632-485b270d471a" x="663" y="59" width="394" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[DIRECCION]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="aa7abf4a-7ac8-4f2a-a5d3-3cf681765b85" x="1057" y="59" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[F.INGRESO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b0f951ec-0062-429d-80ad-fa6a460d5bd1" x="1157" y="59" width="211" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[AREA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8b60b056-35cd-4417-a6ae-f0dac7afbe4d" x="1368" y="59" width="195" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[CARGO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="05ec6c2d-23ff-4830-a779-7a594fcb423c" x="1563" y="59" width="125" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[SUCURSAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9f4b0bf5-9844-42ee-90fa-b6949da6f0a1" x="340" y="0" width="1028" height="40"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[REPORTE TRABAJADORES QUE CUMPLEN CUATRO AÑOS]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="60adaf21-83de-479d-b883-0d0f31922047" x="1368" y="0" width="320" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm a">
+				<reportElement uuid="62ae42b2-2f3d-4f90-82fd-1e7ede5b6c71" x="1368" y="20" width="320" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="7ddee23c-8f16-4ba4-b8a7-fa845f062eb0" x="0" y="0" width="168" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{plapepat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4854f4bf-c1ec-47d5-8242-d6aa977a6e94" x="168" y="0" width="172" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{plapemat}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="668ecf0a-92d5-4b35-83d6-f02644a937e7" x="340" y="0" width="185" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{plnomemp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1872e2ba-8da4-4aff-bcdb-ecb3c41d2d54" x="525" y="0" width="138" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{plnrodoc}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cad80cea-2ef3-4603-a24a-1c8b638155c7" x="663" y="0" width="394" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{pldiremp}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="be74522f-32c4-4417-813f-c2140db8f2eb" x="1057" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{plfecing}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5f57d844-de36-48b2-859f-4e2a28ee9631" x="1157" y="0" width="211" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{plarea_des}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8d7675ba-5cd3-45c3-a84c-710e73a22a5f" x="1368" y="0" width="195" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{plidcargo_des}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="af01702c-3f6a-4a59-b49d-ae5ce50b6c53" x="1563" y="0" width="125" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{suc_id_des}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

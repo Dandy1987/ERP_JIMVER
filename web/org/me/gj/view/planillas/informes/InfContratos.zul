@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>     
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>  
+            <div sclass="cuerpo-main" >
+                <window id="w_infcontratos" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" />   
+                        <label value="REPORTE DE CONTRATOS" sclass="titulo_mant" style="margin-left:225px;"/>
+                    </toolbar>                        
+                    <tabbox id="tabbox_infmovimientos" ctrlKeys="^a#f8#f10" apply="org.me.gj.controller.planillas.informes.ControllerInfContratos">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA" />
+                        </tabs>
+                        
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_infmovi">
+                                    <groupbox width="987px" height="90px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda" />
+                                        <hbox align="center">
+                                            <space width="55px"/>
+                                            <cell align="right" valign="center">
+                                                <span class="colorRojo">PERIODO :</span>
+                                               <!-- <label value="PERIODO :"/>-->
+                                            </cell>
+                                            <radiogroup Id="rg_periodo" onCheck="true">
+                                                <radio label="INICIO DE CONTRATO" />
+                                                <space width="30px"/>
+                                                <radio label="FIN DE CONTRATO"/>
+                                            </radiogroup>
+                                            
+                                            <space width="5px"/>
+                                            <combobox id="cb_fpering" width="70px" readonly="true" tooltiptext="Seleccione periodo de ingresados">
+                                                <template name="model">
+                                                    <comboitem label=" ${each.per_id}" value="${each.per_id}"/>
+                                                </template>
+                                            </combobox>
+                                            
+                                          <!--  <space width="220px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="SUCURSAL :"/>
+                                            </cell>
+                                            <space width="3px"/>
+                                            <combobox id="cb_fsucursal" width="120px" tooltiptext="Seleccione sucursal" readonly="true">
+                                                <template name="model">
+                                                    <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                                </template>
+                                            </combobox>-->
+                                            
+                                        </hbox>
+                                        <space height="8px"/>
+                                        <hbox align="center">
+                                            <space width="55px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="PERSONAL :"/>
+                                            </cell>
+                                            <textbox id="txt_codper" maxlength="9"  placeholder="ENTER" width="100px" focus="false" tooltiptext="Código de Personal" style="text-align:center;"/>
+                                            <textbox id="txt_desper" disabled="true" width="280px" focus="false" tooltiptext="Descripción de Personal"/>
+                                            <textbox id="txt_codper1" visible="false"/>
+                                            <!--<textbox id="txt_desper1"  visible="false" readonly="true" width="327px" focus="false" tooltiptext="Descripción de Personal"/>-->
+                                        
+                                        
+                                            <space width="15px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="AREA :"/>
+                                            </cell>
+                                            <combobox id="cb_area" width="190px" tooltiptext="Seleccione área" readonly="true">
+                                                <template name="model">
+                                                    <comboitem label="${each.area_des}" value="${each.area_id}"/>
+                                                </template>
+                                            </combobox>    
+                                            <space width="15px"/>   
+                                            <button id="btn_consultar" label="Consultar" sclass="botones" />
+                                            
+                                        </hbox>
+                                        
+                                    </groupbox>
+                                    
+                                    <separator height="10px"/>
+                                    <listbox id="lst_lista" mold="paging"  pageSize="14"  width="987px" height="380px">
+                                        <listhead>
+                                            <listheader label="ID"  align="center"/>
+                                            <listheader label="CODIGO - NOMBRE PERSONAL" width="300px" align="center"/>
+                                            <listheader label="INICIO -- FIN"  align="center" width="150px"/> 
+                                            <listheader label="TIPO CONTRATO" width="350px" align="center"/>
+                                              <listheader label="DURACION" align="center"/>
+                                            
+                                        </listhead>
+                                        <template name="model">	
+                                            <listitem>
+                                                <listcell label="${each.id_contrato}"/>
+                                                <listcell label="${each.par06_pertipdoc}${each.par07_pernumdoc} ---  ${each.par08_pernom} " style="text-align:left;"/>
+                                                <listcell label="${each.spar14_confecini} -- ${each.spar15_confecfin}"/>
+                                                <listcell label="${each.desct_tipo}" style="text-align:left;"/>
+                                                <listcell label="${each.par13_conmeses}  meses" />
+                                              
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                </div>  
+                                
+                                
+                                
+                            </tabpanel>
+                            
+                        </tabpanels>
+                        
+                          
+                    </tabbox>
+                </window>  
+                
+                
+                
+            </div>  
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>
+</zk>

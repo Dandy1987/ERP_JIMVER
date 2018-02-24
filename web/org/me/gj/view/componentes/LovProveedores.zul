@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_proveedor" title="BUSQUEDA DE PROVEEDORES" border="normal" width="560px"
+            apply="org.me.gj.controller.componentes.ControllerLovProveedores"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="RAZON SOCIAL :" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="435px" focus="true" maxlength="45" tooltiptext="Ingrese los nombres del supervisor, Máximo 50 caracteres"/>
+            </hbox>
+            <listbox id="lst_buspro" mold="paging" pageSize="15" width="530px">
+                <listhead>
+                    <listheader label="CODIGO" width="60px"/>
+                    <listheader label="RAZON SOCIAL" width="470px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.prov_id}"/>
+                        <listcell label="${each.prov_razsoc}"/>
+                    </listitem>
+                </template>
+            </listbox>
+            
+        </vlayout>
+    </window>
+</zk>

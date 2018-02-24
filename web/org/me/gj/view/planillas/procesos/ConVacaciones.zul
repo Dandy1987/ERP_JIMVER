@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>     
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_manpersonal" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" />
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" />   
+                        <label value="VACACIONES GOZADAS" sclass="titulo_mant" style="margin-left:225px;"/>
+                    </toolbar>                        
+                    <tabbox id="tabbox_personal" ctrlKeys="^a#f8#f10" apply="org.me.gj.controller.planillas.procesos.ControllerVacaciones">
+                        <tabs>
+                            <tab id="tab_listapersonal" label="LISTA" />
+                            <tab id="tab_vacacion" label="MANTENIMIENTO">
+                            
+                                <attribute name="onSelect">
+                                    if (!tab_listapersonal.isDisabled())
+                                    {
+                                    if (lst_personal.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listapersonal.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);  
+                                    }
+                                    }
+                                </attribute>
+                                
+                            </tab>
+                        </tabs>
+                        
+                        <tabpanels>
+
+                            <!--LISTA-->
+                            <tabpanel>
+                                <div id="div_lst_ccorriente">                                    
+                                    <space height="15px" />
+                                    <groupbox width="987px" height="90px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda" />
+                                        <hbox align="center">
+                                            <space width="80px"/>
+                                            <cell align="right" valign="center">
+
+                                                <label value="SUCURSAL :"/>
+                                            </cell>
+                                            <combobox id="cb_fsucursal" width="120px" tooltiptext="Seleccione sucursal" readonly="true">
+                                                <template name="model">
+                                                    <comboitem label="${each.suc_des}" value="${each.suc_id}" style="text-align:left;"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="25px"/>
+                                            <cell align="right" valign="center">
+
+                                                <label value="AREA :"/>
+                                            </cell>
+                                            <textbox id="txt_codarea" maxlength="9"  placeholder="ENTER" width="80px" focus="false" tooltiptext="Código de Personal" style="text-align:center;"/>
+                                            <textbox id="txt_desarea" disabled="true" width="180px" focus="false" tooltiptext="Descripción de Personal"/>
+                                            <textbox id="txt_codarea1" visible="false"/>
+                                            <combobox id="cb_area" width="190px" tooltiptext="Seleccione área" readonly="true" visible = "false">
+                                                <template name="model">
+                                                    <comboitem label="${each.area_des}" value="${each.area_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="15px"/>
+                                            <cell align="right" valign="center">
+
+                                                <label value="Estado :"/>
+                                            </cell>
+                                            <combobox id="cb_estado" width="120px" tooltiptext="Seleccione estado" readonly="true">
+                                                <comboitem label="TODOS"/>
+                                                <comboitem label="ACTIVOS"/>
+                                                <comboitem label="CESADOS"/>
+                                                
+                                            </combobox>
+                                            <space width="40px"/>
+                                            <button id="btn_consultar" label="Consultar" sclass="botones" />
+                                        </hbox>
+                                        <space height="10px"/>
+                                        
+                                    </groupbox>
+                                    <separator height="6px"/>    
+                                    <listbox id="lst_personal" mold="paging"  pageSize="15" width="985px" height="400px">
+                                        <listhead>
+                                            <listheader label="CODIGO" width="70px" align="center"/>
+                                            <listheader label="APELLIDOS Y NOMBRES" align="center"/>
+                                            <listheader label="AREA" width="140px" align="center"/>
+                                            <listheader label="SUCURSAL" width="110px" align="center"/>
+                                            <listheader label="F. INGRESO" width="80px" align="center"/>
+                                            <listheader label="F. CESE" width="80px" align="center"/>
+                                            <listheader label="TOTAL" width="70px" align="center"/>
+                                            <listheader label="GOZ" width="70px" align="center"/>
+                                            <listheader label="PND" width="70px" align="center"/>
+
+                                        </listhead>
+                                        <template name="model">	
+                                            <listitem>
+                                                <listcell label="${each.tipodoc}${each.nrodocpersona}" />
+                                                <listcell label="${each.nombres}" style="text-align:left;"/>
+                                                <listcell label="${each.area}" style="text-align:left;"/>
+                                                <listcell label="${each.sucursal}" style="text-align:left;"/>
+
+
+
+                                                <listcell label="${each.s_fechaingreso}"/>
+                                                <listcell label="${each.s_fechacese}"/>
+                                                <listcell label="${each.total}"/>
+                                                <listcell label="${each.gozado}"/>
+                                                <listcell label="${each.pendiente}"/>
+
+                                            </listitem>
+                                        </template>
+                                    </listbox>                                    
+                                </div>
+                            </tabpanel> 
+                            
+                            <!--MANTENIMIENTO-->
+                           <tabpanel>
+                                <div id="div_mccorriente" align="center" >
+                                    <groupbox width="790px" height="125px" open="true" closable="false" style="text-align:left;"> <!--WIDTH 987PX-->
+                                        <caption label="DATOS DE PERSONAL" style="text-align:left;"/>
+                                        <space width="5px"/>
+                                        <!--<hbox align="down">
+
+                                            <cell align="left" width="105px">
+                                                <label value="FILTRAR POR AREA :"/> 
+
+                                            </cell>
+                                            <textbox id="txt_idarea" style="text-align:right;" width="100px" disabled="true" tooltiptext="Codigo de Area"></textbox>
+                                            <textbox id="txt_descriparea"   width="360px" readonly="true" disabled="true" tooltiptext="Nombre de Area"></textbox>
+                                        </hbox>-->
+
+                                        <space height="8px" />
+                                        <hbox align="down">
+                                            <cell align="left" width="105px">
+                                                <label value="PERSONAL :"/> 
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <textbox id="txt_idpersonal" style="text-align:right;" width="100px" disabled="true" tooltiptext="Codigo del Empleado"></textbox>
+                                            <textbox id="txt_despersonal"   width="360px" disabled="true" readonly="true" tooltiptext="Nombre del Empleado"></textbox>
+                                        </hbox>
+ 
+                                        <space width="5px"/>
+                                        <hbox align="down">
+                                            <cell align="left" width="105px">
+                                                <label value="SUCURSAL :"/> 
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <combobox id="cb_fsucursal2" width="120px" tooltiptext="Seleccione sucursal" style="text-align:left;" readonly="true">
+                                                <template name="model">
+                                                    <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                                </template>
+                                            </combobox>
+                                        </hbox>
+                                    </groupbox>
+                                    <space height="6px"/>
+                                    <hbox>
+                                        <listbox id="lst_vacacionesdetalle" mold="paging" pageSize="8" width="755px" height="280px">
+                                            <listhead>
+                                                <listheader label="FECHA INICIO" width="85px" align="center"/>
+                                                <listheader label="FECHA FIN" width="85px" align="center"/>
+                                                <listheader label="PERIODO" width="120px" align="center"/>
+                                                <listheader label="DIAS" width="40px" align="center"/>
+                                                <listheader label="PERIODO GOZADO" width="120px" align="center"/>
+                                                <listheader label="GLOSA" align="center" />
+                                            </listhead>	
+                                            <template name="model">	                                           
+                                                <listitem>
+                                                    <listcell label="${each.s_fechainicio}"/>
+                                                    <listcell label="${each.s_fechafin}"/>
+                                                    <listcell label="${each.periodo}"/>
+                                                    <listcell label="${each.dias}"/>
+                                                    <listcell label="${each.periodogozado}"/>
+                                                    <listcell label="${each.glosa}" style="text-align: left;"/>
+                                                </listitem>
+                                            </template>
+                                        </listbox>
+                                        <toolbar id="tb_transacciones_dephab" width="25px" height="280px" >
+                                            <separator height="30px"/>
+                                            <toolbarbutton id="tbbtn_btn_nuevoc"    image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (ALT+N)" disabled="true" />                                            
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_editarc" image="/images/iconos/editar.png" tooltiptext="Editar (ALT+D)" disabled="true" />            
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_eliminarc" image="/images/iconos/eliminar.png" tooltiptext="Deshacer (ALT+D)" disabled="true" />
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_deshacerc" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (ALT+D)" disabled="true" />
+                                            <separator height="10px"/>
+                                            
+                                            <toolbarbutton id="tbbtn_btn_guardarc"  image="/images/iconos/guardar.png" tooltiptext="Deshacer (ALT+D)" disabled="true" />
+                                        </toolbar>
+                                    </hbox>
+                                    <space height="5px"/>
+                                    <groupbox width="790px" height="88px" open="true" closable="false" style="text-align:left;">
+                                        <caption label="INGRESO DE DÍAS DE GOCE DE VACACIONES" style="text-align:left;"/>
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+
+                                                <label value="FECHA INICIO :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <datebox id="d_fecini" maxlength="10" disabled="true" width="90px" format="dd/MM/yyyy" style="text-align:center;" tooltiptext="Fecha de ingreso de vacaciones" />
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+
+                                                <label value="FECHA FIN :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <datebox id="d_fecfin" maxlength="10" disabled="true" width="90px" format="dd/MM/yyyy" style="text-align:center;" tooltiptext="Fecha de fin de vacaciones" />
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="P. GOZADO:"/>
+
+
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <datebox id="d_periodogozado" format="yyyyMM" style="text-align:right;" maxlength="6" disabled="true" width="106px" tooltiptext="Seleccione PeriodoGozado" />
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+
+                                                <label value="PERIODO :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <textbox id="txt_periodo" maxlength="5" style="text-align:right;"  disabled="true" width="70px" tooltiptext="Perdiodo de vacaciones" />
+                                            <label value="Ej: 15-16"/>
+                                        </hbox>
+                                        <space height="5px" />
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+
+                                                <label value="GLOSA :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <textbox id="txt_glosa" maxlength="80" disabled="true" readonly="false" width="420px" tooltiptext="Golsa de constante"/>
+                                        </hbox>
+                                        <space height="50px"/>
+                                    </groupbox>
+                                    <space height="15px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador"/>
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación"/>
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó"/>
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación"/>
+                                    </hbox>
+                                </div>
+                            </tabpanel>
+                                                        
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>
+

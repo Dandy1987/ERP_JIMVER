@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InfTotkardex" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="778" leftMargin="7" rightMargin="7" topMargin="7" bottomMargin="7" uuid="91bbcedf-bc26-4967-b16f-04d6b979116f">
+	<property name="ireport.zoom" value="2.420000000000007"/>
+	<property name="ireport.x" value="658"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="empresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="usuario" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="emp_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="suc_id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_WHERER" class="java.lang.String">
+		<defaultValueExpression><![CDATA["select kd.nes_tip codnotes, kd.nes_des notes,kc.emp_id,kc.suc_id,kc.kar_key,kc.kar_id, kc.pro_id,kc.pro_des,kc.pro_undpre,kc.prov_id,kc.prov_razsoc,kc.lin_id,kc.lin_des,kc.stk_ini,kc.cst_ini,kc.cst_uni,kc.stk_fin,kc.cst_fin,kc.cst_unf,kc.cab_mac, sum(kd.cstunis) costini , sum(kc.stk_ini) stk_ini, sum(kc.cst_uni) stfin, sum(kd.cante)totent, x.totcstinie, sum(kd.cstinie) costini,sum(kd.cants)totsal, y.totcstinis from tkardex_cab kc, tkardex_det kd , (select sum(t.cstinie) totcstinie from tkardex_det t where t.tip_mov='E') x , (select sum(t.cstinie) totcstinis from tkardex_det t where t.tip_mov='S') y where kc.emp_id = kd.emp_id and kc.suc_id = kd.suc_id and kc.kar_key = kd.kar_key and kc.cab_mac = kd.det_mac and kc.cab_mac = 'D4-3D-7E-D2-C2-78' and trunc(kd.fecha) between to_date('01/05/2015','dd/MM/yyyy') and to_date('01/06/2015','dd/MM/yyyy')  group by kd.nes_tip, kd.nes_des, kc.cst_uni, kc.emp_id,kc.suc_id,kc.kar_key,kc.kar_id, kc.pro_id,kc.pro_des,kc.pro_undpre,kc.prov_id,kc.prov_razsoc,kc.lin_id,kc.lin_des,kc.stk_ini,kc.cst_ini,kc.cst_uni,kc.stk_fin,kc.cst_fin,kc.cst_unf,kc.cab_mac,kc.stk_ini, kc.stk_fin ,x.totcstinie, y.totcstinis order by kd.nes_tip"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_TITULO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_WHEREDET" class="java.lang.String">
+		<defaultValueExpression><![CDATA["ct  kd.nes_tip codnotes, kd.nes_des notes,kc.emp_id,kc.suc_id,kc.kar_key,kc.kar_id, kc.pro_id,kc.pro_des,kc.pro_undpre,kc.prov_id,kc.prov_razsoc,kc.lin_id,kc.lin_des,kc.stk_ini,kc.cst_ini,kc.cst_uni,kc.stk_fin,kc.cst_fin,kc.cst_unf,kc.cab_mac, sum(kd.cstunis) costini , sum(kc.stk_ini) stk_ini, sum(kc.cst_uni) stfin, sum(kd.cante)totent, x.totcstinie, sum(kd.cstinie) costini,sum(kd.cants)totsal, y.totcstinis from tkardex_cab kc, tkardex_det kd ,(select sum(t.cstinie) totcstinie from tkardex_det t where t.tip_mov='E') x ,(select sum(t.cstinie) totcstinis from tkardex_det t where t.tip_mov='S') y where kc.emp_id = kd.emp_id and kc.suc_id = kd.suc_id and kc.kar_key = kd.kar_key and kc.cab_mac = kd.det_mac and trunc(kd.fecha) between to_date('01/05/2015','dd/MM/yyyy') and to_date('30/05/2015','dd/MM/yyyy') and kc.cab_mac = 'D4-3D-7E-D2-C2-78' and kc.suc_id=1 and kc.emp_id=1 group by kd.nes_tip, kd.nes_des, kc.emp_id,kc.suc_id,kc.kar_key,kc.kar_id, kc.pro_id,kc.pro_des,kc.pro_undpre,kc.prov_id,kc.prov_razsoc,kc.lin_id,kc.lin_des,kc.stk_ini,kc.cst_ini,kc.cst_uni,kc.stk_fin,kc.cst_fin,kc.cst_unf,kc.cab_mac, kc.stk_ini, kc.stk_fin ,x.totcstinie, y.totcstinis order by kd.nes_tip"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{P_WHERER}]]>
+	</queryString>
+	<field name="CODNOTES" class="java.lang.String"/>
+	<field name="NOTES" class="java.lang.String"/>
+	<field name="EMP_ID" class="java.math.BigDecimal"/>
+	<field name="SUC_ID" class="java.math.BigDecimal"/>
+	<field name="KAR_KEY" class="java.math.BigDecimal"/>
+	<field name="KAR_ID" class="java.lang.String"/>
+	<field name="PRO_ID" class="java.lang.String"/>
+	<field name="PRO_DES" class="java.lang.String"/>
+	<field name="PRO_UNDPRE" class="java.math.BigDecimal"/>
+	<field name="PROV_ID" class="java.lang.String"/>
+	<field name="PROV_RAZSOC" class="java.lang.String"/>
+	<field name="LIN_ID" class="java.lang.String"/>
+	<field name="LIN_DES" class="java.lang.String"/>
+	<field name="STK_INI" class="java.math.BigDecimal"/>
+	<field name="CST_INI" class="java.math.BigDecimal"/>
+	<field name="CST_UNI" class="java.math.BigDecimal"/>
+	<field name="STK_FIN" class="java.math.BigDecimal"/>
+	<field name="CST_FIN" class="java.math.BigDecimal"/>
+	<field name="CST_UNF" class="java.math.BigDecimal"/>
+	<field name="CAB_MAC" class="java.lang.String"/>
+	<field name="COSTINI" class="java.math.BigDecimal"/>
+	<field name="STFIN" class="java.math.BigDecimal"/>
+	<field name="TOTENT" class="java.math.BigDecimal"/>
+	<field name="TOTCSTINIE" class="java.math.BigDecimal"/>
+	<field name="TOTSAL" class="java.math.BigDecimal"/>
+	<field name="TOTCSTINIS" class="java.math.BigDecimal"/>
+	<variable name="CANTENT" class="java.lang.Double" resetType="Group" resetGroup="detalladogeneral" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTENT}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<variable name="CANTSAL" class="java.lang.Double" resetType="Group" resetGroup="detalladogeneral" calculation="Sum">
+		<variableExpression><![CDATA[$F{TOTSAL}]]></variableExpression>
+	</variable>
+	<variable name="CSTINI" class="java.lang.Double" resetType="None" incrementType="Group" incrementGroup="detalladogeneral" calculation="Sum">
+		<variableExpression><![CDATA[$F{COSTINI}]]></variableExpression>
+	</variable>
+	<group name="detalladogeneral">
+		<groupExpression><![CDATA[]]></groupExpression>
+		<groupFooter>
+			<band height="44">
+				<line>
+					<reportElement uuid="f3fef60e-ba9a-451b-bba5-42767d6e4fac" x="14" y="2" width="745" height="1"/>
+				</line>
+				<textField pattern="#,##0;(-#,##0)" isBlankWhenNull="true">
+					<reportElement uuid="ff3d73ff-ca79-40d5-856c-715997dcaf1a" x="366" y="5" width="104" height="10"/>
+					<textElement textAlignment="Right">
+						<font size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CANTSAL}]]></textFieldExpression>
+				</textField>
+				<subreport isUsingCache="false" runToBottom="false">
+					<reportElement uuid="04e1cc5f-d27a-4365-a65c-b48e875a4d56" x="14" y="24" width="745" height="10"/>
+					<subreportParameter name="mac">
+						<subreportParameterExpression><![CDATA[$F{CAB_MAC}]]></subreportParameterExpression>
+					</subreportParameter>
+					<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+					<subreportExpression><![CDATA[$P{SUBREPORT_DIR}]]></subreportExpression>
+				</subreport>
+				<textField pattern="#,##0;(-#,##0)" isBlankWhenNull="true">
+					<reportElement uuid="97b47e3e-852e-4f0d-bfb2-f36f6d920002" x="237" y="5" width="104" height="10"/>
+					<textElement textAlignment="Right">
+						<font size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CANTENT}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="2d41f9ed-0c17-4058-9ecb-81039919d137" x="17" y="5" width="52" height="10"/>
+					<textElement>
+						<font size="7"/>
+					</textElement>
+					<text><![CDATA[TOTALES]]></text>
+				</staticText>
+				<textField pattern="#,##0;(-#,##0)" isBlankWhenNull="true">
+					<reportElement uuid="f5916a03-0c0e-4989-aaeb-110d189bc612" x="493" y="5" width="119" height="10"/>
+					<textElement textAlignment="Right">
+						<font size="7"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{CSTINI}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="46" splitType="Stretch">
+			<textField>
+				<reportElement uuid="05394eb9-645a-419b-89cf-4c89a4f3f1ca" x="14" y="7" width="100" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{empresa}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4e77889c-fb62-4105-9004-4a23f1d05dd0" x="14" y="31" width="100" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="aeb52134-e7a1-418d-9168-dedd54a4da15" x="14" y="19" width="100" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[INFTOTKARDEX.JASPER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="007b224e-f969-4c31-b341-58a85af7ccfb" x="717" y="7" width="22" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAG:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ec7ef86d-567f-429b-80f6-0f8a26574491" x="127" y="14" width="528" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[KARDEX RESUMEN]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="2da1beb3-a3ff-4a53-b060-18409ce25806" x="744" y="7" width="16" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm:ss">
+				<reportElement uuid="a52e24ca-d7bd-4986-86b7-3bae60df3121" x="691" y="31" width="69" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="b7e39392-637b-4917-a429-40b119084df3" x="691" y="19" width="69" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ec03d1b4-0df5-4b6e-abbe-4812130ed899" x="127" y="24" width="528" height="10"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_TITULO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="19" splitType="Stretch">
+			<line>
+				<reportElement uuid="f3fef60e-ba9a-451b-bba5-42767d6e4fac" x="15" y="4" width="745" height="1"/>
+			</line>
+			<line>
+				<reportElement uuid="f3fef60e-ba9a-451b-bba5-42767d6e4fac" x="15" y="17" width="745" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="2d41f9ed-0c17-4058-9ecb-81039919d137" x="79" y="6" width="143" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[NOTA E/S]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2d41f9ed-0c17-4058-9ecb-81039919d137" x="237" y="6" width="104" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[ENTRADA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2d41f9ed-0c17-4058-9ecb-81039919d137" x="365" y="6" width="104" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[SALIDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2d41f9ed-0c17-4058-9ecb-81039919d137" x="14" y="6" width="55" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="12" splitType="Stretch">
+			<textField>
+				<reportElement uuid="f2c253b1-4dbe-4eea-84d5-68b1d1b2ced6" x="15" y="1" width="54" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODNOTES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;(-#,##0)" isBlankWhenNull="true">
+				<reportElement uuid="8718ed41-ae22-4c14-b67f-ca6f823693c0" x="365" y="1" width="105" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTSAL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;(-#,##0)" isBlankWhenNull="true">
+				<reportElement uuid="8a586a2a-9f11-43f9-927e-c32f70e71112" x="237" y="1" width="104" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTENT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="fd7ca488-03f6-416c-86de-10f445587932" x="79" y="1" width="142" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOTES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0;(-#,##0)" isBlankWhenNull="true">
+				<reportElement uuid="8718ed41-ae22-4c14-b67f-ca6f823693c0" x="493" y="1" width="119" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(                       "+$F{COSTINI}+")"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

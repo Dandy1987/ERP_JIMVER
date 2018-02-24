@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ManProgReparto" language="groovy" pageWidth="612" pageHeight="792" columnWidth="598" leftMargin="7" rightMargin="7" topMargin="7" bottomMargin="7" uuid="ccb7ed49-48c3-46dc-a10d-f80b25422c9b">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="645"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="usuario" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="empresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_WHERE" class="java.lang.String">
+		<defaultValueExpression><![CDATA["select * from v_listaprogramacionreparto t where t.progrep_estado<>0 and t.progrep_periodo = '" + "201704" + "' and t.emp_id = 1 and t.suc_id=1 order by t.progrep_transid"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{P_WHERE}]]>
+	</queryString>
+	<field name="EMP_ID" class="java.math.BigDecimal"/>
+	<field name="SUC_ID" class="java.math.BigDecimal"/>
+	<field name="PROGREP_KEY" class="java.math.BigDecimal"/>
+	<field name="PROGREP_ID" class="java.lang.String"/>
+	<field name="PROGREP_TRANSID" class="java.lang.String"/>
+	<field name="PROGREP_CHOFID" class="java.lang.String"/>
+	<field name="PROGREP_REPARTID" class="java.lang.String"/>
+	<field name="PROGREP_HORAID" class="java.lang.String"/>
+	<field name="PROGREP_FECASIG" class="java.sql.Timestamp"/>
+	<field name="PROGREP_ESTADO" class="java.math.BigDecimal"/>
+	<field name="PROGREP_USUADD" class="java.lang.String"/>
+	<field name="PROGREP_FECADD" class="java.sql.Timestamp"/>
+	<field name="PROGREP_USUMOD" class="java.lang.String"/>
+	<field name="PROGREP_FECMOD" class="java.sql.Timestamp"/>
+	<field name="PROGREP_PERIODO" class="java.lang.String"/>
+	<field name="PROGREP_INDICA" class="java.math.BigDecimal"/>
+	<field name="PROGREP_TRANSDES" class="java.lang.String"/>
+	<field name="PROGREP_HORADES" class="java.lang.String"/>
+	<field name="PROGREP_CHOFDES" class="java.lang.String"/>
+	<field name="PROGREP_REPARTDES" class="java.lang.String"/>
+	<variable name="tot" class="java.lang.String" incrementType="Report" calculation="Count">
+		<variableExpression><![CDATA[$V{tot}]]></variableExpression>
+		<initialValueExpression><![CDATA[]]></initialValueExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="81" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c8f30a53-d22e-4e36-966a-42764734bd1f" x="10" y="7" width="138" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="604d291a-456d-4ab9-ab90-4ba701076c41" x="180" y="20" width="254" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PROGRAMACIÓN REPARTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c289e06b-2312-4760-b605-b508252abc85" x="488" y="10" width="79" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PAG:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="0fd40718-f392-45a9-a101-94a4007100d9" x="488" y="23" width="100" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="1251bc3b-e918-4723-a52c-1ff3c82c28e5" isPrintRepeatedValues="false" x="567" y="10" width="21" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="10" y="61" width="578" height="1"/>
+			</line>
+			<textField>
+				<reportElement uuid="4062cdda-cd8b-4c85-8888-c3700c646ed6" x="10" y="33" width="138" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{usuario}]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm:ss">
+				<reportElement uuid="90af5a26-2a30-4959-84e1-fc414af41b2e" x="488" y="36" width="100" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="754416d6-40f3-4667-bd96-52a852947d62" x="10" y="20" width="138" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[MANPROGREPARTO.JASPER]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="10" y="75" width="578" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="8b1db3d9-e572-4933-b690-d4fed10f2612" x="10" y="64" width="40" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18bf61cb-397f-4f8c-9cfe-0eab91437bfc" x="50" y="64" width="98" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TRANSPORTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18bf61cb-397f-4f8c-9cfe-0eab91437bfc" x="150" y="64" width="194" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CHOFER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18bf61cb-397f-4f8c-9cfe-0eab91437bfc" x="344" y="64" width="192" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPARTIDOR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18bf61cb-397f-4f8c-9cfe-0eab91437bfc" x="536" y="64" width="52" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[HORARIO]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<textField>
+				<reportElement uuid="71c6cd10-7bf3-4ea9-a234-f5ab4b124ca4" x="50" y="0" width="98" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[ $F{PROGREP_CHOFID} + " - " +$F{PROGREP_TRANSDES}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="71c6cd10-7bf3-4ea9-a234-f5ab4b124ca4" x="150" y="0" width="194" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROGREP_CHOFDES}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="71c6cd10-7bf3-4ea9-a234-f5ab4b124ca4" x="344" y="0" width="192" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROGREP_CHOFDES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="71c6cd10-7bf3-4ea9-a234-f5ab4b124ca4" x="536" y="0" width="52" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROGREP_HORADES}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="6d1777a6-c6fd-49fe-9963-ffaec712684f" x="10" y="0" width="40" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROGREP_FECASIG}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement uuid="33d4713f-456e-45e8-ba7f-b9008b834fe3" x="160" y="8" width="90" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="5be848f2-9b7f-4fc6-9e48-c1458a10e4c1" x="10" y="8" width="140" height="10"/>
+				<textElement>
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TOTAL REGISTROS:]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="4b06612f-3e24-40ce-9154-e30a5bce4740" x="10" y="4" width="578" height="1"/>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

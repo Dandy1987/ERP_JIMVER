@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_manubi" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f9#f8">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)" />            
+                        <label value="MANTENIMIENTO DE UBICACIONES" sclass="titulo_mant" style="margin-left:229px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_ubicaciones" ctrlKeys="#f10" apply="org.me.gj.controller.logistica.mantenimiento.ControllerUbicaciones">
+                        <tabs  >
+                            <tab id="tab_listaubicaciones" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_ubicaciones.getSelectedIndex() == -1)
+                                    {
+                                    tab_listaubicaciones.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="987px" open="true" closable="false">
+                                    <caption label="Opciones de Busqueda"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true" placeholder="---seleccione Opcion----" tooltiptext="Seleccione una Opcion">
+                                            <comboitem label=" "/>
+                                            <comboitem label="ID"/>
+                                            <comboitem label="UBICACION"/>
+                                            <comboitem label="ALTO"/>
+                                            <comboitem  label="ANCHO"/>
+                                            <comboitem  label="LARGO"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <separator/>
+                                        <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                        <space width="10px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="ESTADO:" id="lbl_estado"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una Opción" width="110px">
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+                                        <space width="10px"/>
+                                        <button id="tbbtn_btn_buscar" label="Buscar" sclass="botones"/>
+                                    </hbox>
+                                </groupbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_ubicaciones"  mold="paging" pageSize="18" width="985px" height="460px">
+                                    <listhead>
+                                        <listheader label="ID" width="50px" align="center"/>
+                                        <listheader label="UBICACION"/>
+                                        <listheader label="ALTO (MT)" width="100px"/>
+                                        <listheader label="LARGO (MT)" width="100px"/>
+                                        <listheader label="ANCHO (MT)" width="100px"/>
+                                        <listheader label="EST" width="25px"/>                                  
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.ubic_id}"/>
+                                            <listcell label="${each.ubic_des}"/>
+                                            <listcell label="${each.ubic_alt}"/>
+                                            <listcell label="${each.ubic_lar}"/>
+                                            <listcell label="${each.ubic_anc}"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Ubicación"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación de la Ubicación"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó la Ubicación"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación de la Ubicación"/>    
+                                </hbox>
+                            </tabpanel> 
+                            <tabpanel>
+                                <div >
+                                    <grid width="600px">
+                                        <columns>
+                                            <column width="100px"/>
+                                            <column width="500px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>                 
+                                                <cell align="right" valign="botton">
+                                                    <label value="ID:"/>
+                                                </cell>
+                                                <textbox id="txt_ubicid" disabled="true" width="50px" tooltiptext="Define el Código de la Ubicación, Máximo 5 caracteres"/>                                    
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_ubicest" disabled="true" tooltiptext="Define el Estado de la Ubicación"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="UBICACION:"/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>
+                                                <textbox id="txt_ubicdes" disabled="true" maxlength="50" width="450px" tooltiptext="Define la Descripción de la Ubicación, Máximo 50 caracteres"/>
+                                            </row>
+
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ANCHO:"/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>
+                                                <cell colspan="2">
+                                                    <doublebox id="txt_ubicanc" disabled="true" width="50px" style="text-align:right" locale="en_US" format="###0.##" maxlength="7" tooltiptext="Define el ancho de la Ubicación, Máximo 5 caracteres"/>
+                                                    <label value=" Mt."/>
+                                                </cell>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="LARGO:"/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>
+                                                <cell colspan="2">
+                                                    <doublebox id="txt_ubiclar" disabled="true" width="50px" style="text-align:right" locale="en_US" format="###0.##" maxlength="7" tooltiptext="Define el largo de la Ubicación, Máximo 5 caracteres"/>
+                                                    <label value=" Mt."/>
+                                                </cell>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ALTO:"/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>
+                                                <cell colspan="2">
+                                                    <doublebox id="txt_ubicalt" disabled="true" width="50px" style="text-align:right" locale="en_US" format="###0.##" maxlength="7" tooltiptext="Define el alto de la Ubicación, Máximo 5 caracteres"/>
+                                                    <label value=" Mt."/>
+                                                </cell>
+                                            </row>
+                                            <!--<row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="REPORTE:"/>
+                                                </cell>
+                                                <textbox id="txt_ubicnomrep" disabled="true" maxlength="25" width="270px" tooltiptext="Define el Nombre del Reporte a Utilizar, Máximo 25 caracteres "/>
+                                            </row>-->
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="ORDEN:"/> 
+                                                </cell>
+                                                <spinner id="sp_ubicord" value="0" disabled="true" width="50px" constraint="min 0; max 999" maxlength="3" tooltiptext="Define el orden de la Ubicación"/>
+                                            </row>
+                                            
+                                            <row>
+                                                <cell align="right" valign="botton">
+                                                    <label value="DEFECTO :"/>
+                                                </cell>
+                                                <checkbox id="chk_ubidef" checked="${each.ubic_default}"  disabled="true" tooltiptext="Define por defecto de la Ubicación"/>
+                                               
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                </div>
+                            </tabpanel>     
+                        </tabpanels>
+                    </tabbox>   
+                </window>
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

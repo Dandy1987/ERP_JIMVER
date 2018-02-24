@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>     
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_infprestamos" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" />   
+                        <label value="REPORTE DE PRESTAMOS" sclass="titulo_mant" style="margin-left:225px;"/>
+                    </toolbar>                        
+                    <tabbox id="tabbox_infprestamo" ctrlKeys="^a#f8#f10" apply="org.me.gj.controller.planillas.informes.ControllerInfPrestamo">
+                        <tabs>
+                            <tab id="tab_listaprestamo" label="LISTA" />
+                        </tabs>
+                        
+                        <tabpanels>
+                            
+                            <!--LISTA-->
+                            <tabpanel>
+                                <div id="div_lst_infpres">
+                                    <groupbox width="987px" height="135px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda" />
+                                        <hbox align="center">
+                                            <space width="50px"/>
+                                            <radiogroup Id="rg_prestamo" onCheck="true">
+                                                <radio label="Por Personal"/>
+                                                <space width="30px"/>
+                                                <radio label="Todo el personal"/>
+                                            </radiogroup>
+                                        </hbox>
+                                        <space height="15px"/>
+                                        <hbox align="center">
+                                            <space width="48px"/>
+                                            <cell align="left" width="80px">
+                                                <label value="FECHA INICIO:"/>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <datebox id="d_fechainicio" tooltiptext="Seleccione Fecha Inicio"  format="dd/MM/yyyy" /> 
+                                            <!--  <template name="model">
+                                           <comboitem label="${each.periodoProceso}" value="${each.periodoProceso}"/>
+                                            </template>
+                                            </combobox>-->
+                                            <space width="5px"/>
+                                            <cell align="left" width="70px">
+                                                <label value="FECHA FIN: "/>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <datebox id="d_fechafin" tooltiptext="Seleccione Fecha Fin "  format="dd/MM/yyyy" /> 
+                                            
+                                            <space width="180px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="SUCURSAL :"/>
+                                            </cell>
+                                            <combobox id="cb_fsucursal" width="120px" tooltiptext="Seleccione sucursal" readonly="true">
+                                                <template name="model">
+                                                    <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="20px"/>
+                                            <button id="btn_consultar" label="Consultar" sclass="botones"/>
+                                            <!-- <space width="20px"/>
+                                            <toolbarbutton id="tbbtn_excel" image="/images/iconos_menu/planillas/exportarxls.png" tooltiptext="Exportar a Excel" />
+                                            <toolbarbutton id="tbbtn_pdf" image="/images/iconos_menu/planillas/exportarpdf.png" tooltiptext="Exportar a PDF" />-->
+                                        </hbox>
+                                        <space height="15px"/>
+                                        <hbox align="center">
+                                            <space width="48px" id="s_space2" visible="false"/>
+                                            <cell align="left" width="150px" visible="false" id="c_cell1">
+                                                <label value="PERSONAL :" id="lb_personal" visible ="false"/>
+                                            </cell>
+                                            <space width="20px" id="s_space3"/>
+                                            <textbox id="txt_codper" maxlength="9"  placeholder="ENTER" width="100px" focus="false" tooltiptext="Código de Personal" style="text-align:center;" visible ="false"/>
+                                            <textbox id="txt_desper" disabled="true" width="280px" focus="false" tooltiptext="Descripción de Personal" visible ="false"/>
+                                         
+                                            <!--<textbox id="txt_desper1"  visible="false" readonly="true" width="327px" focus="false" tooltiptext="Descripción de Personal"/>-->
+                                            <space width="115px" visible="false"  id="s_space1" />
+                                            
+                                            <cell align="left" width="70px"  >
+                                                <label value="ESTADO CUOTA :" visible="false" id="lb_estadocuota" />
+                                            </cell>
+                                            <space width="15px"/>
+                                            <combobox id="cb_estadocuota" readonly="true" placeholder="---seleccione Opcion----" tooltiptext="Seleccione una Opcion" visible="false">
+                                                <comboitem label="TODOS"/>
+                                                <comboitem label="PAGADOS"/>
+                                                <comboitem label="PENDIENTES"/>
+                                                
+          
+                                            </combobox>
+                                           
+                                            <cell align="left" width="115px"  >
+                                                <label value="ESTADO PRESTAMO :"  id="lb_estadoprestamo" />
+                                            </cell>
+                                            <combobox id="cb_estadoprestamo" readonly="true" placeholder="---seleccione Opcion----" tooltiptext="Seleccione una Opcion" >
+                                                <comboitem label="TODOS"/>
+                                                <comboitem label="PAGADOS"/>
+                                                <comboitem label="PENDIENTES"/>
+                                                
+          
+                                            </combobox>
+                                            
+                                            <space width="95px"  />
+                                           
+                                            <cell align="left" width="115px"  >
+                                                <label value="ESTADO PERSONAL :" visible="true" id="lb_estadopersonal" />
+                                            </cell>
+                                            <combobox id="cb_estadopersonal" readonly="true" placeholder="---seleccione Opcion----" tooltiptext="Seleccione una Opcion" visible="true">
+                                                <comboitem label="TODOS"/>
+                                                <comboitem label="ACTIVOS"/>
+                                                <comboitem label="INACTIVOS"/>
+                                                
+          
+                                            </combobox>
+                                            
+                                        </hbox>
+                                        
+                                        <space height="5px"/>
+                                      
+                                        <!--<hbox align="center">
+                                            <space width="820px"/>
+                                            <checkbox id="chk_snegativos" disabled="false" label="Solo Negativos" />
+                                        </hbox>-->
+                                    </groupbox>
+                                    <separator height="6px"/>    
+                                     <listbox id="lst_personal" mold="paging"  pageSize="14" width="985px" height="380px" visible="true">
+                                        <listhead>
+                                            <listheader label="# PRESTAMO" width="100px" align="center"/>
+                                            <!-- <listheader label="PATERNO" width="110px" align="center"/>
+                                            <listheader label="MATERNO" width="110px" align="center"/>-->
+                                            <listheader label="CODIGO EMP" width="100px"  align="center"/>
+                                            <listheader label="NOMBRES" width="270px"  align="center"/>
+                                            
+                                            <listheader label="FECHA EMISION" width="135px" align="center"/>
+                                            <listheader label="ESTADO" width="150px" align="center"/>
+                                            <listheader label="MONTO" width="110px" align="center"/>
+                                            <listheader label="POR PAGAR" width="120px" align="center"/>
+                                            <!-- <listheader label="EST" width="30px" align="center"/>-->
+                                        </listhead>	
+                                        <template name="model">     
+                                            <listitem>
+                                                <listcell label="${each.codigo}"/>
+                                                <listcell label="${each.idper}"/>
+                                                <listcell label="${each.nombres}" style="text-align:left"/> 
+                                                
+                                                <listcell label="${each.fecemi}"   />
+                                                <listcell label="${each.estado}"/> 
+                                                <listcell label="${each.monto}" style="text-align:right"/> 
+                                                <listcell label="${each.porpagar}" style="text-align:right"/> 
+                                                <!-- <listcell>
+                                                    <checkbox disabled="true" checked="true"/>
+                                                </listcell>-->
+                                            </listitem>
+                                        </template>
+                                        
+                                    </listbox>
+                                    <listbox id="lst_prestamo" mold="paging"  pageSize="14" width="985px" height="380px" visible="false">
+                                        <listhead>
+                                            <listheader label="# PRESTAMO" width="160px" align="center"/>
+                                            <!-- <listheader label="PATERNO" width="110px" align="center"/>
+                                            <listheader label="MATERNO" width="110px" align="center"/>-->
+                                            <listheader label="FECHA PAGO" width="170px"  align="center"/>
+                                            <listheader label="NUMERO CUOTA" width="130px" align="center"/>
+                                            <listheader label="MONTO" width="170px" align="center"/>
+                                            <listheader label="ESTADO CUOTA" width="170px" align="center"/>
+                                            <listheader label="POR PAGAR" width="170px" align="center"/>
+                                           
+                                            <!-- <listheader label="EST" width="30px" align="center"/>-->
+                                        </listhead>	
+                                        <template name="model">     
+                                            <listitem>
+                                                <listcell label="${each.codigo}"/>
+                                                <listcell label="${each.fechapago}" style="text-align:center"/> 
+                                                <listcell label="${each.nrocuota}"/> 
+                                                <listcell label="${each.montocuota}"/> 
+                                                <listcell label="${each.estadocuota}" style="text-align:center"/> 
+                                                <listcell label="${each.faltante}" style="text-align:center"/>
+                                                <!-- <listcell>
+                                                    <checkbox disabled="true" checked="true"/>
+                                                </listcell>-->
+                                            </listitem>
+                                        </template>
+                                        <listfoot>
+                                            <listfooter>
+                                                <label id="l_tot" value="Total Monto : " />
+                                            </listfooter>
+                                            <listfooter>
+                                                <doublebox id="txt_total" width="94px" maxlength="12"  locale="en_US" format="##,##0.00" disabled="true" style="text-align: left;" />
+                                            </listfooter>
+                                            <listfooter>
+                                                <space width= "20px"/>
+                                            </listfooter>
+                            
+                                            <listfooter>
+                                                <label id="l_deuda" value="Total Deuda:" />
+                                            </listfooter>
+                                            <listfooter>
+                                                <doublebox id="txt_totaldeuda" width="94px" maxlength="12"  locale="en_US" format="##,##0.00" disabled="true" style="text-align: left;" />
+                                            </listfooter>
+ 
+                                        </listfoot>
+                                    </listbox>
+                                    <space height="10px"/>
+                                    <!--  <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador"/>
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación"/>
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó"/>
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación"/>
+                                    </hbox>-->
+                                </div>
+                            </tabpanel>
+                                                        
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>
+

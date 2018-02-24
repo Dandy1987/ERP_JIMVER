@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_motrec" title="BUSQUEDA DE MOTIVOS DE RECHAZO" border="normal" width="378px"
+            apply="org.me.gj.controller.componentes.ControllerLovMotivoRechazo"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="left" valign="center">
+                    <label value="DESCRIPCION:" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="270px" focus="true" maxlength="45" tooltiptext="Ingrese la descripcion del Motivo de Cambio"/>
+            </hbox>
+            <listbox id="lst_motrec" mold="paging" pageSize="13" width="350px">
+                <listhead>
+                    <listheader label="ID" width="50px" align="center"/>
+                    <listheader label="MOTIVO" width="300px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.mrec_id}" style="text-align:center;"/>
+                        <listcell label="${each.mrec_des}"/>
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk>

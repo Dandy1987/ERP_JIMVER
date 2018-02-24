@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos_main.css"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:h="native">   
+    <borderlayout height="100%">
+        <north border="0">
+            <include src="/plantillas/Encabezado.zul"/>
+        </north>
+        <center border="0">
+            <div sclass="cuerpo-main" >
+            <include src="/plantillas/Cuerpo.zul"/>
+            </div>           
+        </center>
+        <south border="0">
+            <include src="/plantillas/Pie.zul"/>
+        </south>        
+    </borderlayout>
+</zk>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_ubigeo" title="Busqueda de Ubigeos" border="normal" width="610px"
+            apply="org.me.gj.controller.componentes.ControllerLovUbigeo"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hlayout>
+                <cell align="right" valign="bottom">
+                    <label value="DESCRIPCION:" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="380px" focus="true" maxlength="45" tooltiptext="Ingrese la descripcion del Ubigeo"/>
+            </hlayout>
+            <listbox id="lst_ubigeo" mold="paging" pageSize="13" width="580px">
+                <listhead>
+                    <listheader label="CODIGO" width="70px"/>
+                    <listheader label="DISTRITO" width="170px"/>
+                    <listheader label="PROVINCIA" width="170px"/>
+                    <listheader label="DEPARTAMENTO" width="170px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.ubi_cod}"/>
+                        <listcell label="${each.ubi_nomdis}"/>
+                        <listcell label="${each.ubi_nompro}"/>
+                        <listcell label="${each.ubi_nomdep}"/>
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk>

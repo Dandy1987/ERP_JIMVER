@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InfTotkardex_subreport" language="groovy" pageWidth="1060" pageHeight="636" orientation="Landscape" columnWidth="1060" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="5e5b0b5c-a35e-4c66-8b1a-f33cf582c0e6">
+	<property name="ireport.zoom" value="3.8906136901500066"/>
+	<property name="ireport.x" value="3049"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="KAR_KEY" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="FECHA" class="java.lang.String"/>
+	<parameter name="mac" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select
+kc.emp_id,kc.suc_id,kc.kar_key,kc.kar_id, kc.pro_id,kc.pro_des,kc.pro_undpre,kc.prov_id,kc.prov_razsoc,kc.lin_id,kc.lin_des,kc.stk_ini,kc.cst_ini,kc.cst_uni,kc.stk_fin,kc.cst_fin,kc.cst_unf,kc.cab_mac,
+sum(kc.stk_ini) stk_ini, sum(kc.cst_uni) stfin,
+sum(kd.cante)totent, x.totcstinie,
+sum(kd.cants)totsal, y.totcstinis,
+round(round(kc.stk_ini*kc.pro_undpre,0)/kc.pro_undpre,0) stkini_ent,mod(round(kc.stk_ini*kc.pro_undpre,0) , kc.pro_undpre) stkini_fra,
+round(round(sum(kd.cante)*kc.pro_undpre,0)/kc.pro_undpre,0) cante_ent,mod(round(sum(kd.cante)*kc.pro_undpre,0) , kc.pro_undpre) cante_fra,
+round(round(sum(kd.cants)*kc.pro_undpre,0)/kc.pro_undpre,0) cants_ent,mod(round(sum(kd.cants)*kc.pro_undpre,0) , kc.pro_undpre) cants_fra,
+round(round(kc.stk_fin*kc.pro_undpre,0)/kc.pro_undpre,0) stkfin_ent,mod(round(kc.stk_fin*kc.pro_undpre,0) , kc.pro_undpre) stkfin_fra
+from tkardex_cab kc, tkardex_det kd ,
+(select sum(t.cstinie) totcstinie from tkardex_det t where t.tip_mov='E') x ,
+(select sum(t.cstinie) totcstinis from tkardex_det t where t.tip_mov='S') y
+where kc.emp_id = kd.emp_id and kc.suc_id = kd.suc_id and kc.kar_key = kd.kar_key and kc.cab_mac = kd.det_mac and
+trunc(kd.fecha) between to_date('01/05/2015','dd/MM/yyyy') and to_date('29/05/2015','dd/MM/yyyy')
+and kc.cab_mac = $P{mac}
+group by
+kc.emp_id,kc.suc_id,kc.kar_key,kc.kar_id, kc.pro_id,kc.pro_des,kc.pro_undpre,kc.prov_id,kc.prov_razsoc,kc.lin_id,kc.lin_des,kc.stk_ini,kc.cst_ini,kc.cst_uni,kc.stk_fin,kc.cst_fin,kc.cst_unf,kc.cab_mac,
+kc.stk_ini, kc.stk_fin ,x.totcstinie, y.totcstinis]]>
+	</queryString>
+	<field name="EMP_ID" class="java.math.BigDecimal"/>
+	<field name="SUC_ID" class="java.math.BigDecimal"/>
+	<field name="KAR_KEY" class="java.math.BigDecimal"/>
+	<field name="KAR_ID" class="java.lang.String"/>
+	<field name="PRO_ID" class="java.lang.String"/>
+	<field name="PRO_DES" class="java.lang.String"/>
+	<field name="PRO_UNDPRE" class="java.math.BigDecimal"/>
+	<field name="PROV_ID" class="java.lang.String"/>
+	<field name="PROV_RAZSOC" class="java.lang.String"/>
+	<field name="LIN_ID" class="java.lang.String"/>
+	<field name="LIN_DES" class="java.lang.String"/>
+	<field name="STK_INI" class="java.math.BigDecimal"/>
+	<field name="CST_INI" class="java.math.BigDecimal"/>
+	<field name="CST_UNI" class="java.math.BigDecimal"/>
+	<field name="STK_FIN" class="java.math.BigDecimal"/>
+	<field name="CST_FIN" class="java.math.BigDecimal"/>
+	<field name="CST_UNF" class="java.math.BigDecimal"/>
+	<field name="CAB_MAC" class="java.lang.String"/>
+	<field name="STFIN" class="java.math.BigDecimal"/>
+	<field name="TOTENT" class="java.math.BigDecimal"/>
+	<field name="TOTCSTINIE" class="java.math.BigDecimal"/>
+	<field name="TOTSAL" class="java.math.BigDecimal"/>
+	<field name="TOTCSTINIS" class="java.math.BigDecimal"/>
+	<field name="STKINI_ENT" class="java.math.BigDecimal"/>
+	<field name="STKINI_FRA" class="java.math.BigDecimal"/>
+	<field name="CANTE_ENT" class="java.math.BigDecimal"/>
+	<field name="CANTE_FRA" class="java.math.BigDecimal"/>
+	<field name="CANTS_ENT" class="java.math.BigDecimal"/>
+	<field name="CANTS_FRA" class="java.math.BigDecimal"/>
+	<field name="STKFIN_ENT" class="java.math.BigDecimal"/>
+	<field name="STKFIN_FRA" class="java.math.BigDecimal"/>
+	<variable name="TOTALE" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{STK_INI}+$F{TOTENT}-$F{TOTSAL}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="TOTALS" class="java.lang.Double">
+		<variableExpression><![CDATA[$F{STFIN}+$F{TOTCSTINIE}-$F{TOTCSTINIS}]]></variableExpression>
+		<initialValueExpression><![CDATA[0.0]]></initialValueExpression>
+	</variable>
+	<variable name="TOTALEC" class="java.lang.String"/>
+	<variable name="TOTALSC" class="java.lang.String"/>
+	<group name="PRO_ID">
+		<groupExpression><![CDATA[]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnFooter>
+		<band height="101" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="c95052c4-28da-4e74-a1a8-403a88a53467" x="50" y="26" width="244" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[STOCK INICIAL:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c95052c4-28da-4e74-a1a8-403a88a53467" x="50" y="38" width="244" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[TOTAL INGRESOS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c95052c4-28da-4e74-a1a8-403a88a53467" x="50" y="52" width="244" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[TOTAL SALIDAS:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c95052c4-28da-4e74-a1a8-403a88a53467" x="35" y="13" width="966" height="12"/>
+				<textElement textAlignment="Center">
+					<font size="7" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RESUMEN DE MOVIMIENTO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c95052c4-28da-4e74-a1a8-403a88a53467" x="50" y="64" width="896" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c95052c4-28da-4e74-a1a8-403a88a53467" x="50" y="76" width="244" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[STOCK ACT]]></text>
+			</staticText>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="e5d75c98-dd6f-4ce4-a4bf-d779120aafe3" x="360" y="26" width="216" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STK_INI}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="6a2cd516-ae7c-4588-9cbc-d3ac84af20c4" x="360" y="38" width="216" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTENT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="998060ac-10e7-44a6-b339-71ec0beb8aa1" x="368" y="51" width="216" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(                         "+$F{TOTSAL}+")"]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="6f3ee45b-5f62-4087-ad1c-b5cdb2855b84" x="360" y="76" width="216" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTALE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="6f3ee45b-5f62-4087-ad1c-b5cdb2855b84" x="662" y="76" width="210" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{TOTALS}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="e5d75c98-dd6f-4ce4-a4bf-d779120aafe3" x="662" y="29" width="211" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{STFIN}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="6a2cd516-ae7c-4588-9cbc-d3ac84af20c4" x="662" y="40" width="210" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOTCSTINIE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement uuid="998060ac-10e7-44a6-b339-71ec0beb8aa1" x="669" y="51" width="213" height="10"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA["(                         "+$F{TOTCSTINIS}+")"]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+</jasperReport>

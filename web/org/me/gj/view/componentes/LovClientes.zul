@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_cliente" title="BUSQUEDA DE CLIENTE" border="normal" width="450px"
+            apply="org.me.gj.controller.componentes.ControllerLovClientes"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="CLIENTE :" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="350px" focus="true" maxlength="45" tooltiptext="Ingrese la Razon Social del Cliente, Máximo 50 caracteres"/>
+            </hbox>
+            <listbox id="lst_buscli" mold="paging" pageSize="13" width="420px">
+                <listhead>
+                    <listheader label="CODIGO" width="80px" align="center"/>
+                    <listheader label="CLIENTE" width="340px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.cli_id}"/>
+                        <listcell label="${each.cli_razsoc}"/>
+                    </listitem>
+                </template>
+            </listbox>        
+        </vlayout>
+    </window>
+</zk>

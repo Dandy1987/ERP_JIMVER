@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_supervisor" title="BUSQUEDA DE SUPERVISORES" border="normal" width="428px"
+            apply="org.me.gj.controller.componentes.ControllerLovSupervisores"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="DESCRIPCION :" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="320px" focus="true" maxlength="45" tooltiptext="Ingrese los nombres del supervisor, Máximo 50 caracteres"/>
+            </hbox>
+            <listbox id="lst_bussup" mold="paging" pageSize="13" width="400px">
+                <listhead>
+                    <listheader label="CODIGO" width="60px" align="center"/>
+                    <listheader label="APELLIDOS Y NOMBRES" width="340px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.sup_id}" style="text-align:center;"/>
+                        <listcell label="${each.sup_apenom}"/>
+                    </listitem>
+                </template>
+            </listbox>
+            
+        </vlayout>
+    </window>
+</zk>

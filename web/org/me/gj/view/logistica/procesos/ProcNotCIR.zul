@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center>
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_gennotas" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_aprobar" image="/images/iconos/nuevo.png"  tooltiptext="Aprobar Nota de Cambio" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_rechazar" image="/images/iconos/eliminar.png" tooltiptext="Rechazar Nota de Cambio" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir Nota de Cambio" disabled="true" />  
+                        <label value="PROCESAR C-I-R" sclass="titulo_mant" style="margin-left:340px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_notas" apply="org.me.gj.controller.logistica.procesos.ControllerProNotasCIR">
+                        <tabs>
+                            <tab id="tab_notas" label="LISTA"/>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="985px" closable="false" style="background-color:#FFFFFF">
+                                    <caption label="BUSQUEDA DE C-I-R"/>
+                                    <vbox>
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+                                                <label value="TIPO NOTA:"/>
+                                            </cell>
+                                            <combobox id="cb_tipnota" readonly="true" width="110px" tooltiptext="Define el Tipo de C-I-R">
+                                                <comboitem label="" value="%%"/> 
+                                                <comboitem value="1" label="CAMBIO"/>
+                                                <comboitem value="3" label="INTERCAMBIO"/>
+                                                <comboitem value="2" label="RECOJO"/>
+                                            </combobox>
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="PERIODO: "/>
+                                            </cell>
+                                            <combobox id="cb_periodo" readonly="true" width="70px" tooltiptext="Define el Periodo que se Emitio el C-I-R">
+                                                <template name="model">
+                                                    <comboitem value="${each.per_periodo}" label="${each.per_periodo}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="VENDEDOR:"/>
+                                            </cell>
+                                            <textbox id="txt_ven_id" maxlength="4" width="28px" focus="true" tooltiptext="Define el código de Vendedor, máximo 4 caracteres"/>
+                                            <textbox id="txt_ven_apenom" maxlength="50" width="275px" disabled="true" tooltiptext="Define el nombre del vendedor, máximo 50 caracteres"/>
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="MOT.CAMBIO:"/>
+                                            </cell>
+                                            <textbox id="txt_mcam_id" maxlength="3" width="22px" tooltiptext="Define el código del Motivo de Cambio, Máximo 3 caracteres"/> 
+                                            <textbox id="txt_mcam_des" maxlength="50" width="150px" disabled="true" tooltiptext="Define la descripción del Motivo de cambio, Máximo 50 caracteres"/> 
+                                        </hbox>
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+                                                <label value="FECHA EMISION:"/>
+                                            </cell>
+                                            <datebox id="d_fecemi" width="80px" readonly="true"  maxlength="10" onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="Fecha de emisión de la Nota C-I-R"/> 
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="CLIENTE:"/>
+                                            </cell>
+                                            <textbox id="txt_cli_id" maxlength="10" width="62px" tooltiptext="Define el Código del Cliente, máximo 10 caracteres"/>
+                                            <textbox id="txt_cli_razsoc" maxlength="100" width="350px" disabled="true" tooltiptext="Define el nombre del Cliente, máximo 100 caracteres"/>
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="SITUACION :"/>
+                                            </cell>
+                                            <combobox id="cb_situacion" readonly="true" width="120px" tooltiptext="Define la Situacion de la Nota">
+                                           <!--     <comboitem label="" value="235"/> 
+                                                <comboitem label="AUTORIZADO" value="200"/> 
+                                                <comboitem label="TRANSITO" value="030"/> 
+                                                <comboitem label="PROCESADO" value="005"/> -->
+                                                <comboitem label="TODO" value="%%"/>
+                                                <comboitem label="INGRESADO" value="1"/>
+                                                <comboitem label="AUTORIZADO" value="2"/> 
+                                                <comboitem label="TRANSITO" value="3"/> 
+                                                <comboitem label="RECHAZADO" value="4"/> 
+                                                <comboitem label="PROCESADO" value="5"/>  
+                                            </combobox>
+                                            <space width="10px"/>                                        
+                                            <button id="tbbtn_btn_buscar"  sclass="botones" label="Consultar" tooltiptext="Consultar C-I-R"/>
+                                            <!--   <separator width="20px"/>
+                                            <toolbarbutton id="tbbtn_btn_buscar" image="/images/iconos/buscar.png" tooltiptext="Buscar" />  -->          
+                                        </hbox>
+                                    </vbox>
+                                </groupbox>
+                                <space height="5px"/>
+                                <listbox id="lst_notascir" mold="paging" pageSize="17" width="985px" height="415px">
+                                    <listhead>
+                                        <listheader label="NOTA" width="35px"/>
+                                        <listheader label="NRO.NOTA"  width="65px" align="center"/>
+                                        <listheader label="FEC.EMI"  width="60px" align="center"/>
+                                        <listheader label="CLIENTE"  width="70px" align="center"/>
+                                        <listheader label="APELLIDOS Y NOMBRES"/>
+                                        <listheader label="VEND" width="35px" align="center"/>
+                                        <listheader label="NOMBRES" width="195px"/>
+                                        <listheader label="#NOTA E/S" width="70px" align="center"/>
+                                        <listheader label="SITUACION" width="80px" align="center"/>
+                                        <listheader label="MOTIVO" width="140px"/>       
+                                        <listheader width="25px">
+                                            <checkbox id="chk_selecAll"/>
+                                        </listheader>                                 
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem value="${each}">
+                                            <listcell label="${each.not_tipdes}"/>
+                                            <listcell label="${each.not_id}"/>
+                                            <listcell label="${each.not_sfecemi}"/>
+                                            <listcell label="${each.cli_id}"/>
+                                            <listcell label="${each.cli_razsoc}"/>
+                                            <listcell label="${each.ven_id}"/>
+                                            <listcell label="${each.ven_apenom}"/>
+                                            <listcell label="${each.not_notasal eq null ? each.not_notaent : each.not_notasal}" style="text-align: center; background-color: #F2F5A9; color: black;"/>
+                                            <listcell label="${each.not_sitdes}"/>
+                                            <listcell label="${each.mcam_des}"/>
+                                            <listcell >
+                                                <checkbox forward="onCheck=lst_notascir.onSeleccion"  checked="${each.valSelec}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="12px"/>
+                                <hbox align="center">
+                                    <space width="120px"/>
+                                    <cell align="right" valign="center">
+                                        <label value="TIPO DE MOVIMIENTO :"/>
+                                    </cell>
+                                    <combobox id="cb_procesar" width="220px" readonly="true">
+                                        <comboitem value="E" label="ENTRADA DE MERCADERIA"/>
+                                        <comboitem value="S" label="SALIDA DE MERCADERIA"/>
+                                    </combobox>
+                                    <space width="30px"/>
+                                    <cell align="right" valign="center">
+                                        <label value="FECHA DE GENERACION :"/>
+                                    </cell>
+                                    <datebox id="d_fecgen" width="80px" onCreate="self.value = new Date()" format="dd/MM/yyyy" tooltiptext="Fecha de emisión de C-I-R"/> 
+                                    <space width="30px"/>
+                                    <button id="btn_procesar" label="Procesar" sclass="botones" tooltiptext="Procesa C.I.R."/>
+                                </hbox>
+                            </tabpanel>                            
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

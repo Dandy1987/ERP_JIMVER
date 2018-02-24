@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_prestamos" title="Enlace Prestamos" border="normal" width="880px"
+            apply="org.me.gj.controller.componentes.ControllerLovDescuentosPrestamos"
+            position="center,center" 
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <groupbox  height="125px" width="850px" open="true" closable="false">
+                <caption label="Opciones de Busqueda" />
+                <hbox align="center">
+                    <space width="220px"/>
+                    <span class="colorRojo">
+                        <label  value="ENLACE AUTOMATICO DE PRESTAMOS PERSONALES" style="font-size:15px;" />
+                    </span>
+                </hbox> 
+                <space width="1px"/>
+                <hbox align="center">
+                    <space width="85px"/>
+                    <cell align="right" valign="center">
+                        <label value="SUCURSAL :"/>
+                    </cell>
+                    <combobox id="cb_fsucursal" width="120px" tooltiptext="Seleccione sucursal" readonly="true">
+                        <template name="model">
+                            <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                        </template>
+                    </combobox>
+                    <space width="15px"/>
+                    <cell align="left" width="65px">
+                    <label value="AREA :"/>
+                </cell>
+                <combobox id="cb_area" width="190px" tooltiptext="Seleccione área" readonly="true">
+                    <template name="model">
+                        <comboitem label="${each.area_des}" value="${each.area_id}"/>
+                    </template>
+                </combobox>    
+                <space width="5px"/>
+                   <!-- <cell align="right" valign="center">
+                        <label value="PERIODO:"/>                                                 
+                    </cell>
+                    <space width="2px"/>
+                    <textbox id="txt_periodo"  disabled="true"  width="72px"/> 
+                    <space width="5px"/>                        
+                    <label value="FECHA PROCESO:"/>
+                
+                    <datebox id="d_fecha"  maxlength="10" width="100px" onCreate="self.value = new Date()"  format="dd/MM/yyyy" readonly="true" style="text-align:right;"  tooltiptext="Fecha de inicio"/>
+                    <space width="10px"/>
+                    <cell align="left" width="65px">
+                        <label value="PERSONAL :"/>
+                    </cell>
+                    <combobox id="cb_personal" width="120px" tooltiptext="Seleccione" readonly="true">
+                        <comboitem label="" value="1"/>
+                        <comboitem label="VENDEDORES" value="2"/>
+                        <comboitem label="REPARTIDORES" value="3"/>
+                        <comboitem label="OFICINA" value="4"/>
+                    </combobox>-->
+                 
+                </hbox> 
+                <space width="1px"/>
+                <hbox align="center">
+                    <space width="70px"/>
+                    <checkbox  id="chk_rango" label="Rango de fecha de prestamo" />
+                    
+                    <space width="25px"/>                        
+                    <label value="FECHA INICIO: "/>
+                
+                    <datebox id="d_inicio" disabled="true" maxlength="10" width="100px" onCreate="self.value = new Date()"  format="dd/MM/yyyy" readonly="false" style="text-align:right;"  tooltiptext="Fecha de inicio"/>
+                
+                    <space width="25px"/>                        
+                    <label value="FECHA FIN: "/>
+                
+                    <datebox id="d_fin" disabled="true" maxlength="10" width="100px" onCreate="self.value = new Date()"  format="dd/MM/yyyy" readonly="false" style="text-align:right;"  tooltiptext="Fecha de inicio"/>
+                    <space width="15px"/>   
+                    <button id="btn_consultar" label="Consultar" sclass="botones" />
+                </hbox>
+            </groupbox> 
+            <separator height="12px"/>    
+            <listbox id="lst_lista" mold="paging" width="850px" height="350px">
+                <listhead>
+                    <listheader label="NUMERO DE PRESTAMO" width="140px" align="center"/>
+                    <listheader label="CODIGO" width="250px" align="center"/>
+                    <!--<listheader label="TRABAJADOR"  align="center"/>-->
+                    <listheader label="MONTO DE CUOTA"  align="center"/>
+                    <listheader label="FECHA DE PAGO"  align="center"/> 
+                    <listheader label="SITU.CUOTA" align="center"/>
+                    <listheader width="25px" label="">
+                        <checkbox id="chk_selecAll"/>
+                    </listheader>
+                </listhead>
+                <template name="model">	
+                    <listitem>
+                        <listcell label="${each.TPLPRESCAB_ID}"/>
+                        <listcell label="${each.TPLID_PERSONAL}" style="text-align:left;"/>
+                        <listcell label="${each.monto}" style="text-align:right;"/>
+                        <listcell label="${each.f_pago}"/>
+                        <listcell label="${each.situacion}" style="${each.situacion eq 'PENDIENTE DE PAGO' ? 'background-color: #e60808  ; font-weight: bold; color: white;' : '' or each.situacion eq 'PENDIENTE DE PAGO'? 'background-color:#FFC300; font-weight: bold; color: white;' : ''}"/>
+                        <!--   <listcell label="${each.codigo_vista}"/>-->
+                        <listcell>
+                            <checkbox forward="onCheck=lst_lista.onSeleccion"  checked="${each.valSelec}"/>
+                        </listcell>  
+                    </listitem>
+                </template>
+            </listbox>
+            
+            
+            <separator height="12px"/>    
+            <hbox align="center">
+                <space width="25px"/>
+                <button id="btn_cancelar" label="Cancelar" sclass="botones"/>
+                <space width="550px"/>
+                <button id="btn_procesar" label="Procesar..." sclass="botones"/>
+            </hbox>
+                  
+            
+            
+           
+            
+            
+            
+        </vlayout>
+        
+    </window>  
+        
+  
+</zk>

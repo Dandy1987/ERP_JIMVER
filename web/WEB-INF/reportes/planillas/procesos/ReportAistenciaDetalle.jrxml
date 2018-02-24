@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportAistenciaDetalle" language="groovy" pageWidth="739" pageHeight="842" columnWidth="699" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="205d4141-d061-46d5-9031-c54182a2b7f1">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="115"/>
+	<parameter name="P_EMPRESA" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_SUCURSAL" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_CODIGO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["125611479"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PERIODO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["201708"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_DIA" class="java.lang.String">
+		<defaultValueExpression><![CDATA["31"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_USUARIO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select t.pltipdoc,t.plnrodoc,t.pltipdoc||t.plnrodoc idper,t.periodo ,
+decode(t.asistencia,'0','ASISTIO','1','FALTA','2','VACACIONES','3','PRE NATAL','4','POST NATAL',
+'5','LIC. C. GOCE','6','LIC. S. GOCE','7','COMPENSACION','8','DESC. MEDICO','9','DESC. M. SUBSIDIO',
+'A','LIC. PATERNIDAD','B','LIC. ENF. TERMINAL' ) asistencia,t.fecha,
+e.plapepat||' '||e.plapemat||' '||e.plnomemp nombre,d.emp_des empresa
+from v_asistencia t,tpersonal e,tempresas d
+where t.pltipdoc = e.pltipdoc
+and t.plnrodoc = e.plnrodoc
+and d.emp_id = t.emp_id
+and e.plestado=1
+and t.emp_id = $P{P_EMPRESA}
+and t.suc_id = $P{P_SUCURSAL}
+and t.pltipdoc||t.plnrodoc =  $P{P_CODIGO}
+and t.periodo = $P{P_PERIODO}
+and to_char(t.fecha,'dd') <= $P{P_DIA}
+
+and to_char(t.fecha,'dd/mm/yyyy') <> cast('01/01/1900'as varchar2(80))]]>
+	</queryString>
+	<field name="PLTIPDOC" class="java.math.BigDecimal"/>
+	<field name="PLNRODOC" class="java.lang.String"/>
+	<field name="IDPER" class="java.lang.String"/>
+	<field name="PERIODO" class="java.lang.String"/>
+	<field name="ASISTENCIA" class="java.lang.String"/>
+	<field name="FECHA" class="java.sql.Timestamp"/>
+	<field name="NOMBRE" class="java.lang.String"/>
+	<field name="EMPRESA" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="41" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="8dc468cc-d489-4093-a2d3-975789b25540" x="599" y="0" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm a">
+				<reportElement uuid="47a3257b-9960-49a9-aa91-02b3f4eb18cd" x="599" y="20" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a50acd22-4807-4b3e-aeac-e936f44dc212" x="251" y="0" width="348" height="40"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black" size="14"/>
+				</textElement>
+				<text><![CDATA[REPORTE ASISTENCIA PERSONAL]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="b7c5979a-6cae-44c8-b3fb-bd08bb3fecf8" x="0" y="20" width="251" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_USUARIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9ab25bf3-0de6-479d-8c39-768281f8d3f4" x="0" y="0" width="251" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{EMPRESA}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="ded575dc-83f7-479a-a3ea-aa8bd0208af0" x="0" y="40" width="699" height="1"/>
+			</line>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="101" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="a507e09a-c410-464c-8e9f-3d8ce081ca81" x="0" y="40" width="251" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[PERIODO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b0f86d2f-2da0-4b27-af27-eda3905a58de" x="0" y="80" width="144" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[ASISTENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b40ee83f-5e93-4c7c-9271-6566bf5a4547" x="144" y="80" width="107" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4d0e3e68-bc71-4d85-a796-e76443f2c122" x="0" y="0" width="251" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[APELLIDOS Y NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fd6218a9-5c9f-46e7-91c9-9fc71c1dbb89" x="0" y="20" width="251" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial Black"/>
+				</textElement>
+				<text><![CDATA[CODIGO]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f8631110-c945-404e-ace7-d14870e4ba34" x="251" y="0" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NOMBRE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="3ce5f3f2-e3d4-4f5e-be5a-779663a6e279" x="251" y="20" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{IDPER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2fba0885-49f3-4dd0-9e66-6ff3b3e1a95d" x="251" y="40" width="448" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PERIODO}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="0659ec47-7d97-4930-858c-0d32e6408e1b" x="0" y="100" width="699" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="3ca4c8a8-cdda-4349-a729-a604bc8cc084" x="0" y="60" width="251" height="20"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5da617b3-cd41-4d4d-893c-0f32ee2ef472" x="251" y="60" width="448" height="20"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="3a6789a0-30ee-4d2b-86df-5c23076dc902" x="0" y="0" width="144" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ASISTENCIA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="14c10fa9-c35d-44f3-8867-523912688814" x="144" y="0" width="107" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{FECHA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

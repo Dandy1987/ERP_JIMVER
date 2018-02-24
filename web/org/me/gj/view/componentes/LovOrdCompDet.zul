@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_ordcompdet" title="BUSQUEDA DE PRODUCTOS DE O/C" border="normal" width="600px"
+            apply="org.me.gj.controller.componentes.ControllerLovOrdCompDet"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hlayout>
+                <cell align="right" valign="bottom">
+                    <label value="DESCRIPCION:" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="250px" focus="true" maxlength="45" tooltiptext="Ingrese la Descripción del Producto, Máximo 50 caracteres"/>
+            </hlayout>
+            <listbox id="lst_ordcompdet" mold="paging" pageSize="13" width="574px">
+                <listhead>
+                    <listheader label="ID" width="110px"/>
+                    <listheader label="ARTICULO" width="464px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.pro_id}"/>
+                        <listcell label="${each.pro_des}"/>
+                    </listitem>
+                </template>
+            </listbox>
+            
+        </vlayout>
+    </window>
+</zk>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_condiciones_venta" title="BUSQUEDA DE CONDICIONES DE VENTA" border="normal" width="447px"
+            apply="org.me.gj.controller.componentes.ControllerLovCondicionesVenta"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="DESCRIPCION:" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="340px" focus="true" maxlength="50" tooltiptext="Ingrese condición de venta. Máximo 50 caracteres"/>
+            </hbox>
+            <listbox id="lst_condiciones_venta" mold="paging" pageSize="13" width="420px">
+                <listhead>
+                    <listheader label="ID" width="40px" align="center"/>
+                    <listheader label="DESCRIPCION" width="380px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.conId}"/>
+                        <listcell label="${each.conDes}"/>
+                    </listitem>
+                </template>
+            </listbox>
+            
+        </vlayout>
+    </window>
+</zk>

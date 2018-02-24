@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>     
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_mancontratos" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)" />
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)" />   
+                        <label value="MANTENIMIENTO DE CONTRATOS" sclass="titulo_mant" style="margin-left:225px;"/>
+                    </toolbar>                        
+                    <tabbox id="tabbox_contratos" ctrlKeys="#f2#f4#f7#f10#f9#f8" apply="org.me.gj.controller.planillas.mantenimiento.ControllerContratos">
+                        <tabs>
+                            <tab id="tab_listacontrato" label="LISTA" />
+                            <tab id="tab_contrato" label="DATOS CONTRATO">
+                                <attribute name="onSelect">
+                                    if (!tab_listacontrato.isDisabled())
+                                    {
+                                    if (lst_contrato.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listacontrato.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);  
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_contrato" >                                
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda" />
+                                        <hbox align="center">
+                                            <cell align="right" valign="center">
+                                                <label value="FILTRO:"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_busqueda" readonly="true" placeholder="---seleccione Opcion----" tooltiptext="Seleccione una Opcion">
+                                                <comboitem label=" "/>
+                                                <comboitem label="NRO.CONTRATO"/>
+                                                <comboitem label="PERSONAL"/>
+                                                <comboitem label="CARGO"/>
+                                                <attribute name="onSelect">
+                                                    txt_busqueda.setDisabled(false);
+                                                </attribute>
+                                            </combobox>
+                                            <separator/>
+                                            <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="ESTADO:" id="lbl_estado"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una Opción" width="110px">
+                                                <comboitem label="ACTIVO"/>
+                                                <comboitem label="INACTIVO"/>
+                                                <comboitem label=" "/>       
+                                            </combobox>                                                                                        
+                                            <button id="tbbtn_btn_buscar" label="Consultar" sclass="botones"/>
+                                        </hbox>
+ 
+                                        <space width="5px"/>
+                                        <hbox align="center">
+                                            <space width="1px"/>
+                                            <cell align="left" valign="center">
+                                                <label value="AREA :"/>
+                                            </cell>
+                                            <combobox id="cb_area" width="190px" tooltiptext="Seleccione área" readonly="true">
+                                                <template name="model">
+                                                    <comboitem label="${each.area_des}" value="${each.area_id}"/>
+                                                </template>
+                                            </combobox>     
+                                            <cell align="right" valign="center">
+                                                <label value="DÍAS" id="lbl_dias"/>
+                                            </cell>
+                                            <space width="10px"/>
+                                            <combobox id="cb_diasfiltro" readonly="true"   tooltiptext="Seleccione una Opción" width="110px">
+                                                <comboitem label=" "/>
+                                                <comboitem label="15"/>
+                                                <comboitem label="30"/>
+                                                <comboitem label="45"/>    
+                                                <comboitem label="60"/>  
+                                                   
+                                            </combobox>  
+                                       
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="5px"/>    
+                                    <listbox id="lst_contrato" mold="paging" pageSize="18" width="985px" height="380px">
+                                        <listhead>
+                                            <listheader label="NRO.CONTRATO" width="100px" align="center"/>
+                                            <listheader label="PERSONAL"  align="center"/>
+                                            <listheader label="COD. EMP" width="80px" align="center"/>
+                                            <listheader label="CARGO" width="200px" align="center"/>
+                                            <listheader label="FEC.INICIO" width="75px" align="center"/>
+                                            <listheader label="FEC.FIN" width="75px" align="center"/>
+                                            <listheader label="DÍAS FALTANTES"  width="92px" align="center"/>
+                                            <listheader label="EST" width="25px" align="center"/>
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.id_contrato}"/>
+                                                <listcell label="${each.par08_pernom}" style="text-align:left;"/>
+                                                <listcell label="${each.par06_pertipdoc}${each.par07_pernumdoc}"/>
+                                                <listcell label="${each.par10_percargo}"/>
+                                                <listcell label="${each.spar14_confecini}"/>
+                                                <listcell label="${each.spar15_confecfin}"/>
+                                                <listcell label="${each.dias_faltantes}"/>
+                                                <listcell>
+                                                    <checkbox disabled="true" checked="${each.valor}"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <space height="5px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador"/>
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación"/>
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó"/>
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación"/>
+                                    </hbox>
+                                </div>
+                            </tabpanel> 
+                            <tabpanel>
+                                <hbox>
+                                    <vbox>
+                                        <groupbox width="985px" open="true" closable="false">
+                                            <caption label="DATOS EMPRESA"/>
+                                            <vbox>
+                                                <hbox>
+                                                    <space width="5px"/>
+                                                    <cell align="left" valign="center" width="70px">
+                                                        <label value="ID.CONTRATO:"/>
+                                                    </cell>
+                                                    <space width="0px"/>
+                                                    <textbox id="txt_codigo" width="70px" maxlength="10" tooltiptext="Código del contrato"/>
+                                                </hbox>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="left" valign="center" width="65px">
+                                                        <label value="EMPRESA :"/>
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_empresa" width="600px" maxlength="300" tooltiptext="Nombre de la empresa"/>
+                                                    <space width="15px"/>
+                                                    <cell align="left" valign="center" width="60px">
+                                                        <label value="RUC :"/>
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_ruc" width="100px" maxlength="11" tooltiptext="RUC de la empresa"/>
+                                                </hbox>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="left" valign="center" width="65px">
+                                                        <label value="DOMICILIO :"/>
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_domicilio" width="600px" maxlength="300" tooltiptext="Dirección de la empresa"/>
+                                                    <space width="15px"/>
+                                                    <cell align="left" valign="center" width="60px">
+                                                        <label value="DISTRITO :"/>
+                                                        <span class="colorRojo">*</span> 
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_distrito" width="100px" maxlength="100" tooltiptext="Distrito donde se encuentra la empresa"/>
+                                                </hbox>
+                                            </vbox>
+                                        </groupbox>
+                                        <space height="5px"/>
+                                        <groupbox width="985px" open="true" closable="false">
+                                            <caption label="DATOS TRABAJADOR"/>
+                                            <vbox>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="NRO.DOC. :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_perNroDoc" width="90px" maxlength="15" tooltiptext="Número de documento del personal"/>
+                                                    <space width="10px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="TRABAJADOR :"/>
+                                                    </cell>
+                                                    <textbox id="txt_perNom" width="450px" maxlength="300" tooltiptext="Nombre del personal"/>
+                                                </hbox>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="left" valign="center" width="65px">
+                                                        <label value="DIRECCIÓN :"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <space width="0px"/>
+                                                    <textbox id="txt_perDir" width="550px" maxlength="300" tooltiptext="Dirección del personal"/>
+                                                    <space width="10px"/>
+                                                    <cell align="left" valign="center" width="60px">
+                                                        <label value="CARGO:"/>
+                                                        <span class="colorRojo" style="color:red">*</span> 
+                                                    </cell>
+                                                    <textbox id="txt_perCargo" width="235px" maxlength="300" tooltiptext="Cargo del personal"/>
+                                                </hbox>
+                                            </vbox>
+                                        </groupbox>
+                                        <space height="5px"/>
+                                        <groupbox width="985px" open="true" closable="false">
+                                            <caption label="DATOS CONTRATO"/>
+                                            <vbox>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="left" valign="center" width="65px">
+                                                        <label value="MESES :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <intbox id="ib_conMeses" width="50px" maxlength="5" tooltiptext="Meses que dura el contrato"/>
+                                                    <space width="30px"/>
+                                                    <cell align="left" valign="center" width="80px">
+                                                        <label value="FECHA INICIO :"/>
+                                                        <span class="colorRojo" style="color:red">*</span> 
+                                                    </cell>
+                                                    <datebox id="d_conFecIni" maxlength="10" width="90px" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha en que inicia el contrato"/>
+                                                    <space width="30px"/>
+                                                    <cell align="left" valign="center" width="80px">
+                                                        <label value="FECHA FIN :"/>
+                                                        <span class="colorRojo" style="color:red">*</span> 
+                                                    </cell>
+                                                    <datebox id="d_conFecFin" maxlength="10" width="90px" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha en que termina el contrato"/>
+                                                    <space width="30px"/>
+                                                    <cell align="left" valign="center" width="100px">
+                                                        <label value="REMUNERACIÓN:"/>
+                                                        <span class="colorRojo" style="color:red">*</span> 
+                                                    </cell>
+                                                    <intbox id="ib_conRem" width="85px" maxlength="15" style="text-align: right;" tooltiptext="Remuneración mensual"/>
+                                                </hbox>
+                                                <hbox align="center">
+                                                    <space width="4px"/>
+                                                    <cell align="left" valign="center" width="75px">
+                                                        <label value="TIP.CONT:"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    
+                                                    <textbox id="txt_idtipcont"   width="60px" tooltiptext="ID de tipo de contrato"/>
+                                                    <textbox id="txt_destipcont"  width="400px" tooltiptext="Descripción de tipo de contrato"/>
+                                                    
+                                                </hbox>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="left" valign="top" width="65px">
+                                                        <label value="ACTIVIDAD:"/>
+                                                        <span class="colorRojo" style="color:red">*</span> 
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_conAct" multiline="true" style="resize:none;" width="700px" height="250px" tooltiptext="Actividades que realizará el personal"/>
+                                                </hbox>
+                                            </vbox>
+                                        </groupbox>
+                                    </vbox>
+                                </hbox>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0"  height="60px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>
+

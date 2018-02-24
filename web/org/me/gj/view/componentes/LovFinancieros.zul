@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_financiero" title="MANTENIMIENTO DE DATOS FINANCIEROS" border="normal" width="1000px"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp"
+            apply="org.me.gj.controller.componentes.ControllerLovFinancieros">
+    
+        <grid width="1000px">
+            <columns>
+                <column width="100px"/>
+                <column width="200px"/>
+                <column width="100px"/>
+                <column width="200px"/>
+                <column width="100px"/>
+                <column width="300px"/>
+            </columns>
+            <rows>
+                <row>
+                    <cell align="right" valign="botton">
+                        <label value="CATEGORIA:"/>
+                    </cell>
+                    <cell>
+                        <combobox id="cb_fin_categoria" readonly="true" placeholder="---seleccione Opcion----" tooltiptext="Seleccione una Opcion">
+                            <template name="model">
+                                <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                            </template> 
+                        </combobox>
+                    </cell>
+                    <cell align="right" valign="botton">
+                        <label value="LIM. CRED:"/>
+                    </cell>
+                    <cell>
+                        <longbox id="txt_fin_limcred" disabled="false" maxlength="11" width="180px" tooltiptext="Define el Limite de Credito por Empresa"/>
+                    </cell>
+                    <cell align="right" valign="botton">
+                        <label value="LIM. DOC:"/>
+                    </cell>
+                    <cell>
+                        <intbox id="txt_fin_limdoc" disabled="false" maxlength="1" width="100px" tooltiptext="Define el Limite de Documento por Empresa"/>
+                    </cell>
+                </row>
+                <row>
+                    <cell align="right" valign="botton">
+                    </cell>
+                    <cell valign="botton">
+                        <button id="btn_aceptar" label="Aceptar" sclass="botones" width="70px"/>
+                        <button id="btn_cancelar" label="Cancelar" sclass="botones" width="70px"/>
+                    </cell>
+                </row>
+            </rows>
+        </grid>
+    </window>
+    
+</zk>
+

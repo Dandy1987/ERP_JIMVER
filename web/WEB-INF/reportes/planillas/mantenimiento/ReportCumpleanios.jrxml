@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportCumpleanios" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4078915a-62e7-4e8d-b2c3-9e2648f6af64">
+	<property name="ireport.zoom" value="1.6757443455841448"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="empresa" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sucursal" class="java.lang.String">
+		<defaultValueExpression><![CDATA["1"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="periodo" class="java.lang.String">
+		<defaultValueExpression><![CDATA["201701"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="sello" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString language="plsql">
+		<![CDATA[{call codijisa.pack_tpersonal.p_cumpleanios($P{periodo},$P{empresa},$P{sucursal},$P{ORACLE_REF_CURSOR})}]]>
+	</queryString>
+	<field name="personal" class="java.lang.String"/>
+	<field name="dia" class="java.lang.String"/>
+	<field name="edad" class="java.lang.String"/>
+	<field name="area" class="java.lang.String"/>
+	<field name="usuadd" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="172" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="bbc5e190-f1ce-4760-a4aa-33762a776fb8" mode="Opaque" x="0" y="1" width="555" height="58" backcolor="#99FF99"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE CUMPLEAÑOS]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="585a36d8-c33b-4eb8-aef0-53ce0d11125e" x="405" y="59" width="150" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="h.mm.ss a">
+				<reportElement uuid="87f842c6-fb6c-4ac6-961a-7944c53fa2ac" x="405" y="79" width="150" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="f86cab4d-f4c8-4c3c-accf-2b95d7d05586" x="0" y="130" width="235" height="20" forecolor="#000000"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[REPORTCUMPLEANIOS.JASPER]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="4ec27778-009b-4ec7-86db-6ff19ebb265c" x="0" y="150" width="235" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{usuadd}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="dacd6a77-d82e-4731-a285-2f995765d6f9" x="235" y="130" width="170" height="20"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="72647795-c525-439a-ab06-5ab7bada35c0" x="235" y="150" width="170" height="20"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="a5c6a1ec-edd2-4bb4-bd70-e3af2a58f9a8" x="0" y="99" width="554" height="1"/>
+			</line>
+			<image>
+				<reportElement uuid="be41a912-3f83-463c-9034-15df9d41039f" x="405" y="100" width="149" height="70"/>
+				<imageExpression><![CDATA[$P{sello}]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="21" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="293e2e45-3d02-4553-b4a8-24fd3b28a0ee" x="0" y="0" width="235" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[APELLIDOS Y  NOMBRES]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1e6e3f5b-098d-439e-b444-e7fdf406fc37" x="235" y="0" width="198" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[AREA]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="49422b85-0718-40c2-a10f-60122b098b1a" x="0" y="20" width="554" height="1"/>
+			</line>
+			<staticText>
+				<reportElement uuid="cf4956b0-5186-4db4-8ed3-cd34d054ce0b" x="433" y="0" width="121" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[DIA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="e952bb4c-f505-4555-a5fe-cd2462ef67b3" x="0" y="0" width="235" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{personal}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="27f2a15d-424e-49fa-b309-3b3ba1982172" x="235" y="0" width="198" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{area}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e9aee175-3504-4711-b415-a7627413576d" x="433" y="0" width="121" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{dia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul" xmlns:w="client">
+    <window id="w_lov_preview" title="CONSOLIDADO PREVIO" border="normal" width="500px"
+            height="200px" position="center,center" closable="true"
+            apply="org.me.gj.controller.componentes.ControllerLovFacInfPreview"
+            action="show: slideDown;hide: slideUp">
+        <div >
+            <vbox>
+                <space width="5px"/>
+                <hbox align="right">
+                    <space width="140px"/>
+                    <label value="GENERACION DE CONSOLIDADO PREVIO" />
+                </hbox>
+                <space height="10px"/>
+                <hbox align="right">
+                    <space width="5px"/>
+                    <cell align="right" valign="center" >
+                        <label value="DIA VIS:"/>
+                    </cell>
+                    <space width="2px"/>
+                    <combobox id="cb_diavisita" readonly="true" width="120px">
+                        <comboitem label="LUNES" value="1"/>
+                        <comboitem label="MARTES" value="2"/>
+                        <comboitem label="MIERCOLES" value="3"/>
+                        <comboitem label="JUEVES" value="4"/>
+                        <comboitem label="VIERNES" value="5"/>
+                        <comboitem label="SABADO" value="6"/>
+                        <comboitem label="" value=""/>                                                 
+                    </combobox>
+                    <space width="5px"/>
+                    <label value="FEC.FAC:"/>
+                    <datebox id="d_fecfac" maxlength="10" readonly="true" width="80px" format="dd/MM/yyyy" />  
+                    <space width="5px"/>
+                    <label value="FEC.ENVIO:"/>
+                    <datebox id="d_fecenvio" maxlength="10" readonly="true" width="80px" format="dd/MM/yyyy" /> 
+                </hbox>
+                <space height="5px"/> 
+                <hbox align="right">
+                    <space width="5px"/> 
+                    <cell align="right" valign="center" >
+                        <label value="TRANSPORTE:"/>
+                    </cell>
+                    <textbox id="txt_trans_id" width="50px" maxlength="4"/>
+                    <textbox id="txt_trans_des" disabled="true" width="160px" maxlength="50"/>
+                    <cell align="right" valign="center" >
+                        <label value="H.ENTREGA:"/>
+                    </cell>
+                    <combobox id="cb_hentrega" readonly="true" width="90px"  tooltiptext="Selecciona el horario">
+                        <template name="model">                                                                                                 
+                            <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>                                                                                                      
+                        </template>                                               
+                    </combobox> 
+                </hbox>
+                <space height="5px"/>
+                <hbox align="right">
+                    <space width="5px"/>
+                    <label value="NRO.REGISTRO:"/>                                                                                                                                              
+                    <textbox id="txt_nroreg" maxlength="10" width="80px" tooltiptext="Número de registro"/>
+                    <space width="60px"/>
+                    <button id="btn_aceptar" label="ACEPTAR" sclass="botones"/>
+                    <button id="btn_cancelar" label="CANCELAR" sclass="botones"/>
+                </hbox>                             
+            </vbox>
+        </div>
+    </window>
+</zk>
+

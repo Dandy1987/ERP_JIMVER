@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InventarioEtiqueta" printOrder="Horizontal" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5ec79550-72f4-4714-a17b-a4c1436924b2">
+    <property name="ireport.zoom" value="1.5394743546921223"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Totales">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[(  $F{ANIO} == null ? true : false   )]]></conditionExpression>
+			<style mode="Opaque" forecolor="#3333FF" backcolor="#CCCCCC" fill="Solid" isBold="true"/>
+		</conditionalStyle>
+	</style>
+	<style name="FondoTotal">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[(  $F{ANIO} == null ? true : false   )]]></conditionExpression>
+			<style mode="Opaque" forecolor="#3333FF" backcolor="#999999" fontSize="9" isBold="true" isItalic="true" isUnderline="false" isStrikeThrough="false"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="P_WHERE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_EMPRESA" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select t.pro_provid||'-'||codijisa.pack_tproveedores.f_001_descProveedor(t.pro_provid) proveedor ,t.pro_id artid,
+       t.pro_des artdes, t.pro_unimanven undman, t.pro_presminven undmed from tproductos t
+ $P!{P_WHERE}]]>
+	</queryString>
+	<field name="PROVEEDOR" class="java.lang.String"/>
+	<field name="ARTID" class="java.lang.String"/>
+	<field name="ARTDES" class="java.lang.String"/>
+	<field name="UNDMAN" class="java.lang.String"/>
+	<field name="UNDMED" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="398" splitType="Stretch">
+			<textField>
+				<reportElement uuid="036ca8e8-577b-44a3-a264-617dbce0527a" mode="Transparent" x="0" y="0" width="112" height="15" forecolor="#000000"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{P_EMPRESA}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement uuid="660391b0-35b0-4fda-ba86-2f257908503b" x="0" y="16" width="555" height="381"/>
+			</rectangle>
+			<textField>
+				<reportElement uuid="9b13e996-84e3-4394-aa99-831975c5adb2" x="0" y="247" width="555" height="150"/>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="SansSerif" size="100" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ARTID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c7418b91-05ef-4348-815a-a81009a20783" x="0" y="102" width="555" height="144"/>
+				<textElement textAlignment="Center">
+					<font size="36"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ARTDES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c8df8d41-02ef-4527-a40e-7808996625ae" x="0" y="15" width="555" height="87"/>
+				<textElement textAlignment="Center">
+					<font size="46" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROVEEDOR}.length() < 18 ?  $F{PROVEEDOR} : $F{PROVEEDOR}.substring(0,18)]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

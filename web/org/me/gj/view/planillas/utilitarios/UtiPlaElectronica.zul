@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%" width="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>
+            <div width="100%" sclass="cuerpo-main">
+                <window id="w_utiplael" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                    <tabbox id="tabbox_utiplael" apply="">
+                        
+                        <tabs>
+                            <tab id="tab_utiplael" label="ENLACE A PLANILLA ELECTRONICA"/>
+                        </tabs>
+                        
+                        <tabpanels>
+                            
+                            <tabpanel>
+                                
+                                <groupbox width="987px" open="true" closable="false" style="text-align: center;">
+                                    
+                                    <space height="30px"/>
+                                    
+                                    <div id="div_center01" align="center">
+                                    
+                                        <hbox align="center">
+                                            <!--<radiogroup id="rg_movdes" onCheck="true">-->
+                                            <radio id="rd_periodo" label="PERIODO ANTERIOR" selected="true"/>
+                                            <!--</radiogroup>-->
+                                        </hbox>
+                                    
+                                        <space height="30px"/>
+                                        
+                                        <div id="div_center02" align="left" width="518px">
+                                                                           
+                                            <hbox align="center"  style="text-position: left;">
+                                                <cell align="left" width="60px">
+                                                    <label value="PERIODO : "/>
+                                                </cell>                                      
+                                                <space width="5px"/>
+                                                <textbox id="txt_periodo" maxlength="8" width="50px" tooltiptext="Ingrese periodo" value="20170903" style="text-align: center;"/>
+                                                <space width="5px"/>
+                                                <label id="lbl_periodo" style="color: red;" value="OCTUBRE - 2017 - "/>
+                                            </hbox>
+                                        
+                                        </div>
+                                        
+                                        <space height="30px"/>
+                                    
+                                        <hbox align="center">
+                                            <cell align="left" width="60px">
+                                                <label value="DESTINO : "/>
+                                            </cell>                                      
+                                            <space width="5px"/>
+                                            <textbox id="txt_destino" maxlength="30" width="440px" tooltiptext="Ruta de destino del archivo" value="g:\sistemas\enlace\pla\"/>
+                                        </hbox>
+                                    
+                                        <space height="30px"/>
+                                        
+                                        <grid width="540px">
+                                            <rows>
+                                                <row>
+                                                    <checkbox id="chk_datper" label="DATOS PERSONALES Y DOMICILIARIOS" onCheck="true" checked="true"/>
+                                                    <checkbox id="chk_jorlab" label="JORNADAS LABORALES" onCheck="true" checked="true"/>
+                                                </row>
+                                                <row>
+                                                    <checkbox id="chk_dattra" label="DATOS DE TRABAJADORES" onCheck="true" checked="true"/>
+                                                    <checkbox id="chk_esttra" label="ESTABLECIMIENTO POR TRABAJADOR" onCheck="true" checked="true"/>
+                                                </row>
+                                                <row>
+                                                    <checkbox id="chk_preser" label="PRESTAMO DE SERVICIO 4TA CATEGORIA" onCheck="true" checked="true"/>
+                                                    <checkbox id="chk_diasub" label="DIAS SUBSIDIADOS" onCheck="true" checked="true"/>
+                                                </row>
+                                                <row>
+                                                    <checkbox id="chk_sus4ta" label="SUSPENSIONES 4TA CATEGORIA" onCheck="true" checked="true"/>
+                                                    <checkbox id="chk_diasno" label="DIAS NO SUBSIDIADOS" onCheck="true" checked="true"/>
+                                                </row>
+                                                <row>
+                                                    <checkbox id="chk_perlab" label="PERIODOS LABORALES" onCheck="true" checked="true"/>
+                                                    <checkbox id="chk_remune" label="REMUNERACIONES" onCheck="true" checked="true"/>
+                                                </row>
+                                                <row>
+                                                    <checkbox id="chk_derhab" label="COMPROBANTES DE SERVICIO 4TA CATEGORIA" onCheck="true" checked="true"/>
+                                                    <checkbox id="chk_comser" label="COMPROBANTES DE SERVICIO 4TA CATEGORIA" onCheck="true" checked="true"/>
+                                                </row>
+                                            </rows>
+                                        </grid>
+                                            
+                                        <space height="30px"/>
+                                    
+                                        <hbox align="center">
+                                            <button id="btn_aceptarr" label="Aceptar" sclass="botones"/>    
+                                        </hbox>
+                                    
+                                    </div>
+                                    
+                                    <space height="30px"/>
+                                                                        
+                                </groupbox>
+                                
+                            </tabpanel>
+                            
+                        </tabpanels>                        
+                        
+                    </tabbox>
+                </window>
+            </div>  
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>
+</zk>

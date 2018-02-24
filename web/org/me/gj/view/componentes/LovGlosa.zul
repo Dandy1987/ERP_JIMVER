@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_glosa" title="ACTUALIZA GLOSA" border="normal" width="850px"
+            apply="org.me.gj.controller.componentes.ControllerLovGlosa"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            
+                <cell align="right" valign="center">
+                    <label value="Observacion - Maximo 80 caracteres" />
+                </cell>
+                <textbox id="txt_glosa" width="550px" focus="true" maxlength="80" tooltiptext="Ingrese la descripcion del Giro"/>
+           
+            <button id="btn_cambiar" width="150px"  sclass="botones" label="Cambiar" />
+
+        </vlayout>
+    </window>
+</zk>

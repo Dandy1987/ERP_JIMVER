@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<?page id="Man-preven"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%" id="cont-pre">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/menulogistica.zul"/>
+        </north>
+        <center  >
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_manpreven" ctrlKeys="#f2#f4#f7#f10#f9#f8" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo(F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar(F4)" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar(F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar(F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer(F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir(F8)" />   
+                        <label value="MANTENIMIENTO DE PRECIOS DE VENTA" sclass="titulo_mant" style="margin-left:210px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_precioven"  ctrlKeys="^a#f10#f8" apply="org.me.gj.controller.logistica.mantenimiento.ControllerPreciosVenta">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_precioven.getSelectedIndex() == -1)
+                                    {
+                                    tab_lista.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute> 
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <groupbox width="987px" open="true" closable="false">
+                                    <caption label="Opciones de Busqueda"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" readonly="true" tooltiptext="Seleccione una Opción">
+                                            <comboitem label=" "/>
+                                            <comboitem label="ID LISTA"/>
+                                            <comboitem label="LISTA"/>
+                                            <comboitem label="ID PRODUCTO"/>
+                                            <comboitem label="PRODUCTO"/>
+                                            <comboitem label="ID PROVEEDOR"/>
+                                            <comboitem label="PROVEEDOR"/>
+                                            <attribute name="onSelect">
+                                                txt_busqueda.setDisabled(false);
+                                            </attribute>
+                                        </combobox>
+                                        <space width="2px"/>
+                                        <textbox id="txt_busqueda" width="400px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                        <space width="10px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="ESTADO:" id="lbl_estado"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una Opción" width="110px">
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+                                        <space width="10px"/>
+                                        <button id="tbbtn_btn_buscar" label="Buscar" sclass="botones"/> 
+                                    </hbox>
+                                </groupbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_precioven" mold="paging" pageSize="18" width="985px" height="460px">
+                                    <listhead>
+                                        <listheader label="ID" width="50px" align="center"/>
+                                        <listheader label="LISTA"  width="150px"/>
+                                        <listheader label="IDPROD" width="70px" align="center"/>
+                                        <listheader label="PRODUCTO" />
+                                        <listheader label="PRECIO" width="80px"/>
+                                        <listheader label="% EF" width="50px"/>
+                                        <listheader label="% CR" width="50px"/>
+                                        <listheader label="EST" width="25px"/>
+                                    </listhead>	
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.lp_id}"/>
+                                            <listcell label="${each.lp_des}"/>
+                                            <listcell label="${each.pro_id}"/>
+                                            <listcell label="${each.pro_des}"/>
+                                            <listcell label="${each.spre_venta}" style="text-align: right;"/>
+                                            <listcell label="${each.spre_valvent}" style="text-align: right;"/>
+                                            <listcell label="${each.spre_igv}" style="text-align: right;"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador del Precio de Venta"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación del Precio de Venta"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó el Precio de Venta"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación del Precio de Venta"/>   
+                                    </hbox>
+                            </tabpanel>                            
+                            <tabpanel>
+                                <div >
+                                    <grid width="650px">
+                                        <columns>
+                                            <column width="130px"/>
+                                            <column width="520px"/>
+                                        </columns>
+                                        <rows>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ESTADO"/>
+                                                </cell>    
+                                                <checkbox id="chk_preest" checked="true" label="ACTIVO" disabled="true" tooltiptext="Define el Estado del precio del producto">
+                                                    <attribute name="onCheck">
+                                                        if(chk_preest.isChecked())
+                                                        chk_preest.setLabel("ACTIVO");
+                                                        else
+                                                        chk_preest.setLabel("INACTIVO");
+                                                    </attribute>
+                                                </checkbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="LISTA DE PRECIOS: "/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>
+                                                <combobox id="cb_lpcprevman" readonly="true" disabled="true" width="150px" tooltiptext="Define la lista de Precios de Venta">
+                                                    <template name="model">
+                                                        <comboitem label=" ${each.lp_des}" value="${each.lp_key}"/>
+                                                    </template>
+                                                </combobox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="PRODUCTO: "/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>
+                                                <hbox>
+                                                    <textbox id="txt_proid" width="80px" maxlength="9" disabled="true" tooltiptext="Define el código del producto, Máximo 9 caracteres"/>      
+                                                    <textbox id="txt_prodes" disabled="true" maxlength="60" width="380px" tooltiptext="Define la descripcion del producto, Máximo 60 caracteres"/>
+                                                </hbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="PRECIO: "/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>
+                                                <doublebox id="txt_preprecio" locale="en_US" format="##,##0.00" maxlength="10"  width="80px" disabled="true" style="text-align: right;" tooltiptext="Define el Precio de Venta del producto, 10 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="DSCTO EFECTIVO: "/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>
+                                                <hbox>
+                                                    <doublebox id="txt_predsctoefe" locale="en_US" format="#0.00" maxlength="5" width="80px" disabled="true" style="text-align: right;" tooltiptext="Define el descuento en efectivo del producto, 5 caracteres"/>
+                                                    <label value="%"/>
+                                                </hbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="DSCTO CREDITO: "/>
+                                                    <span class="colorRojo">*</span>  
+                                                </cell>
+                                                <hbox>
+                                                    <doublebox id="txt_predsctocre" locale="en_US" format="#0.00" maxlength="5" width="80px" disabled="true" style="text-align: right;" tooltiptext="Define el descuento en credito del producto, 5 caracteres"/>
+                                                    <label value="%"/>
+                                                </hbox>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="REPORTE:"/>
+                                                </cell>
+                                                <textbox id="txt_prenomrep" disabled="true" maxlength="25" width="225px" tooltiptext="Define el nombre de Reporte, Máximo 25 caracteres"/>
+                                            </row>
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ORDEN: "/>
+                                                </cell>
+                                                <spinner id="sp_preord" value="0" disabled="true" constraint="min 0; max 999" maxlength="3" width="50px" tooltiptext="Define el orden del precio de Venta"/>
+                                            </row>
+                                        </rows>
+                                    </grid>
+                                </div>
+                            </tabpanel>
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>
+

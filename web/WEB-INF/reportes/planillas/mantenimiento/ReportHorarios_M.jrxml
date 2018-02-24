@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportHorarios" language="groovy" pageWidth="1027" pageHeight="842" orientation="Landscape" columnWidth="987" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="a874169d-4b6e-4eba-be94-62f0755fae88">
+	<property name="ireport.zoom" value="3.0"/>
+	<property name="ireport.x" value="90"/>
+	<property name="ireport.y" value="192"/>
+	<parameter name="EMPRESA" class="java.lang.Integer"/>
+	<parameter name="SUCURSAL" class="java.lang.Integer"/>
+	<parameter name="P_WHERE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[" SELECT e.suc_id || ' ' || t.suc_des sucursal, e.emp_id,t.suc_des, e.horario_id || ' ' || e.hor_descrip horario, decode(E.HOR_TIPHORA, '1', 'NO MARCAN', '2', 'NORMAL', '3', 'VARIABLE') tipo, DECODE(E.HOR_DIAINI, '1', 'LUNES', '7', 'DOMINGO') tipo_dia, e.hor_ingreso, e.hor_salrefri, e.hor_ingrefri, e.hor_salida, e.hor_minutole, e.hor_tiphora, e.hor_usuadd, e.hor_fecadd, e.hor_fecadd, e.hor_usumod, e.hor_fecmod, e.hor_nromarcamax, e.hor_horatrab, e.hor_amanecida, e.hor_refrigerio, e.hor_tdespu1, e.horario_id, e.hor_tantes1, e.hor_tdespu2, e.hor_tantes2, e.hor_tdespu3, e.hor_tantes3, e.hor_tdespu4, e.hor_tantes4, t.suc_des, e.hor_dia1ing, e.hor_dia1salref, e.hor_dia1ingref, e.hor_dia1sal, e.hor_dia2ing, e.hor_dia2salref, e.hor_dia2ingref, e.hor_dia2sal, e.hor_dia3ing, e.hor_dia3salref, e.hor_dia3ingref, e.hor_dia3sal, e.hor_dia4ing, e.hor_dia4salref, e.hor_dia4ingref, e.hor_dia4sal, e.hor_dia5ing, e.hor_dia5salref, e.hor_dia5ingref, e.hor_dia5sal, e.hor_dia6ing, e.hor_dia6salref, e.hor_dia6ingref, e.hor_dia6sal, e.hor_dia7ing, e.hor_dia7salref, e.hor_dia7ingref, e.hor_dia7sal, e.hor_diaini, e.hor_diades, e.hor_ranaut, e.hsm_id, e.hor_marie, e.hor_marsr, e.hor_marir, e.hor_marse,e.suc_id, e.hor_descrip,x.ddiaini,ddiafin,ddiades FROM tAS_HORARIO e, tsucursales t, (select upper(rtrim(ltrim(pack_tashorario.cdia(diaini)))) ddiaini, upper(rtrim(ltrim(pack_tashorario.cdia(diafin)))) ddiafin, upper(rtrim(ltrim(pack_tashorario.cdia(diades)))) ddiades, diaini, diafin, diades,hsm_id,emp_id from( select max(decode(s.hsm_orden, 1, s.hsm_dia, null)) diaini, max(decode(s.hsm_orden, 6, s.hsm_dia, null)) diafin, max(decode(s.hsm_orden, 7, s.hsm_dia, null)) diades,s.hsm_id,s.emp_id from tplhorsem s where s.hsm_orden in(1, 6, 7) group by s.hsm_id,s.emp_id )) x WHERE e.emp_id = x.emp_id and e.hsm_id=x.hsm_id and t.emp_id = e.emp_id and t.suc_id = e.suc_id and t.suc_id = 1 and e.emp_id = 1 and e.hor_estado = 1 order by e.horario_id"]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[$P!{P_WHERE}]]>
+	</queryString>
+	<field name="SUCURSAL" class="java.lang.String"/>
+	<field name="EMP_ID" class="java.math.BigDecimal"/>
+	<field name="SUC_DES" class="java.lang.String"/>
+	<field name="HORARIO" class="java.lang.String"/>
+	<field name="TIPO" class="java.lang.String"/>
+	<field name="TIPO_DIA" class="java.lang.String"/>
+	<field name="HOR_INGRESO" class="java.lang.String"/>
+	<field name="HOR_SALREFRI" class="java.lang.String"/>
+	<field name="HOR_INGREFRI" class="java.lang.String"/>
+	<field name="HOR_SALIDA" class="java.lang.String"/>
+	<field name="HOR_MINUTOLE" class="java.math.BigDecimal"/>
+	<field name="HOR_TIPHORA" class="java.lang.String"/>
+	<field name="HOR_USUADD" class="java.lang.String"/>
+	<field name="HOR_FECADD" class="java.sql.Timestamp"/>
+	<field name="HOR_USUMOD" class="java.lang.String"/>
+	<field name="HOR_FECMOD" class="java.sql.Timestamp"/>
+	<field name="HOR_NROMARCAMAX" class="java.math.BigDecimal"/>
+	<field name="HOR_HORATRAB" class="java.math.BigDecimal"/>
+	<field name="HOR_AMANECIDA" class="java.lang.String"/>
+	<field name="HOR_REFRIGERIO" class="java.math.BigDecimal"/>
+	<field name="HOR_TDESPU1" class="java.math.BigDecimal"/>
+	<field name="HORARIO_ID" class="java.lang.String"/>
+	<field name="HOR_TANTES1" class="java.math.BigDecimal"/>
+	<field name="HOR_TDESPU2" class="java.math.BigDecimal"/>
+	<field name="HOR_TANTES2" class="java.math.BigDecimal"/>
+	<field name="HOR_TDESPU3" class="java.math.BigDecimal"/>
+	<field name="HOR_TANTES3" class="java.math.BigDecimal"/>
+	<field name="HOR_TDESPU4" class="java.math.BigDecimal"/>
+	<field name="HOR_TANTES4" class="java.math.BigDecimal"/>
+	<field name="HOR_DIA1ING" class="java.lang.String"/>
+	<field name="HOR_DIA1SALREF" class="java.lang.String"/>
+	<field name="HOR_DIA1INGREF" class="java.lang.String"/>
+	<field name="HOR_DIA1SAL" class="java.lang.String"/>
+	<field name="HOR_DIA2ING" class="java.lang.String"/>
+	<field name="HOR_DIA2SALREF" class="java.lang.String"/>
+	<field name="HOR_DIA2INGREF" class="java.lang.String"/>
+	<field name="HOR_DIA2SAL" class="java.lang.String"/>
+	<field name="HOR_DIA3ING" class="java.lang.String"/>
+	<field name="HOR_DIA3SALREF" class="java.lang.String"/>
+	<field name="HOR_DIA3INGREF" class="java.lang.String"/>
+	<field name="HOR_DIA3SAL" class="java.lang.String"/>
+	<field name="HOR_DIA4ING" class="java.lang.String"/>
+	<field name="HOR_DIA4SALREF" class="java.lang.String"/>
+	<field name="HOR_DIA4INGREF" class="java.lang.String"/>
+	<field name="HOR_DIA4SAL" class="java.lang.String"/>
+	<field name="HOR_DIA5ING" class="java.lang.String"/>
+	<field name="HOR_DIA5SALREF" class="java.lang.String"/>
+	<field name="HOR_DIA5INGREF" class="java.lang.String"/>
+	<field name="HOR_DIA5SAL" class="java.lang.String"/>
+	<field name="HOR_DIA6ING" class="java.lang.String"/>
+	<field name="HOR_DIA6SALREF" class="java.lang.String"/>
+	<field name="HOR_DIA6INGREF" class="java.lang.String"/>
+	<field name="HOR_DIA6SAL" class="java.lang.String"/>
+	<field name="HOR_DIA7ING" class="java.lang.String"/>
+	<field name="HOR_DIA7SALREF" class="java.lang.String"/>
+	<field name="HOR_DIA7INGREF" class="java.lang.String"/>
+	<field name="HOR_DIA7SAL" class="java.lang.String"/>
+	<field name="HOR_DIAINI" class="java.lang.String"/>
+	<field name="HOR_DIADES" class="java.lang.String"/>
+	<field name="HOR_RANAUT" class="java.math.BigDecimal"/>
+	<field name="HSM_ID" class="java.lang.String"/>
+	<field name="HOR_MARIE" class="java.lang.String"/>
+	<field name="HOR_MARSR" class="java.lang.String"/>
+	<field name="HOR_MARIR" class="java.lang.String"/>
+	<field name="HOR_MARSE" class="java.lang.String"/>
+	<field name="SUC_ID" class="java.math.BigDecimal"/>
+	<field name="HOR_DESCRIP" class="java.lang.String"/>
+	<field name="DDIAINI" class="java.lang.String"/>
+	<field name="DDIAFIN" class="java.lang.String"/>
+	<field name="DDIADES" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="64" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="df66154a-7caa-4db4-96ea-5236d43149b1" x="229" y="14" width="436" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial Black" size="7" isBold="false" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[REPORTE DE HORARIOS]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="359665a1-7e22-4edc-ac1e-a51eaf85d85e" x="33" y="24" width="126" height="10"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HOR_USUADD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="57aa0f19-6f01-4db1-b16c-c724ca20cb4d" x="33" y="44" width="126" height="10"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7"/>
+				</textElement>
+				<text><![CDATA[ReportHorarios_M.jrxml]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="7adc51aa-1941-4161-ad5a-144051c1359f" x="851" y="24" width="97" height="10"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="false" isItalic="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH.mm.ss">
+				<reportElement uuid="9a26c9ae-002c-4223-aa37-8b0492e2feed" x="848" y="44" width="100" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8c6ab73e-b9d5-4c29-b44b-38c14693ae53" x="920" y="4" width="28" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="0486239e-8b8d-4759-af26-86986fdac001" x="896" y="4" width="24" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[PAG.]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="55" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="9b741ac0-519b-4a2f-ad65-13cce2d9085a" x="147" y="28" width="127" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[HORARIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3fa5e15b-39d6-4ee8-8c62-ad86022ffe7b" x="274" y="28" width="89" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[TIPO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="416ad2db-52f3-49b6-947d-799a914bb308" x="363" y="28" width="84" height="10"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[DIA INICIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9a621eb8-4cf2-4a5d-b932-73b4f3e00641" x="447" y="28" width="157" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[INGRESO A EMPRESA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7bf37ab9-4fa8-4629-8b0b-75daa499b672" x="604" y="28" width="159" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[SALIDA REFRIGERIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="926dc77d-6160-4006-ac6a-9376af4c92d3" x="763" y="28" width="115" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[INGRESO REFRIGERIO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="ff010d44-4451-4bc0-b77e-be40ab3b1686" x="878" y="28" width="70" height="10"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[HORA SALIDA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0cd75f56-e7f3-4d70-a595-48c7d82cb48f" x="33" y="28" width="114" height="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="7" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[SUCURSAL]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2db69245-9041-4bf7-8feb-e7e31859ebb1" x="33" y="14" width="915" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2db69245-9041-4bf7-8feb-e7e31859ebb1" x="33" y="40" width="915" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<text><![CDATA[------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="8839d011-44bf-401b-baa5-b4329c83b314" x="147" y="0" width="127" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HORARIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d6b49463-5d2f-47b6-988e-94981bd81d71" x="274" y="0" width="89" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIPO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cdf3bcba-035e-444c-b37e-7d433acced80" x="363" y="0" width="84" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TIPO_DIA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ec864963-1093-4fc5-b68d-ebe88f0a4818" x="447" y="0" width="157" height="10"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HOR_INGRESO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9c314950-7120-43cd-8639-70d9630b9af6" x="604" y="0" width="159" height="10"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HOR_SALREFRI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="95951cf8-20b9-458e-b1e8-07d86cfc72a4" x="763" y="0" width="115" height="10"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HOR_INGREFRI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9aad58ed-5d7d-40a0-ba7a-2236ab847a41" x="878" y="0" width="70" height="10"/>
+				<textElement textAlignment="Center">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HOR_SALIDA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="23e61d8e-5933-4857-a247-0a64650f136f" x="33" y="0" width="114" height="10"/>
+				<textElement>
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{SUC_DES}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+</jasperReport>

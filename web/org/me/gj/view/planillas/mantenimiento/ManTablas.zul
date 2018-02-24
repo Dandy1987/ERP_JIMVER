@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center> 
+            <div width="100%" sclass="cuerpo-main">
+                <window id="w_tablas" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                    <toolbar id="tb_tablas"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png" tooltiptext="Editar (F4)"/>            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (F7)"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" disabled="true" tooltiptext="Guardar (F10)" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" disabled="true" tooltiptext="Deshacer (F9)"/>
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)"/>   
+                        <label value="LISTADO DE TABLAS" sclass="titulo_mant" style="margin-left:260px;"/>
+                    </toolbar>      
+                    <tabbox id="tabbox_tablas" ctrlKeys="#f10" apply="org.me.gj.controller.planillas.mantenimiento.ControllerManTabla">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO"/>
+                        </tabs>
+                        <tabpanels> 
+                            <tabpanel>
+                                <groupbox width="987px" open="true" closable="false">
+                                    <caption label="Opciones de Busqueda" />
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">
+                                            <label value="FILTRO:"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_busqueda" width="120px"  readonly="true" tooltiptext="Seleccione una Opción">
+                                            <comboitem label=" "/>
+                                            <comboitem label="CODIGO"/>
+                                            <comboitem label="DESCRIPCIÓN"/>
+                                        </combobox>
+                                        <space width="2px"/>
+                                        <textbox id="txt_busqueda" width="350px" value="%%" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda"/>          
+                                        <space width="10px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="ESTADO:" id="lbl_estado"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_estado" readonly="true" width="80px" tooltiptext="Seleccione una Opción" >
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+                                        <space width="2px"/>
+                                        <label value="PERIODO: "/>
+                                                                                         
+                                        <combobox id="cb_periodo" width="60px"  readonly="true" tooltiptext="Define el Periodo">
+                                            <template name="model">    
+                                                <comboitem label="${each.anio}"  value="${each.anio}"  />                                                                                                      
+                                            </template>                                                
+                                        </combobox>                
+                                        <space width="10px"/>
+                                        <button id="btn_buscar" label="Buscar" sclass="botones"/> 
+                                        <space width="10px"/>
+                                        <!--<toolbarbutton id="tbbtn_excel" image="/images/iconos_menu/estadisticas/exportarxls.png" tooltiptext="Exportar a Excel" />--> 
+                                    </hbox>
+                                </groupbox>
+                                <space width="10px"/>                 
+                                <listbox id="lst_lista" mold="paging" pageSize="18" width="986px" height="450px">     
+                                    <listhead>
+                                        <listheader label=" CODIGO"  width="65px" align="center"/>
+                                        <listheader label=" DESCRIPCION" />  
+                                        <listheader label=" TIPO"  width="85px" align="center" />   
+                                        <listheader label=" EST" width="25px" align="center"/>      
+                                    </listhead>
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.codigo}"  style="text-align:center;"/>
+                                            <listcell label="${each.descripcion}"/> 
+                                            <listcell label="${each.tipo}"/>  
+                                            <listcell>
+                                                <checkbox checked="${each.valor}" disabled="true"/>
+                                            </listcell>
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <separator height="5px"/> 
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox  id="txt_usua" maxlength="15" style="text-align:left;" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fec" maxlength="10" style="text-align:right;"  readonly="true" width="137px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumo" maxlength="15"  style="text-align:left;" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmo" maxlength="10" style="text-align:right;"  readonly="true" width="137px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación"/>   
+                                </hbox>
+       
+                            </tabpanel>
+                            
+                            <tabpanel>
+                                <space width="25px"/>
+                                <div id="div_man_alm" >
+                                    <grid id="grd_man_alm" width="600px">
+                                        <columns>
+                                            <column width="100px"/>
+                                            <column width="500px"/>
+                                        </columns>    
+                                        <rows> 
+                                            <row>
+                                                <cell align="right" valign="center">
+                                                    <label value="ESTADO:"/>
+                                                </cell>
+                                                <checkbox id="chk_almest" disabled="true" tooltiptext="Define el estado"/>
+                                            </row> 
+                                        </rows> 
+                                    </grid>
+                                </div>    
+                                <space width="35px"/>
+                                <hbox align="center"> 
+                                    <space width="25px"/>
+                                    <cell align="right" valign="center">    
+                                        <label value="PERIODO: "/>
+                                        <span class="colorRojo">*</span>
+                                    </cell> 
+                                    <space width="7px"/>
+                                    <combobox id="cb_periodo2" width="80px" readonly="true"  tooltiptext="Define el Periodo">
+                                        <template name="model">    
+                                            <comboitem label="${each.anio}"  value="${each.anio}"  />                                                                                                      
+                                        </template>                                                
+                                    </combobox> 
+                                    <space width="33px"/>
+                                    <cell align="right" valign="center">
+                                        <label value="TABLA :" />
+                                    </cell> 
+                                    <textbox id="txt_codigo" disabled="true" maxlength="3" width="40px"   style="text-align:right;text-transform:uppercase;" tooltiptext="Ingrese descripción,maximo 3 caracteres" />                                                                
+                                    <space width="5px"/>
+                                    <textbox id="txt_descripcion" disabled="true" maxlength="50" width="300px"   style="text-align:left;text-transform:uppercase;" tooltiptext="Ingrese descripción,maximo 50 caracteres" />              
+                                </hbox> 
+                                <space width="25px"/>
+                                <hbox align="center">
+                                    <space width="30px"/>
+                                    <cell align="right" valign="center">
+                                        <label value="TIPO : "/> 
+                                        <span class="colorRojo">*</span>
+                                    </cell>    
+                                    <space width="20px"/>
+                                    <combobox id="cb_tipo" readonly="true" width="80px" tooltiptext="Seleccione una Opción" >
+                                        <comboitem label="MONTO" />
+                                        <comboitem label="TASA"/> <!-- value="T"-->
+                                    </combobox> 
+                                    <space width="25px"/>
+                                    <cell align="right" valign="center">
+                                        <label value="DEFAULT : " />
+                                    </cell> 
+                                    <doublebox id="d_default" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.00" maxlength="10"  width="100px"    tooltiptext="Ingrese monto,maximo 12 caracteres"/>                                                                
+                                    <space width="5px"/>    
+                                </hbox>
+                                <space width="75px" height="55px"/>
+                                <hbox>
+                                    <groupbox width="870px" open="true" closable="false">                             
+                                        <hbox align="center">
+                                            <space width="25px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="ENERO"/>
+                                            </cell>
+                                            <space width="17px"/>
+                                            <doublebox id="d_enero" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.00" maxlength="12"  width="100px"    tooltiptext="Ingrese monto,maximo 12 caracteres" />                                                                       
+                                            <space width="15px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="FEBRERO"/>
+                                            </cell>
+                                            <space width="10px"/>
+                                            <doublebox id="d_febrero" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.00" maxlength="12" width="100px"    tooltiptext="Ingrese monto,maximo 12 caracteres" />                                                                       
+                                            <space width="25px"/>   
+                                            <cell align="right" valign="center">
+                                                <label value="MARZO"/>
+                                            </cell>
+                                            <space width="23px"/>
+                                            <doublebox id="d_marzo" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.00" maxlength="12"  width="100px"    tooltiptext="Ingrese monto,maximo 12 caracteres" />                                                                       
+                                            <space width="35px"/>  
+                                            <cell align="right" valign="center">
+                                                <label value="ABRIL"/>
+                                            </cell>
+                                            <space width="14px"/>
+                                            <doublebox id="d_abril" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.00" maxlength="12"  width="100px"    tooltiptext="Ingrese monto,maximo 12 caracteres" />                                                                       
+                                   
+                                        </hbox> 
+                                   
+                                        <space width="35px" height="25px"/>
+                                        <hbox align="center">
+                                            <space width="25px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="MAYO"/>
+                                            </cell>
+                                            <space width="19px"/>
+                                            <doublebox id="d_mayo" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.00" maxlength="12"  width="100px"    tooltiptext="Ingrese monto,maximo 12 caracteres" />                                                                       
+                                            <space width="22px"/> 
+                                            <cell align="right" valign="center">
+                                                <label value="JUNIO"/>
+                                            </cell>
+                                            <space width="21px"/>
+                                            <doublebox id="d_junio" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.00" maxlength="12"  width="100px"    tooltiptext="Ingrese monto,maximo 12 caracteres" />                                                                       
+                                            <space width="30px"/> 
+                                            <cell align="right" valign="center">
+                                                <label value="JULIO"/>
+                                            </cell>
+                                            <space width="27px"/>
+                                            <doublebox id="d_julio" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.00" maxlength="12"  width="100px"    tooltiptext="Ingrese monto,maximo 12 caracteres" />                                                                       
+                                            <space width="25px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="AGOSTO"/>
+                                            </cell>
+                                            <space width="10px"/>
+                                            <doublebox id="d_agosto" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.00" maxlength="12"  width="100px"    tooltiptext="Ingrese monto,maximo 12 caracteres" />                                                                       
+                                   
+                                        </hbox>  
+                                        <space width="35px" height="25px"/>
+                                        <hbox align="center">
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="SEPTIEMBRE"/>
+                                            </cell>
+                                            <space width="10px"/>
+                                            <doublebox id="d_septiembre" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.00" maxlength="12"  width="100px"    tooltiptext="Ingrese monto,maximo 12 caracteres" />                                                                       
+                                            <space width="15px"/>  
+                                            <cell align="right" valign="center">
+                                                <label value="OCTUBRE"/>
+                                            </cell>
+                                            <space width="9px"/>
+                                            <doublebox id="d_octubre" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.00" maxlength="12"  width="100px"    tooltiptext="Ingrese monto,maximo 12 caracteres" />                                                                       
+                                            <space width="15px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="NOVIEMBRE"/>
+                                            </cell>
+                                            <space width="11px"/>
+                                            <doublebox id="d_noviembre" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.00" maxlength="12"  width="100px"    tooltiptext="Ingrese monto,maximo 12 caracteres" />                                                                       
+                                            <space width="15px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="DICIEMBRE"/>
+                                            </cell>
+                                            <space width="10px"/>
+                                            <doublebox id="d_diciembre" disabled="true" style="text-align:right" locale="en_US" format="#,###,##0.00" maxlength="12"  width="100px"    tooltiptext="Ingrese monto,maximo 12 caracteres" />                                                                       
+                                   
+                                        </hbox>      
+                                   
+                                    </groupbox>
+                                </hbox>        
+                                                    
+                                  
+                            </tabpanel>    
+                    
+                        </tabpanels>
+                    </tabbox>
+                </window>           
+            </div>            
+        </center>                  
+                            
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>                                
+                            
+                            
+                            
+                            
+                            
+                                             
+</zk>

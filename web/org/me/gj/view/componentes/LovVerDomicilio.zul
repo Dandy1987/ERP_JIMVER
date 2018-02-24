@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_mapa" title="COORDENADAS DEL DOMICILIO" border="normal" width="710px" height="450px"
+            apply="org.me.gj.controller.componentes.ControllerLovVerDomicilio"
+            position="center,top" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <!--<script type="text/javascript" content="zk.googleAPIkey='AIzaSyD_XhmuTxIak9u6br5RWOF3JODEheECcek'"/>-->
+        <script type="text/javascript" content="zk.googleAPIkey='AIzaSyCLhusAqRrQeCgvLPJs4WTAfJ9cjO-GWAY'"/>
+        <gmaps id="mapa" width="700px" height="450px"  lat="-12.01703470573168" lng="-77.08667683400257" showSmallCtrl="true" showTypeCtrl="true">
+       
+            </gmaps>
+    
+          <!--  <hbox align="center">
+                <space width="20px"/> 
+                <label value="Latitud" />
+                <doublebox id="d_latitud" hflex="1" />
+                <space width="20px"/> 
+                <label value="Longitud:" /> 
+                <doublebox id="d_longitud" hflex="1" width="200px" />
+            </hbox>-->
+    </window>
+</zk>

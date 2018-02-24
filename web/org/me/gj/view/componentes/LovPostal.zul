@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_postal" title="Busqueda de Postal" border="normal" width="390px"
+            apply="org.me.gj.controller.componentes.ControllerLovPostal"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hlayout>
+                <cell align="right" valign="bottom">
+                    <label value="DESCRIPCION:" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="380px" focus="true" maxlength="45" tooltiptext="Ingrese la descripcion del Postal"/>
+            </hlayout>
+            <listbox id="lst_postal" mold="paging" pageSize="13" width="580px">
+                <listhead>
+                    <listheader label="CODIGO" width="70px"/>
+                    <listheader label="POSTAL" width="310px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.tab_subdir}"/>
+                        <listcell label="${each.tab_subdes}"/>
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk>

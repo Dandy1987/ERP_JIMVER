@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReportInformesDescuentos_M" language="groovy" pageWidth="1742" pageHeight="595" orientation="Landscape" columnWidth="1702" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="aa5486cd-9df1-4341-b585-c26a64d5676a">
+	<property name="ireport.zoom" value="0.9090909090909101"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="P_WHERE" class="java.lang.String">
+		<defaultValueExpression><![CDATA[" select t.pltipdoc || t.plnrodoc codigo, t.plapepat || ' ' || t.plapemat || ' ' || t.plnomemp nombres, d.pldc_idconc, pack_planilla_informes.f_descripcion_constante(pldc_idconc) tabla_descri, d.pldc_glosa, d.nro_rec_ie, d.nro_rec_ref, d.pldc_fecmov, sum(to_number(lib.decrypt8(d.pldc_valabo))) abono, sum(to_number(lib.decrypt8(d.pldc_valcar))) cargo, d.emp_id, d.suc_id, t.plapepat,e.emp_des, pack_tpersonal.ftb1_descripcion(dl.plarea, '00003') area from tpersonal t, tpldsctos d, tpldatoslab dl,tempresas e where t.pltipdoc = d.pltipdoc and d.emp_id = dl.emp_id and d.suc_id = dl.suc_id and d.pltipdoc = dl.pltipdoc and d.plnrodoc = dl.plnrodoc and t.plnrodoc = d.plnrodoc and e.emp_id=d.emp_id and e.emp_id=dl.emp_id and e.emp_est=1 and t.plestado = 1 and d.pldc_estado = 1 and dl.plestado_dl = 1 and d.emp_id = 1 group by t.pltipdoc, t.plnrodoc, d.pldc_idconc, d.pldc_glosa, d.nro_rec_ie, d.nro_rec_ref, t.plapepat, t.plapemat, t.plnomemp, d.emp_id, d.suc_id, d.pldc_fecmov, dl.plarea,e.emp_des order by t.plnrodoc"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="USUARIO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[$P!{P_WHERE}]]>
+	</queryString>
+	<field name="CODIGO" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="PLDC_IDCONC" class="java.lang.String"/>
+	<field name="TABLA_DESCRI" class="java.lang.String"/>
+	<field name="PLDC_GLOSA" class="java.lang.String"/>
+	<field name="NRO_REC_IE" class="java.lang.String"/>
+	<field name="NRO_REC_REF" class="java.lang.String"/>
+	<field name="PLDC_FECMOV" class="java.sql.Timestamp"/>
+	<field name="ABONO" class="java.math.BigDecimal"/>
+	<field name="CARGO" class="java.math.BigDecimal"/>
+	<field name="EMP_ID" class="java.math.BigDecimal"/>
+	<field name="SUC_ID" class="java.math.BigDecimal"/>
+	<field name="PLAPEPAT" class="java.lang.String"/>
+	<field name="EMP_DES" class="java.lang.String"/>
+	<field name="AREA" class="java.lang.String"/>
+	<variable name="CargoSuma" class="java.math.BigDecimal" resetType="Group" resetGroup="Trabajador" calculation="Sum">
+		<variableExpression><![CDATA[$F{CARGO}]]></variableExpression>
+	</variable>
+	<variable name="AbonoSuma" class="java.math.BigDecimal" resetType="Group" resetGroup="Trabajador" calculation="Sum">
+		<variableExpression><![CDATA[$F{ABONO}]]></variableExpression>
+	</variable>
+	<group name="Trabajador" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{NOMBRES}]]></groupExpression>
+		<groupHeader>
+			<band height="50">
+				<textField>
+					<reportElement uuid="1f648048-b6d4-47b4-90fc-7c4733d2194b" x="41" y="30" width="100" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{CODIGO}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="e01e69f6-6d90-46c9-97fc-d4cb00a8975c" x="141" y="30" width="318" height="20"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<textField>
+					<reportElement uuid="21322bf8-2199-455f-a7f4-917dcbbf2324" x="1139" y="10" width="100" height="20"/>
+					<textElement/>
+					<textFieldExpression><![CDATA[$V{CargoSuma}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="040a2baa-8798-473e-bc8f-e195d10ecab6" x="1239" y="10" width="100" height="20"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{AbonoSuma}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="e12a9fde-165e-46af-ab92-342990555c1c" x="1237" y="8" width="100" height="1"/>
+				</line>
+				<line>
+					<reportElement uuid="128f6ee6-3d99-43b1-a657-b51b4fc41ae3" x="1137" y="8" width="100" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="da9fd671-5269-4a4b-b31d-f3e8f9728453" x="1025" y="11" width="112" height="20"/>
+					<textElement/>
+					<text><![CDATA[Total: ]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="59" splitType="Stretch">
+			<textField>
+				<reportElement uuid="3cf211e4-e212-4ad4-9cd1-28308b4ada1b" x="41" y="39" width="471" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$P{USUARIO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9d30df9f-4947-4fd2-9afc-22741b3da5e3" x="41" y="19" width="471" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{EMP_DES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3aeb589d-e7d3-48e1-8f92-78789762881b" x="512" y="19" width="656" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[REPORTE INFORMES DESCUENTOS]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="60">
+			<staticText>
+				<reportElement uuid="acece34c-27fb-4b10-986a-a3f0f2ae4316" x="41" y="0" width="1637" height="20"/>
+				<textElement/>
+				<text><![CDATA[-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="acece34c-27fb-4b10-986a-a3f0f2ae4316" x="41" y="40" width="1637" height="20"/>
+				<textElement/>
+				<text><![CDATA[------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8acabee6-1823-4829-87bd-101037006b32" x="41" y="20" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="eca950d3-be91-41fd-b13d-f72dcf3877c4" x="141" y="20" width="318" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[CONSTANTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0150d1d9-80c8-45b4-84ed-e605ceb2aeb2" x="459" y="20" width="307" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[GLOSA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d18e4d53-d56f-4422-8893-59f588f32d5d" x="766" y="20" width="134" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[N° EGRESO / INGRESO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="76c9005e-eaf9-47d6-984e-9e5978f86791" x="900" y="20" width="125" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[N° DE REFERENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9c34e448-2868-4349-ba2f-eaeb64bdec72" x="1025" y="20" width="112" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[FECHA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fbc5fb5a-c34f-4d86-94b6-ec501d5def01" x="1237" y="20" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[REINTEGROS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f13618c1-c0ba-4301-953d-700688f82923" x="1141" y="20" width="96" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[DESCUENTOS]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="54db9aa9-3218-48dd-8bc5-17508d114844" x="41" y="0" width="100" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PLDC_IDCONC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="51ac19c9-8d6e-46ae-9772-c47df976f82f" x="141" y="0" width="318" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{TABLA_DESCRI}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="cb5a2da5-1b69-4247-be2d-c3c07e0f0317" x="459" y="0" width="307" height="20"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PLDC_GLOSA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="05a2bc1d-5bae-4d84-89ea-0825b37ebc92" x="766" y="0" width="134" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NRO_REC_IE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="7d47f304-17e3-42e3-9ef8-763e741a595c" x="900" y="0" width="125" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{NRO_REC_REF}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement uuid="3716ff1b-9592-4b83-b894-ff037d703cb7" x="1025" y="0" width="112" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{PLDC_FECMOV}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="5c70161c-f90b-4813-b7c5-14e1132c7723" x="1239" y="0" width="100" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{ABONO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement uuid="45ef8788-a72e-40d4-875d-444d87d639f2" x="1137" y="0" width="96" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CARGO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_almacenes" title="LISTADO DE MOVIMIENTO DE CREDITO DEL CLIENTE" border="normal" width="90%" height="50%"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <separator width="100px"/>
+            <listbox id="lst_movcredcli" mold="paging" pageSize="13" width="100%">
+                <auxhead>
+                    <auxheader colspan="3" />
+                    <auxheader label="DATOS CLIENTE" style="text-align:center;" colspan="2"/>                                                          
+                    <auxheader label="LIMITE CREDITO" style="text-align:center;"  colspan="3"/> 
+                    <auxheader label="LIMITE DOC." style="text-align:center;"  colspan="3"/> 
+                    <auxheader label="LIMITE DSCT." style="text-align:center;"  colspan="3"/>    
+                    <auxheader label="ESTADO" style="text-align:center;"  colspan="2"/>  
+                    <auxheader style="text-align:center;"  colspan="2"/>                        
+                </auxhead>
+                
+                <listhead>
+                   
+                    <listheader label="FECHA" width="61px"/>
+                    <listheader label="HORA" width="61px"/>
+                    <listheader label="USUARIO" width="110px"/>
+                    <listheader label="COD" width="80px"/>
+                    <listheader label="CLIENTE" width="120px"/>
+                    <listheader label="INICIAL" width="50px"/>
+                    <listheader label="ACTUAL" width="50px"/>
+                    <listheader label="MOV." width="50px" style="text-align:center;" />
+                    
+                    <listheader label="INICIAL" width="50px"/>
+                    <listheader label="ACTUAL" width="50px"/>
+                    <listheader label="MOV." width="50px" style="text-align:center;" />
+                    
+                    <listheader label="INICIAL" width="50px"/>
+                    <listheader label="ACTUAL" width="50px"/>
+                    <listheader label="MOV." width="50px" style="text-align:center;" />
+                    
+                    <listheader label="INICIAL" width="50px" style="text-align:center;" />
+                    <listheader label="ACTUAL" width="50px" style="text-align:center;" />
+                    
+                    <listheader label="U.RED" width="100px" style="text-align:center;" />
+                    <listheader label="TERMI" width="100px" style="text-align:center;" />
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.alm_id}"/>
+                        <listcell label="${each.alm_des}"/>
+                    </listitem>
+                </template>
+            </listbox>
+            
+        </vlayout>
+    </window>
+</zk>
+

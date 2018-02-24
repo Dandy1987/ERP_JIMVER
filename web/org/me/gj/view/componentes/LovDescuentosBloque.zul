@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_bloque" title="Procesar en bloque" border="normal" width="800px"
+            apply="org.me.gj.controller.componentes.ControllerLovDescuentosBloque"
+            position="center,center" 
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <space width="160px"/>
+                <span class="colorRojo">
+                   
+                    <label  value="CARGA MASIVA DE DESCUENTOS - BLOQUE" style="font-size:18px;" />
+                </span>
+            </hbox>  
+            <space width="1px"/>
+            <hbox align="center">
+                <space width="300px"/>
+                <cell align="right" valign="center">
+                    <label value="PERIODO:"/>                                                 
+                </cell>
+                <space width="2px"/>
+                <textbox id="txt_periodo"  disabled="true"  width="72px"/> 
+                <space width="5px"/>   
+            </hbox>
+            <space width="1px"/>
+            <hbox align="center">
+                <space width="5px"/>
+                <cell align="left" width="65px">
+                    <label value="CONCEPTO :"/>
+                </cell>
+                <space width="5px"/>
+                <textbox id="txt_codcon" maxlength="3"  width="18px" tooltiptext="Código de concepto de personal"/>
+                <space width="8px"/>
+                <textbox id="txt_descon" maxlength="70" disabled="true" width="333px"  tooltiptext="Descripción de concepto de personal"/>
+                <space width="20px"/>
+                <label value="FECHA:"/>
+                <space width="25px"/>
+                <datebox id="d_fecha"  maxlength="10" width="100px" onCreate="self.value = new Date()"  format="dd/MM/yyyy" readonly="true" style="text-align:right;"  tooltiptext="Fecha de inicio"/>
+                
+            </hbox>
+            <space width="1px"/>
+            <hbox align="center">
+                <space width="10px"/>
+                <cell align="left" width="65px">
+                    <label value="GLOSA :"/>
+                </cell> 
+                <textbox id="txt_GLOSA" maxlength="100"  width="375px"  tooltiptext="Descripción de glosa"/>
+                <space width="20px"/>
+                <cell align="left" width="65px">
+                    <label value="CARGO :"/>
+                </cell>
+                <combobox id="cb_cargo" width="90px" tooltiptext="Seleccione cargo" readonly="true">
+                    <comboitem label="" value="1"/> 
+                    <comboitem label="CARGO" value="2"/>
+                    <comboitem label="ABONO" value="3"/>
+                </combobox>
+                
+                <doublebox id="txt_monto" style="text-align:right;" width="70px"  maxlength="12"  locale="en_US" format="##,##0.00" tooltiptext="Ingrese valor"/>
+                
+            
+            </hbox>
+
+            <space width="1px"/>
+            <hbox align="center"> 
+                <space width="10px"/>                     
+                <cell align="left" width="65px">
+                    <label value="SUCURSAL :"/>
+                </cell>
+                <combobox id="cb_fsucursal" width="120px" tooltiptext="Seleccione sucursal" readonly="true">
+                    <template name="model">
+                        <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                    </template>
+                </combobox>
+                <space width="5px"/>
+                <cell align="left" width="65px">
+                    <label value="AREA :"/>
+                </cell>
+                <combobox id="cb_area" width="190px" tooltiptext="Seleccione área" readonly="true">
+                    <template name="model">
+                        <comboitem label="${each.area_des}" value="${each.area_id}"/>
+                    </template>
+                </combobox>    
+                <space width="5px"/>
+                <button id="btn_consultar" label=">>" sclass="botones"/>
+            </hbox> 
+            <separator height="12px"/>    
+            <listbox id="lst_bloque" mold="paging" width="770px" height="350px">
+                <listhead>
+                    <listheader label="CODIGO" width="100px" align="center"/>
+                    <listheader label="TRABAJADOR" width="300px"  align="center"/>
+                    <listheader label="IMPORTE" width="100px" align="center"/>
+                    <listheader label="GLOSA" width="225px" align="center"/>
+                    <listheader width="50px">
+                        <checkbox id="chk_selecAll"/>
+                    </listheader>
+                </listhead>
+                <template name="model">	
+                    <listitem>
+                        <listcell label="${each.codigo_vista}"/>
+                        <listcell label="${each.paterno} ${each.materno} ${each.nombre}" style="text-align:left;"/>
+                        <listcell label="${each.valor_concepto}" style="text-align:right;"/>
+                        <listcell label="${each.valor_concept}" style="text-align:right;"/>
+                        <listcell>
+                            <checkbox forward="onCheck=lst_bloque.onSeleccion"  checked="${each.valSelec}"/>
+                        </listcell>  
+                    </listitem>
+                </template>
+            </listbox>
+            <separator height="12px"/>    
+            <hbox align="center">
+                <space width="25px"/>
+                <button id="btn_cancelar" label="Cancelar" sclass="botones"/>
+                <space width="500px"/>
+                <button id="btn_procesar" label="Procesar..." sclass="botones"/>
+            </hbox>
+                  
+               
+            
+        </vlayout>
+    </window>
+    
+</zk>

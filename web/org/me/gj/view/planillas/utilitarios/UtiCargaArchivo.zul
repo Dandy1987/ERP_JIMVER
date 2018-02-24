@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <style>
+        .btn {
+        display: inline-block;
+        zoom: 1; 
+        display: inline;
+        vertical-align: baseline;
+        margin: 0 0 0 0;
+        outline: none;
+        cursor: pointer;
+        text-align: center;
+        color: white;
+        text-decoration: none;
+        font: 11px/100% Arial;
+        padding: 5px 10px;
+        border: none;
+        text-shadow: 0 1px 1px rgba(0,0,0,.3);
+        -webkit-border-radius: .5em;
+        -moz-border-radius: .5em;
+        border-radius: .5em;
+        -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        box-shadow: 0 1px 2px rgba(0,0,0,.2);
+        background-color: #0080C8;
+        }
+        .btn:hover {
+        background-color: #A1D9F7;
+        color: #0080C8;
+        }
+    </style>
+    <borderlayout sclass="complex-layout" height="100%" width="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>
+            <div width="100%" sclass="cuerpo-main">
+                <window id="w_uticarar" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                    <tabbox id="tabbox_uticarar" apply="">
+                        
+                        <tabs>
+                            <tab id="tab_uticarar" label="CARGA DE DATOS DESDE UN ARCHIVO"/>
+                        </tabs>
+                        
+                        <tabpanels>
+                            
+                            <tabpanel>
+                                
+                                <groupbox width="987px" open="true" closable="false" style="text: center;">
+                                    
+                                    <space height="30px"/>
+                                    
+                                    <div id="div_center01" align="center">
+                                                                                                                                                                                                                                                                                                                      
+                                        <hbox align="center">
+                                            <label value="CARGA MASIVA DE CONCEPTOS" style="color: red; font-weight: bold;"/>
+                                        </hbox>
+                                        
+                                        <space height="20px"/>
+                                                                                                                                                                                                                      
+                                        <hbox align="center">
+                                            <cell align="left" width="106px">
+                                                <label value="MES PROCESO : "/>
+                                            </cell>
+                                            <textbox id="txt_mespro" width="55px" value="20170703" maxlength="8" readonly="true" disabled="true" style="text-align: center" />
+                                        </hbox>
+                                        
+                                        <space height="20px"/>
+                                                                                                                                                                                                                                        
+                                        <hbox align="center">
+                                            <radiogroup id="rg_movdes" onCheck="true">
+                                                <radio label="MOVIMIENTOS EN LINEA (INGRESOS)" selected="true"/>
+                                                <space width="145px"/>
+                                                <radio label="CUENTA CORRIENTE (DESCUENTOS)"/>
+                                            </radiogroup>
+                                        </hbox>
+                                        
+                                        <space height="20px"/>
+                                        
+                                        <hbox align="center">
+                                            <cell align="left" width="70px">
+                                                <label value="ARCHIVO : "/>
+                                            </cell>
+                                            <button class="btn" label=".." tooltiptext="Click para buscar archivo a importar"/>                     
+                                            <textbox id="txt_desperiodo" disabled="true" readonly="true" width="430px" tooltiptext="Ruta del archivo" value="DISK:\PATH FILE\" maxlength="60"/>
+                                        </hbox>
+                                    
+                                        <space height="20px"/>
+                                    
+                                        <hbox align="center">
+                                            <cell align="left" width="70px">
+                                                <label value="CONCEPTO : "/>
+                                            </cell>                                      
+                                            <textbox id="txt_concep" maxlength="3" width="20px" tooltiptext="Ingrese codigo de concepto" value="000" style="text-align: center;"/>
+                                            <textbox id="txt_desconcep" disabled="true" readonly="true" width="430px" tooltiptext="Descripción de concepto" value="CONSTANTES DEFAULT/MENSUAL Y F"/>
+                                        </hbox>
+                                        
+                                        <space height="20px"/>
+                                        
+                                        <groupbox width="650px" open="true" closable="false" style="text: center; text-align: left;">
+                                            <caption label="BORRAR CONCEPTOS"/>
+                                    
+                                            <space height="10px"/>
+                                    
+                                            <div id="div_center02" align="center">
+                                    
+                                                <hbox align="center">
+                                                    <cell align="left" width="240px">
+                                                        <label value="CENTRO DE COSTOS : "/>
+                                                    </cell>                                      
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_cencos" maxlength="3" width="20px" tooltiptext="Ingrese código de centro de costos" value="000" style="text-align: center;"/>
+                                                    <textbox id="txt_descencos" disabled="true" readonly="true" width="330px" tooltiptext="Descripción de centro de costos" value="NO EXISTE CENTRO DE COSTOS"/>
+                                                </hbox>
+                                                
+                                                <space height="10px"/>
+                                                
+                                                <hbox align="center">
+                                                    <cell align="left" width="240px">
+                                                        <label value="LISTA DE CONCEPTOS (Ejemplo: cpto01,cpto02...) "/>
+                                                    </cell>                                      
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_liscon" disabled="false" readonly="false" width="360px" tooltiptext="Lista de conceptos"/>
+                                                </hbox>
+                                    
+                                                <space height="10px"/>
+                                    
+                                                <div id="div_center03" align="right">
+                                                
+                                                    <hbox align="center">
+                                                        <button id="btn_eliminar" label="Eliminar" sclass="botones"/>
+                                                        <space width="7px"/>
+                                                    </hbox>
+                                                
+                                                </div>
+                                    
+                                            </div>
+                                            
+                                            <space height="10px"/>
+                                                                                                                    
+                                        </groupbox>
+                                    
+                                        <space height="30px"/>
+                                    
+                                        <hbox align="center">
+                                            <button id="btn_aceptar" label="Cargar" sclass="botones"/>    
+                                        </hbox>
+                                        
+                                        <space height="10px"/>
+                                                                                
+                                        <hbox align="center">
+                                            <checkbox id="chk_eliminar" label="SOLO ELIMINAR DATOS CARGADOS EN EL PERIODO" onCheck="true" style="font-weight: bold;"/>
+                                        </hbox>
+                                        
+                                        <space height="10px"/>
+                                        
+                                        <hbox align="center">
+                                            <span sclass="colorRojo">¡Los datos cargados por esta opción, se eliminarán, si vuelves a enlazarlos!</span>
+                                        </hbox>
+                                    
+                                    </div>
+                                    
+                                    <space height="30px"/>
+                                    
+                                </groupbox>
+                                
+                            </tabpanel>
+                            
+                        </tabpanels>                        
+                        
+                    </tabbox>
+                </window>
+            </div>  
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>
+</zk>

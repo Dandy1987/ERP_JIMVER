@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north height="27px" sclass="arriba-main">
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_perProc" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar (F4)" />            
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar (F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)" />
+                        <label value="MANTENIMIENTO PERIODOS DE PROCESOS" sclass="titulo_mant" style="margin-left:229px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_perProc" ctrlKeys="#f10" apply="org.me.gj.controller.planillas.mantenimiento.ControllerPerProceso">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_mantenimiento" disabled="false" label="MANTENIMIENTO" >
+                                <attribute name="onSelect">
+                                    if (lst_perProc.getSelectedIndex() == -1) {
+                                    tab_lista.setSelected(true);
+                                    Messagebox.show("Por favor, seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_perProc" >
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda" />
+                                        <hbox align="center">
+                                            <space width="250px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="TIPO DE PLANILLA : "/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_tipPeriodo" readonly="true" width="200px" tooltiptext="Seleccione una Opcion">
+                                                <template name="model">
+                                                    <comboitem label = "${each.tab_descri}" value = "${each.tab_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="10px"/>
+                                            <button id="btn_consultar" label="Consultar" sclass="botones"/>
+                                            <space width="10px"/>
+                                            <!--<toolbarbutton id="tbbtn_excel" image="/images/iconos_menu/estadisticas/exportarxls.png" tooltiptext="Exportar a Excel" />--> 
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <listbox id="lst_perProc" mold="paging" pageSize="18" width="985px" height="430px">
+                                        <listhead>
+                                            <listheader label="COD" width="50px" align="center"/>
+                                            <listheader label="DESCRIPCIÓN"/>
+                                            <listheader label="FEC. INI." width="90px" align="center"/>
+                                            <listheader label="FEC. FIN." width="90px" align="center"/>
+                                            <listheader label="SITUACIÓN" width="120px" align="center"/>
+                                            <listheader label="ACT." width="35px" align="center"/>
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.perPag_id}"/>
+                                                <listcell label="${each.perPag_desc}"/>
+                                                <listcell label="${each.s_perPag_fecIni}" style="text-align:center;"/>
+                                                <listcell label="${each.s_perPag_fecFin}" style="text-align:center;"/>
+                                                <listcell label="${each.perPag_situ}" style="text-align:left;"/>
+                                                <listcell>
+                                                    <checkbox checked="${each.perPag_valor}" disabled="true"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <space height="5px"/>
+                                    <hbox align="center">
+                                        <space width="867px"/>
+                                        <button id="btn_ajussp" label="Ajustar S.S.P." sclass="botones"/>
+                                    </hbox>
+                                    <space height="5px"/>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuAdd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador del Almacen"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="dt_fecAdd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación del Almacen"/>  
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuMod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó el Almacen"/>   
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="dt_fecMod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación del Almacen"/>   
+                                    </hbox>
+                                </div>    
+                            </tabpanel>
+                            <tabpanel>
+                                <div id="div_man_perProc" >
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="Períodos de Pagos"/>
+                                        <grid id="grd_man_perProc">
+                                            <columns>
+                                                <column width="250px"/>
+                                                <column width="250px"/>
+                                                <column width="150px"/>
+                                                <column />
+                                            </columns>
+                                            <rows> 
+                                                <!-- Fila 1 -->
+                                                <row align="right">
+                                                    <hbox align="center">
+                                                        <label value="TIPO DE PLANILLA : " />
+                                                        <span class="colorRojo">*</span>
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <combobox id="cb_tipPla" readonly="true" width="200px" disabled="true" tooltiptext="Define el Tipo de Planilla, Máximo 40 caracteres" >
+                                                            <template name="model">
+                                                                <comboitem label="${each.tab_descri}" value="${each.tab_id}" /> 
+                                                            </template>
+                                                        </combobox> 
+                                                    </hbox>                                                    
+                                                    <hbox align="center">
+                                                        <label value="ACTIVO ?:"/>
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <checkbox id="chk_act" disabled="true" tooltiptext="Define el Estado del Tipo de Planilla"/>
+                                                    </hbox>
+                                                </row>
+                                                <!-- Fila 2 -->
+                                                <row align="right">
+                                                    <hbox  align="center" width = "108px">
+                                                        <cell align="right" valign="center">
+                                                            <label value="PERÍODO:" />
+                                                            <span class="colorRojo">*</span>
+                                                        </cell>
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <textbox id="txt_periodo" disabled="true" maxlength="6" width="80px" tooltiptext="Define el Período de Pago Máximo 6 caracteres"/> 
+                                                        <span class="colorRojo">
+                                                            <label value="AAAAMM" />
+                                                        </span>
+                                                    </hbox>
+                                                    
+                                                    
+                                                </row>
+                                                <!-- Fila 3 -->
+                                                <row align="right">
+                                                    <hbox align="center" width = "101px">
+                                                        <label value="DESCRIPCIÓN : " />
+                                                        <span class="colorRojo">*</span>   
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <textbox id="txt_desc" disabled="true" width="200px" maxlength="20" tooltiptext="Define la Descripción del Período de Pago, Máximo 20 caracteres"/> 
+                                                    </hbox>
+                                                    <hbox align="center"/> 
+                                                    <hbox align="center"/>
+                                                </row>
+                                                <!-- Fila 4 -->
+                                                <row align="right">
+                                                    <hbox align="center" width = "108px">
+                                                        <cell align="right" valign="center">
+                                                            <label value="FECHA INICIAL:"/>
+                                                            <span class="colorRojo">*</span>   
+                                                        </cell>
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <datebox id="dt_fecInicial" disabled="true"  width="80px" maxlength="10" format="dd/MM/yyyy" tooltiptext="Define la Fecha Inicial del Período de Pagos"/>
+                                                    </hbox>
+                                                    <hbox align="center">
+                                                        <cell align="right" valign="center">
+                                                            <label value="FECHA FINAL:"/>
+                                                            <span class="colorRojo">*</span>   
+                                                        </cell>
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <datebox id="dt_fecFinal" disabled="true"  width="80px" maxlength="10" format="dd/MM/yyyy" tooltiptext="Define la Fecha Final del Período de Pagos"/>
+                                                    </hbox>
+                                                </row>
+                                                <!-- Fila 5 -->
+                                                <row align="right">
+                                                    <hbox align="center" width = "101px">
+                                                        <label value="SITUACIÓN : " />
+                                                    </hbox>
+                                                    <hbox align="center" width="320px">
+                                                        <textbox id="txt_situ" disabled="true" width="200px" maxlength="50" tooltiptext="Define la Situación del Período de Pagos, Máximo 50 caracteres"/> 
+                                                    </hbox>
+                                                    <hbox align="center"/> 
+                                                    <hbox align="center"/>
+                                                </row>
+                                            </rows>
+                                        </grid>
+                                    </groupbox>
+                                </div>    
+                            </tabpanel>
+                        </tabpanels>  
+                    </tabbox> 
+                </window>
+            </div>
+        </center>
+        <south height="25px" border="0">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>    
+</zk>

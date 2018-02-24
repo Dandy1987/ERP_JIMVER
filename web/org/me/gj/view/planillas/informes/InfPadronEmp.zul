@@ -1,0 +1,1611 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>     
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_manpersonal" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" />
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" />   
+                        <label value="MANTENIMIENTO DE PERSONAL" sclass="titulo_mant" style="margin-left:225px;"/>
+                    </toolbar>                        
+                    <tabbox id="tabbox_personal" ctrlKeys="^a#f8#f10" apply="org.me.gj.controller.planillas.informes.ControllerPatronE">
+                        <tabs>
+                            <tab id="tab_listapersonal" label="LISTA" />
+                            <tab id="tab_datosper" label="DATOS PERSONALES">
+                                <attribute name="onSelect">
+                                    if (!tab_listapersonal.isDisabled())
+                                    {
+                                    if (lst_personal.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listapersonal.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);  
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                            <tab id="tab_datoslab" label="DATOS LABORALES">
+                                <attribute name="onSelect">
+                                    if (!tab_listapersonal.isDisabled())
+                                    {
+                                    if (lst_personal.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listapersonal.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);  
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                            <tab id="tab_pagos" label="PAGOS">
+                                <attribute name="onSelect">
+                                    if (!tab_listapersonal.isDisabled())
+                                    {
+                                    if (lst_personal.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listapersonal.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);  
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                            <tab id="tab_adjuntos" label="ADJUNTOS">
+                                <attribute name="onSelect">
+                                    if (!tab_listapersonal.isDisabled())
+                                    {
+                                    if (lst_personal.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listapersonal.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);  
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                            <tab id="tab_derhabientes" label="DERECHOHABIENTES">
+                                <attribute name="onSelect">
+                                    if (!tab_listapersonal.isDisabled())
+                                    {
+                                    if (lst_personal.getSelectedIndex() == -1) 
+                                    {
+                                    tab_listapersonal.setSelected(true);
+                                    Messagebox.show("por favor seleccione un registro de la tabla","ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);  
+                                    }
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <div id="div_lst_personal" >                                
+                                    <groupbox width="987px" open="true" closable="false">
+                                        <caption label="Opciones de Busqueda" />
+                                        <hbox align="center">
+                                            <space width="5px"/>
+<cell align="right" valign="center">
+                                            <label value="EMPRESA : " />
+                                        </cell>
+                                        <bandbox id="cb_empresas" mold="rounded" autodrop="true" readonly="true" disabled="false" width="100px">  
+                                            <bandpopup>
+                                                <listbox id="lst_empresas" width="100px">
+                                                    <listhead>
+                                                        <listheader label="Empresa" />
+                                                        <listheader width="30px" label="SEL">
+                                                        </listheader>
+                                                    </listhead>
+                                                    <template name="model">
+                                                        <listitem>
+                                                            <listcell label="${each.emp_sig}"/>
+                                                            <listcell>
+                                                                <checkbox forward="onCheck=lst_empresas.onSeleccione"  checked="${each.valSelec}"/>
+                                                            </listcell>
+                                                        </listitem>
+                                                    </template>
+                                                </listbox>
+                                            </bandpopup>
+                                        </bandbox>
+                                        <space width="5px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="SUCURSAL : "/>
+                                        </cell>
+                                        <bandbox id="cb_fsucursal" mold="rounded" autodrop="true" readonly="true" disabled="false" width="120px">  
+                                            <bandpopup>
+                                                <listbox id="lst_sucursales" width="120px">
+                                                    <listhead>
+                                                        <listheader label="Sucursal" />
+                                                        <listheader width="30px" label="SEL">
+                                                        </listheader>
+                                                    </listhead>
+                                                    <template name="model">
+                                                        <listitem>
+                                                            <listcell label="${each.suc_des}"/>
+                                                            <listcell>
+                                                                <checkbox forward="onCheck=lst_sucursales.onSeleccions"  checked="${each.valSelec}"/>
+                                                            </listcell>
+                                                        </listitem>
+                                                    </template>
+                                                </listbox>
+                                            </bandpopup>
+                                        </bandbox>
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="PERIODO:"/>
+                                            </cell>
+                                            <combobox id="cb_fpering" width="70px" readonly="true" tooltiptext="Seleccione periodo de ingresados">
+                                                <template name="model">
+                                                    <comboitem label=" ${each.per_id}" value="${each.per_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="CESADOS EN PERIODO:"/>
+                                            </cell>
+                                            <combobox id="cb_fperces" readonly="true" width="70px" tooltiptext="Seleccione periodo de cesados">
+                                                <template name="model">
+                                                    <comboitem label=" ${each.per_id}" value="${each.per_id}"/>
+                                                </template>
+                                            </combobox>                                      
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center">
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="FILTRO:"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <combobox id="cb_busqueda" readonly="true" placeholder="--seleccione Opcion--" tooltiptext="Seleccione una Opcion">
+                                                <comboitem label=" "/>
+                                                <comboitem label="DOCUMENTO"/>
+                                                <comboitem label="APE.PATERNO"/>
+                                                <comboitem label="APE.MATERNO"/>
+                                                <comboitem label="NOMBRES"/>
+                                                <comboitem label="CARGO"/>
+                                                <attribute name="onSelect">
+                                                    txt_busqueda.setDisabled(false);
+                                                </attribute>
+                                            </combobox>
+                                            <separator/>
+                                            <textbox id="txt_busqueda" width="200px" disabled="true" style="background: #F5F6CE; color:#0080FF;"  placeholder="Ingrese un Valor para la busqueda" value="%%" tooltiptext="Ingresa un Valor para su Busqueda"/>
+                                           
+                                               <space width="20px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="CESADOS :"/>
+                                            </cell>
+                                            <checkbox id="chk_cesados"/>
+                                            <space width="5px"/>
+             
+                                        <space width="10px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="ESTADO:" id="lbl_estado"/>
+                                        </cell>
+                                        <space width="2px"/>
+                                        <combobox id="cb_estado" readonly="true" tooltiptext="Seleccione una Opción" width="90px">
+                                            <comboitem label="ACTIVO"/>
+                                            <comboitem label="INACTIVO"/>
+                                            <comboitem label=" "/>       
+                                        </combobox>
+                                            
+                                            <space width="80px"/>
+                                            <button id="btn_consultar" label="Consultar" sclass="botones"/>
+                                           <!-- <space width="5px"/>
+                                            <toolbarbutton id="tbbtn_excel" image="/images/iconos_menu/planillas/exportarxls.png" tooltiptext="Exportar a Excel" />
+                                            <space width="5px"/>
+                                            <toolbarbutton id="tbbtn_torta" image="/images/iconos_menu/planillas/TORTA.png" tooltiptext="Cumpleaños" />  
+                                             <space width="5px"/>
+                                            <toolbarbutton id="tbbtn_anios" image="/images/iconos_menu/planillas/cuatro_anios.png" tooltiptext="Trabajadores que cumplen 4 años este mes" />  -->
+                                            
+                                        </hbox>
+
+                                        <hbox align="center">
+                                            <space width="5px"/>
+                                            <cell align="left" width="center">
+                                                <label value="COSTO :"/>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <textbox id="txt_costo" placeholder="PRESIONE ENTER" maxlength="3" readonly="false" width="100px" focus="false" tooltiptext="Código de Centro de Costos" style="text-align:center;"/>
+                                            <textbox id="txt_descripcioncosto" maxlength="150" readonly="true" width="350px" focus="false" disabled="true" tooltiptext="Descripcion de Centro de Costos" />
+                                            <textbox id="txt_costo1" visible="false"/>
+                                            <space width="10px"/>											
+                                            <cell align="left" valign="center">
+                                                <label value="AREA :"/>
+                                            </cell>
+                                            
+                                            <textbox id="txt_areaId_Lov" width="30px" maxlength="3"   tooltiptext="Código de Area"/>
+                                            <textbox id="txt_areaId1_Lov"   visible="false" />
+                                            <textbox id="txt_areaDes_Lov" width="180px" disabled="true" tooltiptext="Descripción de Area"/>
+                                            <!--<button id="btn_movimiento" label="Movimiento" sclass="botones" />
+                                            <button id="btn_descuento" label="Descuentos" sclass="botones"/>
+                                            <button id="btn_asistencia" label="Asistencia" sclass="botones"/>-->
+                                            
+                                            
+                                        </hbox>
+                                    </groupbox>
+                                    <separator height="5px"/>    
+                                    <listbox id="lst_personal" mold="paging" pageSize="14" width="985px" height="370px">
+                                        <listhead>
+                                            <listheader label="DNI" width="70px" align="center"/>
+                                            <listheader label="PATERNO" width="95px" align="center"/>
+                                            <listheader label="MATERNO" width="95px" align="center"/>
+                                            <listheader label="NOMBRES" align="center"/>
+                                            <listheader label="SUCURSAL" width="73px" align="center"/>
+                                            <listheader label="CARGO" width="160px" align="center"/>
+                                            <listheader label="FEC.ING" width="75px" align="center"/>
+                                            <listheader label="FEC.CESE" width="75px" align="center"/>
+                                            <listheader label="EST" width="25px" align="center"/>
+                                            <listheader label="" width="25px">
+                                                <!--<checkbox id="chk_selecAll"/>-->
+                                            </listheader> 
+                                        </listhead>	
+                                        <template name="model">
+                                            <listitem>
+                                                <listcell label="${each.plnrodoc}"/>
+                                                <listcell label="${each.plapepat}" style="text-align:left;"/>
+                                                <listcell label="${each.plapemat}" style="text-align:left;"/>
+                                                <listcell label="${each.plnomemp}" style="text-align:left;"/>
+                                                <listcell label="${each.suc_id_des}"/>
+                                                <listcell label="${each.plidcargo_des}" style="text-align:left;"/>
+                                                <listcell label="${each.s_plfecing}"/>
+                                                <listcell label="${each.s_plfecces}"/>
+                                                <listcell>
+                                                    <checkbox disabled="true" checked="${each.valor}"/>
+                                                </listcell>
+                                                <listcell>
+                                                    <checkbox forward="onCheck=lst_personal.onSeleccion"  checked="${each.valSelec}"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    
+                                    
+                                    <groupbox width="985px" height="50px" open="true" closable="false"> 
+                                          <caption label="Ordenar por: "/>
+                                           <radiogroup id="rbg_indicador">
+                                                <radio label="APELLIDO PATERNO" value="0"/>
+                                                <space width="15px"/>
+                                                <radio label="CENTRO DE COSTO" value="1"/>
+                                                <space width="15px"/>
+                                                <radio label="AFP" value="2"/>
+                                                 <space width="15px"/>
+                                                <radio label="FECHA INGRESO" value="3"/>
+                                                <space width="15px"/>
+                                                <radio label="HAPPY BIRTHDAY" value="4"/>
+                                                 <space width="15px"/>
+                                                <radio label="FECHA CESE" value="5"/>
+                                            
+                                            </radiogroup>
+                                    </groupbox>
+                                    <hbox align="center">
+                                        <cell align="right" valign="center">                                            
+                                            <label value="USU. ADD:"/>
+                                        </cell>
+                                        <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador"/>
+                                        <cell align="right" valign="center">
+                                            <space width="85px"  />
+                                            <label value="FEC. ADD:"/>
+                                        </cell>
+                                        <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación"/>
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="USU. MOD:"/>
+                                        </cell>
+                                        <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó"/>
+                                        <cell align="right" valign="center">
+                                            <space width="95px"  />
+                                            <label value="FEC. MOD:"/>
+                                        </cell>
+                                        <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación"/>
+                                    </hbox>
+                                </div>
+                            </tabpanel> 
+                            <tabpanel>
+                                <hbox>
+                                    <vbox>
+                                        <groupbox width="775px" height="200px" open="true" closable="false">
+                                            <caption label="DATOS PERSONALES"/>
+                                            <vbox>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="APELLIDO PATERNO :"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_apePat" width="180px" maxlength="50" disabled="true" tooltiptext="Apellido paterno, máximo 50 caracteres"/>
+                                                    <space width="15px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="APELLIDO MATERNO :"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_apeMat" width="180px" maxlength="50" disabled="true" tooltiptext="Apellido materno máximo 50 caracteres"/>
+                                                    <space width="35px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="ESTADO :"/>
+                                                    </cell>
+                                                    <checkbox id="chk_estado" disabled="true" tooltiptext="Define el Estado de las Linea"/>
+                                                </hbox>
+                                                <space height="2px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="NOMBRES :"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell> 
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_nombres" disabled="true" maxlength="50" width="380px" tooltiptext="Nombres, máximo 100 caracteres"/>
+                                                    <space width="16px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="NACIÓN :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell> 
+                                                    <textbox id="txt_nacionId" disabled="true" maxlength="4"  width="40px" tooltiptext="Código de nacionalidad, máximo 4 caracteres"/>
+                                                    <textbox id="txt_nacionDes" disabled="true" width="155px" tooltiptext="Descripción de nacionalidad, Máximo 50 caracteres"/>
+                                                </hbox>
+                                                <space height="2px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="TIPO DOC :"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <space width="8px"/>
+                                                    <combobox id="cb_tipDoc" width="210px" disabled="true" readonly="true" placeholder="------seleccione opción-------" tooltiptext="Seleccione tipo documento">
+                                                        <template name="model">
+                                                            <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                        </template>
+                                                    </combobox>
+                                                    <space width="10px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="NRO.DOCUMENTO :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    <space width="2px"/>
+                                                    <textbox id="txt_nroDoc" width="100px" maxlength="15" disabled="true" tooltiptext="Número de documento"/>
+                                                    <space width="10px"/>
+                                                    <cell align="rigth" valign="center">
+                                                        <label value="FECHA NACIMIENTO:"/>
+                                                        <span class="colorRojo" style="color:red">*</span> 
+                                                    </cell>
+                                                    <space width="2px"/>
+                                                    <datebox id="d_fecNac" disabled="true" maxlength="10" width="100px" readonly="false" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha de nacimiento"/>
+                                                </hbox>
+                                                <space height="2px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="SEXO :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    <space width="27px"/>
+                                                    <combobox id="cb_sexo" width="160px" disabled="true" readonly="true" placeholder="---seleccione opción----" tooltiptext="Seleccione el sexo">
+                                                        <comboitem label="MASCULINO" value="1"/>
+                                                        <comboitem label="FEMENINO" value="2"/> 
+                                                    </combobox>
+                                                    <space width="15px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="ESTADO CIVIL :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    <space width="10px"/>
+                                                    <combobox id="cb_estCivil" width="180px" disabled="true" readonly="true" placeholder="-----seleccione opción------" tooltiptext="Seleccione Estado Civil">
+                                                        <template name="model">
+                                                            <comboitem label="${each.tabla_descri}" value="${each.tabla_id}"/>
+                                                        </template>
+                                                    </combobox>
+                                                    <space width="15px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="GRUPO SANGUÍNEO :" />
+                                                    </cell>                                                 
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_grupSang" width="60px" maxlength="5" disabled="true" tooltiptext="Grupo Sanguíneo"/>
+                                                </hbox>
+                                                <space height="2px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="TELÉFONO :" />
+                                                        <!---<span class="colorRojo">*</span>  -->
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_telefono" width="70px" maxlength="10" disabled="true" tooltiptext="Número de teléfono"/>
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="MÓVIL :" />
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>                                                 
+                                                    <textbox id="txt_movil" width="70px" maxlength="10" disabled="true" tooltiptext="Número móvil"/>
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="CORREO :" />
+                                                    </cell>                                                 
+                                                    <textbox id="txt_correo"  width="280px" maxlength="50" disabled="true" tooltiptext="Ingrese correo electrónico"/>
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="DISCAPACIDAD:"/>
+                                                    </cell>
+                                                    <checkbox id="chk_discap" disabled="true" tooltiptext="Define discapacidad"/>
+                                                </hbox>
+                                                <space height="2px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="NIVEL EDU :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell> 
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_nivEduId" disabled="true" maxlength="3"  width="20px" tooltiptext="Código de nivel de educación"/>
+                                                    <textbox id="txt_nivEduDes" disabled="true" width="275px" tooltiptext="Descripción de nivel de educación"/>
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="OCUPACIÓN :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell> 
+                                                    <textbox id="txt_ocupaId" disabled="true" maxlength="6"  width="45px" tooltiptext="Código de ocupación"/>
+                                                    <textbox id="txt_ocupaDes" disabled="true" width="215px" tooltiptext="Descripción de ocupación"/>
+                                                </hbox>
+                                            </vbox>
+                                        </groupbox>
+                                        <space height="5px"/>
+                                        <groupbox width="775px" height="210px" open="true" closable="false">
+                                            <caption label="DOMICILIO"/>
+                                            <vbox>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="CONDICIÓN :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    <space width="2px"/>
+                                                    <combobox id="cb_condicion" width="160px" disabled="true" readonly="true" placeholder="---seleccione opción----" tooltiptext="Seleccione condición">
+                                                        <comboitem label="DOMICILIADO" value="1"/>
+                                                        <comboitem label="NO DOMICILIADO" value="2"/> 
+                                                    </combobox>
+                                                    <space width="10px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="UBIGEO :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>                                           
+                                                    <textbox id="txt_ubigeoId" width="50px" maxlength="6" disabled="true" tooltiptext="Código de ubigeo, máximo 6 caracteres"/>
+                                                    <textbox id="txt_ubigeoDes" width="370px" disabled="true" tooltiptext="Descripción de ubigeo, máximo 50 caracteres"/>
+                                                </hbox>
+                                                <space height="2px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="VÍA :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <combobox id="cb_via" width="180px" disabled="true" readonly="true" placeholder="-----seleccione opción------" tooltiptext="Seleccione">
+                                                        <template name="model">
+                                                            <comboitem label="${each.tabla_descri}" value="${each.tabla_id}"/>
+                                                        </template>
+                                                    </combobox>
+                                                    <space width="5px"/>
+                                                    <span class="colorRojo">*</span>
+                                                    <textbox id="txt_via" disabled="true" maxlength="100" width="320px" tooltiptext="Nombre de vía, máximo 100 caracteres"/>
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="NRO :"/>
+                                                    </cell>
+                                                    <textbox id="txt_nro" disabled="true" maxlength="10" width="40px" tooltiptext="Número, máximo 10 caracteres"/>
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="INT :"/>
+                                                    </cell>
+                                                    <textbox id="txt_int" disabled="true" maxlength="10" width="40px" tooltiptext="Interior, máximo 10 caracteres"/>
+                                                </hbox>
+                                                <space height="2px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="ZONA :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <combobox id="cb_zona" width="200px" disabled="true" readonly="true" placeholder="-----seleccione opción------" tooltiptext="Seleccione Zona">
+                                                        <template name="model">
+                                                            <comboitem label="${each.tabla_descri}" value="${each.tabla_id}"/>
+                                                        </template>
+                                                    </combobox>
+                                                    <space width="5px"/>
+                                                    <span class="colorRojo">*</span>
+                                                    <textbox id="txt_zona" width="465px" maxlength="100" disabled="true" tooltiptext="Descripcion de zona, Máximo 100 caracteres"/>
+                                                </hbox>
+                                                <space height="2px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="DIRECCIÓN :" />
+                                                        <!--<span class="colorRojo">*</span>  -->
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_direccion" width="660px" maxlength="60" disabled="true" tooltiptext="Dirección, Máximo 60 dÍgitos"/>
+                                                </hbox>
+                                                <space height="2px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="REFERENCIA :" />
+                                                    </cell>
+                                                    <space width="1px"/>
+                                                    <textbox id="txt_referencia" width="660px" maxlength="100" disabled="true" tooltiptext="Referencia, Máximo 100 dÍgitos"/>
+                                                </hbox>
+                                                <space height="2px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="COORDENADAS X (LATITUD) :" />
+                                                    </cell>
+                                                    <space width="1px"/>
+                                                    <doublebox id="db_dirlatx" width="130px" maxlength="100" disabled="true" tooltiptext="Latitud, Máximo 100 dÍgitos"/>
+                                                    <space width="32px"/>
+                                                    <cell align="right" valign="center">
+                                                        <label value="COORDENADAS Y (LONGITUD) :" />
+                                                    </cell>
+                                                    <space width="1px"/>
+                                                    <doublebox id="db_dirlony" width="130px" maxlength="100" disabled="true" tooltiptext="Longitud, Máximo 100 dÍgitos"/>
+                                                    <space width="33px"/>
+                                                    <button id="btn_coordenadasDomi" label="VER" sclass="botones" disabled="true"/>
+                                                </hbox>  
+                                            </vbox>
+                                        </groupbox>
+                                    </vbox>
+                                    <vbox>
+                                        <hbox> 
+                                            <groupbox closable="false" style="background-color:#FFFFFF" width="210px" height="280px" >
+                                                <caption label="FOTO" width="80px"/> 
+                                                <vbox>
+                                                    <hbox align="center"> 
+                                                        <div id="img_foto" width="197px" height="252px" style="text-align:center; border:1px solid; "  />                                                    
+                                                    </hbox>
+                                                </vbox>                                                
+                                            </groupbox>
+                                        </hbox> 
+                                        <!--<space height="5px"/>
+                                        <hbox> 
+                                            <groupbox closable="false" style="background-color:#FFFFFF" width="195px" height="140px" >
+                                                <caption label="FIRMA" width="80px"/> 
+                                                <vbox>
+                                                    <hbox align="center"> 
+                                                        <div id="img_firma" width="180px" height="100px" style="text-align:center; border:1px solid; "  />                                                    
+                                                    </hbox>
+                                                </vbox>                                                
+                                            </groupbox>
+                                        </hbox>-->
+                                    </vbox>
+                                </hbox>
+                            </tabpanel>
+                            <tabpanel>
+                                <hbox>
+                                    <groupbox width="950px" height="215px" open="true" closable="false">
+                                        <caption label="DATOS LABORALES"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="rigth" valign="center">
+                                                <label value="FECHA INGRESO:"/>
+                                                <span class="colorRojo" style="color:red">*</span> 
+                                            </cell>
+                                            <space width="10px"/>
+                                            <datebox id="d_fecIng" disabled="true" readonly="true" width="100px" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha de ingreso"/>
+                                            <space width="15px"/>
+                                            <cell align="rigth" valign="center">
+                                                <label value="FECHA CESE:"/>
+                                            </cell>
+                                            <space width="10px"/>
+                                            <datebox id="d_fecCese" disabled="true" maxlength="10" width="100px" readonly="false" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha de cese"/>
+                                            <space width="5px"/>
+                                            <toolbarbutton id="tbbtn_btn_cesedl" image="/images/iconos/historial.png" tooltiptext="Detalle del motivo de cese"/>
+                                            <space width="10px"/>
+                                            
+                                            <!--xx-->
+                                            <combobox id="cb_motivoCese" width="20px" visible="false">
+                                                <template name="model">
+                                                    <comboitem label="${each.tabla_descri}" value="${each.tabla_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <textbox id="txt_ceseDet" width="20px" visible="false"/>
+                                            <textbox id="txt_ceseObs" width="20px" visible="false"/>
+                                            <!--xx-->
+                                            
+                                            
+                                            <cell align="right" valign="center">
+                                                <label value="CÓDIGO INTERNO :"/>
+                                            </cell>
+                                            <textbox id="txt_codInterno" width="50px" maxlength="4" disabled="true" tooltiptext="Código interno,maximo 4 carácteres"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="SUCURSAL :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>
+                                            <space width="10px"/>
+                                            <combobox id="cb_sucursal" width="120px" disabled="true" readonly="true" placeholder="-seleccione opción-" tooltiptext="Seleccione sucursal">
+                                                <template name="model">
+                                                    <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="15px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="ÁREA :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>                                           
+                                            <textbox id="txt_areaId" width="30px" maxlength="3" disabled="true" tooltiptext="Código Area, máximo 3 carácteres"/>
+                                            <textbox id="txt_areaDes" width="200px" maxlength="50" disabled="true" tooltiptext="Descripción Area, máximo 50 caracteres"/>
+                                            <space width="15px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="CENTRO DE COSTO :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>                                           
+                                            <textbox id="txt_ccostoId" width="40px" maxlength="3" disabled="true" tooltiptext="Código Centro de Costo, máximo 3 caracteres"/>
+                                            <textbox id="txt_ccostoDes" width="210px" maxlength="50" disabled="true" tooltiptext="Descripción de centro de costo, máximo 50 caracteres"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center">
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="CATEGORÍA :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>
+                                            <space width="6px"/>
+                                            <combobox id="cb_categoria" width="200px" disabled="true" readonly="true" placeholder="-------seleccione opción--------" tooltiptext="Seleccione Categoría">
+                                                <template name="model">
+                                                    <comboitem label="${each.tabla_descri}" value="${each.tabla_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="15px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="TIPO TRABAJADOR :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>
+                                            <space width="10px"/>
+                                            <textbox id="txt_tipTrabId" width="30px" maxlength="3" disabled="true" tooltiptext="Código tipo de trabajador, máximo 3 carácteres"/>
+                                            <textbox id="txt_tipTrabDes" width="435px" disabled="true" tooltiptext="Descripción tipo de trabajador, máximo 50 caracteres"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="HORARIO :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>
+                                            <space width="20px"/>
+                                            <textbox id="txt_horarioId" width="30px" maxlength="3" disabled="true" tooltiptext="Código de Horario, máximo 3 carácteres"/>
+                                            <textbox id="txt_horarioDes" width="130px" disabled="true" tooltiptext="Descripción de Horario, máximo 50 caracteres"/>
+                                            <space width="15px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="CARGO :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>                                           
+                                            <textbox id="txt_cargoId" width="30px" maxlength="3" disabled="true" tooltiptext="Código de cargo, máximo 3 caracteres"/>
+                                            <textbox id="txt_cargoDes" width="200px" disabled="true" tooltiptext="Descripción de cargo, máximo 50 caracteres"/>
+                                            <space width="15px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="SITUACIÓN ESPECIAL :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>
+                                            <space width="5px"/>
+                                            <combobox id="cb_sitEsp" width="180px" disabled="true" readonly="true" placeholder="----seleccione opción----" tooltiptext="Seleccione Situación">
+                                                <comboitem label="NINGUNA" value="1"/> 
+                                                <comboitem label="TRABAJADOR DE DIRECCION" value="2"/>
+                                                <comboitem label="TRABAJADOR DE CONFIANZA" value="3"/> 
+                                            </combobox>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="TIPO CONTRATO :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>
+                                            <space width="5px"/>
+                                            <textbox id="txt_tipContId" width="30px" maxlength="3" disabled="true" tooltiptext="Código de contrato, máximo 3 caracteres"/>
+                                            <textbox id="txt_tipContDes" width="545px" disabled="true" tooltiptext="Descripción de contrato, máximo 50 caracteres"/>
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="SUJETO A CONTROL INMEDIATO:"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <checkbox id="chk_sujCtrlInm" disabled="true" tooltiptext="Sujeto a control"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="TIPO SUELDO :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>
+                                            <space width="4px"/>
+                                            <combobox id="cb_tipSueldo" width="120px" disabled="true" readonly="true" placeholder="seleccione opción" tooltiptext="Seleccione Sueldo">
+                                                <comboitem label="FIJO" value="1"/> 
+                                                <comboitem label="VARIABLE" value="2"/>
+                                                <comboitem label="MIXTO" value="3"/>
+                                            </combobox>
+                                            <space width="25px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="PERIODICIDAD REMUNERATIVA :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>
+                                            <space width="10px"/>
+                                            <combobox id="cb_perRem" width="120px" disabled="true" readonly="true" placeholder="-seleccione opción-" tooltiptext="Seleccione Periodicidad">
+                                                <comboitem label="MENSUAL" value="1"/> 
+                                                <comboitem label="QUINCENAL" value="2"/>
+                                                <comboitem label="SEMANAL" value="3"/> 
+                                                <comboitem label="DIARIA" value="4"/> 
+                                                <comboitem label="OTROS" value="5"/> 
+                                            </combobox>
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="PERCIBE UTILIDAD :"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <checkbox id="chk_utilidad" disabled="true" tooltiptext="Define Utilidad"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="EXCLUIR 5TA CATEGORÍA :"/>
+                                            </cell>
+                                            <checkbox id="chk_excQuinta" disabled="true" tooltiptext="Define categoría"/>
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="OTROS INGRESOS 5TA CATEGORÍA :"/>
+                                            </cell>
+                                            <checkbox id="chk_otrosQuinta" disabled="true" tooltiptext="Otros"/>
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="ESSALUD VIDA :"/>
+                                            </cell>
+                                            <checkbox id="chk_essalud" disabled="true" tooltiptext="Esalud"/>
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="CARNET SSP :"/>
+                                            </cell>                                           
+                                            <textbox id="txt_carnetSsp" width="80px" maxlength="18" disabled="true" tooltiptext="Carnet"/>
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="SINDICALIZADO :"/>
+                                            </cell>
+                                            <checkbox id="chk_sindicalizado" disabled="true" tooltiptext="Define si es Sindicalizado"/>
+                                            <space width="11px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="PENSIONISTA :"/>
+                                            </cell>
+                                            <checkbox id="chk_pensionista" disabled="true" tooltiptext="Define si es Pensionista"/>
+                                        </hbox>
+                                    </groupbox>
+                                    <toolbar id="tb_transacciones_datoslab" width="25px" height="210px" >
+                                        <toolbarbutton id="tbbtn_btn_nuevodl" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (ALT+N)" disabled="true" />                                            
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_editardl" image="/images/iconos/editar.png"  tooltiptext="Editar (ALT+M)" disabled="true" />                                                        
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_deshacerdl" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (ALT+D)" disabled="true" />
+                                        <!--<separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_guardarpc" image="/images/iconos/guardar.png" tooltiptext="Guardar (ALT+G)" disabled="true" />-->
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_historialdl" image="/images/iconos/historial.png" tooltiptext="Historial Datos Laborales - Grupo Jimenez"/>
+                                    </toolbar>
+                                </hbox>
+                                <space height="25px"/>
+                                <hbox>
+                                    <groupbox width="950px" height="160px" open="true" closable="false">
+                                        <caption label="APORTACIÓN"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="REG. PENS. :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <space width="5px"/>                                   
+                                            <textbox id="txt_regPenId" width="30px" maxlength="3" disabled="true" tooltiptext="Código de pensión"/>
+                                            <textbox id="txt_regPenDes" width="400px" disabled="true" tooltiptext="Descripción de pensión"/>
+                                            <space width="5px"/>
+                                            <cell align="rigth" valign="center">
+                                                <label value="FECHA INGRESO :"/>
+                                                <span class="colorRojo" style="color:red">*</span> 
+                                            </cell>
+                                            <space width="2px"/>
+                                            <datebox id="d_fecIngRp" disabled="true" maxlength="10" width="90px" readonly="false" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha de ingreso"/>
+                                            <space width="5px"/>
+                                            <cell align="rigth" valign="center">
+                                                <label value="FECHA CESE :"/>
+                                            </cell>
+                                            <space width="2px"/>
+                                            <datebox id="d_fecCesRp" disabled="true" maxlength="10" width="90px" readonly="false" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha de cese"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="TIPO PENSIÓN :"/>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <combobox id="cb_tipPen" width="200px" disabled="true" readonly="true" placeholder="-------seleccione opción--------" tooltiptext="Seleccione tipo de Pensión">
+                                                <template name="model">
+                                                    <comboitem label="${each.tabla_descri}" value="${each.tabla_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="15px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="AFP :"/>
+                                            </cell>                                           
+                                            <textbox id="txt_afpId" width="30px" maxlength="3" disabled="true" tooltiptext="Código de AFP"/>
+                                            <textbox id="txt_afpDes" width="150px" disabled="true" tooltiptext="Descripción de AFP"/>
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="CUPSS :"/>
+                                            </cell>                                           
+                                            <textbox id="txt_carnetAfp" width="150px" maxlength="12" disabled="true" tooltiptext="Carnet de AFP"/>
+                                            <space width="10px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="COMISIÓN MIXTA:"/>
+                                            </cell>
+                                            <checkbox id="chk_comMix" disabled="true" tooltiptext="Comisión Mixta"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center">
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="ENTIDAD PRESTADORA DE SALUD :"/>
+                                            </cell>
+                                            <space width="10px"/>
+                                            <textbox id="txt_presSaludId" width="30px" maxlength="3" disabled="true" tooltiptext="Código"/>
+                                            <textbox id="txt_presSaludDes" width="665px" disabled="true" tooltiptext="Descripción"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="SITUACIÓN :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <space width="15px"/>
+                                            <textbox id="txt_sitEpsId" width="50px" maxlength="3" disabled="true" tooltiptext="Código de situación"/>
+                                            <textbox id="txt_sitEpsDes" width="550px" disabled="true" tooltiptext="Descripción de situación"/>
+                                            <space width="15px"/>
+                                            <cell align="rigth" valign="center">
+                                                <label value="FECHA BAJA :"/>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <datebox id="d_fecBajaEs" disabled="true" maxlength="10" width="100px" readonly="false" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha de baja"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="SCTR SALUD :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <combobox id="cb_sctrSalud" width="160px" disabled="true" readonly="true" placeholder="----seleccione opción----" tooltiptext="Seleccione Sector Salud">
+                                                <comboitem label="NINGUNO" value="1"/> 
+                                                <comboitem label="ES SALUD" value="2"/>
+                                                <comboitem label="ENT.PREST.SALUD" value="3"/> 
+                                            </combobox>
+                                            <space width="30px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="SCTR PENSIÓN :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <space width="10px"/>
+                                            <combobox id="cb_sctrPension" width="160px" disabled="true" readonly="true" placeholder="----seleccione opción----" tooltiptext="Seleccione Pensión">
+                                                <comboitem label="NINGUNO" value="1"/> 
+                                                <comboitem label="ONP" value="2"/>
+                                                <comboitem label="ENT.PREST.SALUD" value="3"/>
+                                            </combobox>
+                                        </hbox>
+                                    </groupbox>
+                                    <toolbar id="tb_transacciones_aportes" width="25px" height="155px" >
+                                        <toolbarbutton id="tbbtn_btn_nuevoap" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (ALT+N)" disabled="true" />                                            
+                                        <separator height="10px"/>
+                                        <!--<toolbarbutton id="tbbtn_btn_editarap" image="/images/iconos/editar.png"  tooltiptext="Editar (ALT+M)" disabled="true" />                                                        
+                                        <separator height="10px"/>-->
+                                        <toolbarbutton id="tbbtn_btn_deshacerap" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (ALT+D)" disabled="true" />
+                                        <!--<separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_guardarpc" image="/images/iconos/guardar.png" tooltiptext="Guardar (ALT+G)" disabled="true" />-->
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_historialap" image="/images/iconos/historial.png" tooltiptext="Deshacer (ALT+D)"  />
+                                    </toolbar>
+                                </hbox>
+                            </tabpanel>
+                            <tabpanel>
+                                <space height="50px"/>
+                                <hbox>
+                                    <groupbox width="450px" height="270px" open="true" closable="false">
+                                        <space height="10px"/>
+                                        <hbox align="center" >
+                                            <space width="150px"/>
+                                            <label id="lbl_depHab" value="DEPÓSITO HABERES" style="text-align: right; color:black !important;font-size: 15px;font-weight : bold;" />
+                                        </hbox>
+                                        <space height="20px"/>
+                                        <intbox id="ib_correlph" visible="false"/>
+                                        <hbox align="center" >
+                                            <space width="40px"/>
+                                            <cell align="left" valign="center" width="80px">
+                                                <label value="BANCO :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <textbox id="txt_banDepHabId" width="30px" maxlength="50" disabled="true" tooltiptext="Código"/>
+                                            <textbox  id="txt_banDepHabDes" width="215px" disabled="true" tooltiptext="Descripción"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="40px"/>
+                                            <cell align="left" valign="center" width="80px">
+                                                <label value="TIPO CUENTA :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <combobox id="cb_tipCuentaDepHab" width="160px" disabled="true" readonly="true" tooltiptext="Seleccione tipo de Cuenta">
+                                                <comboitem label="AHORRO" value="1"/> 
+                                                <comboitem label="CORRIENTE" value="2"/>
+                                                <comboitem label="OTROS" value="3"/>
+                                            </combobox>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="40px"/>
+                                            <cell align="left" valign="center" width="80px">
+                                                <label value="MONEDA :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <combobox id="cb_tipMonedaDepHab" width="160px" disabled="true" readonly="true" tooltiptext="Seleccione Moneda">
+                                                <comboitem label="SOLES" value="1"/> 
+                                                <comboitem label="DOLARES" value="2"/>
+                                                <comboitem label="EUROS" value="3"/>
+                                            </combobox>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="40px"/>
+                                            <cell align="left" valign="center" width="80px">
+                                                <label value="NRO. CUENTA :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>
+                                            <space width="6px"/>
+                                            <textbox id="txt_nroCtaDepHab" width="160px"  disabled="true" tooltiptext="Número de cuenta"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="40px"/>
+                                            <cell align="left" valign="center" width="80px">
+                                                <label value="TIPO PAGO :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <combobox id="cb_tipPagoDepHab" width="160px" disabled="true" readonly="true" tooltiptext="Tipo de pago">
+                                                <comboitem label="EFECTIVO" value="1"/> 
+                                                <comboitem label="DEPOSITO EN CUENTA" value="2"/>
+                                                <comboitem label="CHEQUE" value="3"/>
+                                                <comboitem label="OTROS" value="4"/>
+                                            </combobox>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox>
+                                            <space width="40px"/>
+                                            <cell align="left" valign="center" width="88px">
+                                                <label value="OBSERVACIÓN :"/>
+                                            </cell>
+                                            <textbox id="txt_glosaDepHab" width="260px" rows="3" maxlength="300" disabled="true" style="resize:none;" />
+                                        </hbox>
+                                        
+                                    </groupbox>
+                                    <toolbar id="tb_transacciones_dephab" width="25px" height="265px" >
+                                        <separator height="50px"/>
+                                        <toolbarbutton id="tbbtn_btn_nuevoph" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (ALT+N)" disabled="true"/>
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_editarph" image="/images/iconos/editar.png"  tooltiptext="Nuevo (ALT+N)" disabled="true"/>
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_deshacerph" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (ALT+D)" disabled="true"/>
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_historialph" image="/images/iconos/historial.png" tooltiptext="Deshacer (ALT+D)" />
+                                    </toolbar>
+                                    <space width="15px"/>
+                                    <groupbox width="450px" height="270px" open="true" closable="false">
+                                        <space height="10px"/>
+                                        <hbox align="center" >
+                                            <space width="150px"/>
+                                            <label id="lbl_depCts" value="DEPÓSITO CTS" style="text-align: right; color:black !important;font-size: 15px;font-weight : bold;" />
+                                        </hbox>
+                                        <space height="20px"/>
+                                        <intbox id="ib_correlpc" visible="false"/>
+                                        <hbox align="center" >
+                                            <space width="40px"/>
+                                            <cell align="left" valign="center" width="80px">
+                                                <label value="BANCO :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <textbox id="txt_banDepCtsId" width="30px" maxlength="50" disabled="true" tooltiptext="Código"/>
+                                            <textbox  id="txt_banDepCtsDes" width="215px" disabled="true" tooltiptext="Descripción"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="40px"/>
+                                            <cell align="left" valign="center" width="80px">
+                                                <label value="TIPO CUENTA :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <combobox id="cb_tipCuentaDepCts" width="160px" disabled="true" readonly="true" tooltiptext="Seleccione Tipo de Cuenta">
+                                                <comboitem label="AHORRO" value="1"/> 
+                                                <comboitem label="CORRIENTE" value="2"/>
+                                                <comboitem label="OTROS" value="3"/>
+                                            </combobox>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="40px"/>
+                                            <cell align="left" valign="center" width="80px">
+                                                <label value="MONEDA :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <combobox id="cb_tipMonedaDepCts" width="160px" disabled="true" readonly="true" tooltiptext="Seleccione Moneda">
+                                                <comboitem label="SOLES" value="1"/> 
+                                                <comboitem label="DOLARES" value="2"/>
+                                                <comboitem label="EUROS" value="3"/>
+                                            </combobox>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="40px"/>
+                                            <cell align="left" valign="center" width="80px">
+                                                <label value="NRO. CUENTA :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>
+                                            <space width="6px"/>
+                                            <textbox id="txt_nroCtaDepCts" width="160px" disabled="true" tooltiptext="Número de cuenta"/>
+                                        </hbox>
+                                        <space height="32px"/>
+                                        <hbox>
+                                            <space width="40px"/>
+                                            <cell align="left" valign="center" width="88px">
+                                                <label value="OBSERVACIÓN :"/>
+                                            </cell>
+                                            <textbox id="txt_glosaDepCts" width="260px" rows="3" maxlength="300" disabled="true" style="resize:none;" />
+                                        </hbox>
+                                    </groupbox>
+                                    <toolbar id="tb_transacciones_depcts" width="25px" height="265px" >
+                                        <separator height="50px"/>
+                                        <toolbarbutton id="tbbtn_btn_nuevopc" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (ALT+N)" disabled="true" />                                            
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_editarpc" image="/images/iconos/editar.png"  tooltiptext="Nuevo (ALT+N)" disabled="true"/>
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_deshacerpc" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (ALT+D)" disabled="true" />
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_historialpc" image="/images/iconos/historial.png" tooltiptext="Deshacer (ALT+D)" />
+                                    </toolbar>
+                                </hbox>
+                                <hbox>
+                                    <!--<calendars id="calendars" firstDayOfWeek="Sunday" height="400px" width="500px"
+                                    timeZone="Main=GMT+0" mold="month"/>-->
+                                </hbox>
+                            </tabpanel>
+                            <tabpanel>
+                                <hbox>
+                                    <vbox>
+                                        <hbox>
+                                            <groupbox width="530px" height="150px" open="true" closable="false">
+                                                <caption label="DOCUMENTOS"/>
+                                                <space height="5px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center" width="120px">
+                                                        <label value="ANT. POLICIALES :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_adj_antpol" width="300px" readonly="true" tooltiptext="Antecedentes policiales"/>
+                                                    <toolbarbutton id="tbbtn_adjcar_antpol" upload="true" disabled="true" image="/images/iconos_menu/planillas/buscar.png" tooltiptext="Cargar"></toolbarbutton> 
+                                                    <toolbarbutton id="tbbtn_adjpdf_antpol" disabled="true" image="/images/iconos_menu/planillas/pdf.png" tooltiptext="Dercargar"></toolbarbutton> 
+                                                </hbox>
+                                                <space height="5px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center" width="120px">
+                                                        <label value="CERT. DOMICILIARIO :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>             
+                                                    <space width="5px"/>                              
+                                                    <textbox id="txt_adj_cerdom" width="300px" readonly="true" tooltiptext="Certificado domiciliario"/>
+                                                    <toolbarbutton id="tbbtn_adjcar_cerdom" upload="true" disabled="true" image="/images/iconos_menu/planillas/buscar.png" tooltiptext="Cargar" ></toolbarbutton> 
+                                                    <toolbarbutton id="tbbtn_adjpdf_cerdom" disabled="true" image="/images/iconos_menu/planillas/pdf.png" tooltiptext="Descargar" ></toolbarbutton> 
+                                                </hbox>
+                                                <space height="5px"/>
+                                                <hbox align="center" > 
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center" width="120px">
+                                                        <label value="CURRICULUM VITAE :"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_adj_curvit" width="300px" readonly="true" tooltiptext="Curriculum Vitae"/>
+                                                    <toolbarbutton id="tbbtn_adjcar_curvit" upload="true" disabled="true" image="/images/iconos_menu/planillas/buscar.png" tooltiptext="Cargar" ></toolbarbutton> 
+                                                    <toolbarbutton id="tbbtn_adjpdf_curvit" disabled="true" image="/images/iconos_menu/planillas/pdf.png" tooltiptext="Descargar" ></toolbarbutton> 
+                                                </hbox>
+                                            </groupbox>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox>
+                                            <groupbox width="530px" height="383px" open="true" closable="false">
+                                                <caption label="IMAGENES"/>
+                                                <space height="5px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center" width="90px">
+                                                        <label value="CROQUIS :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_adj_croquis" width="330px" readonly="true" tooltiptext="Croquis"/>
+                                                    <toolbarbutton id="tbbtn_adjcar_croquis" upload="true" disabled="true" image="/images/iconos_menu/planillas/buscar.png" tooltiptext="Cargar" ></toolbarbutton> 
+                                                    <toolbarbutton id="tbbtn_adjpdf_croquis" disabled="true" image="/images/iconos_menu/planillas/pdf.png" tooltiptext="Ver" ></toolbarbutton> 
+                                                </hbox>
+                                                <space height="5px"/>
+                                                <hbox align="center" >
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center" width="90px">
+                                                        <label value="DNI :"/>
+                                                        <span class="colorRojo">*</span>  
+                                                    </cell>             
+                                                    <space width="5px"/>                              
+                                                    <textbox id="txt_adj_dni" width="330px" readonly="true" tooltiptext="Dni"/>
+                                                    <toolbarbutton id="tbbtn_adjcar_dni" upload="true" disabled="true" image="/images/iconos_menu/planillas/buscar.png" tooltiptext="Cargar" ></toolbarbutton>
+                                                    <toolbarbutton id="tbbtn_adjpdf_dni" disabled="true" image="/images/iconos_menu/planillas/pdf.png" tooltiptext="Ver" ></toolbarbutton> 
+                                                </hbox>
+                                                <space height="5px"/>
+                                                <hbox align="center" > 
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center" width="90px">
+                                                        <label value="FIRMA :"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_adj_firma" width="330px" readonly="true" tooltiptext="Firma"/>
+                                                    <toolbarbutton id="tbbtn_adjcar_firma" upload="true" disabled="true" image="/images/iconos_menu/planillas/buscar.png" tooltiptext="Cargar" ></toolbarbutton> 
+                                                    <toolbarbutton id="tbbtn_adjpdf_firma" disabled="true" image="/images/iconos_menu/planillas/pdf.png" tooltiptext="Ver" ></toolbarbutton> 
+                                                </hbox>                                                
+                                                <space height="5px"/>
+                                                <hbox align="center" > 
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center" width="90px">
+                                                        <label value="REC.AGUA/LUZ:"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_adj_recibo" width="330px" readonly="true" tooltiptext="Recibo Agua/Luz"/>
+                                                    <toolbarbutton id="tbbtn_adjcar_recibo" upload="true" disabled="true" image="/images/iconos_menu/planillas/buscar.png" tooltiptext="Cargar" ></toolbarbutton> 
+                                                    <toolbarbutton id="tbbtn_adjpdf_recibo" disabled="true" image="/images/iconos_menu/planillas/pdf.png" tooltiptext="Ver" ></toolbarbutton> 
+                                                </hbox>
+                                                <space height="5px"/>
+                                                <hbox align="center" > 
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center" width="90px">
+                                                        <label value="OTROS :"/>
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_adj_otros" width="330px" readonly="true" tooltiptext="Otros"/>
+                                                    <toolbarbutton id="tbbtn_adjcar_otros" upload="true" disabled="true" image="/images/iconos_menu/planillas/buscar.png" tooltiptext="Cargar" ></toolbarbutton> 
+                                                    <toolbarbutton id="tbbtn_adjpdf_otros" disabled="true" image="/images/iconos_menu/planillas/pdf.png" tooltiptext="Ver" ></toolbarbutton> 
+                                                </hbox>
+                                                <space height="5px"/>
+                                                <hbox align="center" > 
+                                                    <space width="5px"/>
+                                                    <cell align="right" valign="center" width="90px">
+                                                        <label value="FOTO :"/>
+                                                        <span class="colorRojo">*</span>
+                                                    </cell>
+                                                    <space width="5px"/>
+                                                    <textbox id="txt_adj_foto" width="330px" readonly="true" tooltiptext="Foto"/>
+                                                    <toolbarbutton id="tbbtn_adjcar_foto" disabled="true" image="/images/iconos_menu/planillas/foto.png" tooltiptext="Capturar foto" ></toolbarbutton> 
+                                                    <toolbarbutton id="tbbtn_adjcar_fotofile" upload="true" disabled="true" image="/images/iconos_menu/planillas/buscar.png" tooltiptext="Cargar Foto desde Archivo JPG" ></toolbarbutton> 
+                                                    <!--<toolbarbutton id="tbbtn_adjpdf_foto" disabled="true" image="/images/iconos_menu/planillas/pdf.png" tooltiptext="Ver" ></toolbarbutton> -->
+                                                </hbox>
+                                                <!-- Camara Web -->
+                                                <hbox align="center">
+                                                    <space width="420px"/>
+                                                   
+                                                    <!-- <window id="win" title="Mi ejemplo con Camara Web" mode="overlapped" border="normal" width="30%" height="30%"  apply="org.me.gj.controller.componentes.ControladorWeb" >-->
+                                                    <html><![CDATA[
+            
+        <!-- Div que muestra la Camara -->
+        <div id="my_camera"></div>
+        <!-- Div que muestra la imagen capturada -->
+        <!--<div id="resultado">Tu imagen aparecera aqui...</div>   -->
+            
+        <div class="container" id="Guardado">
+            <span id="loading"></span>
+        </div>          
+               
+        <!-- Primero incluimos la Webcam.js JavaScript Library -->
+        <script type="text/javascript" src="./../../../../../../js/webcam.js"></script>
+
+        <!-- Configurar la camara por defecto -->
+        <script language="JavaScript">
+            Webcam.set({
+                width: 80,
+                height: 150,
+                dest_width: 435,
+                dest_height: 510,
+                image_format: 'jpeg',
+                jpeg_quality: 100,
+                fps: 45
+            });
+            Webcam.attach('#my_camera');
+        </script>
+              
+        <script language="JavaScript">
+            <!-- Metodo para tomar la foto -->
+            function tomar_foto() {
+                // Capturamos la imagen de la camara
+                Webcam.snap(function(data_uri) {
+                    // Colocamos la foto en el Div vacio
+                    document.getElementById('resultado').innerHTML = ' <img id="imagen_foto"  src="' + data_uri + '"/> ';                                
+                    }
+                );
+            }
+                        
+             <!-- Metodo para guardar la foto -->           
+            function SaveSnap(nomarchivo){          
+                document.getElementById('loading').innerHTML="Guardando, espere por favor ...";
+                var file =  document.getElementById('imagen_foto').src;
+                var formdata = new FormData();
+                formdata.append('imagen_foto', file);
+                formdata.append('tipnumdoc', nomarchivo);
+                var ajax = new XMLHttpRequest();
+                //ajax.open("POST", "./../../../../../../Upload");
+                ajax.open("POST", "./../../../../../../Upload");
+                ajax.send(formdata); 
+                document.getElementById('loading').innerHTML = "Guardado Correctamente!!!";                                       
+            }
+                                          
+        </script>                                    
+            
+            ]]></html>  
+                                                    <vbox>
+                                                        <!--<button id="btn_capture" label="Capturar" sclass="botones" disabled="true"/>
+                                                        <button id="btn_guardar" label="Guardar" sclass="botones" disabled="true"/>-->
+                                                    </vbox>
+                                                    <!-- </window>-->
+    
+                                                
+                                                </hbox>
+                                                
+                                            </groupbox>
+                                        </hbox>
+                                    </vbox>
+                                    <space width="5px"/>
+                                    <vbox>
+                                        <hbox> 
+                                            <groupbox closable="false" style="background-color:#FFFFFF" width="452px" height="544px" >
+                                                <caption label="IMAGEN" width="80px"/> 
+                                                <vbox>
+                                                    <hbox align="center"> 
+                                                        
+                                                        <html><![CDATA[
+            
+                                                        <div id="resultado" width="335px" height="410px" style="text-align:center; border:1px solid; "  >
+                                                            Tu imagen aparecera aqui...
+                                                        </div>
+                                                            
+                                                             
+            ]]></html>  
+                                                    </hbox>
+                                                </vbox>                                                
+                                            </groupbox>
+                                        </hbox> 
+                                    </vbox>
+                                </hbox>
+                            </tabpanel>
+                            <tabpanel>
+                                <hbox>
+
+                                    <listbox id="lst_derhab" width="956px" height="210px">
+                                        <listhead>
+                                            <listheader label="ID" width="20px" align="center"/>
+                                            <listheader label="APELLIDOS Y NOMBRES" align="center"/>
+                                            <listheader label="PARENTESCO" width="100px" align="center"/>
+                                            <listheader label="DOCUMENTO" width="200px" align="center"/>
+                                            <listheader label="FEC.NAC" width="80px" align="center"/>
+                                            <listheader label="SEXO" width="50px" align="center"/>
+                                            <listheader label="SITUACION" width="80px" align="center"/>
+                                            <listheader label="EST" width="25px" align="center"/>
+                                        </listhead>
+                                        <template name="model">
+                                            <listitem >
+                                                <listcell label="${each.pldh_id}"/>
+                                                <listcell label="${each.pldh_apepat} ${each.pldh_apemat} ${each.pldh_nombres}" style="text-align:left;"/>
+                                                <listcell label="${each.pldh_vinfam_des}"/>
+                                                <listcell label="${each.pldh_tipdoc_des} - ${each.pldh_nrodoc}"/>
+                                                <listcell label="${each.s_pldh_fecnac}"/>
+                                                <listcell label="${each.pldh_sexo_des}"/>
+                                                <listcell label="${each.pldh_situa_des}"/>
+                                                <listcell>
+                                                    <checkbox disabled="true" checked="${each.valor}"/>
+                                                </listcell>
+                                            </listitem>
+                                        </template>
+                                    </listbox>
+                                    <toolbar id="tb_transacciones_derhab" width="25px" height="210px" >
+                                        <separator height="25px"/>
+                                        <toolbarbutton id="tbbtn_btn_nuevodh" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true" />                                            
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_editardh" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true" />
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_deshacerdh" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_eliminardh" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true" />
+                                        <separator height="10px"/>
+                                        <toolbarbutton id="tbbtn_btn_guardardh" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+
+                                    </toolbar>
+                                </hbox>
+                                <space height="5px" />
+                                <hbox>
+                                    <groupbox width="988px" height="165px" open="true" closable="false">
+                                        <!--<caption label="DERECHO HABIENTES"/>-->
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="left" width="90px">
+                                                <label value="APE. PATERNO :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell> 
+                                            <space width="5px"/>
+                                            <textbox id="txt_dhApePat" disabled="true" maxlength="50" width="180px" tooltiptext="Apellido paterno, máximo 50 caracteres"/>
+                                            <space width="5px"/>
+                                            <cell align="left" width="85px">
+                                                <label value="APE. MATERNO :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell> 
+                                            <space width="5px"/>
+                                            <textbox id="txt_dhApeMat" disabled="true" maxlength="50" width="180px" tooltiptext="Apellido materno, máximo 50 caracteres"/>
+                                            <space width="5px"/>
+                                            <cell align="left" width="70px">
+                                                <label value="NOMBRE(S) :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell> 
+                                            <space width="5px"/>
+                                            <textbox id="txt_dhNombres" disabled="true" maxlength="100" width="270px" tooltiptext="Nombres, máximo 100 caracteres"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="left" width="90px">
+                                                <label value="TIPO DOC :"/>
+                                                <span class="colorRojo">*</span>
+                                            </cell>
+                                            <space width="5px"/>
+                                            <combobox id="cb_dhTipDoc" width="184px" disabled="true" readonly="true" placeholder="---------Seleccione opción---------" tooltiptext="Seleccione tipo documento">
+                                                <template name="model">
+                                                    <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="5px"/>
+                                            <cell align="left" width="85px">
+                                                <label value="NRO. DOC. :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell> 
+                                            <space width="2px"/>
+                                            
+                                            <textbox id="txt_dhNroDoc" width="100px" maxlength="15" disabled="true" tooltiptext="Número de documeto,máximo 15 caracteres"/>
+                                            <cell align="left" width="145px">
+                                                <label value="FECHA DE NACIMIENTO :"/>
+                                                <span class="colorRojo" style="color:red">*</span> 
+                                            </cell>
+                                            <datebox id="d_dhFecNac" disabled="true" maxlength="10" width="106px" readonly="false" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha de nacimiento"/>
+                                            <space width="5px" />
+                                            <cell align="left" width="50px">
+                                                <label value="SEXO :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>
+                                            <combobox id="cb_dhSexo" width="120px" disabled="true" readonly="true" placeholder="--Seleccione--" tooltiptext="Seleccione el sexo">
+                                                <comboitem label="MASCULINO" value="1"/>
+                                                <comboitem label="FEMENINO" value="2"/> 
+                                            </combobox>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="left" width="90px">
+                                                <label value="PARENTESCO :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell>
+                                            <space width="5px"/>
+                                            <combobox id="cb_dhParentesto" width="184px" disabled="true" readonly="true" placeholder="---------Seleccione opción---------" tooltiptext="Seleccione parentesco">
+                                                <template name="model">
+                                                    <comboitem label="${each.tabla_descri}" value="${each.tabla_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="5px"/>
+                                            <cell align="left" width="85px">
+                                                <label value="FEC. ALTA :"/>
+                                            </cell> 
+                                            <space width="5px"/>
+                                            <datebox id="d_dhFecAlta" disabled="true" maxlength="10" width="106px" readonly="false" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha de alta"/>
+                                            <space width="5px"/>
+                                            <cell align="left" width="80px">
+                                                <label value="TIPO DOC. VF :" />
+                                            </cell>
+                                            <combobox id="cb_dhDocVf" width="178px" disabled="true" readonly="true" placeholder="------Seleccione opción------" tooltiptext="Si el tipo de 'Parentesco' es (4)Gestante - Tipo de Doc. que acredite la peternidad">
+                                                <comboitem label="ESCRITURA PÚBLICA" value="1"/>
+                                                <comboitem label="TESTAMENTO" value="2"/>
+                                                <comboitem label="SENTENCIA DECLARATORIA P" value="3"/>
+                                            </combobox>
+                                            <space width="5px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="NUMERO :"/>
+                                            </cell> 
+                                            <textbox id="txt_dhNroDocVf" width="99px" maxlength="15" disabled="true" tooltiptext="Si el tipo de 'Parentesco' es (4)Gestante - Ingrese Nro. de carta de atención médica"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="left" width="90px">
+                                                <label value="NRD :" />
+                                            </cell>
+                                            <space width="5px"/>
+                                            <textbox id="txt_dhNrd" width="180px" maxlength="20" disabled="true" tooltiptext="Nro. de resolución directorial (Si parentesco es (1)Hijo y la cantidad de años entre la fecha de nacimiento y el presente es mayor a 18 años)"/>
+                                            <space width="5px"/>
+                                            <cell align="left" width="85px">
+                                                <label value="MUNI. PN. :"/>
+                                            </cell> 
+                                            <space width="5px"/>                                                 
+                                            <textbox id="txt_dhIdMuni" width="50px" maxlength="6" disabled="true" tooltiptext="Id de la Municipalidad P.N., máximo 10 dÍgitos"/>                                                                                
+                                            <textbox id="txt_dhDesMuni" width="400px" maxlength="50" disabled="true" tooltiptext="Descripción de Municipalidad P.N., Máximo 25 dÍgitos"/>                                            
+                                            <space width="5px"/>
+                                            <cell align="right" valign="center">
+                                                <label value="ESTADO :"/>
+                                            </cell>
+                                            <checkbox id="chk_dhEstado" disabled="true" tooltiptext="Define el Estado de las Linea"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="left" width="90px">
+                                                <label value="NACIONALIDAD :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell> 
+                                            <space width="5px"/>
+                                            <textbox id="txt_dhNacion" disabled="true" maxlength="4"  width="26px" tooltiptext="Código de nacionalidad, máximo 4 caracteres"/>
+                                            <textbox id="txt_dhDesNacion" disabled="true" width="145px" tooltiptext="Descripción de nacionalidad"/>
+                                            <space width="5px"/>
+                                            <cell align="left" width="85px">
+                                                <label value="SITUACION :"/>
+                                                <span class="colorRojo">*</span>  
+                                            </cell> 
+                                            <space width="5px"/>
+                                            <combobox id="cb_dhSituacion" width="90px" disabled="true" readonly="true" placeholder="--Seleccione--" tooltiptext="Seleccione tipo se situación">
+                                                <comboitem label="ACTIVO" value="10"/>
+                                                <comboitem label="BAJA" value="11"/>
+                                            </combobox>
+                                            <space width="5px"/>
+                                            <cell align="left" width="80px">
+                                                <label value="TIPO DE BAJA :"/>
+                                            </cell> 
+                                            <combobox id="cb_dhTipBaja" width="200px" disabled="true" readonly="true" placeholder="------Seleccione opción------" tooltiptext="Seleccione tipo de baja">
+                                                <template name="model">
+                                                    <comboitem label="${each.tabla_descri}" value="${each.tabla_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="5px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="FEC. BAJA :"/>
+                                            </cell> 
+                                            <datebox id="d_dhFecBaja" disabled="true" maxlength="10" width="90px" readonly="false" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha de baja"/>
+                                        </hbox>
+										<hbox align="center">
+                                            <space width="5px"/>
+                                            
+                                            <cell align="right" valign="center">
+                                                <label value="ESTUDIANTE ? :"/>
+                                            </cell>
+                                             <space width="40px"/>
+                                            <checkbox id="chk_dhEst" disabled="true" tooltiptext="Define discapacidad"/>
+                                            <space width="170px"/>
+                                            <cell align="center" valign="center">
+                                                <label value="DISCAPACIDAD :"/>
+                                            </cell>
+                                              <space width="10px"/>
+                                              <checkbox id="chk_dhDiscap" disabled="true" tooltiptext="Define discapacidad"/>  
+                                            
+                                        </hbox>
+                                    </groupbox>
+                                </hbox>
+                                <space height="5px"/>
+                                <hbox>
+                                    <!-- DOMICILIO -->
+                                    <groupbox width="988px" height="140px" open="true" closable="false">
+                                        <caption label="DOMICILIO"/>
+                                        <hbox align="center">
+                                            <space width="5px"/>
+                                            <cell align="left" width="50px">
+                                                <label value="VIA :"/>
+                                            </cell>
+                                            <space width="2px"/>                                        
+                                            <combobox id="cb_dhVia" width="200px" disabled="true" readonly="true" placeholder="---------Seleccione opción---------" tooltiptext="Seleccione vía">
+                                                <template name="model">
+                                                    <comboitem label="${each.tabla_descri}" value="${each.tabla_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="15px"/>                                         
+                                            <textbox id="txt_dhVia" width="440px" maxlength="50" disabled="true" tooltiptext="Descripción de vía"/>
+                                            <space width="6px" />
+                                            <checkbox id="chk_dhViveDom" disabled="true"/>
+                                            <label value="Vive en domicilio del Trabajador"/>
+                                            <intbox id="ib_dhId" visible="false"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="left" width="50px">
+                                                <label value="ZONA :"/>
+                                            </cell>
+                                            <space width="2px"/>                                        
+                                            <combobox id="cb_dhZona" width="200px" disabled="true" readonly="true" placeholder="---------Seleccione opción---------" tooltiptext="Seleccione Zona">
+                                                <template name="model">
+                                                    <comboitem label="${each.tabla_descri}" value="${each.tabla_id}"/>
+                                                </template>
+                                            </combobox>
+                                            <space width="15px"/>                                          
+                                            <textbox id="txt_dhZona" width="440px" maxlength="50" disabled="true" tooltiptext="Descripción de la zona"/>
+                                            <cell align="right" width="45px">
+                                                <label value="NRO :"/>
+                                            </cell>
+                                            <textbox id="txt_dhNro" width="10px" maxlength="10" disabled="true" tooltiptext="Número de domicilio"/>
+                                            <cell align="right" width="60px">
+                                                <label value="INTERIOR :"/>
+                                            </cell>
+                                            <textbox id="txt_dhInt" width="50px" maxlength="10" disabled="true" tooltiptext="Interior de domicilio"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="left" width="50px">
+                                                <label value="REFER. :"/>
+                                            </cell>                     
+                                            <space width="2px"/>
+                                            <textbox id="txt_dhRefer" width="892px" maxlength="50" disabled="true" tooltiptext="Referencia sobre la dirección, máximo 150 caracteres"/>
+                                        </hbox>
+                                        <space height="5px"/>
+                                        <hbox align="center" >
+                                            <space width="5px"/>
+                                            <cell align="left" width="55px">
+                                                <label value="UBIGEO :"/>
+                                            </cell>
+                                            <textbox id="txt_dhCodUbi" width="100px" maxlength="6" disabled="true" tooltiptext="Codigo de Ubigeo"/>
+                                            <space width="5px"/>                                          
+                                            <textbox id="txt_dhDesUbi" width="775px" maxlength="100" disabled="true" tooltiptext="Descripcion de Ubigeo"/>
+                                            <!--<space width="20px"/>                                          
+                                            <button id="btn_dhAceptar" label="Aceptar" sclass="botones"/>
+                                            <space width="15px"/>                                          
+                                            <button id="btn_dhCancelar" label="Cancelar" sclass="botones"/>-->
+                                        </hbox>
+                                    </groupbox>
+                                </hbox>
+                            </tabpanel>
+                        </tabpanels>
+                        
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>
+

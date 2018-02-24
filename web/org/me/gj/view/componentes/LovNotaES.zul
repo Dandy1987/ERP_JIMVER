@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <window id="w_lov_notaes" title="BUSQUEDA DE NOTA E/S" border="normal" width="410px"
+            apply="org.me.gj.controller.componentes.ControllerLovNotaES"
+            position="center,center" closable="true"
+            action="show: slideDown;hide: slideUp">
+        <vlayout>
+            <hbox align="center">
+                <cell align="right" valign="center">
+                    <label value="DESCRIPCION :" />
+                </cell>
+                <textbox id="txt_busqueda" value="%%" width="300px" focus="true" maxlength="45" tooltiptext="Ingrese la descripcion de la Nota E/S"/>
+            </hbox>
+            <listbox id="lst_notaes" mold="paging" pageSize="13" width="380px">
+                <listhead>
+                    <listheader label="ID" width="40px" align="center"/>
+                    <listheader label="DESCRIPCION" width="340px"/>
+                </listhead>	
+                <template name="model">
+                    <listitem>
+                        <listcell label="${each.codigo}"/>
+                        <listcell label="${each.desGui}"/>
+                    </listitem>
+                </template>
+            </listbox>
+        </vlayout>
+    </window>
+</zk>

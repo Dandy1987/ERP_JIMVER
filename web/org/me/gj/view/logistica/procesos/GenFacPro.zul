@@ -1,0 +1,424 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuLogistica.zul"/>
+        </north>
+        <center>
+            <div width="100%" sclass="cuerpo-main" >
+                <window id="w_genfacturap" ctrlKeys="@n@m@e@g@d@i#f2#f4#f7#f10#f9#f8" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo(F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar(F4)" />            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar(F7)" />
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar(F10)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer(F9)" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir(F8)"  />   
+                        <label value="GENERAR FACTURA DE PROVEEDOR" sclass="titulo_mant" style="margin-left:217px;"/>
+                    </toolbar>
+                    <tabbox id="tabbox_genfacturap" ctrlKeys="#f10" apply="org.me.gj.controller.logistica.procesos.ControllerGenFacPro">
+                        <tabs>
+                            <tab id="tab_lista" label="LISTA"/>
+                            <tab id="tab_mantenimiento" label="MANTENIMIENTO">
+                                <attribute name="onSelect">
+                                    if (lst_comprascab.getSelectedIndex() == -1)
+                                    {
+                                    tab_lista.setSelected(true);
+                                    Messagebox.show("Por favor seleccione un registro de la tabla "," ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);   
+                                    }
+                                </attribute>
+                            </tab>
+                        </tabs>
+                        <tabpanels>
+                            <tabpanel>
+                                <hbox>
+                                    <groupbox width="985px" closable="false">
+                                        <caption label="BUSCAR FACTURA DE PROVEEDOR"/>
+                                        <vbox>
+                                            <hbox align="center"> 
+                                                <label value="# FACTURA:"/>
+                                                <textbox id="txt_filtro_fac" maxlength="10" width="65px" focus="true" tooltiptext="Define el Código de factura, máximo 10 caracteres"/>  
+                                                <space width="2px"/>
+                                                <label value="PROVEEDOR:"/>
+                                                <textbox id="txt_providcab" maxlength="8" width="50px" focus="true" tooltiptext="Define el Código de proveedor, máximo 8 caracteres"/>
+                                                <textbox id="txt_provdescab" maxlength="50" width="295px" disabled="true" tooltiptext="Razon social del proveedor, máximo 60 caracteres"/>
+                                                <space width="2px"/>
+                                                <label value="DESDE:"/>
+                                                <space width="2px"/>                                                
+                                                <datebox id="d_fecemiini" onCreate="self.value = new Date();" width="90px" format="dd/MM/yyyy" tooltiptext="Fecha de Emisión Inicial de la Factura Proveedor"/>                                                                                                 
+                                                <space width="2px"/>
+                                                <label value="HASTA:"/>
+                                                <space width="2px"/>                                                
+                                                <datebox id="d_fecemifin" onCreate="self.value = new Date();" width="90px" format="dd/MM/yyyy" tooltiptext="Fecha de Emisión Final de la Factura Proveedor"/>                                       
+                                                <space width="2px"/>
+                                                <button id="tbbtn_btn_buscar" label="Consultar" sclass="botones"/>                                                                                         
+                                            </hbox>
+                                        </vbox>
+                                    </groupbox>
+                                </hbox>
+                                <separator height="5px"/>
+                                <listbox id="lst_comprascab" mold="paging" pageSize="18" width="985px" height="460px">
+                                    <listhead>
+                                        <listheader label="# FACTURA" width="70px" align="center"/>
+                                        <listheader label="FEC.EMI" width="70px" align="center"/>
+                                        <listheader label="FEC.VENC"  width="70px" align="center"/>
+                                        <listheader label="PROV" width="60px" align="center"/>
+                                        <listheader label="RAZON SOCIAL"/>
+                                        <listheader label="TIPO DOC" width="100px" align="center"/>
+                                        <listheader label="SERIE"  width="50px"/>
+                                        <listheader label="DOCUMENTO" width="80px"/>
+                                        <listheader label="# ORDEN" width="70px" align="center"/>
+                                        <listheader label="TOTAL" width="90px" align="right"/>
+                                        <listheader label="EST" width="25px"/>
+                                    </listhead>
+                                    <template name="model">
+                                        <listitem>
+                                            <listcell label="${each.tc_id}"/>
+                                            <listcell label="${each.tc_fecemision}"/>
+                                            <listcell label="${each.tc_fecvencimiento}"/>
+                                            <listcell label="${each.tc_provid}"/>
+                                            <listcell label="${each.tc_provrazsoc}"/>
+                                            <listcell label="${each.tc_tipodocumento}"/>
+                                            <listcell label="${each.tc_serie}"/>
+                                            <listcell label="${each.tc_nrodoc}"/>
+                                            <listcell label="${each.tc_ocompra}" style=" background-color: #BEF781;color: #2E2E2E;"/>
+                                            <listcell label="${each.tc_svtotal}" style="text-align: right; background-color: skyblue;color: blue;"/>
+                                            <listcell>
+                                                <checkbox disabled="true" checked="${each.valor}"/>
+                                            </listcell>
+                                            
+                                        </listitem>
+                                    </template>		
+                                </listbox>
+                                <space height="5px"/>
+                                <hbox align="center">
+                                    <cell align="right" valign="center">                                            
+                                        <label value="USU. ADD:"/>
+                                    </cell>
+                                    <textbox id="txt_usuadd" maxlength="15" readonly="true"  width="98px" focus="true" tooltiptext="Define el Usuario Creador de la Factura Proveedor"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="85px"  />
+                                        <label value="FEC. ADD:"/>
+                                    </cell>
+                                    <datebox id="d_fecadd" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Creación de la Factura Proveedor"/>  
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="USU. MOD:"/>
+                                    </cell>
+                                    <textbox id="txt_usumod" maxlength="15" readonly="true" width="98px" tooltiptext="Define el Usuario que Modificó la Factura Proveedor"/>   
+                                    <cell align="right" valign="center">
+                                        <space width="95px"  />
+                                        <label value="FEC. MOD:"/>
+                                    </cell>
+                                    <datebox id="d_fecmod" maxlength="10" readonly="true" width="127px" disabled="true" format="dd/MM/yyyy HH:mm:ss" tooltiptext="Define la Fecha de Modificación de la Factura Proveedor"/>   
+                                </hbox>
+                            </tabpanel>
+                            <tabpanel>
+                                <div >
+                                    <groupbox style="background-color:#FFFFFF" closable="false" width="985px">
+                                        <caption label="DATOS DE CABECERA - FACTURA DE PROVEEDOR" />
+                                        <vbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" >
+                                                    <label value="FEC.EMISION: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <longbox id="txt_tckey" visible="false" width="1px"/>
+                                                <textbox id="txt_tcid" visible="false" width="1px"/>
+                                                <datebox id="d_fecemi" width="85px" format="dd/MM/yyyy"  disabled="true" tooltiptext="Fecha de Emisión de la Factura Proveedor" /> 
+                                                <space width="10px"/>
+                                                <cell align="right" valign="center" >
+                                                    <label value="FEC.VENCIMIENTO: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <datebox id="d_fecven" width="85px" format="dd/MM/yyyy"  disabled="true" tooltiptext="Fecha de Vencimiento de la Factura Proveedor" /> 
+                                                <space width="10px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="MONEDA: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <combobox id="cb_moneda" readonly="true" width="184px" disabled="true" tooltiptext="Define la Moneda">
+                                                    <template name="model">    
+                                                        <comboitem label="${each.tab_subdes}" value="${each.tab_id}"/>                                                                                                      
+                                                    </template>                                              
+                                                </combobox>
+                                                <space width="10px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="TIPO CAMBIO: "/>
+                                                </cell>
+                                                <doublebox id="txt_tcamb" format="###0.0000" locale="US" maxlength="5"  width="81px" disabled="true"  tooltiptext="Define el Tipo de Cambio Comercial, 5 caracteres"/>
+                                                <space width="15px"/>
+                                                <label value="ESTADO:"/>                                                                                                                                              
+                                                <textbox id="txt_est" width="85px" maxlength="9" disabled="true" tooltiptext="Estado del Pedido de Compra" value="ACTIVO"  />                                                
+                                            </hbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center">
+                                                    <label value="TIPO DE DOCUMENTO: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <combobox id="cb_tipdoc" readonly="true" width="170px" disabled="true" tooltiptext="Define el Tipo de Documento" > 
+                                                    <template name="model">    
+                                                        <comboitem label="${each.tipdoc_des}" value="${each.tipdoc_key}"/>                                                                                                      
+                                                    </template>                                               
+                                                </combobox>                               
+                                                <space width="28px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="SERIE: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_serie" maxlength="5" width="40px" disabled="true" tooltiptext="Define la Serie del Documento, máximo 5 caracteres"/>
+                                                <space width="28px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="DOCUMENTO: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_nrodoc" maxlength="10" width="70px" disabled="true" tooltiptext="Define el Numero de Documento, máximo 10 caracteres"/>
+                                                <space width="30px"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="ORDEN DE COMPRA: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_ocnropedkey" maxlength="10" width="150px" disabled="true" tooltiptext="Define el Numero de la O/C, máximo 10 caracteres"/>
+                                                <button id="btn_ocnropedkey" disabled="true" sclass="botones" label=".........." tooltiptext="Consultar las O/C" width="10px" height="20px"/>
+                                                <space width="3px"/>
+                                            </hbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center">
+                                                    <label value="CONDICION DE COMPRA: "/>
+                                                    <span class="colorRojo">*</span>
+                                                </cell>
+                                                <textbox id="txt_conid" width="50px" disabled="true" maxlength="3" tooltiptext="Define el Código de la Condicion de Pago, máximo 3 caracteres"/>
+                                                <textbox id="txt_condes"  width="200px" disabled="true" maxlength="50" tooltiptext="Define la Condición de Pago, máximo 50 caracteres"/>
+                                                <space width="35px"/>
+                                                <cell align="right" valign="center" >
+                                                    <label value="PROVEEDOR: "/>
+                                                    <span class="colorRojo">*</span>                                                                                                                                                
+                                                </cell>
+                                                <textbox id="txt_provid" maxlength="8" width="50px" disabled="true" tooltiptext="Define el Código del Proveedor, máximo 8 caracteres"/>
+                                                <textbox id="txt_provrazsoc" maxlength="60" width="378px" disabled="true" tooltiptext="Define la Razón Social del Proveedor, máximo 60 caracteres"/>                           
+                                            </hbox>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center">
+                                                    <label value="GLOSA: "/>
+                                                </cell>
+                                                <textbox id="txt_glosa" width="607px" maxlength="50" disabled="true" tooltiptext="Define la Glosa de la Factura Proveedor, máximo 50 caracteres" /> 
+                                                <space width="3px"/> 
+                                                <label value="DSCTO: " visible="false"/>
+                                                <doublebox id="txt_dsctgral" visible="false" style="text-align: right;" format="##0.00" locale="en_US" disabled="true"  maxlength="6" width="40px" tooltiptext="Ingrese el descuento general, máximo 6 caracteres"/>
+                                                <space width="3px"/> 
+                                                <label value="DSCTO: "/>
+                                                <doublebox id="txt_dsctfin" style="text-align: right;" format="##0.00" locale="en_US" disabled="true"  maxlength="6" width="40px" tooltiptext="Ingrese el descuento acordado, máximo 6 caracteres"/>
+                                                <space width="3px"/> 
+                                                <checkbox id="chk_efectivo" label="PAGO EFECTIVO" disabled="true"/>
+                                            </hbox>                                            
+                                        </vbox>
+                                    </groupbox>
+                                    <separator height="5px"/>
+                                    <hbox>
+                                        <listbox id="lst_comprasdet" width="950px" height="302px">
+                                            <frozen columns="2"></frozen>
+                                            <listhead>
+                                                <listheader label="IDPROD" width="61px"/>
+                                                <listheader label="DESCRIPCION" width="270px"/>
+                                                <listheader label="PRECIO" width="69px" align="right"/>
+                                                <listheader label="PRECIO FAC" width="69px" align="right"/>                                                
+                                                <listheader label="CANT. PED"  width="70px" align="right"/>                                                                                  
+                                                <listheader label="CANT. FAC"  width="70px" align="right"/>
+                                                <listheader label="V. VENTA PED"  width="90px" align="right"/>
+                                                <listheader label="V. VENTA FAC"  width="90px" align="right"/>
+                                                <listheader label="IGV PED"  width="90px" align="right"/>
+                                                <listheader label="IGV FAC"  width="90px" align="right"/>                                                                                                                                        
+                                                <listheader label="P. VTA PED"  width="90px" align="right"/>
+                                                <listheader label="P. VTA FAC"  width="90px" align="right"/>
+                                                
+                                                <!--
+                                                <listheader label="DESC. GRAL" width="80px" align="right"/>
+                                                <listheader label="DESC. ITEM"  width="80px" align="right"/>
+                                                <listheader label="IMP. NETO" width="90px" align="right"/>
+                                                <listheader label="VAL. VTA." width="100px" align="right"/>
+                                                <listheader label="IGV." width="100px" align="right"/>
+                                                <listheader label="SUBTOTAL" width="100px" align="right"/>
+                                                -->
+                                            </listhead>
+                                            <template name="model">
+                                                <listitem>
+                                                    <listcell label="${each.pro_id}"/>
+                                                    <listcell label="${each.pro_des}"/>
+                                                    <listcell label="${each.tcd_sprecioped}" style="text-align: right;"/>
+                                                    <listcell label="${each.tcd_spreciofac}" style="text-align: right;"/>
+                                                    <listcell label="${each.tcd_cantped}" style="text-align: right; background-color: #BEF781;color: #2E2E2E;"/>
+                                                    <listcell label="${each.tcd_cantfac}" style="text-align: right; background-color: #D8F781;color: #2E2E2E;"/>
+                                                    <listcell label="${each.tcd_svventaped}" style="text-align: right;"/>
+                                                    <listcell label="${each.tcd_svventafac}" style="text-align: right;"/>
+                                                    <listcell label="${each.tcd_sigvped}" style="text-align: right;"/>
+                                                    <listcell label="${each.tcd_sigvfac}" style="text-align: right;"/>
+                                                    <listcell label="${each.tcd_sprevenped}" style="text-align: right; background-color: #F7BE81;color: #2E2E2E;"/>
+                                                    <listcell label="${each.tcd_sprevenfac}" style="text-align: right; background-color: #F5ECCE;color: #2E2E2E;"/>
+                                                    <!--
+                                                    <listcell label="${each.tcd_simpnetoc}" style="text-align: right; background-color: #F7BE81;color: #2E2E2E;"/>
+                                                    <listcell label="${each.tcd_simpnet}" style="text-align: right; background-color: #F5ECCE;color: #2E2E2E;"/>
+                                                    <listcell label="${each.tcd_smdscgral}" style="text-align: right;"/>
+                                                    <listcell label="${each.tcd_smdscxart}" style="text-align: right;"/>
+                                                    <listcell label="${each.tcd_simptot}" style="text-align: right;"/>
+                                                    <listcell label="${each.tcd_svventa}" style="text-align: right;"/>
+                                                    <listcell label="${each.tcd_sigv}" style="text-align: right;"/>
+                                                    <listcell label="${each.tcd_ssubtotalvta}" style="text-align: right;"/>
+                                                    -->
+                                                </listitem>
+                                            </template>
+                                            <listfoot>
+                                                <listfooter>  
+                                                    <label id="l_total1" value="" />
+                                                </listfooter>
+                                                <listfooter>  
+                                                    <label id="l_total2" value="" />
+                                                </listfooter>
+                                                <listfooter>  
+                                                    <label id="l_total3" value="" />
+                                                </listfooter>
+                                                <listfooter>  
+                                                    <label id="l_total4" value="" />
+                                                </listfooter>
+                                                <listfooter>  
+                                                    <label id="l_total5" value="" />
+                                                </listfooter>                                                
+                                                <listfooter>  
+                                                    <label id="l_total6" value="TOTALES" />
+                                                </listfooter>
+                                                
+                                                <!--
+                                                <listfooter>  
+                                                    <doublebox id="txt_lpvtaoc" width="70px" format="#,##0.##" locale="en_US" style="text-align: right; color:black;" disabled="true"/>
+                                                </listfooter>
+                                                <listfooter> 
+                                                    <doublebox id="txt_lpvta" width="70px" format="#,##0.####" locale="en_US" style="text-align: right; color:black;" disabled="true"/>                                                
+                                                </listfooter>
+                                                -->
+                                                
+                                                
+                                                <listfooter> 
+                                                    <doublebox id="txt_lvventaped" width="80px" format="#,##0.00" locale="en_US" style="text-align: right; color:black;" disabled="true"/>
+                                                </listfooter>
+                                                <listfooter> 
+                                                    <doublebox id="txt_lvventafac" width="80px" format="#,##0.00" locale="en_US" style="text-align: right; color:black;" disabled="true"/>
+                                                </listfooter>
+                                                <listfooter> 
+                                                    <doublebox id="txt_ligvped" width="80px" format="#,##0.00" locale="en_US" style="text-align: right; color:black;" disabled="true"/>
+                                                </listfooter>
+                                                <listfooter> 
+                                                    <doublebox id="txt_ligvfac" width="80px" format="#,##0.00" locale="en_US" style="text-align: right; color:black;" disabled="true"/>
+                                                </listfooter>
+                                                <listfooter> 
+                                                    <doublebox id="txt_lpventaped" width="80px" format="#,##0.00" locale="en_US" style="text-align: right; color:black;" disabled="true"/>
+                                                </listfooter>
+                                                <listfooter> 
+                                                    <doublebox id="txt_lpventafac" width="80px" format="#,##0.00" locale="en_US" style="text-align: right; color:black;" disabled="true"/>
+                                                </listfooter>
+                                                
+                                                
+                                            </listfoot>
+                                        </listbox>
+                                        <toolbar id="tb_transacciones_compras" width="25px" height="300px" >
+                                            <separator height="55px"/>
+                                            <toolbarbutton id="tbbtn_btn_nuevoc" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (ALT+N)" disabled="true" />
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_editarc" image="/images/iconos/editar.png"  tooltiptext="Editar (ALT+M)" disabled="true" />            
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_eliminarc" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (ALT+E)" disabled="true" />
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_guardarc" image="/images/iconos/guardar.png" tooltiptext="Guardar (ALT+G)" disabled="true" />
+                                            <separator height="10px"/>
+                                            <toolbarbutton id="tbbtn_btn_deshacerc" image="/images/iconos/deshacer.png" tooltiptext="Deshacer (ALT+D)" disabled="true" />
+                                        </toolbar>
+                                    </hbox>
+                                    <space height="1px"/> 
+                                    <groupbox style="background-color:#FFFFFF" closable="false" width="985px">
+                                        <caption label="DATOS DEL DETALLE - FACTURA DE PROVEEDOR" />
+                                        <vbox>
+                                            <hbox align="center">    
+                                                <label value="PRODUCTO "/>
+                                                <span class="colorRojo">*</span>
+                                                <label id="lbl_codori" visible="false" width="10px" />
+                                                <textbox id="txt_prodid" disabled="true" width="60px" maxlength="9" tooltiptext="Define el Código del producto, máximo 9 caracteres"/>
+                                                <textbox id="txt_proddes" width="403px" maxlength="60" disabled="true" tooltiptext="Define la descripción del producto, máximo 60 caracteres"/>
+                                                <space width="30px"/>                                               
+                                                <label value="CANTIDAD PEDIDO: "/>
+                                                <doublebox id="txt_cantped" style="text-align: right;" locale="en_US" format="#,##0.##" disabled="true" maxlength="10" width="50px" visible="true" tooltiptext="Define el número de productos solicitados, máximo 50 caracteres"/>
+                                                <space width="30px"/>
+                                                <label value="CANTIDAD FACTURA: " style="font-size: 11px; color: red;" />
+                                                <span class="colorRojo">*</span>
+                                                <doublebox id="txt_cantfac" style="text-align: right;" locale="en_US" format="#,##0.##" disabled="true" maxlength="10" width="50px" tooltiptext="Define el número de productos a facturar, máximo 50 caracteres"/>
+                                                
+                                                                                                
+                                                
+                                            </hbox>
+                                            <hbox align="center">  
+                                                <label value="PRECIO PED: "/>
+                                                <span class="colorRojo">*</span>
+                                                <doublebox id="txt_preuni" style="text-align: right;"  locale="en_US" format="#,##0.00" disabled="true" maxlength="12" width="63px" tooltiptext="Define el precio unitario, máximo 10 caracteres"/>
+                                                <space width="5px"/>
+                                                
+                                                <label value="PRECIO FACT: " style="font-size: 11px; color: red;" />
+                                                <span class="colorRojo">*</span>
+                                                <doublebox id="txt_preunifac" style="text-align: right;"  locale="en_US" format="#,##0.00" disabled="true" maxlength="12" width="63px" tooltiptext="Define el precio unitario, máximo 10 caracteres"/>
+                                                
+                                                <space width="5px"/>
+                                                <label value="%DESCUENTO: "/> 
+                                                <doublebox id="txt_pdescxart" style="text-align: right;" locale="en_US" format="#,##0.00"  disabled="true"  maxlength="10" width="33px" tooltiptext="Define el descuento especial del producto, máximo 10 caracteres"/>
+  
+                                                
+                                                <space width="5px"/>
+                                                <label value="VAL.DESC: "/> 
+                                                <doublebox id="txt_vdescxart" style="text-align: right;" locale="en_US" format="#,##0.00"  disabled="true"  maxlength="12" width="63px" tooltiptext="Define el descuento especial del producto, máximo 10 caracteres"/>
+                                                <space width="5px"/>                                                                                                          
+                                                
+                                                <label value="SUBTOTAL PED: "/>
+                                                <doublebox id="txt_totalped" style="text-align: right;" visible="true" disabled="true" locale="en_US" format="#,###,##0.00"/>
+                                                <space width="5px"/> 
+                                                <label value="SUBTOTAL FACT: " style="font-size: 11px; color: red;" />
+                                                <span class="colorRojo">*</span>
+                                                <doublebox id="txt_totalfac" style="text-align: right;" locale="en_US" format="#,###,##0.00" readonly="true"  maxlength="12" tooltiptext="Define el importe, máximo 12 caracteres"/>
+                                            </hbox>
+                                            <space height="1px"/>
+                                            <hbox align="center">
+                                                <cell align="right" valign="center" >
+                                                    <label value="VALOR DSCTO:"/>
+                                                </cell>
+                                                <space width="50px"/>
+                                                <label id="lbl_tdsctos" style="font-size: 14px; color: red;" width="85px" value="0.00"/> 
+                                                <space width="40px"/>
+                                                <cell align="right" valign="center" >
+                                                    <label value="VALOR VENTA:"/>
+                                                </cell>
+                                                <space width="50px"/>
+                                                <label id="lbl_valventa" style="font-size: 14px; color: red;" width="85px" value="0.00"/>  
+                                                <space width="40px"/>
+                                                <cell align="right" valign="center" >
+                                                    <label value="VALOR IMPUESTO:"/>
+                                                </cell>
+                                                <space width="50px"/>
+                                                <label id="lbl_valimp" style="font-size: 14px; color: red;" width="85px" value="0.00"/>         
+                                                <space width="40px"/>
+                                                <cell align="right" valign="center" >
+                                                    <label value="TOTAL FACTURA:"/>
+                                                </cell>
+                                                <space width="50px"/>
+                                                <label id="lbl_valtotal" style="font-size: 14px; color: red;" width="85px" value="0.00"/>
+                                            </hbox>
+                                        </vbox>
+                                    </groupbox>                                    
+                                </div>
+                            </tabpanel>                            
+                        </tabpanels>
+                    </tabbox>
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>   
+</zk>

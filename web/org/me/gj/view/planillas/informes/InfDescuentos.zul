@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?init class="org.me.gj.model.seguridad.utilitarios.AutenticacionInicial"?>
+<?link rel="stylesheet" type="text/css" href="/css/estilos.css"?>
+<?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?> 
+<zk xmlns="http://www.zkoss.org/2005/zul">
+    <borderlayout sclass="complex-layout" height="100%">
+        <north  sclass="arriba-main" height="27px" >
+            <include src="/plantillas/modulos/MenuPlanillas.zul"/>
+        </north>
+        <center>  
+            <div sclass="cuerpo-main" >
+                <window id="w_descuentos" width="100%" height="100%" border="none" closable="true" >
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  tooltiptext="Editar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" tooltiptext="Eliminar" disabled="true"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" tooltiptext="Guardar" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" tooltiptext="Deshacer" disabled="true" />
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir" />   
+                        <label value="REPORTE DE DESCUENTOS" sclass="titulo_mant" style="margin-left:225px;"/>
+                    </toolbar>   
+                    <tabbox id="tabbox_dsecuentos" ctrlKeys="^a#f8#f10" apply="org.me.gj.controller.planillas.informes.ControllerDescuentos">
+                        <tabs>
+                            <tab id="tab_listadescuentos" label="LISTA" />
+                        </tabs> 
+                        <tabpanels>
+                            <tabpanel>   
+                                <div id="div_descuento">
+                                    <!--<groupbox  width="987px" height="135px" open="true" closable="false"/>
+                                    <caption label="Opciones de Busqueda" /> -->     
+                                    <space width="150px"/>
+                                    <groupbox>
+                                        <caption label="Seleccione una opcion para consultar : "/>
+                                    <hbox>
+                                        <space width="150px"/>
+                                        <radiogroup Id="rg_descripcion" onCheck="true">
+                                            <radio label="LEGAL" value="0"/>
+                                            <space width="30px"/>
+                                            <radio label="POR FECHAS" value="1"/>
+                                            <space width="30px"/>
+                                            <radio label="POR PERSONAL" value="2"/>
+                                            <space width="30px"/>
+                                            <radio label="POR CENTRO DE COSTO" value="3"/>
+                                        </radiogroup>
+                                    </hbox>
+                                    </groupbox>   
+                                    <space width="10px"/>
+                                    <hbox align="center">
+                                        <space width="300px"/>
+                                        <cell align="left" width="65px">
+                                            <label value="PERIODO :"/>
+                                        </cell>
+                                        <space width="5px"/>
+                                        <combobox id="cb_periodo" width="120px" tooltiptext="Seleccione periodo" readonly="true">
+                                            <template name="model">
+                                                <comboitem label="${each.periodoProceso}" value="${each.periodoProceso}"/>
+                                            </template>
+                                        </combobox>
+                                        
+                                       
+                                         
+                                 
+                                    </hbox>
+                                    
+                                    <space width="25px"/>
+                                    <groupbox id="g_legal" visible="false" width="987px" height="120px" open="true" closable="false">
+                                        <space width="25px"/>
+                                        <hbox align="center">    
+                                            <space width="25px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="SUCURSAL :"/>
+                                            </cell>
+                                          
+                                            <space width="5px"/>
+                                            <textbox id="txt_lidsucursal" maxlength="3"  width="120px" style="text-align:right" tooltiptext="Código de sucursal"/>
+                                            <textbox id="txt_lidsucursal1" visible="false" />
+                                            <space width="8px"/>
+                                            <textbox id="txt_ldessucursal" maxlength="100" disabled="true" width="200px" style="text-align:left" tooltiptext="Descripción de sucursal"/>
+                                            <space width="5px"/>
+                                            <radiogroup Id="rg_orden" onCheck="true">
+                                                <radio label="ORDEN : AREA" value="0"/>
+                                                <space width="30px"/>
+                                                <radio label="ORDEN : APELLIDOS" value="1"/>
+                                           
+                                           
+                                            </radiogroup>
+                                        </hbox>
+                                        <space width="25px"/>
+                                       
+                                         <space width="25px"/>
+                                        <hbox>
+                                            <space width="25px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="PERSONAL :"/>
+                                            </cell>
+                                          
+                                            <space width="5px"/>
+                                            <textbox id="txt_lidpersonal" maxlength="9"  width="120px" style="text-align:right" tooltiptext="Código de personal"/>
+                                            <textbox id="txt_lidpersonal1" visible="false" />
+                                            <space width="8px"/>
+                                            <textbox id="txt_ldespersonal" maxlength="150" disabled="true" width="333px" style="text-align:left"  tooltiptext="Descripción de personal"/>
+                                        </hbox>
+                                        <space width="25px"/>
+                                        <hbox align="center">
+                                             <space width="800px"/>
+                                        <button label="Consultar" id="btn_lconsultar" sclass="botones"/>
+                                  
+                                        </hbox>
+                                    </groupbox>
+                                      <groupbox id="g_fecha" visible="false" width="987px" height="120px" open="true" closable="false">
+                                        <space width="25px"/>
+                                        <hbox align="center">    
+                                            <space width="25px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="SUCURSAL :"/>
+                                            </cell>
+                                         
+                                            <space width="5px"/>
+                                            <textbox id="txt_fidsucursal" maxlength="3"  width="120px" style="text-align:right" tooltiptext="Código de sucursal"/>
+                                           <textbox id="txt_fidsucursal1" visible="false"/>
+                                           <space width="8px"/>
+                                            <textbox id="txt_fdessucursal" maxlength="100" disabled="true" width="200px" style="text-align:left"  tooltiptext="Descripción de sucursal"/>
+                                            <space width="5px"/>
+                                        </hbox>
+                                        <space width="25px"/>
+                                        <hbox align="center">
+                                           <space width="155px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="DESDE :"/> 
+                                            </cell>
+                                            <datebox id="d_fdesde"  maxlength="10" width="90px" readonly="false" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha de desde"/>
+                                            <space width="10px"/>
+                                             
+                                            <cell align="left" width="65px">
+                                                <label value="HASTA:"/> 
+                                            </cell>
+                                            <datebox id="d_fhasta"  maxlength="10" width="90px" readonly="false" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha hasta"/>
+                                           
+                                        </hbox>
+                                        <space width="25px"/>
+                                         <hbox align="center">
+                                             <space width="800px"/>
+                                        <button label="Consultar" id="btn_fconsultar" sclass="botones"/>
+                                  
+                                        </hbox>
+                                    </groupbox>
+                                      <groupbox id="g_personal" visible="false" width="987px" height="120px" open="true" closable="false">
+                                        <space width="25px"/>
+                                        <hbox align="center">    
+                                            <space width="25px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="SUCURSAL :"/>
+                                            </cell>
+                                          
+                                            <space width="5px"/>
+                                            <textbox id="txt_pidsucursal" maxlength="3"  width="120px" style="text-align:right" tooltiptext="Código de sucursal"/>
+                                            <textbox id="txt_pidsucursal1" visible="false"/>
+                                            <space width="8px"/>
+                                            <textbox id="txt_pdessucursal" maxlength="100" disabled="true" width="333px" style="text-align:left" tooltiptext="Descripción de sucursal"/>
+                                        </hbox>
+                                        <space width="25px"/>
+                                        
+                                         <hbox align="center">
+                                            <space width="32px"/>
+                                             <cell align="left" width="65px">
+                                            <label value="AREA :"/>
+                                        </cell>
+                                        <textbox id="txt_codarea" maxlength="9" width="120px" focus="false" tooltiptext="Código de Personal" style="text-align:center;"/>
+                                         <space height="15px"/>                                         
+                                        <textbox id="txt_desarea" disabled="true" width="333px" focus="false" tooltiptext="Descripción de Personal"/>
+                                        <textbox id="txt_codarea1" visible="false"/>
+                                        </hbox>
+                                         <space height="15px"/>
+                                        <hbox align="center">
+                                            <space width="25px"/>
+                                            <cell align="left" width="75px">
+                                                <label value="PERSONAL :"/>
+                                            </cell>
+                                          
+                                 
+                                            <textbox id="txt_pidpersonal" maxlength="9"  width="120px" style="text-align:right" tooltiptext="Código de personal"/>
+                                            <textbox id="txt_pidpersonal1" visible="false" />
+                                            <space width="8px"/>
+                                               <textbox id="txt_pdespersonal" maxlength="150" disabled="true" width="333px" style="text-aling:left" tooltiptext="Descripción de personal"/>
+                                              <space width="215px"/>                                        
+                                            <button label="Consultar" id="btn_pconsultar" sclass="botones"/>
+                                        </hbox>
+                              
+            
+                                    </groupbox>
+                                     
+                                      <groupbox id="g_costo" visible="false" width="987px" height="120px" open="true" closable="false">
+                                        <space width="25px"/>
+                                        <hbox align="center">    
+                                            <space width="25px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="SUCURSAL :"/>
+                                            </cell>
+                                          
+                                            <space width="5px"/>
+                                            <textbox id="txt_cidsucursal" maxlength="3"  width="120px" style="text-align:right" tooltiptext="Código de sucursal"/>
+                                            
+                                            <textbox id="txt_cidsucursal1" visible="false"/>
+                                            <space width="8px"/>
+                                            <textbox id="txt_cdessucursal" maxlength="100" disabled="true" width="200px" style="text-aling:left" tooltiptext="Descripción de sucursal"/>
+                                        </hbox>
+                                        <space width="25px"/>
+                                        <hbox align="center">
+                                            <space width="25px"/>
+                                            <cell align="left" width="85px">
+                                                <label value="C. DE COSTO :"/>
+                                            </cell>
+                                          
+                                            <space width="5px"/>
+                                            <textbox id="txt_ccosto" maxlength="3"  width="50px" style="text-aling:right" tooltiptext="Código de centro de costo"/>
+                                           <space width="5px"/>
+                                            <textbox id="txt_cdescosto" disabled="true" width="180px" tooltiptext="Descripción de centro de costo"/>
+                                            <space width="100px"/>
+                                            <cell align="left" width="65px">
+                                                <label value="DESDE :"/> 
+                                            </cell>
+                                            <datebox id="d_cdesde"  maxlength="10" width="90px" readonly="false" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha de desde"/>
+                                            <space width="10px"/>
+                                             
+                                            <cell align="left" width="65px">
+                                                <label value="HASTA:"/> 
+                                            </cell>
+                                            <datebox id="d_chasta"  maxlength="10" width="90px" readonly="false" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha hasta"/>
+                                           
+                                        </hbox>
+                                
+                                        <space width="25px"/>
+                                         <hbox align="center">
+                                             <space width="800px"/>
+                                        <button label="Consultar" id="btn_cconsultar" sclass="botones"/>
+                                  
+                                        </hbox>
+                                    </groupbox>
+                                          
+                                    <separator height="6px"/>    
+                                    <listbox id="lst_descuentos" mold="paging"  pageSize="12" width="985px" height="300px">
+                                         <frozen columns="4"/>
+                                        <listhead>
+                                            <listheader label="CODIGO" width="110px" align="center"/>
+                                            <listheader label="NOMBRES" width="280px"  align="center"/>
+                                            <listheader label="C.C." width="30px" align="center"/>
+                                            <listheader label="CONSTANTE" width="230px" align="center"/>   
+                                            <listheader label="N°EGRESO/INGRESO" width="180px" align="center"/>
+                                            <listheader label="N°REFERENCIA" width="180px" align="center"/>
+                                            <listheader label="FECHA" width="90px" align="center"/>
+                                            <listheader label="CARGO" width="90px" align="center"/>
+                                            <listheader label="ABONO" width="90px" align="center"/>
+                                            <listheader label="GLOSA" width="350px" align="center"/>
+                                        </listhead>	
+                                        <template name="model">     
+                                            <listitem>
+                                                <listcell label="${each.codigo}" style="text-align:center"/>
+                                                <listcell label="${each.nombres}" style="text-align:left"/> 
+                                                <listcell label="${each.id_concepto}"/> 
+                                                <listcell label="${each.des_concepto}" style="text-align:left"/> 
+                                                
+                                                <listcell label="${each.regreso}" style="text-align:right"/> 
+                                                <listcell label="${each.referencia}" style="text-align:right"/> 
+                                                <listcell label="${each.sfecha_mov}" style="text-align:center"/> 
+                                                <listcell label="${each.abono}" style="text-align:right"/> 
+                                                <listcell label="${each.cargo}" style="text-align:right"/>
+                                                <listcell label="${each.glosa}" style="text-align:left"/>  
+                                                <!-- <listcell>
+                                                    <checkbox disabled="true" checked="true"/>
+                                                </listcell>-->
+                                            </listitem>
+                                        </template>
+                                      <!--  <listfoot>
+                                            <listfooter>
+                                                <label id="space_08" value="" />
+                                            </listfooter>
+                                            <listfooter>
+                                                <label id="space_09" value="" />
+                                            </listfooter>
+                                            <listfooter>
+                                                <label id="space_03" value="" />
+                                            </listfooter>
+                                            <listfooter>
+                                                <label id="space_04" value="" />
+                                            </listfooter>
+                                            <listfooter>
+                                                <label id="l_tot" value="Total Monto : " style="position:center; top:550px; left:795px;"/>
+                                            </listfooter>
+                                            <listfooter>
+                                                <doublebox id="txt_total" width="94px" maxlength="12"  locale="en_US" format="##,##0.00" disabled="true" style="text-align: right;" />
+                                            </listfooter>
+                                 
+                                        </listfoot>-->
+                                    </listbox>
+                                    <space height="10px"/>
+                                </div>
+                            </tabpanel>
+                        </tabpanels>
+                
+                    </tabbox>
+                 
+                        
+                </window> 
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>
+
