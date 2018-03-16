@@ -11,7 +11,7 @@
         <center>
             <div width="100%" sclass="cuerpo-main">
                 <window id="w_utibanco" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
-                    <tabbox id="tabbox_utibanco" apply="">
+                    <tabbox id="tabbox_utibanco" apply="org.me.gj.controller.planillas.utilitarios.ControllerUtiBancos">
                         
                         <tabs>
                             <tab id="tab_utibanco" label="ENLACE A BANCOS"/>
@@ -43,9 +43,9 @@
                                                 <cell align="left" width="70px">
                                                     <label value="PERIODO : "/>
                                                 </cell>
-                                                <textbox id="txt_periodo" maxlength="8" width="50px" tooltiptext="Ingrese periodo" value="20170903" style="text-align: center;"/>
+                                                <textbox id="txt_periodo" maxlength="8" width="50px" tooltiptext="Ingrese periodo"  style="text-align: center;"/>
                                                 <space width="10px"/>
-                                                <label id="lbl_periodo" value="   -  -   " style="color: red; font-weight: bold;"/>
+                                                <label id="lbl_periododesc" style="font-weight: bold;" width="300px" /> 
                                             </hbox>
                                     
                                             <space height="20px"/>
@@ -54,7 +54,11 @@
                                                 <cell align="left" width="70px">
                                                     <label value="SUCURSAL : "/>
                                                 </cell>
-                                                <combobox id="cb_sucursal" width="150px" tooltiptext="Seleccione Sucursal" readonly="true" placeholder="--------Seleccione--------"/>
+                                                <combobox id="cb_sucursal" width="150px" tooltiptext="Seleccione Sucursal" readonly="true" placeholder="--------Seleccione--------">
+                                                    <template name="model">
+                                                        <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                                    </template>
+                                                </combobox>
                                             </hbox>                                                                                       
                                     
                                         </div>      
@@ -84,7 +88,7 @@
                                                     <space width="5px"/>
                                                     <radio label="MENSUAL"/>
                                                     <space width="5px"/>
-                                                    <radio label="CTS SEM."/>
+                                                    <radio label="CTS SEM." id="rb_cts"/>
                                                     <space width="5px"/>
                                                     <radio label="ADELANTOS"/>
                                                     <space width="5px"/>
@@ -99,7 +103,12 @@
                                             <cell align="left" width="80px">
                                                 <label value="BANCO : "/>
                                             </cell>
-                                            <combobox id="cb_banco" width="338px" tooltiptext="Seleccione Banco" readonly="true" placeholder="--------------------------------Seleccione--------------------------------"/>
+                                            <combobox id="cb_banco" width="338px" tooltiptext="Seleccione Banco" readonly="true" placeholder="--------------------------------Seleccione--------------------------------">
+                                                <template name="model">
+                                                    <comboitem label="${each.descripcion}" value="${each.key}"/>
+                                                </template>
+                                                
+                                            </combobox>
                                         </hbox>
                                         
                                         <space height="20px"/>
@@ -117,7 +126,12 @@
                                             <cell align="left" width="80px">
                                                 <label value="FORMATO : "/>
                                             </cell>
-                                            <combobox id="cb_formato" width="338px" tooltiptext="Seleccione Formato" readonly="true" placeholder="--------------------------------Seleccione--------------------------------"/>
+                                            <combobox id="cb_formato" width="338px" tooltiptext="Seleccione Formato" readonly="true" placeholder="--------------------------------Seleccione--------------------------------">
+                                                <template name="model">                                                 
+                                                    <comboitem label="${each.desc_formato}" value="${each.id_formato}"/>
+                                                </template>
+                                                
+                                            </combobox>
                                         </hbox>                                           
                                         
                                         <space height="20px"/>
@@ -136,7 +150,7 @@
                                             <cell align="left" width="80px">
                                                 <label value="REFERENCIA : "/>
                                             </cell>
-                                            <textbox id="txt_ref" width="334px" tooltiptext="Ingrese referencia" value="PAGO MENSUAL"/>
+                                            <textbox id="txt_ref" width="334px" tooltiptext="Ingrese referencia" />
                                         </hbox>
                                                                                                                       
                                         <space height="30px"/>

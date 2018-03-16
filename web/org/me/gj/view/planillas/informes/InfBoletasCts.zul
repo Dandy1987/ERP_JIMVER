@@ -11,7 +11,16 @@
         <center> 
             <div width="100%" sclass="cuerpo-main">
                 <window id="w_bolcts" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
-                    <tabbox id="tabbox_bolcts"  apply="">
+                    <toolbar id="tb_transacciones"  width="99.75%">
+                        <toolbarbutton id="tbbtn_btn_nuevo" image="/images/iconos/nuevo.png" disabled="true" tooltiptext="Nuevo (F2)" />
+                        <toolbarbutton id="tbbtn_btn_editar" image="/images/iconos/editar.png"  disabled="true" tooltiptext="Editar (F4)"/>            
+                        <toolbarbutton id="tbbtn_btn_eliminar" image="/images/iconos/eliminar.png" disabled="true" tooltiptext="Eliminar (F7)"/>
+                        <toolbarbutton id="tbbtn_btn_guardar" image="/images/iconos/guardar.png" disabled="true" tooltiptext="Guardar (F10)" />
+                        <toolbarbutton id="tbbtn_btn_deshacer" image="/images/iconos/deshacer.png" disabled="true" tooltiptext="Deshacer (F9)"/>
+                        <toolbarbutton id="tbbtn_btn_imprimir" image="/images/iconos/imprimir.png" tooltiptext="Imprimir (F8)"/>   
+                        <!-- <label value="BOLETA DE PAGO" sclass="titulo_mant" style="margin-left:225px;"/>-->
+                    </toolbar>  
+                    <tabbox id="tabbox_bolcts"  apply="org.me.gj.controller.planillas.informes.ControllerBoletaCts">
                         <tabs>
                             <tab id="tab_bolcts" label="BOLETA CTS"/>
                         </tabs>
@@ -19,7 +28,7 @@
                         <tabpanels>
                             <tabpanel>
                                 
-                                <groupbox width="987px" open="true" closable="false" style="text: center;">
+                                <groupbox width="987px" open="true" closable="false" style="text:center;">
                                     <space height="30px"/>
                                     
                                     <hbox align="center">
@@ -39,7 +48,9 @@
                                             <label value="PERIODO : "/>
                                         </cell>
                                         <space width="5px"/>
-                                        <combobox id="cb_periodo" width="120px" tooltiptext="Seleccione periodo" readonly="true" placeholder="-seleccione-"/>
+                                        <textbox id="txt_periodo" placeholder="PRESIONE ENTER" disabled="true" maxlength="8" width="118px" tooltiptext="Define el Período de Planilla"/> 
+                                        <space width="5px"/>                                        
+									<label id="lbl_periododesc" style="font-weight: bold;" width="300px" />  
                                     </hbox>
                                     
                                     <space height="20px"/>
@@ -50,9 +61,23 @@
                                             <label value="SUCURSAL : "/>
                                         </cell>
                                         <space width="5px"/>
-                                        <combobox id="cb_sucursal" width="120px" tooltiptext="Seleccione periodo" readonly="true" placeholder="-seleccione-"/>
+                                        <combobox id="cb_sucursal" width="120px" tooltiptext="Seleccione periodo" readonly="true" placeholder="-seleccione-">
+                                                      <template name="model">
+                                                <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                            </template>
+                                        </combobox>
                                     </hbox>
-                                    
+                                    <space height="20px"/>
+                                    <hbox align="center">
+                                        <space width="244px"/>
+                                        <cell align="left" width="65px">
+                                            <label value="AREA :"/>
+                                        </cell>
+                                        <space width="15px"/>
+                                        <textbox id="txt_codarea" maxlength="9"  placeholder="ENTER" width="80px" focus="false" tooltiptext="Código de Personal" style="text-align:center;"/>
+                                        <textbox id="txt_desarea" disabled="true" width="180px" focus="false" tooltiptext="Descripción de Personal"/>
+                                        <textbox id="txt_codarea1" visible="false"/>
+                                    </hbox>
                                     <space height="20px"/>
                                     
                                     <hbox align="center">
@@ -65,38 +90,41 @@
                                     </hbox>
                                     
                                     <space height="20px"/>
-                                    
-                                    <div id="div_01" align="center">
+                                     
+                                  
                                         <hbox align="center">
+                                            <space width="244px"/>
                                             <cell align="left" width="70px">
                                                 <label value="PERSONAL :"/>
                                             </cell>
                                             <space width="5px"/>
-                                            <textbox id="txt_codper" maxlength="5" readonly="false" width="35px" focus="false" tooltiptext="Código de Personal" style="text-align: center;"/>
-                                            <textbox id="txt_desper" maxlength="5" readonly="true" width="350px" focus="false" disabled="true" tooltiptext="Descripcion de Personal" />
+                                                <textbox id="txt_codper" placeholder="Presione Enter" maxlength="9" readonly="false" width="100px" focus="false" tooltiptext="Código de Personal" style="text-align: center;"/>
+                                                <textbox id="txt_desper" maxlength="150" readonly="true" width="350px" focus="false" disabled="true" tooltiptext="Descripcion de Personal" />
+                                                <textbox id="txt_codper1" visible="false"/>
                                         </hbox>
-                                    </div>
+                                  
                                     
                                     <space height="20px"/>
                                     
-                                    <div id="div_02" align="center">
+                                    <!-- <div id="div_02" align="center" style="background-color:red;" > -->
                                         <hbox align="center" >
-                                            <cell align="left" width="100px">
-                                                <label value="FECHA DEPOSITO : "/>
+                                            <space width="310px"/>
+                                            <cell align="left" width="120px" >
+                                                <label value="FECHA DEPOSITO:" />
                                             </cell>
                                             <space width="5px"/>
                                             <datebox id="db_fechadep" maxlength="10" readonly="true" width="85px" disabled="false" format="dd/MM/yyyy" style="text-align: center;" />
                                         </hbox>
-                                    </div>
+                                    <!-- </div> -->
                                     
                                     <space height="20px"/>
-                                    
+                                    <!--
                                     <div id="div_03" align="center">
                                         <hbox align="center">
-                                            <button id="btn_aceptar" label="Consultar" sclass="botones"/>
+                                            <button id="btn_consultar" label="Consultar" sclass="botones"/>
                                         </hbox>
                                     </div>
-                                    
+                                    -->
                                     <space height="30px"/>
                                     
                                 </groupbox>

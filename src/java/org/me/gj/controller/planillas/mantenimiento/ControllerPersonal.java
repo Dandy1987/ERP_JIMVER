@@ -31,8 +31,6 @@ import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.engine.util.JRProperties;
 import org.apache.log4j.Logger;
 import org.me.gj.controller.facturacion.mantenimiento.DaoManPer;
-import org.me.gj.controller.planillas.procesos.ControllerDescuentos;
-import org.me.gj.controller.planillas.procesos.ControllerMovLinea;
 import org.me.gj.controller.planillas.procesos.DaoMovLinea;
 import org.me.gj.controller.seguridad.mantenimiento.DaoAccesos;
 import org.me.gj.database.ConectaBD;
@@ -125,7 +123,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
             txt_dhApePat, txt_dhApeMat, txt_dhNombres, txt_dhNroDoc, txt_dhNroDocVf, txt_dhNrd,
             txt_dhIdMuni, txt_dhDesMuni, txt_dhNacion, txt_dhDesNacion, txt_dhZona, txt_dhNro,
             txt_dhInt, txt_dhRefer, txt_dhCodUbi, txt_dhDesUbi, txt_dhVia,//derhabientes
-            txt_usuadd, txt_usumod,txt_areaId_Lov, txt_areaDes_Lov, txt_areaId1_Lov, txt_costo, txt_descripcioncosto, txt_costo1;
+            txt_usuadd, txt_usumod, txt_areaId_Lov, txt_areaDes_Lov, txt_areaId1_Lov, txt_costo, txt_descripcioncosto, txt_costo1;
     @Wire
     Combobox cb_fsucursal, cb_fpering, cb_fperces, cb_busqueda,//busqueda
             cb_tipDoc, cb_sexo, cb_estCivil, cb_condicion, cb_via, cb_zona,//datos personales
@@ -147,11 +145,11 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
     Intbox /*ib_hExtras,*/ ib_dhId,
             ib_correlph, ib_correlpc;
     @Wire
-	Label lbl_nombre1,lbl_nombre2,lbl_nombre3,lbl_nombre4;
+    Label lbl_nombre1, lbl_nombre2, lbl_nombre3, lbl_nombre4;
     @Wire
     Doublebox db_dirlatx, db_dirlony;
 
-	URL imagen;
+    URL imagen;
     @Wire
     Div img_foto;
     @Wire
@@ -191,8 +189,8 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
     ListModelList<Tablas1> objlstMotivos;
     ListModelList<Tablas1> objlstParentesco;
     ListModelList<Tablas1> objlstTipoBajaDH;
-	
-	public static int val;
+
+    public static int val;
     DaoPersonal objDaoPersonal;
     DaoCliente objDaoCliente;
     DaoAccesos objDaoAccesos;
@@ -246,7 +244,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
     File archivoAntPol, archivoCerDom, archivoCurVit, archivoCroquis,
             archivoDni, archivoFirma, archivoFoto, archivoRecibo, archivoOtros, archivoFotoFromFile;
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-	SimpleDateFormat formato2 = new SimpleDateFormat("yyyyMM");
+    SimpleDateFormat formato2 = new SimpleDateFormat("yyyyMM");
     int i_sel, emp_id, suc_id;
     //int flag = 3;
     public static boolean bandera = false;
@@ -386,8 +384,8 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
         cb_fperces.setModel(new DaoManPer().listaPeriodosDinamico(0));
         //carga clientes
         objlstPersonal = new ListModelList<Personal>();
-        
-		objlstPersonal = objDaoPersonal.consultaPersonal("", "", "", 0, "", "no", 1, "","");
+
+        objlstPersonal = objDaoPersonal.consultaPersonal("", "", "", 0, "", "no", 1, "", "");
         lst_personal.setModel(objlstPersonal);
 
         objlstDerHabientes = null;
@@ -408,34 +406,57 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
 
     @Listen("onClick=#btn_movimiento")
     public void btn_movimiento() throws Exception {
-         
+
         Executions.sendRedirect("/org/me/gj/view/planillas/procesos/MovLinea.zul");
         val = 1;
     }
-	
-     @Listen("onClick=#tab_datoslab")
-    public void label1(){
-        lbl_nombre1.setValue(txt_apePat.getValue().toString() +" " + txt_apeMat.getValue().toString()+" "+ txt_nombres.getValue().toString() );
-        lbl_nombre2.setValue(txt_apePat.getValue().toString() +" " + txt_apeMat.getValue().toString()+" "+ txt_nombres.getValue().toString() );
-        lbl_nombre3.setValue(txt_apePat.getValue().toString() +" " + txt_apeMat.getValue().toString()+" "+ txt_nombres.getValue().toString() );
-        lbl_nombre4.setValue(txt_apePat.getValue().toString() +" " + txt_apeMat.getValue().toString()+" "+ txt_nombres.getValue().toString() );
-        
-        
+
+    @Listen("onClick=#tab_datoslab")
+    public void label1() {
+        lbl_nombre1.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+        lbl_nombre2.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+        lbl_nombre3.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+        lbl_nombre4.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
     }
-	
+
+    @Listen("onClick=#tab_pagos")
+    public void label2() {
+        lbl_nombre1.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+        lbl_nombre2.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+        lbl_nombre3.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+        lbl_nombre4.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+
+    }
+
+    @Listen("onClick=#tab_adjuntos")
+    public void label3() {
+        lbl_nombre1.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+        lbl_nombre2.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+        lbl_nombre3.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+        lbl_nombre4.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+
+    }
+
+    @Listen("onClick=#tab_derhabientes")
+    public void label4() {
+        lbl_nombre1.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+        lbl_nombre2.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+        lbl_nombre3.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+        lbl_nombre4.setValue(txt_apePat.getValue().toString() + " " + txt_apeMat.getValue().toString() + " " + txt_nombres.getValue().toString());
+
+    }
+
     @Listen("onClick=#btn_descuento")
     public void btn_descuento() {
         Executions.sendRedirect("/org/me/gj/view/planillas/procesos/Descuentos.zul");
         val = 1;
-        
+
     }
 
-    @Listen("onClick=#btn_asistencia")
-    public void btn_asistencia() {
-        Executions.sendRedirect("/org/me/gj/view/planillas/procesos/AsisGeneral.zul");
-        
-    }
-	
+    /* @Listen("onClick=#btn_asistencia")
+     public void btn_asistencia() {
+     Executions.sendRedirect("/org/me/gj/view/planillas/procesos/AsisGeneral.zul");
+     }*/
     @Listen("onCreate=#tb_transacciones")
     public void VerificarTransacciones() throws SQLException {
         int usuario = objUsuCredential.getCodigo();
@@ -520,13 +541,13 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
         String per_ces = cb_fperces.getSelectedIndex() == -1 || cb_fperces.getSelectedIndex() == 0 ? "" : cb_fperces.getSelectedItem().getValue().toString();
         String cesados = chk_cesados.isChecked() ? "si" : "no";
         // int estado = chk_activos.isChecked() ? 1 : 2;
-		String area = txt_areaId1_Lov.getValue();
+        String area = txt_areaId1_Lov.getValue();
 
-		String s_aux = area.replace("'", "");
+        String s_aux = area.replace("'", "");
         s_aux = area.replace(")", "");
         String costo = txt_costo1.getValue();
        // String s_auxCosto = costo.replace("'", "");
-       // s_auxCosto = costo.replace(")", "");
+        // s_auxCosto = costo.replace(")", "");
         if (cb_estado.getSelectedIndex() == 2 || cb_estado.getSelectedIndex() == -1) {
             est = 3;
         } else if (cb_estado.getSelectedIndex() == 0) {
@@ -534,7 +555,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
         } else {
             est = 2;
         }
-        objlstPersonal = objDaoPersonal.consultaPersonal(sucursal, per_ing, per_ces, i_seleccion, s_consulta, cesados, est, s_aux,costo);
+        objlstPersonal = objDaoPersonal.consultaPersonal(sucursal, per_ing, per_ces, i_seleccion, s_consulta, cesados, est, s_aux, costo);
         //public ListModelList<Personal> consultaPersonal(String per_ingreso, String per_cesado, int seleccion, String busqueda) throws SQLException {
         if (rbg_indicador.getSelectedIndex() == 0) {
             Collections.sort(objlstPersonal, new Comparator<Personal>() {
@@ -681,7 +702,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
         chk_estado.setChecked(true);
         chk_estado.setDisabled(true);
         d_fecIng.setValue(new Date());
-		d_fecIngRp.setValue(new Date());
+        d_fecIngRp.setValue(new Date());
 
         txt_nacionId.setValue("589");
         cb_tipDoc.setSelectedIndex(0);
@@ -736,8 +757,8 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
                                 if (objParam.getFlagIndicador() == 0) {
                                     limpiarCampos();
                                     limpiaAuditoria();
-                                    
-									objlstPersonal = objDaoPersonal.consultaPersonal("", "", "", 0, "", "no", 1, "","");
+
+                                    objlstPersonal = objDaoPersonal.consultaPersonal("", "", "", 0, "", "no", 1, "", "");
                                     lst_personal.setModel(objlstPersonal);
                                     VerificarTransacciones();
                                 }
@@ -762,16 +783,18 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
                 }
             });
         } else {
-            String s_valida2 = validaFechaIngreso();
-            if (!s_valida2.isEmpty()) {
-                Messagebox.show(s_valida2, "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION, new EventListener() {
-                    @Override
-                    public void onEvent(Event event) throws Exception {
-                        if (((Integer) event.getData()).intValue() == Messagebox.OK) {
-                            d_fecIng.focus();
+            if (!s_estado.equals("M")) {
+                String s_valida2 = validaFechaIngreso();
+                if (!s_valida2.isEmpty()) {
+                    Messagebox.show(s_valida2, "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION, new EventListener() {
+                        @Override
+                        public void onEvent(Event event) throws Exception {
+                            if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+                                d_fecIng.focus();
+                            }
                         }
-                    }
-                });
+                    });
+                }
             } else {
                 String s_valida3 = validaFechaCese();
                 if (!s_valida3.isEmpty()) {
@@ -825,8 +848,9 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
                                                 } else {
                                                     objParam = objDaoPersonal.actualizarPersonal(objPersonal, objDatosLabNuevo, objPersAportacionNuevo,
                                                             objPersPagoHabNuevo, objPersPagoCtsNuevo, getDerHabiente(objlstDerHabientes));
+
                                                 }
-												String s_ms1="";
+                                                String s_ms1 = "";
                                                 if (objParam.getFlagIndicador() == 0) {
                                                     //validacion de guardar/nuevo
                                                     if (cargaFoto == true) {
@@ -864,10 +888,17 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
                                                     if (cargaOtros == true) {
                                                         Files.copy(archivoOtros, mediaOtros.getStreamData());
                                                     }
-													// AQUI!!!!!
-                                                    if (objDatosLabNuevo.getPlfecces() != null) {
-                                                        s_ms1 = objDaoPersonal.copiaMovimiento(objPersonal.getPltipdoc() + objPersonal.getPlnrodoc(),formato2.format(objDatosLabNuevo.getPlfecces()) );
+                                                    // AQUI!!!!!
+                                                    try {
+                                                        if (objDatosLabNuevo.getPlfecces() != null) {
+                                                            s_ms1 = objDaoPersonal.copiaMovimiento(objPersonal.getPltipdoc() + objPersonal.getPlnrodoc(), formato2.format(objDatosLabNuevo.getPlfecces()));
 
+                                                        } else {
+                                                            s_ms1 = objDaoPersonal.eliminaMovimiento(objPersonal.getPltipdoc() + objPersonal.getPlnrodoc(), Utilitarios.periodoActual());
+
+                                                        }
+                                                    } catch (Exception ex) {
+                                                        String err = ex.toString() + "*--" + ex.getMessage();
                                                     }
 
                                                     habilitaBotones(false, true);
@@ -884,7 +915,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
                                                     habilitaBotonesPdf(false);
                                                     habilitaBotonesPagosHab(false, true);
                                                     tbbtn_btn_nuevoph.setDisabled(true);
-                                                    tbbtn_btn_editarph.setDisabled(true);
+                                                    // tbbtn_btn_editarph.setDisabled(true);
                                                     habilitaBotonesPagosCts(false, true);
                                                     tbbtn_btn_nuevopc.setDisabled(true);
                                                     tbbtn_btn_editarpc.setDisabled(true);
@@ -900,8 +931,8 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
                                                     limpiaAuditoria();
                                                     limpiaCargaAdjunto();
                                                     limpiarListaDerhabiente();
-                                                    objlstPersonal = new ListModelList<Personal>();                                                    
-													objlstPersonal = objDaoPersonal.consultaPersonal("", "", "", 0, "", "no", 1, "","");
+                                                    objlstPersonal = new ListModelList<Personal>();
+                                                    objlstPersonal = objDaoPersonal.consultaPersonal("", "", "", 0, "", "no", 1, "", "");
                                                     lst_personal.setModel(objlstPersonal);
                                                     //objlstPersonal.clear();
                                                     objlstDerHabientes.clear();
@@ -951,7 +982,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
                             habilitaBotonesAdjunto(true);
                             habilitaBotonesPagosHab(false, true);
                             tbbtn_btn_nuevoph.setDisabled(true);
-                            tbbtn_btn_editarph.setDisabled(true);
+                            //tbbtn_btn_editarph.setDisabled(true);
                             habilitaBotonesPagosCts(false, true);
                             tbbtn_btn_nuevopc.setDisabled(true);
                             tbbtn_btn_editarpc.setDisabled(true);
@@ -1097,9 +1128,9 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
             window.doModal();
         }
 
-	}
+    }
 
-		/**
+    /**
      * Metodo de filtro de personal por areas
      */
     @Listen("onOK=#txt_areaId_Lov")
@@ -1149,7 +1180,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
 
         bandera = false;
     }
-	
+
     //DATOS APORTACION
     @Listen("onClick=#tbbtn_btn_nuevoap")
     public void botonNuevoAportacion() {
@@ -2195,7 +2226,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
     //DATOS PAGOS HABERES
     public void habilitaBotonesPagosHab(boolean b_valida1, boolean b_valida2) {
         tbbtn_btn_nuevoph.setDisabled(b_valida1);
-        tbbtn_btn_editarph.setDisabled(b_valida1);
+        //tbbtn_btn_editarph.setDisabled(b_valida1);
         tbbtn_btn_deshacerph.setDisabled(b_valida2);
     }
 
@@ -2283,7 +2314,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
     public void habilitaCamposDerHabiente(boolean b_valida1) {
         chk_dhEstado.setDisabled(b_valida1);
 
-		chk_dhEst.setDisabled(b_valida1);
+        chk_dhEst.setDisabled(b_valida1);
         chk_dhDiscap.setDisabled(b_valida1);
 
         txt_dhApeMat.setDisabled(b_valida1);
@@ -2338,7 +2369,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
         cb_dhVia.setSelectedIndex(-1);
         txt_dhVia.setValue("");
         chk_dhViveDom.setChecked(false);
-		chk_dhEst.setChecked(false);
+        chk_dhEst.setChecked(false);
         chk_dhDiscap.setChecked(false);
         cb_dhZona.setSelectedIndex(-1);
         txt_dhZona.setValue("");
@@ -2366,8 +2397,8 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
             objListaDepurada = objListaAuxiliar;
         }
         //Creamos el arreglo con los detalles
-		// Object[][] listaCompRetDet = new Object[objListaDepurada.size()][29];
-	    Object[][] listaCompRetDet = new Object[objListaDepurada.size()][31];
+        // Object[][] listaCompRetDet = new Object[objListaDepurada.size()][29];
+        Object[][] listaCompRetDet = new Object[objListaDepurada.size()][31];
         //Barreros la lista que contiene los datos a grabar
         for (int i = 0; i < objListaDepurada.size(); i++) {
             //Llenamos la lista con los datos
@@ -2402,7 +2433,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
             listaCompRetDet[i][26] = objListaDepurada.get(i).getPldh_dirref();
             listaCompRetDet[i][27] = objListaDepurada.get(i).getPldh_dirubigeo();
             listaCompRetDet[i][28] = objListaDepurada.get(i).getPldh_estudios();
-			listaCompRetDet[i][29] = objListaDepurada.get(i).getPldh_discapacidad();
+            listaCompRetDet[i][29] = objListaDepurada.get(i).getPldh_discapacidad();
             listaCompRetDet[i][30] = objListaDepurada.get(i).getInd_accion();
         }
         return listaCompRetDet;
@@ -2460,7 +2491,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
         txt_dhRefer.setValue(objDerHabiente.getPldh_dirref());
         txt_dhCodUbi.setValue(objDerHabiente.getPldh_dirubigeo());
         txt_dhDesUbi.setValue(objDerHabiente.getPldh_dirubigeo_des());
-		chk_dhEst.setChecked(objDerHabiente.getPldh_estudios() == 1);
+        chk_dhEst.setChecked(objDerHabiente.getPldh_estudios() == 1);
         chk_dhDiscap.setChecked(objDerHabiente.getPldh_discapacidad() == 1);
     }
 
@@ -2501,18 +2532,18 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
             s_valor = "Por favor seleccione el estado civil";
             foco = "estcivil";
         } /*else if (txt_grupSang.getValue().isEmpty()) {
-            s_valor = "Por favor ingrese el grupo sanguíneo";
-            foco = "grupsang";
-        }*/ /*else if (txt_telefono.getValue().isEmpty()) {
+         s_valor = "Por favor ingrese el grupo sanguíneo";
+         foco = "grupsang";
+         }*/ /*else if (txt_telefono.getValue().isEmpty()) {
          s_valor = "Por favor ingrese el teléfono de casa";
          foco = "telcasa";
          } */ else if (txt_movil.getValue().isEmpty()) {
             s_valor = "Por favor ingrese el teléfono móvil";
             foco = "telmovil";
         } /*else if (txt_correo.getValue().isEmpty()) {
-            s_valor = "Por favor ingrese el correo";
-            foco = "correo";
-        } */else if (txt_nivEduId.getValue().isEmpty()) {
+         s_valor = "Por favor ingrese el correo";
+         foco = "correo";
+         } */ else if (txt_nivEduId.getValue().isEmpty()) {
             s_valor = "Por favor ingrese el nivel educativo";
             foco = "nivedu";
         } else if (txt_ocupaId.getValue().isEmpty()) {
@@ -2688,19 +2719,19 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
             tab_datosper.setSelected(true);
             cb_estCivil.focus();
         } /*else if (foco.equals("grupsang")) {
-            tab_datosper.setSelected(true);
-            txt_grupSang.focus();
-        }
-		*//* else if (foco.equals("telcasa")) {
+         tab_datosper.setSelected(true);
+         txt_grupSang.focus();
+         }
+         *//* else if (foco.equals("telcasa")) {
          tab_datosper.setSelected(true);
          txt_telefono.focus();
          }*/ else if (foco.equals("telmovil")) {
             tab_datosper.setSelected(true);
             txt_movil.focus();
         } /*else if (foco.equals("correo")) {
-            tab_datosper.setSelected(true);
-            txt_correo.focus();
-        } */else if (foco.equals("nivedu")) {
+         tab_datosper.setSelected(true);
+         txt_correo.focus();
+         } */ else if (foco.equals("nivedu")) {
             tab_datosper.setSelected(true);
             txt_nivEduId.focus();
         } else if (foco.equals("ocupacion")) {
@@ -3052,7 +3083,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
         objDerHab.setPldh_tipbaj(cb_dhTipBaja.getSelectedIndex() == -1 ? null : cb_dhTipBaja.getSelectedItem().getValue().toString());
         objDerHab.setPldh_fecbaj(d_dhFecBaja.getValue());
 
-		//jr 16012018
+        //jr 16012018
         objDerHab.setPldh_estudios(chk_dhEst.isChecked() ? 1 : 0);
         objDerHab.setPldh_discapacidad(chk_dhDiscap.isChecked() ? 1 : 0);
 
@@ -3638,7 +3669,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
                 objMapObjetos.put("TABLA_ID", txt_regPenId);
                 objMapObjetos.put("TABLA_DESCRI", txt_regPenDes);
 
-				objMapObjetos.put("id", txt_afpId);
+                objMapObjetos.put("id", txt_afpId);
                 objMapObjetos.put("des", txt_afpDes);
 
                 objMapObjetos.put("controlador", "ControllerPersonal");
@@ -4312,7 +4343,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-	@Listen("onClick=#chk_dmedicos")
+    @Listen("onClick=#chk_dmedicos")
     public void imprimirDMedicos() throws SQLException, FileNotFoundException, IOException {
         if (chk_dmedicos.isChecked()) {
             String per_ing = cb_fpering.getSelectedIndex() == -1 || cb_fpering.getSelectedIndex() == 0 ? "" : cb_fpering.getSelectedItem().getValue().toString();
@@ -4361,7 +4392,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
         }
 
     }
-	
+
     @Listen("onClick=#tbbtn_excel")
     public void consultaExcel() throws SQLException, FileNotFoundException, IOException {
         busquedaRegistros();
@@ -4404,9 +4435,9 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
         String per_ing = cb_fpering.getSelectedIndex() == -1 || cb_fpering.getSelectedIndex() == 0 ? "" : cb_fpering.getSelectedItem().getValue().toString();
         String per_ces = cb_fperces.getSelectedIndex() == -1 || cb_fperces.getSelectedIndex() == 0 ? "" : cb_fperces.getSelectedItem().getValue().toString();
         String cesados = chk_cesados.isChecked() ? "si" : "no";
-        
+
         String carea = txt_areaId1_Lov.getValue();
-		String costo = txt_costo1.getValue();
+        String costo = txt_costo1.getValue();
         String documento = "", paterno = "", materno = "", nombres = "", cargo = "";
         switch (i_seleccion) {
             case 1:
@@ -4444,7 +4475,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
             objParam.put("ccesados", cesados);
             objParam.put("estado", est);
             objParam.put("carea", carea);
-			objParam.put("ccosto", costo);
+            objParam.put("ccosto", costo);
             objParam.put("REPORT_LOCALE", new Locale("en", "US"));
             final Execution exec = Executions.getCurrent();
             is = exec.getDesktop().getWebApp().getResourceAsStream(exec.toAbsoluteURI("/WEB-INF/reportes/planillas/mantenimiento/ReportPersonal.jasper", false));
@@ -4469,7 +4500,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
             exporterXLS.exportReport();
             File file = new File(rutaFileCumple + nom_reporte + ".xls");
             Filedownload.save(file, "application/xlsx");
-			busquedaRegistros();
+            busquedaRegistros();
         } catch (JRException ex) {
             throw new RuntimeException(ex);
         } finally {
@@ -4536,13 +4567,13 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
             //  URL fileUrl = null;
             JasperPrint jasperPrint;
             try {
-				imagen = getClass().getClassLoader().getResource("../../images/cumple/cumplean.JPEG");
+                imagen = getClass().getClassLoader().getResource("../../images/cumple/cumplean.JPEG");
                 Map objParam = new HashMap();
                 objParam.put("periodo", per_ing);
                 objParam.put("empresa", objUsuCredential.getCodemp());
                 objParam.put("sucursal", sucursal);
                 objParam.put("REPORT_LOCALE", new Locale("en", "US"));
-				objParam.put("sello", imagen);
+                objParam.put("sello", imagen);
                 final Execution exec = Executions.getCurrent();
                 is = exec.getDesktop().getWebApp().getResourceAsStream(exec.toAbsoluteURI("/WEB-INF/reportes/planillas/mantenimiento/ReportCumpleanios.jasper", false));
                 //fileUrl = getClass().getClassLoader().getResource("../../reportes/ReportPersonal.jasper");
@@ -4694,6 +4725,45 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
         }
     }
 
+    @Listen("onClick=#btn_asistencia")
+    public void generarAsistencia() throws SQLException {
+        int i = 0;
+        for (int j = 0; j < objlstPersonal.getSize(); j++) {
+            if (objlstPersonal.get(j).isValSelec()) {
+                i = i + 1;
+                break;
+            }
+
+        }
+        if (i <= 0 || lst_personal.getModel().getSize() < 1) {
+            Messagebox.show("Debe seleccionar (√) un registro", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+        } else if (cb_fpering.getValue().isEmpty()) {
+            Messagebox.show("Debe elegir el periodo a generar asistencia", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+        } else {
+            /* ParametrosSalida objPara = objDaoPersonal.generarAsistenciaAut(11,
+             1,
+             cb_fpering.getValue(),
+             "142472830");   */
+            ParametrosSalida vista = null;
+            for (int j = 0; j < objlstPersonal.getSize(); j++) {
+                if (objlstPersonal.get(j).isValSelec()) {
+                    vista = objDaoPersonal.generarAsistenciaAut(objlstPersonal.get(j).getEmp_id(),
+                            objlstPersonal.get(j).getSuc_id(),
+                            cb_fpering.getValue(),
+                            objlstPersonal.get(j).getPltipdoc() + objlstPersonal.get(j).getPlnrodoc());
+                }
+
+            }
+            if (vista.getFlagIndicador() == 0) {
+                Messagebox.show(vista.getMsgValidacion(), "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+            } else {
+                Messagebox.show(vista.getMsgValidacion(), "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+            }
+
+        }
+
+    }
+
     @Listen("onBlur=#txt_via;onBlur=#txt_nro;onBlur=#txt_int;onBlur=#txt_zona;onBlur=#cb_via;onBlur=#cb_zona")
     public void next() {
         String zona = "", via = "";
@@ -4808,7 +4878,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
                     });
         }
     }
-	
+
     @Listen("onBlur=#txt_nroDoc")
     public void dpNext6() throws SQLException, IOException {
         /*  if (txt_nroDoc.getValue().isEmpty()) {
@@ -4888,40 +4958,40 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
             }
         }
     }
-	
+
     @Listen("onOK=#d_fecNac")
-        public void dpNext7() {
+    public void dpNext7() {
         if (d_fecNac.getValue() == null) {
-                Messagebox.show("Debe ingresar fecha de nacimiento", "ERP-JIMVER", Messagebox.OK | Messagebox.CANCEL,
+            Messagebox.show("Debe ingresar fecha de nacimiento", "ERP-JIMVER", Messagebox.OK | Messagebox.CANCEL,
+                    Messagebox.INFORMATION, new EventListener() {
+                        public void onEvent(Event t) throws Exception {
+                            if (((Integer) t.getData()).intValue() == Messagebox.OK) {
+                                // d_fecNac.setValue(null);
+                                d_fecNac.focus();
+                            }
+                        }
+                    });
+        } else {
+            String fecha = formato.format(d_fecNac.getValue());
+            int eda = edad(fecha);//enviamos la fecha de nacimiento para hallar la edad del trabajador
+            if (eda < 18) {
+                Messagebox.show("Es menor de edad, no puede ingresar a trabajar", "ERP-JIMVER", Messagebox.OK | Messagebox.CANCEL,
                         Messagebox.INFORMATION, new EventListener() {
+
                             public void onEvent(Event t) throws Exception {
                                 if (((Integer) t.getData()).intValue() == Messagebox.OK) {
-                                    // d_fecNac.setValue(null);
+                                    d_fecNac.setValue(null);
                                     d_fecNac.focus();
                                 }
                             }
                         });
             } else {
-                String fecha = formato.format(d_fecNac.getValue());
-                int eda = edad(fecha);//enviamos la fecha de nacimiento para hallar la edad del trabajador
-                if (eda < 18) {
-                    Messagebox.show("Es menor de edad, no puede ingresar a trabajar", "ERP-JIMVER", Messagebox.OK | Messagebox.CANCEL,
-                            Messagebox.INFORMATION, new EventListener() {
-
-                                public void onEvent(Event t) throws Exception {
-                                    if (((Integer) t.getData()).intValue() == Messagebox.OK) {
-                                        d_fecNac.setValue(null);
-                                        d_fecNac.focus();
-                                    }
-                                }
-                            });
-                } else {
-                    cb_sexo.focus();
-                }
+                cb_sexo.focus();
             }
         }
-		
-        //metodo para hallar edad
+    }
+
+    //metodo para hallar edad
     public int edad(String fecha_nac) {     //fecha_nac debe tener el formato dd/MM/yyyy
 
         Date fechaActual = new Date();
@@ -5341,7 +5411,7 @@ public class ControllerPersonal extends SelectorComposer<Component> implements I
             txt_busqueda.setValue("%%");
         }
     }
-	
+
     //metodo lov para centro de costos
     @Listen("onOK=#txt_costo")
     public void lovCosto() {

@@ -212,7 +212,7 @@ public class ControllerImpresionPersonal extends SelectorComposer<Component> imp
      @Listen("onClick=#tbbtn_btn_imprimir")
     public void botonImprimir() throws SQLException, IOException, PrintException {
         int x = 100;
-        int y = 0;
+        int y = 0;        
         int aleatorio = (int) (Math.random() * x) + y;
         String nom_reporte = null;
 
@@ -224,77 +224,84 @@ public class ControllerImpresionPersonal extends SelectorComposer<Component> imp
         File file;
         try {
             if (rbg_impresion.getItems().get(0).isChecked()) {
-                Map<String, Object> objHashMap2 = new HashMap<String, Object>();
-                objHashMap.put("empresa", objUsuCredential.getCodemp());
-                objHashMap.put("cdocumento", newcadenaLetra);
-                objHashMap.put("IMAGEN", foto);
-                objHashMap.put("REPORT_LOCALE", new Locale("en", "US"));
-                if (rbg_tipo.getItems().get(0).isChecked()) {
-                    if (rbg_reporte.getItems().get(0).isChecked()) {
-                        final Execution exec = Executions.getCurrent();
-                        is = exec.getDesktop().getWebApp().getResourceAsStream(exec.toAbsoluteURI("/WEB-INF/reportes/planillas/mantenimiento/ReportGeneral.jasper", false));
-                        //agregado para formato plsql
-                        JasperReport reporte = (JasperReport) JRLoader.loadObject(is);
-                        reporte.setProperty("net.sf.jasperreports.query.executer.factory.plsql", "com.jaspersoft.jrx.query.PlSqlQueryExecuterFactory");
-                        JRProperties.setProperty("net.sf.jasperreports.query.executer.factory.plsql", "com.jaspersoft.jrx.query.PlSqlQueryExecuterFactory");
-                        JRProperties.setProperty(JRQueryExecuterFactory.QUERY_EXECUTER_FACTORY_PREFIX + "plsql", "com.jaspersoft.jrx.query.PlSqlQueryExecuterFactory");
+                //Si el archivo de imagen existe
+                File f_archivo_foto = new File(foto);
+                if( f_archivo_foto.exists() ){                    
+                    Map<String, Object> objHashMap2 = new HashMap<String, Object>();
+                    objHashMap.put("empresa", objUsuCredential.getCodemp());
+                    objHashMap.put("cdocumento", newcadenaLetra);                                
+                    objHashMap.put("IMAGEN", foto);                                                                               
+                    objHashMap.put("REPORT_LOCALE", new Locale("en", "US"));
+                    if (rbg_tipo.getItems().get(0).isChecked()) {
+                        if (rbg_reporte.getItems().get(0).isChecked()) {
+                            final Execution exec = Executions.getCurrent();
+                            is = exec.getDesktop().getWebApp().getResourceAsStream(exec.toAbsoluteURI("/WEB-INF/reportes/planillas/mantenimiento/ReportGeneral.jasper", false));
+                            //agregado para formato plsql
+                            JasperReport reporte = (JasperReport) JRLoader.loadObject(is);
+                            reporte.setProperty("net.sf.jasperreports.query.executer.factory.plsql", "com.jaspersoft.jrx.query.PlSqlQueryExecuterFactory");
+                            JRProperties.setProperty("net.sf.jasperreports.query.executer.factory.plsql", "com.jaspersoft.jrx.query.PlSqlQueryExecuterFactory");
+                            JRProperties.setProperty(JRQueryExecuterFactory.QUERY_EXECUTER_FACTORY_PREFIX + "plsql", "com.jaspersoft.jrx.query.PlSqlQueryExecuterFactory");
 
-                         jasperPrint = JasperFillManager.fillReport(reporte, objHashMap, conexion);
-                       // jasperPrint = JasperFillManager.fillReport(is, objHashMap, conexion);
-                        nom_reporte = Utilitarios.hoyAsString1() + "-" + objUsuCredential.getCodemp() + objUsuCredential.getCodsuc() + "_" + "PERSONALGENERAL-" + aleatorio;
-                    } else {
+                             jasperPrint = JasperFillManager.fillReport(reporte, objHashMap, conexion);
+                           // jasperPrint = JasperFillManager.fillReport(is, objHashMap, conexion);
+                            nom_reporte = Utilitarios.hoyAsString1() + "-" + objUsuCredential.getCodemp() + objUsuCredential.getCodsuc() + "_" + "PERSONALGENERAL-" + aleatorio;
+                        } else {
+                            objHashMap.put("empresa", objUsuCredential.getCodemp());
+                            objHashMap.put("cdocumento", newcadenaLetra);
+                            objHashMap.put("IMAGEN", foto);
+                            objHashMap.put("REPORT_LOCALE", new Locale("en", "US"));
+                            final Execution exec = Executions.getCurrent();
+                            is = exec.getDesktop().getWebApp().getResourceAsStream(exec.toAbsoluteURI("/WEB-INF/reportes/planillas/mantenimiento/ReportGeneral.jasper", false));
+                            JasperReport reporte = (JasperReport) JRLoader.loadObject(is);
+                            reporte.setProperty("net.sf.jasperreports.query.executer.factory.plsql", "com.jaspersoft.jrx.query.PlSqlQueryExecuterFactory");
+                            JRProperties.setProperty("net.sf.jasperreports.query.executer.factory.plsql", "com.jaspersoft.jrx.query.PlSqlQueryExecuterFactory");
+                            JRProperties.setProperty(JRQueryExecuterFactory.QUERY_EXECUTER_FACTORY_PREFIX + "plsql", "com.jaspersoft.jrx.query.PlSqlQueryExecuterFactory");
+
+                            //jasperPrint = JasperFillManager.fillReport(is, objHashMap, conexion);
+                              jasperPrint = JasperFillManager.fillReport(reporte, objHashMap, conexion);
+                            nom_reporte = Utilitarios.hoyAsString1() + "-" + objUsuCredential.getCodemp() + objUsuCredential.getCodsuc() + "_" + "PERSONALGENERAL-" + aleatorio;
+                        }
+                        JRPdfExporter exporter = new JRPdfExporter();
+                        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                        exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, rutaFileFicha + nom_reporte + ".pdf");
+                        exporter.exportReport();
+                        file = new File(rutaFileFicha + nom_reporte + ".pdf");
+                        FileInputStream fis = new FileInputStream(file);
+                        amedia = new AMedia(file.getAbsolutePath(), "pdf", "application/pdf", fis);
+                        tipo = "pdf";
+                    } else {//MATRICIAL
                         objHashMap.put("empresa", objUsuCredential.getCodemp());
                         objHashMap.put("cdocumento", newcadenaLetra);
                         objHashMap.put("IMAGEN", foto);
                         objHashMap.put("REPORT_LOCALE", new Locale("en", "US"));
                         final Execution exec = Executions.getCurrent();
-                        is = exec.getDesktop().getWebApp().getResourceAsStream(exec.toAbsoluteURI("/WEB-INF/reportes/planillas/mantenimiento/ReportGeneral.jasper", false));
-                        JasperReport reporte = (JasperReport) JRLoader.loadObject(is);
-                        reporte.setProperty("net.sf.jasperreports.query.executer.factory.plsql", "com.jaspersoft.jrx.query.PlSqlQueryExecuterFactory");
-                        JRProperties.setProperty("net.sf.jasperreports.query.executer.factory.plsql", "com.jaspersoft.jrx.query.PlSqlQueryExecuterFactory");
-                        JRProperties.setProperty(JRQueryExecuterFactory.QUERY_EXECUTER_FACTORY_PREFIX + "plsql", "com.jaspersoft.jrx.query.PlSqlQueryExecuterFactory");
+                        is = exec.getDesktop().getWebApp().getResourceAsStream(exec.toAbsoluteURI("/WEB-INF/reportes/planillas/mantenimiento/ReportGeneral_M.jasper", false));
+                        jasperPrint = JasperFillManager.fillReport(is, objHashMap, conexion);
+                        nom_reporte = Utilitarios.hoyAsString1() + "-" + objUsuCredential.getCodemp() + objUsuCredential.getCodsuc() + "_" + "REPORTEPERSONAL-" + aleatorio;
+                        //formato
+                        JRTextExporter exporter = new JRTextExporter();
+                        exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH, 1060);
+                        exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT, 636);
+                        exporter.setParameter(JRTextExporterParameter.CHARACTER_WIDTH, new Float(7));
+                        exporter.setParameter(JRTextExporterParameter.CHARACTER_HEIGHT, new Float(10));
+                        exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
+                        exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, rutaFileFicha + nom_reporte + ".txt");
+                        exporter.exportReport();
+                        file = new File(rutaFileFicha + nom_reporte + ".txt");
+                        FileInputStream fis = new FileInputStream(file);
+                        amedia = new AMedia(file.getAbsolutePath(), "txt", "text/plain", fis);
+                        tipo = "txt";
 
-                        //jasperPrint = JasperFillManager.fillReport(is, objHashMap, conexion);
-                          jasperPrint = JasperFillManager.fillReport(reporte, objHashMap, conexion);
-                        nom_reporte = Utilitarios.hoyAsString1() + "-" + objUsuCredential.getCodemp() + objUsuCredential.getCodsuc() + "_" + "PERSONALGENERAL-" + aleatorio;
                     }
-                    JRPdfExporter exporter = new JRPdfExporter();
-                    exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-                    exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, rutaFileFicha + nom_reporte + ".pdf");
-                    exporter.exportReport();
-                    file = new File(rutaFileFicha + nom_reporte + ".pdf");
-                    FileInputStream fis = new FileInputStream(file);
-                    amedia = new AMedia(file.getAbsolutePath(), "pdf", "application/pdf", fis);
-                    tipo = "pdf";
-                } else {//MATRICIAL
-                    objHashMap.put("empresa", objUsuCredential.getCodemp());
-                    objHashMap.put("cdocumento", newcadenaLetra);
-                    objHashMap.put("IMAGEN", foto);
-                    objHashMap.put("REPORT_LOCALE", new Locale("en", "US"));
-                    final Execution exec = Executions.getCurrent();
-                    is = exec.getDesktop().getWebApp().getResourceAsStream(exec.toAbsoluteURI("/WEB-INF/reportes/planillas/mantenimiento/ReportGeneral_M.jasper", false));
-                    jasperPrint = JasperFillManager.fillReport(is, objHashMap, conexion);
-                    nom_reporte = Utilitarios.hoyAsString1() + "-" + objUsuCredential.getCodemp() + objUsuCredential.getCodsuc() + "_" + "REPORTEPERSONAL-" + aleatorio;
-                    //formato
-                    JRTextExporter exporter = new JRTextExporter();
-                    exporter.setParameter(JRTextExporterParameter.PAGE_WIDTH, 1060);
-                    exporter.setParameter(JRTextExporterParameter.PAGE_HEIGHT, 636);
-                    exporter.setParameter(JRTextExporterParameter.CHARACTER_WIDTH, new Float(7));
-                    exporter.setParameter(JRTextExporterParameter.CHARACTER_HEIGHT, new Float(10));
-                    exporter.setParameter(JRExporterParameter.JASPER_PRINT, jasperPrint);
-                    exporter.setParameter(JRExporterParameter.OUTPUT_FILE_NAME, rutaFileFicha + nom_reporte + ".txt");
-                    exporter.exportReport();
-                    file = new File(rutaFileFicha + nom_reporte + ".txt");
-                    FileInputStream fis = new FileInputStream(file);
-                    amedia = new AMedia(file.getAbsolutePath(), "txt", "text/plain", fis);
-                    tipo = "txt";
-
-                }
-                objHashMap2.put("amedia", amedia);
-                objHashMap2.put("archivo", file.getAbsolutePath().toString());
-                objHashMap2.put("tipo", tipo);
-                Window window = (Window) Executions.createComponents("/org/me/gj/view/planillas/mantenimiento/Reporte.zul", null, objHashMap2);
-                window.doModal();
+                    objHashMap2.put("amedia", amedia);
+                    objHashMap2.put("archivo", file.getAbsolutePath().toString());
+                    objHashMap2.put("tipo", tipo);
+                    Window window = (Window) Executions.createComponents("/org/me/gj/view/planillas/mantenimiento/Reporte.zul", null, objHashMap2);
+                    window.doModal();
+               }
+                else{
+                    Messagebox.show("La foto de este trabajador no se encuentra en el servidor", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);                    
+                }                                 
             } else if (rbg_impresion.getItems().get(1).isChecked()) {
                 PrintService designatedService = null;
                 PrintService[] printServices = PrintServiceLookup.lookupPrintServices(null, null);

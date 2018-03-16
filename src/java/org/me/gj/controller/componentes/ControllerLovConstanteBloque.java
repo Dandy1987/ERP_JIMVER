@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.log4j.Logger;
+import org.me.gj.controller.planillas.mantenimiento.DaoPerPago;
 import org.me.gj.controller.planillas.mantenimiento.DaoPersonal;
 import org.me.gj.controller.planillas.procesos.ControllerMovLinea;
 import static org.me.gj.controller.planillas.procesos.ControllerMovLinea.bandera;
@@ -59,6 +60,8 @@ public class ControllerLovConstanteBloque extends SelectorComposer<Component> {
     Combobox cb_fsucursal, cb_area;
     @Wire
     Listbox lst_bloque;
+	@Wire
+    Checkbox chk_selecAll;
     Session sesion = Sessions.getCurrent();
     UsuariosCredential objUsuCredential = (UsuariosCredential) sesion.getAttribute("usuariosCredential");
     private static final Logger LOGGER = Logger.getLogger(ControllerMovLinea.class);
@@ -69,18 +72,20 @@ public class ControllerLovConstanteBloque extends SelectorComposer<Component> {
     DaoPersonal objDaoPersonal = new DaoPersonal();
     DaoAccesos objDaoAccesos = new DaoAccesos();
     Movlinea objMovLinea;
+	DaoPerPago objDaoPerPago;
     DaoMovLinea objDaoMovLinea;
     //variable globales
-    String foco, s_mensaje;
-    @Wire
-    Checkbox chk_selecAll;
-
+    String foco, s_mensaje;    
+	
     @Override
     public void doAfterCompose(Component window) throws Exception {
         super.doAfterCompose(window);
         objDaoMovLinea = new DaoMovLinea();
         //periodo
-        String periodo = objDaoMovLinea.setearPeriodo();
+       /* String periodo = objDaoMovLinea.setearPeriodo();
+        txt_periodo.setValue(periodo);*/
+        objDaoPerPago = new DaoPerPago();
+        String periodo = objDaoPerPago.getPeriodoProceso(objUsuCredential.getCodemp());
         txt_periodo.setValue(periodo);
         //se completa combobox de sucursales
         objlstSucursal = objDaoAccesos.lstSucursales_union(objUsuCredential.getCodemp());
@@ -169,14 +174,16 @@ public class ControllerLovConstanteBloque extends SelectorComposer<Component> {
      */
 
     @Listen("onClick=#btn_procesar")
-    public void guardarBloque() {
-        if (txt_periodo.getValue().isEmpty()) {
+    public void guardarBloque() throws SQLException {
+        String periodo = objDaoPerPago.getPeriodoProceso(objUsuCredential.getCodemp());
+        txt_periodo.setValue(periodo);
+        if (periodo.isEmpty() || periodo.equals("--------")) {
             Messagebox.show("No puede procesar, no hay periodo en proceso", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
         } else if (objlsPrincipal.isEmpty()) {
             Messagebox.show("No hay datos a procesar", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
         } else {
             s_mensaje = "Esta seguro que desea guardar los cambios?";
-            Messagebox.show(s_mensaje, "ERP,JIMVER", Messagebox.OK | Messagebox.CANCEL,
+            Messagebox.show(s_mensaje, "ERP-JIMVER", Messagebox.OK | Messagebox.CANCEL,
                     Messagebox.QUESTION, new EventListener() {
 
                         public void onEvent(Event t) throws Exception {

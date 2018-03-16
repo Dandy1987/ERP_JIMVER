@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="InformeAnalisisAfp" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="416ff412-fb85-4ede-800f-b83091046847">
+	<property name="ireport.zoom" value="2.5937424601000023"/>
+	<property name="ireport.x" value="308"/>
+	<property name="ireport.y" value="74"/>
+	<parameter name="nempid" class="java.lang.Integer"/>
+	<parameter name="nsucuid" class="java.lang.Integer"/>
+	<parameter name="cperiodo" class="java.lang.String"/>
+	<parameter name="ccodemp" class="java.lang.String"/>
+	<parameter name="cafp" class="java.lang.String"/>
+	<queryString language="plsql">
+		<![CDATA[{call codijisa.pack_planilla_informes.p_analisisAfp($P{nempid},$P{nsucuid},$P{cperiodo},$P{ccodemp},$P{cafp},$P{ORACLE_REF_CURSOR})}]]>
+	</queryString>
+	<field name="EMPRESA" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="AFPDESCRI" class="java.lang.String"/>
+	<field name="PERIODO" class="java.lang.String"/>
+	<field name="CODEMPLEADO" class="java.lang.String"/>
+	<field name="AFPCOD" class="java.lang.String"/>
+	<field name="BASEIMPONIBLE" class="java.lang.Number"/>
+	<field name="APORTEOBL" class="java.lang.Number"/>
+	<field name="PRIMASEGURO" class="java.lang.Number"/>
+	<field name="COMISIONVAR" class="java.lang.Number"/>
+	<field name="APORTETOTAL" class="java.lang.Number"/>
+	<field name="PERIODODESC" class="java.lang.String"/>
+	<variable name="SUMAFP" class="java.lang.Number" resetType="Group" resetGroup="AFP" calculation="Sum">
+		<variableExpression><![CDATA[$F{APORTETOTAL}]]></variableExpression>
+	</variable>
+	<variable name="SUMCOM" class="java.lang.Number" resetType="Group" resetGroup="AFP" calculation="Sum">
+		<variableExpression><![CDATA[$F{COMISIONVAR}]]></variableExpression>
+	</variable>
+	<variable name="SUMSEG" class="java.lang.Number" resetType="Group" resetGroup="AFP" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRIMASEGURO}]]></variableExpression>
+	</variable>
+	<variable name="SUMOBL" class="java.lang.Number" resetType="Group" resetGroup="AFP" calculation="Sum">
+		<variableExpression><![CDATA[$F{APORTEOBL}]]></variableExpression>
+	</variable>
+	<variable name="SUMBASE" class="java.lang.Number" resetType="Group" resetGroup="AFP" calculation="Sum">
+		<variableExpression><![CDATA[$F{BASEIMPONIBLE}]]></variableExpression>
+	</variable>
+	<variable name="SUMAFP_1" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{APORTETOTAL}]]></variableExpression>
+	</variable>
+	<variable name="SUMCOM_1" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{COMISIONVAR}]]></variableExpression>
+	</variable>
+	<variable name="SUMSEG_1" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{PRIMASEGURO}]]></variableExpression>
+	</variable>
+	<variable name="SUMOBL_1" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{APORTEOBL}]]></variableExpression>
+	</variable>
+	<variable name="SUMBASE_1" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{BASEIMPONIBLE}]]></variableExpression>
+	</variable>
+	<group name="AFP" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{AFPDESCRI}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<staticText>
+					<reportElement uuid="8f7f9610-c36b-4ccf-ae13-0756f0d9cfd4" x="0" y="0" width="48" height="20"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[COD]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="b895a8ed-0abc-438d-b673-ade3624cdd54" x="1" y="20" width="554" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="db17b472-0195-4f9f-be83-8dd9f2ed3846" x="48" y="0" width="184" height="20"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[NOMBRES]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="9454a39e-6b84-4d3f-a3fd-78f39fe1178c" x="232" y="0" width="66" height="20"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[CUSP]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="a3e82c0d-ac4d-459d-9a20-4884f7df9d18" x="298" y="0" width="40" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[BASE IMP]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="ec616357-2763-48a0-b52e-229bb93a6d01" x="338" y="0" width="54" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[APORTE OBL]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="ffaec4b3-941d-4f81-a08b-aa0e85f90cdf" x="392" y="0" width="54" height="20"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[PRIMA SEG]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="6a75e2a0-de2b-4dbb-b2d1-fbf37dd40d34" x="446" y="0" width="41" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[COMI VAR]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="55de26f7-dc9c-47f9-885d-b523e63133ae" x="487" y="0" width="68" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[  TOTAL]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="22">
+				<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+					<reportElement uuid="edc65c91-0694-4fc5-8256-2d9ee03c74e2" mode="Transparent" x="487" y="2" width="68" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUMAFP}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="5a9c4ec2-b5ed-4fdd-831c-b1c0eff4be71" x="0" y="1" width="555" height="1"/>
+				</line>
+				<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+					<reportElement uuid="f674823e-ac1b-4fcc-8039-8f76d9987d1c" mode="Transparent" x="446" y="2" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUMCOM}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+					<reportElement uuid="49fac19a-8152-470f-bcef-2394e2a9f5fb" mode="Transparent" x="392" y="2" width="54" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUMSEG}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+					<reportElement uuid="b946ffba-aa70-4cd3-aa68-82622e0caeaa" mode="Transparent" x="338" y="2" width="54" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUMOBL}]]></textFieldExpression>
+				</textField>
+				<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+					<reportElement uuid="ef6f011d-b02a-4f6d-987e-3ba1f9aed1de" mode="Transparent" x="298" y="2" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+					<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+						<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+						<paragraph lineSpacing="Single"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{SUMBASE}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="25803b90-e26a-4cc7-969a-645d5883a464" x="63" y="2" width="235" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{AFPDESCRI}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="09a368fe-9c6b-4abf-aa6f-bdbc5b901126" x="0" y="2" width="63" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[TOTAL AFP]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="84" splitType="Stretch">
+			<textField>
+				<reportElement uuid="b8c42521-d437-4cc1-8a4d-814d2e2c68ca" x="0" y="0" width="163" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{EMPRESA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="659fcfdd-16c0-4bd2-b757-6706a204f6c6" x="0" y="33" width="555" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[DETALLE DE PAGOS AFPs]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="2aed4b86-5e9b-4d50-bf87-7c7be219f942" x="89" y="64" width="90" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PERIODO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2d48512c-af83-4489-9e8a-57cbd0ea5b4f" x="179" y="64" width="376" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PERIODODESC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="99af4f95-3050-40fa-9692-adcf9a12ff02" x="0" y="64" width="89" height="20"/>
+				<textElement/>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="99199b25-58bb-495b-8639-8cb1c1d78cb1" x="0" y="0" width="48" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODEMPLEADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ccb4a965-71ad-4536-abd8-81ce762b9cd2" x="48" y="0" width="184" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="07b38228-3749-4648-a585-662269ec8fcd" x="232" y="0" width="66" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AFPCOD}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)">
+				<reportElement uuid="6f61f74b-99b9-4605-9d20-5e0b5206841b" x="298" y="0" width="40" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BASEIMPONIBLE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)">
+				<reportElement uuid="9f056284-70aa-43c8-8f3b-1a066c33f452" x="338" y="0" width="54" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{APORTEOBL}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)">
+				<reportElement uuid="7584a475-082e-4eee-b01c-28d9d0d70885" x="392" y="0" width="54" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PRIMASEGURO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)">
+				<reportElement uuid="68b81bb7-91f7-42b0-a783-ee7cc9432b75" x="446" y="0" width="41" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMISIONVAR}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)">
+				<reportElement uuid="09c5693e-c6a2-49d1-91fe-220e77747021" x="487" y="0" width="68" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{APORTETOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+				<reportElement uuid="38dbf114-4aef-4c1b-b60a-f636cdbd595f" mode="Transparent" x="487" y="1" width="68" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUMAFP_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+				<reportElement uuid="e8bd4b67-3941-40fb-8d47-8f37a0b90325" mode="Transparent" x="298" y="1" width="40" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUMBASE_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+				<reportElement uuid="c5e94255-ac85-4072-9683-0ee9fcc4e461" mode="Transparent" x="338" y="1" width="54" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUMOBL_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+				<reportElement uuid="86db9344-fab1-436d-9887-0063360f45e5" mode="Transparent" x="392" y="1" width="54" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUMSEG_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+				<reportElement uuid="1d462f0a-757e-4fac-944b-5612249133fa" mode="Transparent" x="446" y="1" width="41" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUMCOM_1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="09a368fe-9c6b-4abf-aa6f-bdbc5b901126" x="201" y="1" width="97" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[TOTAL ]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="5a9c4ec2-b5ed-4fdd-831c-b1c0eff4be71" x="0" y="0" width="555" height="1"/>
+			</line>
+		</band>
+	</summary>
+</jasperReport>

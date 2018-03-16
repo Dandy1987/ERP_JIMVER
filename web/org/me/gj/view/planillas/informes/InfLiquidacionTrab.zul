@@ -11,7 +11,7 @@
         <center> 
             <div width="100%" sclass="cuerpo-main">
                 <window id="w_liqtra" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
-                    <tabbox id="tabbox_liqtra"  apply="">
+                    <tabbox id="tabbox_liqtra"  apply="org.me.gj.controller.planillas.informes.ControllerLiquidacionTrab">
                         <tabs>
                             <tab id="tab_liqtra" label="LIQUIDACION DE BENEFICIOS SOCIALES"/>
                         </tabs>
@@ -28,8 +28,8 @@
                                                 <label value="PERSONAL :"/>
                                             </cell>
                                             <space width="5px"/>
-                                            <textbox id="txt_codper" maxlength="5" readonly="false" width="35px" focus="false" tooltiptext="Código de Personal" style="text-align: center;"/>
-                                            <textbox id="txt_desper" maxlength="5" readonly="true" width="350px" focus="false" disabled="true" tooltiptext="Descripcion de Personal" />
+                                            <textbox id="txt_codper" maxlength="9" readonly="false" width="100px" focus="false" tooltiptext="Código de Personal" style="text-align: center;"/>
+                                            <textbox id="txt_desper" maxlength="150" readonly="true" width="350px" focus="false" disabled="true" tooltiptext="Descripcion de Personal" />
                                         </hbox>
                                     </div>
                                     

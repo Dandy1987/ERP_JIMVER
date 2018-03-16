@@ -352,6 +352,31 @@ public class DaoPerPago {
         return s_periodo_proceso;
     }
 
+        public String getPeriodoDescripcion(String s_periodo) throws SQLException {
+        String s_periodo_descripcion = null;
+        try {
+            con = (new ConectaBD()).conectar();
+            String sql_query = "{?=call pack_tperpag.f_descper(?)}";
+            cst = con.prepareCall(sql_query);
+            cst.clearParameters();
+            cst.registerOutParameter(1, java.sql.Types.VARCHAR);
+            cst.setString(2, s_periodo);
+            cst.execute();
+            s_periodo_descripcion = cst.getString(1);
+
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } catch (NullPointerException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } finally {
+            if (con != null) {
+                cst.close();
+                con.close();
+            }
+        }
+        return s_periodo_descripcion;
+    }
+	
     /**
      * Metodo que devuelve el periodo calculado segun el codigo de la empresa
      * Llama a funcion call pack_tperpag.f_periodo_calculado(?)

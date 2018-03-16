@@ -12,6 +12,7 @@ import org.me.gj.controller.planillas.mantenimiento.DaoPersonal;
 import org.me.gj.controller.seguridad.mantenimiento.DaoAccesos;
 import org.me.gj.model.planillas.mantenimiento.ManAreas;
 import org.me.gj.model.planillas.mantenimiento.Personal;
+import org.me.gj.model.planillas.procesos.Descuentos;
 import org.me.gj.model.planillas.procesos.Movlinea;
 import org.me.gj.model.seguridad.mantenimiento.Accesos;
 import org.me.gj.model.seguridad.mantenimiento.Sucursales;
@@ -24,16 +25,20 @@ import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
+import org.zkoss.zk.ui.event.ForwardEvent;
 import org.zkoss.zk.ui.event.KeyEvent;
 import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
+import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Doublebox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Listitem;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Radiogroup;
 import org.zkoss.zul.Tab;
@@ -52,8 +57,10 @@ public class ControllerMovLinea extends SelectorComposer<Component> {
     @Wire
     Textbox txt_usua, txt_usumo, txt_idpersonal,
             txt_despersonal, txt_codcons, txt_descons,
-            txt_codconsm, txt_desconsm, txt_periodo,
+            txt_codconsm, txt_desconsm, txt_periodo, txt_periodo2,
             txt_codcon, txt_descon, txt_codigo, txt_codigo1, txt_apenom, txt_codarea, txt_desarea, txt_codarea1;
+    @Wire
+	Label lbl_periododesc;
     @Wire
     Doublebox txt_valorcons, txt_valorconsm;
     @Wire
@@ -64,12 +71,14 @@ public class ControllerMovLinea extends SelectorComposer<Component> {
     Listbox lst_principal, lst_constante, lst_constantemensual;
     @Wire
     Combobox cb_fsucursal, cb_area;
+    @Wire	
+	Checkbox chk_selecAll;
     @Wire
-    Button btn_consultar, btn_genblo;
+    Button btn_consultar, btn_genblo, btn_eliminarBloque;
     @Wire
     Toolbarbutton tbbtn_btn_nuevoc, tbbtn_btn_editarc, tbbtn_btn_deshacerc, tbbtn_btn_eliminarc, tbbtn_btn_guardarc,
             tbbtn_btn_nuevo, tbbtn_btn_editar, tbbtn_btn_eliminar, tbbtn_btn_guardar, tbbtn_btn_deshacer, tbbtn_btn_imprimir;
-    ListModelList<Movlinea> objlstEliminar, objlstMovLinea, objlstConstanteMensual, objlsPrincipal;
+    ListModelList<Movlinea> objlstEliminar, objlstMovLinea, objlstConstanteMensual, objlsPrincipal, objlsPrincipal2;
     Movlinea objMovLinea, objConstanteMensual, objPrincipal;
     DaoMovLinea objDaoMovLinea;
     ManAreas objArea;
@@ -80,8 +89,10 @@ public class ControllerMovLinea extends SelectorComposer<Component> {
     //Instancias de Objetos
     Accesos objAccesos;
     DaoAccesos objDaoAccesos;
+	DaoDescuentos objDaoDescuentos;
     DaoPersonal objDaoPersonal;
     DaoPerPago objDaoPerPago;
+	DaoAsistenciaGen objdaoAsistenciaGen;
     Session sesion = Sessions.getCurrent();
     UsuariosCredential objUsuCredential = (UsuariosCredential) sesion.getAttribute("usuariosCredential");
     private static final Logger LOGGER = Logger.getLogger(ControllerMovLinea.class);
@@ -100,12 +111,15 @@ public class ControllerMovLinea extends SelectorComposer<Component> {
         objDaoMovLinea = new DaoMovLinea();
         objDaoAccesos = new DaoAccesos();
         objDaoPersonal = new DaoPersonal();
+		objDaoDescuentos = new DaoDescuentos();
+        objdaoAsistenciaGen = new DaoAsistenciaGen();
         objlstMovLinea = null;
         objlstMovLinea = new ListModelList<Movlinea>();//lista de constante
         objlstConstanteMensual = null;
         objlstConstanteMensual = new ListModelList<Movlinea>();
         objlstEliminar = null;
         objlsPrincipal = new ListModelList<Movlinea>();
+		objlsPrincipal2 = new ListModelList<Movlinea>();
         objlstEliminar = new ListModelList<Movlinea>();
         habilitaTab(false, true);
         //se completa combobox de sucursales
@@ -118,7 +132,10 @@ public class ControllerMovLinea extends SelectorComposer<Component> {
         //String periodo = objDaoMovLinea.setearPeriodo();
         objDaoPerPago = new DaoPerPago();
         String periodo = objDaoPerPago.getPeriodoProceso(objUsuCredential.getCodemp());
+        String periodo_descrip = objDaoPerPago.getPeriodoDescripcion(periodo);
+          lbl_periododesc.setValue(periodo_descrip);
         txt_periodo.setValue(periodo);
+      
         //se completa lista al ingresar al formulario Movimiento Linea
 
         objlsPrincipal = objDaoMovLinea.ingresoMovimiento(periodo);
@@ -188,7 +205,8 @@ public class ControllerMovLinea extends SelectorComposer<Component> {
             LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | no tiene acceso a impresion de la lista de Movimientos");
         }
 		if (ControllerPersonal.val == 1) {
-            botonNuevo();
+                    botonNuevo();
+                    ControllerPersonal.val = 0;
         }
     }
 	
@@ -312,24 +330,33 @@ public class ControllerMovLinea extends SelectorComposer<Component> {
      * @autor Junior Fernandez
      */
     @Listen("onClick=#tbbtn_btn_nuevo")
-    public void botonNuevo() {
+    public void botonNuevo() throws SQLException {
         estado = "N";
         //if (txt_periodo.getValue()!=null || !txt_periodo.getValue().isEmpty() || txt_periodo.getValue().equalsIgnoreCase("")) {
         if (!txt_periodo.getValue().isEmpty() && !txt_periodo.getValue().equals("--------")) {
-            habilitaBotones(true, false);
-            habilitaBotonesDetalle(false, true);
-            seleccionaTab(false, true);
-            habilitaTab(true, false);
-            txt_idpersonal.focus();
-            txt_idpersonal.setDisabled(false);
-            rbg_indicador.setSelectedIndex(0);
-            limpiaAuditoria();
-            limpiaConstante();
-            limpiaConstanteMensual();
-            limpiarCamposGuardar();
-            limpiarListas();
+            if (objDaoDescuentos.validaPeriodoCalculando(txt_periodo.getValue().toString()) == 1) {
+                Messagebox.show("La planilla se encuentra calculando", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+            } else {
+                int i_valida = objDaoDescuentos.validaPeriodoProceso(txt_periodo.getValue().toString());
+                if (i_valida == 1) {
+                    habilitaBotones(true, false);
+                    habilitaBotonesDetalle(false, true);
+                    seleccionaTab(false, true);
+                    habilitaTab(true, false);
+                    txt_idpersonal.focus();
+                    txt_idpersonal.setDisabled(false);
+                    rbg_indicador.setSelectedIndex(0);
+                    limpiaAuditoria();
+                    limpiaConstante();
+                    limpiaConstanteMensual();
+                    limpiarCamposGuardar();
+                    limpiarListas();
 
-            LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | pulso la opcion nuevo para crear un registro");
+                    LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | pulso la opcion nuevo para crear un registro");
+                } else {
+                    Messagebox.show("El periodo no se encuentra en proceso", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+                }
+            }
         } else {
             Messagebox.show("No hay periodo en proceso no puede continuar con la operación", "ERP-JIMVER", Messagebox.OK,
                     Messagebox.INFORMATION, new EventListener() {
@@ -348,29 +375,39 @@ public class ControllerMovLinea extends SelectorComposer<Component> {
      */
 
     @Listen("onClick=#tbbtn_btn_editar")
-    public void botonEditar() {
+    public void botonEditar() throws SQLException {
         if (!txt_periodo.getValue().isEmpty() && !txt_periodo.getValue().equals("--------")) {
-            txt_idpersonal.setDisabled(true);//pendiente
-            if (lst_principal.getSelectedIndex() == -1) {
-                Messagebox.show("Por favor seleccionar un registro", "ERP-JIMVER", Messagebox.OK,
-                        Messagebox.INFORMATION, new EventListener() {
-                            @Override
-                            public void onEvent(Event event) throws Exception {
-                                if (((Integer) event.getData()).intValue() == Messagebox.OK) {
 
-                                }
-                            }
-                        });
-
+            if (objDaoDescuentos.validaPeriodoCalculando(txt_periodo.getValue().toString()) == 1) {
+                Messagebox.show("La planilla se encuentra calculando", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
             } else {
-                estado = "M";
-                habilitaBotones(true, false);
-                // habilitaBotonesDetalle(false);
-                seleccionaTab(false, true);
-                habilitaTab(true, false);
-                habilitaBotonesDetalle(false, true);
-                objlstEliminar = null;
-                objlstEliminar = new ListModelList<Movlinea>();
+                int i_valida = objDaoDescuentos.validaPeriodoProceso(txt_periodo.getValue().toString());
+                if (i_valida == 1) {
+                    txt_idpersonal.setDisabled(true);//pendiente
+                    if (lst_principal.getSelectedIndex() == -1) {
+                        Messagebox.show("Por favor seleccionar un registro", "ERP-JIMVER", Messagebox.OK,
+                                Messagebox.INFORMATION, new EventListener() {
+                                    @Override
+                                    public void onEvent(Event event) throws Exception {
+                                        if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+
+                                        }
+                                    }
+                                });
+
+                    } else {
+                        estado = "M";
+                        habilitaBotones(true, false);
+                        // habilitaBotonesDetalle(false);
+                        seleccionaTab(false, true);
+                        habilitaTab(true, false);
+                        habilitaBotonesDetalle(false, true);
+                        objlstEliminar = null;
+                        objlstEliminar = new ListModelList<Movlinea>();
+                    }
+                } else {
+                    Messagebox.show("El periodo no se encuentra en proceso", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+                }
             }
         } else {
             Messagebox.show("No hay periodo en proceso no puede continuar con la operación", "ERP-JIMVER", Messagebox.OK,
@@ -1109,17 +1146,17 @@ public class ControllerMovLinea extends SelectorComposer<Component> {
     //Lov para filtro 
     @Listen("onClick=#btn_genblo")
     public void procesoEnBloque() {
-        /// if (bandera == false) {
-        //  bandera = true;
-        // if (txt_codigo.getValue().equals("")) {
-        Map objMapObjetos = new HashMap();
-        objMapObjetos.put("id_per", txt_codigo);
-        objMapObjetos.put("des_per", txt_apenom);
-        objMapObjetos.put("controlador", "ControllerMovLinea");
-        Window window = (Window) Executions.createComponents("/org/me/gj/view/componentes/LovConstanteBloque.zul", null, objMapObjetos);
-        window.doModal();
-        // }
-        //  }
+        boolean x = validaPeriodo();
+        if (x == true) {
+            Map objMapObjetos = new HashMap();
+            objMapObjetos.put("id_per", txt_codigo);
+            objMapObjetos.put("des_per", txt_apenom);
+            objMapObjetos.put("controlador", "ControllerMovLinea");
+            Window window = (Window) Executions.createComponents("/org/me/gj/view/componentes/LovConstanteBloque.zul", null, objMapObjetos);
+            window.doModal();
+        } else {
+            Messagebox.show("No hay periodo en proceso no puede acceder", "ERP-JIMVER", 1, "z-msgbox z-msgbox-information");
+        }
     }
     /*
      * Metodo que se realiza al salir del campo codigo de personal
@@ -1586,8 +1623,8 @@ public class ControllerMovLinea extends SelectorComposer<Component> {
         txt_despersonal.setValue(objPrincipal.getPaterno() + " " + objPrincipal.getMaterno() + " " + objPrincipal.getNombre());
         objlstMovLinea = null;
         objlstConstanteMensual = null;
-        objlstMovLinea = objDaoMovLinea.buscarDetalle(objPrincipal.getCodigo_vista(), "C", objPrincipal.getSucursal());
-        objlstConstanteMensual = objDaoMovLinea.buscarDetalle(objPrincipal.getCodigo_vista(), "M", objPrincipal.getSucursal());
+        objlstMovLinea = objDaoMovLinea.buscarDetalle(objPrincipal.getCodigo_vista(), "C", objPrincipal.getSucursal(),objPrincipal.getPeriodo_proceso());
+        objlstConstanteMensual = objDaoMovLinea.buscarDetalle(objPrincipal.getCodigo_vista(), "M", objPrincipal.getSucursal(),objPrincipal.getPeriodo_proceso());
         lst_constantemensual.setModel(objlstConstanteMensual);
         lst_constante.setModel(objlstMovLinea);
 
@@ -1622,4 +1659,155 @@ public class ControllerMovLinea extends SelectorComposer<Component> {
      d_fecmo.setValue(objMovLinea.getFecha_mod());
              
      }*/
+
+    /**
+     * Metodo para validar periodo
+     *
+     * @return valor
+     */
+    public boolean validaPeriodo() {
+        boolean valor = false;
+        if (txt_periodo.getValue().equals("--------")) {
+            valor = false;
+
+        } else {
+            valor = true;
+        }
+
+        return valor;
+    }
+
+    /**
+     * Metodo de check
+     */
+    @Listen("onCheck=#chk_selecAll")
+    public void seleccionatodo() {
+        if (objlsPrincipal.isEmpty()) {
+            Messagebox.show("No hay registros a mostrar", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+            chk_selecAll.setChecked(false);
+        } else {
+            for (int i = 0; i < objlsPrincipal.getSize(); i++) {
+                objlsPrincipal.get(i).setValSelec(chk_selecAll.isChecked());
+
+            }
+            lst_principal.setModel(objlsPrincipal);
+        }
+    }
+
+    @Listen("onSeleccion=#lst_principal")
+    public void seleccionaRegistro(ForwardEvent evt) {
+        objlsPrincipal = (ListModelList) lst_principal.getModel();
+        //si viene de registrar nuevos recibos
+        if (!objlsPrincipal.isEmpty() || objlsPrincipal != null) {
+            Checkbox chk_Reg = (Checkbox) evt.getOrigin().getTarget();
+            Listitem item = (Listitem) chk_Reg.getParent().getParent();
+            objlsPrincipal.get(item.getIndex()).setValSelec(chk_Reg.isChecked());
+            lst_principal.setModel(objlsPrincipal);
+        }
+    }
+
+    @Listen("onClick=#btn_eliminarBloque")
+    public void eliminarBloque() {
+        boolean x = validaPeriodo();
+        if (x == true) {
+            estado = "E";
+            String valida = verificar();
+            if (!valida.isEmpty()) {
+                Messagebox.show(valida, "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION, new EventListener() {
+                    @Override
+                    public void onEvent(Event event) throws Exception {
+                        if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+                            devuelveFocus();
+
+                        }
+                    }
+                });
+
+            } else {
+                s_mensaje = "Esta seguro que desea eliminar constante en bloque?";
+                Messagebox.show(s_mensaje, "ERP-JIMVER", Messagebox.OK | Messagebox.CANCEL,
+                        Messagebox.QUESTION, new EventListener<Event>() {
+
+                            public void onEvent(Event t) throws Exception {
+                                if (((Integer) t.getData()).intValue() == Messagebox.OK) {
+                                    ParametrosSalida objParam;
+                                    for (int j = 0; j < objlsPrincipal.getSize(); j++) {
+                                        if (objlsPrincipal.get(j).isValSelec()) {
+                                            objlsPrincipal2 = objlsPrincipal;
+                                        }
+
+                                    }
+                                    objParam = objDaoMovLinea.eliminarBloque(getEliminarBloque(objlsPrincipal2));
+                                   // limiparListaPrincipal();
+                                    if (objParam.getFlagIndicador() == 0) {
+                                        buscarRegistros();
+                                       // limiparListaPrincipal();
+                                        if (objParam.getMsgValidacion() == null) {
+                                            Messagebox.show("No se realizó ninguna operación", "ERP-JIMVER", 1, "z-msgbox z-msgbox-information");
+                                        } else {
+                                            Messagebox.show(objParam.getMsgValidacion(), "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION, new EventListener() {
+
+                                                public void onEvent(Event t) throws Exception {
+                                                    if (((Integer) t.getData()).intValue() == Messagebox.OK) {
+                                                        //va el focus que te mostrara despues de guardar
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            }
+                        });
+
+            }
+        } else {
+            Messagebox.show("No hay periodo en proceso no puede acceder", "ERP-JIMVER", 1, "z-msgbox z-msgbox-information");
+        }
+    }
+
+    public String verificar() {
+        String valor;
+        if (txt_codcon.getValue().isEmpty()) {
+            valor = "Ingrese Codigo de  Constante";
+            foco = "constante";
+        } else if (objlsPrincipal.isEmpty()) {
+            valor = "No hay datos en la lista";
+            foco = "lista";
+        } else {
+            valor = "";
+        }
+        return valor;
+    }
+
+    //devuelve cursor en campo vacio
+    public void devuelveFocus() {
+        if (foco.equals("constante")) {
+            txt_codcon.focus();
+        }
+    }
+
+    public Object[][] getEliminarBloque(ListModelList<Movlinea> x) {
+
+        ListModelList<Movlinea> objListaDepurada3;
+        objListaDepurada3 = x;
+
+        Object[][] listaConstante = new Object[objListaDepurada3.size()][11];
+        for (int i = 0; i < objListaDepurada3.size(); i++) {
+            if (objListaDepurada3.get(i).isValSelec() == true) {
+                listaConstante[i][0] = objUsuCredential.getCodemp();
+                listaConstante[i][1] = objListaDepurada3.get(i).getSucursal();//objUsuCredential.getCodsuc(); viene la sucursal del trabajador
+                listaConstante[i][2] = objListaDepurada3.get(i).getTipo_doc();//objMovLinea.getTipo_doc();//String.valueOf(txt_idpersonal.getValue().charAt(0));
+                listaConstante[i][3] = objListaDepurada3.get(i).getNumero_doc();//objMovLinea.getNumero_doc();//txt_idpersonal.getValue().substring(1);   
+                listaConstante[i][4] = objListaDepurada3.get(i).getPeriodo_proceso();
+                listaConstante[i][5] = txt_codcon.getValue();//objListaDepurada3.get(i).getId_concepto();
+                listaConstante[i][6] = objListaDepurada3.get(i).getValor_concepto();
+                listaConstante[i][7] = objUsuCredential.getCuenta();
+                listaConstante[i][8] = objUsuCredential.getComputerName();
+                listaConstante[i][9] = "E";//objListaDepurada3.get(i).getInd_accion(); 
+                listaConstante[i][10] = objListaDepurada3.get(i).getNro_ope();
+            }
+
+        }
+        return listaConstante;
+    }
 }

@@ -4,61 +4,95 @@
 <?link rel="shortcut icon" href="/images/ico/grupojimenez.ico" type="image/x-icon"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
-    <borderlayout sclass="complex-layout" height="100%" width="100%">
+    <borderlayout sclass="complex-layout" height="100%">
         <north  sclass="arriba-main" height="27px" >
             <include src="/plantillas/modulos/MenuPlanillas.zul"/>
         </north>
-        <center>
-            <div width="100%" sclass="cuerpo-main">
-                <window id="w_uticomis" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
-                    <tabbox id="tabbox_uticomis" apply="">
-                        
+        <center>      
+            <div sclass="cuerpo-main" >
+                <window id="w_movlinea" width="100%" height="100%" border="none" closable="true" ctrlKeys="#f2#f4#f7#f10#f8#f9">
+                    <toolbar id="tb_transacciones"  width="99.75%" height="15px">
+                       
+                        <label value=""  sclass="titulo_mant" style="margin-left:470px;" />
+                    </toolbar>  
+                           
+                    <tabbox id="tabbox_movlinea"  apply="org.me.gj.controller.planillas.utilitarios.ControllerUtiComision">
                         <tabs>
-                            <tab id="tab_uticomis"/>
+                            <tab id="tab_lista"/>
                         </tabs>
-                        
                         <tabpanels>
-                            
                             <tabpanel>
-                                
+                                <div id="div_lst_personal" >  
+                       
                                 <groupbox width="987px" open="true" closable="false" style="text: center;">
-                                    <caption label="ENLACE A CONTABILIDAD"/>
-                                    
-                                    <space height="30px"/>
-                                    
-                                    <div id="div_center01" align="center">
-                                    
-                                        <hbox align="center">
-                                            <cell align="left" width="70px">
-                                                <label value="PERIODO : "/>
-                                            </cell>
-                                            <combobox id="cb_periodo" width="150px" tooltiptext="Seleccione Periodo" readonly="true" placeholder="--------Seleccione--------"/>
-                                        </hbox>
-                                    
-                                        <space height="30px"/>
-                                    
-                                        <hbox align="center">
-                                            <cell align="left" width="70px">
-                                                <label value="SUCURSAL : "/>
-                                            </cell>
-                                            <combobox id="cb_sucursal" width="150px" tooltiptext="Seleccione Sucursal" readonly="true" placeholder="--------Seleccione--------"/>
-                                        </hbox>
-                                    
-                                        <space height="30px"/>
-                                    
-                                        <hbox align="center">
-                                            <button id="btn_aceptar" label="Aceptar" sclass="botones"/>    
-                                        </hbox>
-                                    
-                                    </div>
-                                    
-                                    <space height="30px"/>
+                                    <caption label="Cargar comision a los movimientos de la planilla"/>
+                                   
+                                    <hbox align="center">
+                                        <space width="100px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="PERIODO : "/>
+                                        </cell>
+                                        <!-- <combobox id="cb_periodo" width="150px" tooltiptext="Seleccione Periodo" readonly="true" placeholder="-->
+                                        <textbox id="txt_periodo" style="text-align:center;"  disabled="true"  width="52px"/> 
+                                        <space width="30px"/>
+                                        <cell align="right" valign="center">
+                                            <label value="SUCURSAL : "/>
+                                        </cell>
+                                        <combobox id="cb_sucursal" width="100px" tooltiptext="Seleccione Sucursal" readonly="true" placeholder="-Seleccione-">
+                                            <template name="model">
+                                                <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                            </template>
+                                        </combobox>
+                                        <space width="60px"/>
+                                        <button id="btn_buscar" label="Buscar" sclass="botones"/>  
+                                        
+                                    </hbox>
                                     
                                 </groupbox>
+                                <separator height="12px"/> 
+                                <listbox id="lst_lista" mold="paging" pageSize="18"  width="985px" height="450px">
+                                    <listhead>
+                                        <listheader label="CODIGO" width="100px" align="center"/>
+                                        <listheader label="DNI" width="150px" align="center"/>
+                                        <listheader label="PERSONAL" width="550px" align="center"/>
+                                        <listheader label="COMISION" width="150px" align="center"/>
+                                      
+                                        <listheader>
+                                            <checkbox id="chk_selecAll"/>
+                                        </listheader>
+                                    </listhead>
+                                    <template name="model">	
+                                        <listitem>
+                                            <listcell label="${each.cod_vendedor}"/>
+                                            <listcell label="${each.dni}" style="text-align:center;"/>
+                                            <listcell label="${each.personal}" style="text-align:left;"/>
+                                            <listcell label="${each.valor}" style="text-align:right;"/>
+                                  
+                                            <listcell>
+                                                <checkbox forward="onCheck=lst_lista.onSeleccion"  checked="${each.valSelec}"/>
+                                            </listcell>  
+                                        </listitem>
+                                    </template>
+                                </listbox>
+                                <hbox align="center">
+                                <button id="btn_procesar" label="Procesar" sclass="boton_1"/>  
+                                </hbox>
+                                </div>
+                            </tabpanel>   
+                        </tabpanels>                 
+                    </tabbox>
+                </window>
+            </div>
+        </center>
+        <south border="0" height="25px">
+            <include src="/plantillas/Pie.zul"/>
+        </south>
+    </borderlayout>  
+</zk>
+
+       
                                 
-                                <space height="5px"/>
-                                
-                                <groupbox width="987px" open="true" closable="false" style="text: center;">
+                              <!--  <groupbox width="987px" open="true" closable="false" style="text: center;">
                                     <caption label="ENLACE POR CONCEPTOS DESDE ARCHIVO"/>
                                     
                                     <space height="30px"/>
@@ -94,18 +128,5 @@
                                     
                                     <space height="30px"/>
                                     
-                                </groupbox>
-                                
-                            </tabpanel>
-                            
-                        </tabpanels>                        
-                        
-                    </tabbox>
-                </window>
-            </div>  
-        </center>
-        <south border="0" height="25px">
-            <include src="/plantillas/Pie.zul"/>
-        </south>
-    </borderlayout>
-</zk>
+</groupbox>-->
+   

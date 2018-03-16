@@ -54,7 +54,7 @@
                                                 <textbox id="txt_periodo1" visible="false" />
                                                 <space width="13px"/>
                                                 <cell align="left" width="290px">
-                                                    <label id="lbl_desper" value="OCTUBRE NORMAL - VACACIONES" style="font-weight: bold;"/>
+                                                    <label id="lbl_periododesc" style="font-weight: bold;" width="300px" />
                                                 </cell>
                                                 <space width="10px"/>
                                                 <cell align="left" width="65px">

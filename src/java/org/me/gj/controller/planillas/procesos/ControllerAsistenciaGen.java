@@ -185,13 +185,14 @@ public class ControllerAsistenciaGen extends SelectorComposer<Component> {
         i_dias_selecc = 0;
         rbg_asisgen.setSelectedItem(null);
         limpiarFechas();
+		/*
 		int i_valida = objdaoAsistenciaGen.validaCambioAsistencia(cb_periodo.getValue().toString());
         if (i_valida == 0) {
             tbbtn_btn_editar.setDisabled(true);
         } else {
             tbbtn_btn_editar.setDisabled(false);
         }
-
+*/
     }
 
      @Listen("onCreate=#tb_transacciones")
@@ -912,8 +913,8 @@ public class ControllerAsistenciaGen extends SelectorComposer<Component> {
     }
 
     @Listen("onClick=#tbbtn_btn_guardar")
-    public void botonGuardar() {
-
+    public void botonGuardar() throws SQLException {
+		
         s_mensaje = "Está seguro que desea guardar los cambios?";
         Messagebox.show(s_mensaje, "ERP-JIMVER", Messagebox.OK | Messagebox.CANCEL,
                 Messagebox.QUESTION, new EventListener() {
@@ -969,21 +970,32 @@ public class ControllerAsistenciaGen extends SelectorComposer<Component> {
         if (lst_asistenciagen.getSelectedIndex() == -1) {
             Messagebox.show("Por favor seleccione un registro de la tabla", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
         } else {
-            objlstLov = null;
-            objlstLov = new ListModelList<AsistenciaGen>();
-            s_estado = "M";
-            i_num_descansos = objdaoAsistenciaGen.getDescansoMedico(objAsistenciaGen.getPeriodo(), objAsistenciaGen.getId_per());
-            habilitaBotones(true, false);
-            habilitaTab(true, false);
-            seleccionaTab(false, true);
-            txt_asistencia.setDisabled(true);
-            habilitaRadioGroup(false);
-            limpiarFechas();
-            rbg_asisgen.setSelectedItem(null);
-            if (b_vaolidaseleccion == false) {
-                d_fecini.setDisabled(false);
-                d_fecfin.setDisabled(false);
+            if (objdaoAsistenciaGen.validaPeriodoCalculado(cb_periodo.getValue().toString()) == 1) {
+                Messagebox.show("La planilla se encuentra calculando", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+            } else {
+
+                int i_valida = objdaoAsistenciaGen.validaPeriodoProceso(cb_periodo.getValue().toString());
+                if (i_valida == 1) {
+                    objlstLov = null;
+                    objlstLov = new ListModelList<AsistenciaGen>();
+                    s_estado = "M";
+                    i_num_descansos = objdaoAsistenciaGen.getDescansoMedico(objAsistenciaGen.getPeriodo(), objAsistenciaGen.getId_per());
+                    habilitaBotones(true, false);
+                    habilitaTab(true, false);
+                    seleccionaTab(false, true);
+                    txt_asistencia.setDisabled(true);
+                    habilitaRadioGroup(false);
+                    limpiarFechas();
+                    rbg_asisgen.setSelectedItem(null);
+                    if (b_vaolidaseleccion == false) {
+                        d_fecini.setDisabled(false);
+                        d_fecfin.setDisabled(false);
+                    }
+                } else {
+                    Messagebox.show("El periodo no se encuentra en proceso", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+                }
             }
+
         }
     }
 
@@ -1047,13 +1059,14 @@ public class ControllerAsistenciaGen extends SelectorComposer<Component> {
 
         limpiarCampos();
         limpiaAuditoria();
+		/*
         int i_valida = objdaoAsistenciaGen.validaCambioAsistencia(cb_periodo.getSelectedItem().getValue().toString());
         if (i_valida == 0) {
             tbbtn_btn_editar.setDisabled(true);
         } else {
             tbbtn_btn_editar.setDisabled(false);
         }
-
+*/
     }
 
     public void llenarCabecera(AsistenciaGen objAsistenciaGen) throws SQLException {

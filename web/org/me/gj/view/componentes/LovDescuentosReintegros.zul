@@ -68,13 +68,13 @@
             </groupbox>
             
             <separator height="12px"/>    
-            <listbox id="lst_lista" mold="paging" width="825px" height="350px">
+            <listbox id="lst_lista" mold="paging" width="825px" pageSize="13" height="350px">
                 <listhead>
-                    <listheader label="REC. INGRESO" align="center"/>
-                    <listheader label="CODIGO"  align="center"/>
-                    <listheader label="TRABAJADOR"  align="center"/>
-                    <listheader label="IMPORTE"  align="center"/>
-                    <listheader label="GLOSA"  align="center"/>
+                    <listheader label="REC. INGRESO" align="center" width="100px"/>
+                    <listheader label="CODIGO"  align="center" width="75px"/>
+                    <listheader label="TRABAJADOR"  align="center" width="320px"/>
+                    <listheader label="IMPORTE"  align="center" width="60px"/>
+                    <listheader label="GLOSA"  align="center"  width ="175px"/>
                     <listheader label="REC. EGRESO"  align="center"/>
                     <listheader width="25px" >
                         <checkbox id="chk_selecAll"/>
@@ -82,15 +82,18 @@
                 </listhead>
                 <template name="model">	
                     <listitem>
-                        <listcell label="${each.codigo_vista}"/>
-                        <listcell label="${each.paterno} ${each.materno} ${each.nombre}" style="text-align:left;"/>
-                        <listcell label="${each.valor_concepto}" style="text-align:right;"/>
-                        <listcell label="${each.codigo_vista}"/>
-                        <listcell label="${each.codigo_vista}"/>
-                        <listcell label="${each.codigo_vista}"/>
+                        <listcell label="${each.recibo_egreso}"/>
+                        <listcell label="${each.cod_personal}" style="text-align:center;"/>
+                        <listcell label="${each.nombre_completo}"/>
+                  
+                        <listcell label="${each.neto}" style="text-align:right;"/>
+                 
+                        <listcell label="${each.glosa}"/>
+                        <listcell label="${each.recibo_egreso_referencia}"/>
                         <listcell>
-                            <checkbox forward="onCheck=lst_bloque.onSeleccion"  checked="${each.valSelec}"/>
+                            <checkbox forward="onCheck=lst_lista.onSeleccion"  checked="${each.valSelec}"/>
                         </listcell>  
+           
                     </listitem>
                 </template>
             </listbox>

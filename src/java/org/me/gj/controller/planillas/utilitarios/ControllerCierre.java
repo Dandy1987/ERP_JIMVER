@@ -59,7 +59,7 @@ public class ControllerCierre extends SelectorComposer<Component> {
         if (periodo.equals("") || periodo.equals("--------")) {
             Messagebox.show("No hay ningun periodo en proceso", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
         } else {
-            if (percom.equals("00") || percom.equals("01") || percom.equals("02") || percom.equals("03")) {
+            if (percom.equals("03")) {//percom.equals("00") || percom.equals("01") || percom.equals("02") || 
 
                 //comparamos los numero de trabajadores 
                 int trab_act = objDaoCierre.trabActivos(periodo);

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import org.me.gj.controller.planillas.informes.ControllerBoletaPago;
+import org.me.gj.controller.planillas.informes.ControllerInfUtil;
 import org.me.gj.controller.planillas.procesos.DaoMovLinea;
 import org.me.gj.model.planillas.mantenimiento.Personal;
 import org.me.gj.model.seguridad.utilitarios.UsuariosCredential;
@@ -51,7 +52,7 @@ public class ControllerLovInformesBoletaPago extends SelectorComposer<Component>
     Personal objPersonal;
 
     DaoMovLinea objDaoManPresPer = new DaoMovLinea();
-    String sucursal, periodo, controlador, area;
+    String sucursal, periodo, controlador, area,estadotrab;
     Map parametros;
 
     int tipo;
@@ -70,6 +71,7 @@ public class ControllerLovInformesBoletaPago extends SelectorComposer<Component>
         tipo = (Integer) parametros.get("tipo");
         controlador = (String) parametros.get("controlador");
         area = (String) parametros.get("area");
+		estadotrab = (String)parametros.get("estado");
     }
 
     @Listen("onCreate=#w_lov_movimiento")
@@ -83,8 +85,27 @@ public class ControllerLovInformesBoletaPago extends SelectorComposer<Component>
         }else{
             sucu = Integer.parseInt(sucursal);
         }
-        
-        objlstPersonal = objDaoManPresPer.buscarPersonaBoleta(sucu, periodo, tipo, s_aux);
+        //Va condiciones para validar el mismo lov pero con diferentes
+        //parametros de acuerdo al controlador que usamos
+        if (controlador.equals("ControllerInfUtil")) {
+            if (tipo == 1) {
+                objlstPersonal = objDaoManPresPer.buscarPersonalInformesPlames(sucursal,"",periodo); 
+            }else{
+                objlstPersonal = objDaoManPresPer.buscarPersonalInformesPlanilla(sucursal,"",periodo); 
+            }
+           
+            
+        }else if (controlador.equals("ControllerBoletaPago")) {
+             if (tipo == 1) {
+                objlstPersonal = objDaoManPresPer.buscarPersonalInformesPlames(sucursal,"",periodo); 
+            }else{
+                objlstPersonal = objDaoManPresPer.buscarPersonalInformesPlanilla(sucursal,"",periodo); 
+            }
+        }
+        else{
+             objlstPersonal = objDaoManPresPer.buscarPersonaBoleta(sucu, periodo, tipo, s_aux,estadotrab);
+        }
+       
         lst_movimiento.setModel(objlstPersonal);
         lst_movimiento.focus();
         txt_busqueda_per.focus();
@@ -150,6 +171,8 @@ public class ControllerLovInformesBoletaPago extends SelectorComposer<Component>
         if (controlador.equals("ControllerBoletaPago")) {
             ControllerBoletaPago.bandera = false;
 
+        }if (controlador.equals("ControllerInfUtil")) {
+                ControllerInfUtil.bandera = false;
         }
     }
 
@@ -186,6 +209,9 @@ public class ControllerLovInformesBoletaPago extends SelectorComposer<Component>
             ControllerBoletaPago.bandera = false;
 
         }
+        if (controlador.equals("ControllerInfUtil")) {
+                ControllerInfUtil.bandera = false;
+            }
         w_lov_movimiento.detach();
 
     }

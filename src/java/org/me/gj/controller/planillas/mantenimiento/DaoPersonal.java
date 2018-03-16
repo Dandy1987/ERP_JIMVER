@@ -57,7 +57,7 @@ public class DaoPersonal {
     Personal objPersonal;
     DerHabiente objDerHabiente;
     DatosLaborales objDatosLab;
-    
+
     Bancos objBancos;
 
     /*Condicion objCondicion;
@@ -128,7 +128,7 @@ public class DaoPersonal {
 
     //LOV BANCOS
     ListModelList<Bancos> objlstBancos;
-  
+
     //LOV HORARIOS
     ListModelList<HorariosPla> objlstHorarios;
     HorariosPla objHorarios;
@@ -586,7 +586,7 @@ public class DaoPersonal {
         return objlstTablas1;
     }
 
-    public ListModelList<Personal> consultaPersonal(String sucursal, String per_ingreso, String per_cesado, int seleccion, String busqueda, String cesados, int estado, String area,String costo) throws SQLException {
+    public ListModelList<Personal> consultaPersonal(String sucursal, String per_ingreso, String per_cesado, int seleccion, String busqueda, String cesados, int estado, String area, String costo) throws SQLException {
 
         String documento = "", paterno = "", materno = "", nombres = "", cargo = "";
         switch (seleccion) {
@@ -633,7 +633,7 @@ public class DaoPersonal {
                 //cst.setString(12, orden);
                 cst.registerOutParameter(12, OracleTypes.CURSOR); //REF CURSOR
                 cst.setString(13, area);
-				cst.setString(14, costo);
+                cst.setString(14, costo);
                 cst.execute();
                 rs = ((OracleCallableStatement) cst).getCursor(12);
 
@@ -675,6 +675,7 @@ public class DaoPersonal {
 
                     //DATOS LABORALES
                     objPersonal.setSuc_id(rs.getInt("suc_id"));
+                    objPersonal.setEmp_id(rs.getInt("emp_id"));
                     objPersonal.setPlcodemp(rs.getString("plcodemp"));
                     objPersonal.setPlarea(rs.getString("plarea"));
                     objPersonal.setPlccosto(rs.getString("plccosto"));
@@ -687,7 +688,7 @@ public class DaoPersonal {
                     objPersonal.setPlsujconinm(rs.getInt("plsujconinm"));
                     objPersonal.setPltipsue(rs.getInt("pltipsue"));
                     objPersonal.setPlperrem(rs.getInt("plperrem"));
-                  //  objPersonal.setPlhextra(rs.getInt("plhextra"));
+                    //  objPersonal.setPlhextra(rs.getInt("plhextra"));
                     objPersonal.setPlputil(rs.getInt("plputil"));
                     objPersonal.setPlquinta(rs.getInt("plquinta"));
                     objPersonal.setPlotr5ta(rs.getInt("plotr5ta"));
@@ -832,7 +833,7 @@ public class DaoPersonal {
                     objDerHabiente.setPldh_nacion_des(rs.getString("pldh_nacion_des"));
                     objDerHabiente.setPldh_situa_des(rs.getString("pldh_situa_des"));
                     objDerHabiente.setPldh_dirubigeo_des(rs.getString("pldh_dirubigeo_des"));
-					objDerHabiente.setPldh_estudios(rs.getInt("estudios"));
+                    objDerHabiente.setPldh_estudios(rs.getInt("estudios"));
                     objDerHabiente.setPldh_discapacidad(rs.getInt("discapacidad"));
                     objlstDerHabientes.add(objDerHabiente);
                 }
@@ -2257,86 +2258,86 @@ public class DaoPersonal {
 
     }
 
-	/*
+    /*
+     //LOV BANCOS
+     public ListModelList<Bancos> busquedaLovBancos() throws SQLException {
+
+     String sql_bancos = "select b.ban_key, b.ban_des from tbancos b "
+     + " where b.ban_estado = '1' "
+     + " order by b.ban_key ";
+
+     objlstBancos = new ListModelList<Bancos>();
+
+     try {
+
+     con = new ConectaBD().conectar();
+     st = con.createStatement();
+     rs = st.executeQuery(sql_bancos);
+     while (rs.next()) {
+     objBancos = new Bancos();
+     objBancos.setKey(rs.getInt("ban_key"));
+     objBancos.setDescripcion(rs.getString("ban_des"));
+     objlstBancos.add(objBancos);
+
+     }
+
+     } catch (SQLException e) {
+     Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+     } catch (NullPointerException e) {
+     Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+     } finally {
+     if (con != null) {
+     st.close();
+     rs.close();
+     con.close();
+     }
+
+     }
+
+     return objlstBancos;
+
+     }
+
+     public ListModelList<Bancos> busquedaLovBancos2(String consulta) throws SQLException {
+
+     String sql_bancos = "select b.ban_key,b.ban_des from tbancos b "
+     + " where b.ban_estado = '1' "
+     + " and b.ban_des like '%" + consulta + "%' "
+     + " order by b.ban_key ";
+
+     objlstBancos = new ListModelList<Bancos>();
+
+     try {
+
+     con = new ConectaBD().conectar();
+     st = con.createStatement();
+     rs = st.executeQuery(sql_bancos);
+     while (rs.next()) {
+     objBancos = new Bancos();
+     objBancos.setKey(rs.getInt("ban_key"));
+     objBancos.setDescripcion(rs.getString("ban_des"));
+     objlstBancos.add(objBancos);
+
+     }
+
+     } catch (SQLException e) {
+     Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+     } catch (NullPointerException e) {
+     Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+     } finally {
+     if (con != null) {
+     st.close();
+     rs.close();
+     con.close();
+     }
+
+     }
+
+     return objlstBancos;
+
+     }
+     */
     //LOV BANCOS
-    public ListModelList<Bancos> busquedaLovBancos() throws SQLException {
-
-        String sql_bancos = "select b.ban_key, b.ban_des from tbancos b "
-                + " where b.ban_estado = '1' "
-                + " order by b.ban_key ";
-
-        objlstBancos = new ListModelList<Bancos>();
-
-        try {
-
-            con = new ConectaBD().conectar();
-            st = con.createStatement();
-            rs = st.executeQuery(sql_bancos);
-            while (rs.next()) {
-                objBancos = new Bancos();
-                objBancos.setKey(rs.getInt("ban_key"));
-                objBancos.setDescripcion(rs.getString("ban_des"));
-                objlstBancos.add(objBancos);
-
-            }
-
-        } catch (SQLException e) {
-            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
-        } catch (NullPointerException e) {
-            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
-        } finally {
-            if (con != null) {
-                st.close();
-                rs.close();
-                con.close();
-            }
-
-        }
-
-        return objlstBancos;
-
-    }
-
-    public ListModelList<Bancos> busquedaLovBancos2(String consulta) throws SQLException {
-
-        String sql_bancos = "select b.ban_key,b.ban_des from tbancos b "
-                + " where b.ban_estado = '1' "
-                + " and b.ban_des like '%" + consulta + "%' "
-                + " order by b.ban_key ";
-
-        objlstBancos = new ListModelList<Bancos>();
-
-        try {
-
-            con = new ConectaBD().conectar();
-            st = con.createStatement();
-            rs = st.executeQuery(sql_bancos);
-            while (rs.next()) {
-                objBancos = new Bancos();
-                objBancos.setKey(rs.getInt("ban_key"));
-                objBancos.setDescripcion(rs.getString("ban_des"));
-                objlstBancos.add(objBancos);
-
-            }
-
-        } catch (SQLException e) {
-            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
-        } catch (NullPointerException e) {
-            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
-        } finally {
-            if (con != null) {
-                st.close();
-                rs.close();
-                con.close();
-            }
-
-        }
-
-        return objlstBancos;
-
-    }
-	*/
-	    //LOV BANCOS
     public ListModelList<Bancos> busquedaLovBancos() throws SQLException {
 
         String sql_bancos = "select b.ban_id,b.ban_des from tbancos b "
@@ -2933,10 +2934,10 @@ public class DaoPersonal {
         return objlstPersonal;
     }
 
-       //valida numero de digitos de cuneta de banco
-       public int consultaDigitos(String cod_banco) throws SQLException {
+    //valida numero de digitos de cuneta de banco
+    public int consultaDigitos(String cod_banco) throws SQLException {
         int valor = 0;
-        String sql ="select t.ban_numeracion as ctaCant from tbancos t where t.ban_id =" + cod_banco + "";
+        String sql = "select t.ban_numeracion as ctaCant from tbancos t where t.ban_id =" + cod_banco + "";
 // "select count(t.plnrodoc) as a  from tpersonal t where t.plnrodoc=" + documento + "";
         try {
             con = new ConectaBD().conectar();
@@ -2992,8 +2993,8 @@ public class DaoPersonal {
         return valor;
 
     }
-	
-/**
+
+    /**
      * @return lista de areas para combobox
      * @throws java.sql.SQLException
      * @autor Junior Fernandez Metodo de combobox en movimiento linea
@@ -3043,7 +3044,7 @@ public class DaoPersonal {
 
 //ver emopresa y sucursal
     public ListModelList<Personal> verEmpresa(String documento) throws SQLException {
-		
+
         String query = " select e.emp_des,s.suc_des,t.plfecces fecha_cese,pack_tpersonal.ftb1_descripcion(t.plcesemot,'00021') plcesemot_des "
                 + " from tempresas e , tsucursales s , tpldatoslab t"
                 + " where e.emp_id = s.emp_id"
@@ -3088,13 +3089,12 @@ public class DaoPersonal {
         return objlstPersonal;
 
     }
-	
+
     /**
      * ***********************************************
-     * para patrones empleados
-	 ************************************************
+     * para patrones empleados ***********************************************
      */
-       public ListModelList<Personal> consultaPatronPersonal(String empresa,String sucursal, String per_ingreso, String per_cesado, int seleccion, String busqueda, String cesados, int estado, String area,String costo) throws SQLException {
+    public ListModelList<Personal> consultaPatronPersonal(String empresa, String sucursal, String per_ingreso, String per_cesado, int seleccion, String busqueda, String cesados, int estado, String area, String costo) throws SQLException {
 
         String documento = "", paterno = "", materno = "", nombres = "", cargo = "";
         switch (seleccion) {
@@ -3141,7 +3141,7 @@ public class DaoPersonal {
                 //cst.setString(12, orden);
                 cst.registerOutParameter(12, OracleTypes.CURSOR); //REF CURSOR
                 cst.setString(13, area);
-				cst.setString(14, costo);
+                cst.setString(14, costo);
                 cst.execute();
                 rs = ((OracleCallableStatement) cst).getCursor(12);
 
@@ -3283,8 +3283,8 @@ public class DaoPersonal {
 
         return objlstPersonal;
     }
-	
-public String copiaMovimiento(String s_codemp, String s_periodo) throws SQLException {
+
+    public String copiaMovimiento(String s_codemp, String s_periodo) throws SQLException {
 
         String SQL = "{call pack_tpersonal.p_datostlanillatrunca(?,?,?,?,?,?,?,?)}";
         int i_flag;
@@ -3299,7 +3299,7 @@ public String copiaMovimiento(String s_codemp, String s_periodo) throws SQLExcep
             cst.setString(3, s_codemp);
             cst.setString(4, objUsuCredential.getCuenta());
             cst.setString(5, objUsuCredential.getComputerName());
-            cst.setString(6, s_periodo+"03");
+            cst.setString(6, s_periodo + "03");
             cst.registerOutParameter(7, java.sql.Types.INTEGER);
             cst.registerOutParameter(8, java.sql.Types.VARCHAR);
 
@@ -3322,5 +3322,72 @@ public String copiaMovimiento(String s_codemp, String s_periodo) throws SQLExcep
         return s_msg;
 
     }
-	
+
+    public String eliminaMovimiento(String s_codemp, String s_periodo) throws SQLException {
+
+        String SQL = "{call pack_tpersonal.p_borrarplanillatrunca(?,?,?,?,?,?)}";
+        int i_flag;
+        try {
+            con = new ConectaBD().conectar();
+            cst = con.prepareCall(SQL);
+
+            cst.clearParameters();
+
+            cst.setInt(1, objUsuCredential.getCodemp());
+            cst.setInt(2, objUsuCredential.getCodsuc());
+            cst.setString(3, s_codemp);
+            cst.setString(4, s_periodo + "03");
+            cst.registerOutParameter(5, java.sql.Types.INTEGER);
+            cst.registerOutParameter(6, java.sql.Types.VARCHAR);
+
+            cst.execute();
+            s_msg = cst.getString(6);
+            i_flag = cst.getInt(5);
+        } catch (SQLException e) {
+            s_msg = "Ocurrio una Excepcion debido al Error " + e.toString();
+            LOGGER.error("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | no pudo realizar la creación de un registro debido al error " + e.toString());
+        } catch (NullPointerException e) {
+            s_msg = "Ocurrio una Excepcion debido al Error " + e.toString();
+            LOGGER.error("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | no puedo realizar la creación porque no existe conexión a BD debido al error" + e.toString());
+        } finally {
+            if (con != null) {
+                cst.close();
+                con.close();
+            }
+        }
+
+        return s_msg;
+
+    }
+
+    public ParametrosSalida generarAsistenciaAut(int empresa, int sucursal, String periodo, String personal) throws SQLException {
+
+        String SQL_PROCEDURE = "{call codijisa.pack_tpersonal.p_generaAsistenciaAut(?,?,?,?,?,?,?)}";
+        try {
+            con = new ConectaBD().conectar();
+            cst = con.prepareCall(SQL_PROCEDURE);
+            cst.clearParameters();
+            cst.setInt(1, empresa);
+            cst.setInt(2, sucursal);
+            cst.setString(3, periodo.trim());
+            cst.setString(4, personal);//1
+            cst.setString(5, objUsuCredential.getCuenta());//2
+            cst.registerOutParameter(6, java.sql.Types.NUMERIC);//4
+            cst.registerOutParameter(7, java.sql.Types.VARCHAR);//5
+            cst.execute();
+            i_flagErrorBD = cst.getInt(6);//4
+            s_msg = cst.getString(7);//5
+            //LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | elimino un registro con código " + codigo);
+        } catch (SQLException e) {
+            s_msg = "Ocurrio una Excepcion debido al Error " + e.toString();
+            //LOGGER.error("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | no pudo realizar la eliminación de un registro debido al error " + e.toString());
+        } finally {
+            if (con != null) {
+                con.close();
+                cst.close();
+            }
+        }
+        return new ParametrosSalida(i_flagErrorBD, s_msg);
+    }
+
 }

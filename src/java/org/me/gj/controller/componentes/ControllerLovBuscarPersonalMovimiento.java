@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import org.me.gj.controller.planillas.informes.ControllerCertificadoTrab;
+import org.me.gj.controller.planillas.informes.ControllerLiquidacionTrab;
 import org.me.gj.controller.planillas.informes.DaoCartaBancos;
 import org.me.gj.controller.planillas.informes.DaoCertificadoTrab;
 import org.me.gj.controller.planillas.mantenimiento.ControllerManPresPer;
@@ -70,11 +71,23 @@ public class ControllerLovBuscarPersonalMovimiento extends SelectorComposer<Comp
             lst_per.focus();
             txt_busqueda_per.focus();
         } else if (controlador.equals("ControllerCartaBancos")) {
-            objlstPersonal = objDaoInfCarBan.busquedaLovPersonal(objUsuCredential.getCodemp(),"1",3,"",2);
+            objlstPersonal = objDaoInfCarBan.busquedaLovPersonal(objUsuCredential.getCodemp(),"",3,"",3);
             lst_per.setModel(objlstPersonal);
             lst_per.focus();
             txt_busqueda_per.focus();
-        } else {
+        } 
+        else if (controlador.equals("ControllerInfUtil")) {
+            objlstPersonal = objDaoInfCarBan.LovPersonalDinamico(objUsuCredential.getCodemp(),"1",3,"",2);
+            lst_per.setModel(objlstPersonal);
+            lst_per.focus();
+            txt_busqueda_per.focus();
+        } else if (controlador.endsWith("ControllerLiquidacionTrab")) {
+            objlstPersonal = objDaoInfCarBan.LovPersonalDinamico(objUsuCredential.getCodemp(),"2",1,"",3);
+            lst_per.setModel(objlstPersonal);
+            lst_per.focus();
+            txt_busqueda_per.focus();
+        }               
+        else {
             objlstPersonal = objDaoManPresPer.busquedaLovPersonal(objUsuCredential.getCodemp(),objUsuCredential.getCodsuc(),"TODOS","ACTIVOS","X","");
             lst_per.setModel(objlstPersonal);
             lst_per.focus();
@@ -155,6 +168,8 @@ public class ControllerLovBuscarPersonalMovimiento extends SelectorComposer<Comp
                     ControllerManPresPer.bandera = false;
                 } else if (controlador.equals("ControllerManPresPer")) {
                     ControllerManPresPer.bandera = false;
+				} else if (controlador.equals("ControllerLiquidacionTrab")) {
+                    ControllerLiquidacionTrab.bandera = false;
                 }
                 w_lov_per.detach();
             }
@@ -173,6 +188,8 @@ public class ControllerLovBuscarPersonalMovimiento extends SelectorComposer<Comp
             ControllerManPresPer.bandera = false;
         } else if (controlador.equals("ControllerAsistenciaGen")) {
             ControllerAsistenciaGen.bandera = false;
+		} else if (controlador.equals("ControllerLiquidacionTrab")) {
+            ControllerLiquidacionTrab.bandera = false;
         }
     }
 

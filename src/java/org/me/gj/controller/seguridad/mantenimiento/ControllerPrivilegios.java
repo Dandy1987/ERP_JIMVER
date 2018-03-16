@@ -87,7 +87,7 @@ public class ControllerPrivilegios extends SelectorComposer<Component> implement
     Menuitem smen2_perproc, smen2_util, smen2_confper, smen2_confcalc, smen2_bancos, smen2_afps, smen2_asist;
     @Wire
     Menuitem smen3_areas, smen3_cargos, smen3_datfor, smen3_tablas, smen3_conceptos, smen3_funciones, 
-            smen3_creacion, smen3_config, smen3_horarios,
+            smen3_creacion, smen3_config, smen3_horarios, smen3_feriado,
     
 	//para ver utilitarios
 	smen3_utienlConta, smen3_utienlSunat, smen3_utienlAfp, smen3_utienlBancos,
@@ -356,6 +356,7 @@ public class ControllerPrivilegios extends SelectorComposer<Component> implement
         smen3_creacion.setDisabled(objDaoAccesos.Verifica_Acceso(90101100, usuario, empresa, sucursal));
         smen3_config.setDisabled(objDaoAccesos.Verifica_Acceso(90101110, usuario, empresa, sucursal));
         smen3_horarios.setDisabled(objDaoAccesos.Verifica_Acceso(90101120, usuario, empresa, sucursal));
+		smen3_feriado.setDisabled(objDaoAccesos.Verifica_Acceso(90101150, usuario, empresa, sucursal));
         
         smen1_contrato.setDisabled(objDaoAccesos.Verifica_Acceso(90103000, usuario, empresa, sucursal));
         smen1_presper.setDisabled(objDaoAccesos.Verifica_Acceso(90104000, usuario, empresa, sucursal));

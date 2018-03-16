@@ -45,7 +45,9 @@
                                             <span class="colorRojo">
                                                 <label value="AAMM" />
                                             </span>
-                                            <space width="450px"/>
+											<space width="5px"/>      
+                                            <label id="lbl_periododesc" style="font-weight: bold;" width="300px" />   
+                                            <space width="250px"/>
                                             <button id="btn_bloque" label="Bloque" sclass="botones"/>
                                            <!-- <space width="1px"/>-->
                                             <button id="btn_faltantes" label="Faltantes" sclass="botones" />
@@ -254,34 +256,34 @@
                                         <groupbox width="987px" height="80px" open="true" closable="false" style="text-align:left;"> <!--WIDTH 987PX-->
                                             <caption label="DATOS DE DETALLE DE CONSTANTE"/>
                                             <hbox align="center">
-                                                <cell align="left" width="65px">
+                                                <cell align="right" valign="center">
                                                     <label value="CONCEPTO :"/>
                                                     <span class="colorRojo">*</span>
                                                 </cell>
                                                 <textbox id="txt_mcodconstante" maxlength="3" style="text-align:right;" disabled="true" width="30px"  tooltiptext="Código de concepto"/>
                                                 <textbox id="txt_mdesconstante"  disabled="true" width="300px"  tooltiptext="Descripción de concepto"/>
                                                 <space width="5px"/>
-                                                <cell align="left" width="65px">
+                                                <cell align="right" valign="center">
                                                     <label value="FECHA :"/>
                                                     <span class="colorRojo">*</span>
                                                 </cell>
                                                 <datebox id="d_feccons" maxlength="10" disabled="true" width="90px" format="dd/MM/yyyy" style="text-align:right;" tooltiptext="Fecha de ingreso de constante" />
                                                 <space width="5px"/>
-                                                <cell align="left" width="65px">
-                                                    <label value="CARGO :"/>
+                                                  <cell align="right" valign="center">
+                                                    <label value="DESCUENTOS :"/>
                                                     <!-- <span class="colorRojo">*</span>-->
                                                 </cell>
                                                 <doublebox id="d_cargo"  format="#,###,##0.00"  locale="en_US" width="80px" disabled="true" maxlength="8" style="text-align:right;" tooltiptext="Valor de cargo"/>
                                                 <space height="5px" />
-                                                <cell align="left" width="65px">
-                                                    <label value="ABONO :"/>
+                                                <cell align="right" valign="center">
+                                                    <label value="REINTEGROS :"/>
                                                     <!--<span class="colorRojo">*</span>-->
                                                 </cell>
                                                 <doublebox id="d_abono"  format="#,###,##0.00"  locale="en_US" maxlength="8" disabled="true"  width="80px" style="text-align:right;" tooltiptext="Valor  de abono"/>
                                             </hbox>              
                                             <space height="5px" />
                                             <hbox align="center">
-                                                <cell align="left" width="65px">
+                                                <cell align="right" valign="center">
                                                     <label value="GLOSA :"/>
                                                     <span class="colorRojo">*</span>
                                                 </cell>

@@ -163,30 +163,7 @@ public class DaoCartaBancos {
 //*****METODOS DE BUSQUEDA PARA EL LOV
     public ListModelList<Personal> busquedaLovPersonal(int empresa,String estado, int cese,String consulta,int cuenta) throws SQLException {
 		
-   String sql_personal = "{call codijisa.p_lovPersonal.p_listPersonalLov(?,?,?,?,?,?)}";
-      /*  String sql_personal = " select t.pltipdoc||t.plnrodoc id_per,"
-                            + " t.plapepat || ' ' || t.plapemat || ' ' || t.plnomemp des_per,"
-                            + " t.pltipdoc,t.plnrodoc, s.suc_des"
-                            + " from tpersonal t,tpldatoslab d, tplctadep dp, tsucursales s"
-                            + " where"
-                            + " t.pltipdoc = d.pltipdoc and"
-                            + " t.plnrodoc = d.plnrodoc and"
-                            + " d.suc_id = s.suc_id and"
-                            + " d.emp_id = s.emp_id and"
-                            + " s.emp_id = dp.emp_id and"
-                            + " t.plnrodoc = dp.plnrodoc and"
-                            + " t.pltipdoc = dp.pltipdoc and"
-                            + " d.pltipdoc = dp.pltipdoc and"
-                            + " d.plnrodoc = dp.plnrodoc and"
-                            + " d.emp_id = dp.emp_id and"
-                            + " t.plestado = 1 and"
-                            + " d.plestado_dl = 1 and"
-                            + " d.emp_id = '" + objUsuCredential.getCodemp() + "' and"
-                            + " dp.plestado_dep = '1' and"
-                            + " dp.pltipdep = '2' and"
-                            + " d.plfecces is not null and"
-                            + " dp.plnrocta is not null"
-                            + " order by t.plapepat, t.plapemat, t.plnomemp";*/
+   String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?,?,?)}";
 
        con = new ConectaBD().conectar();
             cst = con.prepareCall(sql_personal);
@@ -232,6 +209,47 @@ public class DaoCartaBancos {
 
     }
 
+public ListModelList<Personal> LovPersonalDinamico(int empresa, String estado, int cese, String consulta, int cuenta) throws SQLException {
+
+        String sql_personal = "{call codijisa.pack_tpersonal.p_lovPersonal(?,?,?,?,?,?)}";
+        try {
+            con = new ConectaBD().conectar();
+            cst = con.prepareCall(sql_personal);
+            cst.setInt(1, empresa);
+            cst.setString(2, estado);
+            cst.setInt(3, cese);
+            cst.setString(4, consulta);
+            cst.setInt(5, cuenta);
+            cst.registerOutParameter(6, OracleTypes.CURSOR);
+            cst.execute();
+            rs = ((OracleCallableStatement) cst).getCursor(6);
+            objlstPersonal = null;
+            objlstPersonal = new ListModelList<Personal>();
+            while (rs.next()) {
+                objPersonal = new Personal();
+                objPersonal.setPlidper(rs.getString("id_per"));
+                objPersonal.setPldesper(rs.getString("des_per"));
+                objPersonal.setPltipdoc(rs.getInt("pltipdoc"));
+                objPersonal.setPlnrodoc(rs.getString("plnrodoc"));
+                objPersonal.setSuc_id_des(rs.getString("suc_des"));
+                objlstPersonal.add(objPersonal);
+            }
+
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } finally {
+            if (con != null) {
+                cst.close();
+                rs.close();
+                con.close();
+            }
+
+        }
+
+        return objlstPersonal;
+
+    }
+	
     public ListModelList<Personal> busquedaLovPersonal2(String consulta) throws SQLException {
 
         String sql_personal = " select t.pltipdoc||t.plnrodoc id_per,"

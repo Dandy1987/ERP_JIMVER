@@ -170,6 +170,49 @@ body {
     background-color: #A1D9F7;
     color: #0080C8;
 }
+.boton_1{
+    text-decoration: none;
+    padding: 10px;
+    font-weight: 600;
+    font-size: 20px;
+    font-style: italic;
+    color: #ffffff;
+    background-color: #1883ba;
+    border-radius: 6px;
+    border: 2px solid #0016b0;
+  }
+  .boton_1:hover{
+    color: #1883ba;
+    background-color: #ffffff;
+  }
+//creado jr.
+.boton {
+    display: inline-block;
+    zoom: 1; 
+    display: inline;
+    vertical-align: baseline;
+    margin: 0 2px;
+    outline: none;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    text-decoration: none;
+    font: 11px/100% Arial;
+    padding: .5em 2em .55em;
+    text-shadow: 0 1px 1px rgba(0,0,0,.3);
+    -webkit-border-radius: .5em;
+    -moz-border-radius: .5em;
+    border-radius: .5em;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    -moz-box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    box-shadow: 0 1px 2px rgba(0,0,0,.2);
+    background-color: #09EE28;
+}
+
+.boton:hover {
+    background-color: #F4F00E;
+    color: #09EE28;
+}
 /**FIN DE ESTILO PERSONALIZADO**/
 /**GRID**/
 div .z-grid {

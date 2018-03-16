@@ -26,7 +26,7 @@
             <space width="1px"/>
             <hbox align="center">
                 <space width="5px"/>
-                <cell align="left" width="65px">
+                <cell align="right" valign="center">
                     <label value="CONCEPTO :"/>
                 </cell>
                 <space width="5px"/>
@@ -39,21 +39,21 @@
                 <datebox id="d_fecha"  maxlength="10" width="100px" onCreate="self.value = new Date()"  format="dd/MM/yyyy" readonly="true" style="text-align:right;"  tooltiptext="Fecha de inicio"/>
                 
             </hbox>
-            <space width="1px"/>
+            <space width="1px"/>            
             <hbox align="center">
-                <space width="10px"/>
-                <cell align="left" width="65px">
+                <space width="30px"/>
+                <cell align="right" valign="center">
                     <label value="GLOSA :"/>
                 </cell> 
-                <textbox id="txt_GLOSA" maxlength="100"  width="375px"  tooltiptext="Descripción de glosa"/>
+                <textbox id="txt_glosa" maxlength="100"  width="380px"  tooltiptext="Descripción de glosa"/>
                 <space width="20px"/>
-                <cell align="left" width="65px">
+                <cell align="right" valign="center">
                     <label value="CARGO :"/>
                 </cell>
-                <combobox id="cb_cargo" width="90px" tooltiptext="Seleccione cargo" readonly="true">
+                <combobox id="cb_cargo" width="100px" tooltiptext="Seleccione cargo" readonly="true">
                     <comboitem label="" value="1"/> 
-                    <comboitem label="CARGO" value="2"/>
-                    <comboitem label="ABONO" value="3"/>
+                    <comboitem label="DESCUENTOS" value="2"/>
+                    <comboitem label="REINTEGROS" value="3"/>
                 </combobox>
                 
                 <doublebox id="txt_monto" style="text-align:right;" width="70px"  maxlength="12"  locale="en_US" format="##,##0.00" tooltiptext="Ingrese valor"/>
@@ -64,7 +64,7 @@
             <space width="1px"/>
             <hbox align="center"> 
                 <space width="10px"/>                     
-                <cell align="left" width="65px">
+                <cell align="right" valign="center">
                     <label value="SUCURSAL :"/>
                 </cell>
                 <combobox id="cb_fsucursal" width="120px" tooltiptext="Seleccione sucursal" readonly="true">
@@ -73,7 +73,7 @@
                     </template>
                 </combobox>
                 <space width="5px"/>
-                <cell align="left" width="65px">
+                <cell align="right" valign="center">
                     <label value="AREA :"/>
                 </cell>
                 <combobox id="cb_area" width="190px" tooltiptext="Seleccione área" readonly="true">
@@ -85,12 +85,14 @@
                 <button id="btn_consultar" label=">>" sclass="botones"/>
             </hbox> 
             <separator height="12px"/>    
-            <listbox id="lst_bloque" mold="paging" width="770px" height="350px">
+             <listbox id="lst_bloque" mold="paging" width="770px" height="350px">
                 <listhead>
-                    <listheader label="CODIGO" width="100px" align="center"/>
-                    <listheader label="TRABAJADOR" width="300px"  align="center"/>
-                    <listheader label="IMPORTE" width="100px" align="center"/>
-                    <listheader label="GLOSA" width="225px" align="center"/>
+                    <listheader label="CODIGO" width="90px" align="center"/>
+                    <listheader label="TRABAJADOR" width="220px"  align="center"/>
+                    <listheader label="GLOSA" width="280px" align="center"/>
+                    <listheader label="CARGO" width="70px" align="center"/>
+                    <listheader label="ABONO" width="70px" align="center"/>
+                    
                     <listheader width="50px">
                         <checkbox id="chk_selecAll"/>
                     </listheader>
@@ -99,8 +101,9 @@
                     <listitem>
                         <listcell label="${each.codigo_vista}"/>
                         <listcell label="${each.paterno} ${each.materno} ${each.nombre}" style="text-align:left;"/>
-                        <listcell label="${each.valor_concepto}" style="text-align:right;"/>
-                        <listcell label="${each.valor_concept}" style="text-align:right;"/>
+                        <listcell label="${each.glosa}" style="text-align:left;"/>
+                        <listcell label="${each.cargo}" style="text-align:right;"/>
+                        <listcell label="${each.abono}" style="text-align:right;"/>
                         <listcell>
                             <checkbox forward="onCheck=lst_bloque.onSeleccion"  checked="${each.valSelec}"/>
                         </listcell>  

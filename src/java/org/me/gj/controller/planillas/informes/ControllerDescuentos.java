@@ -36,6 +36,7 @@ import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Groupbox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
@@ -64,6 +65,8 @@ public class ControllerDescuentos extends SelectorComposer<Component> {
     Radiogroup rg_descripcion, rg_orden;
     @Wire
     Datebox d_fdesde, d_fhasta, d_cdesde, d_chasta;
+    @Wire
+    Label lbl_periododesc;
     /*@Wire
      Intbox txt_lidsucursal1,txt_lidsucursal;*/
     @Wire
@@ -108,6 +111,12 @@ public class ControllerDescuentos extends SelectorComposer<Component> {
 		
     }
 
+    @Listen("onChange=#cb_periodo")
+    public void cambiarPeriodo() throws SQLException{
+          String periodo_descrip = objdaoPerPago.getPeriodoDescripcion(cb_periodo.getSelectedItem().getValue().toString());
+          lbl_periododesc.setValue(periodo_descrip);
+    }
+	
     @Listen("onCreate=#tb_transacciones")
     public void VerificarTransacciones() throws SQLException {
         int usuario = objUsuCredential.getCodigo();

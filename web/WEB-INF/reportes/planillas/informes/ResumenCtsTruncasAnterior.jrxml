@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ResumenCtsTruncasActual" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a277286-d65e-4b3d-8f7c-77087d569102">
+	<property name="ireport.zoom" value="2.143588810000002"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="nempid" class="java.lang.Integer"/>
+	<parameter name="nsucuid" class="java.lang.Integer"/>
+	<parameter name="cperiodo" class="java.lang.String"/>
+	<queryString language="plsql">
+		<![CDATA[{call codijisa.pack_planilla_informes.p_CtsTruncasResumenAnterior($P{nempid},$P{nsucuid},$P{cperiodo},$P{ORACLE_REF_CURSOR})}]]>
+	</queryString>
+	<field name="EMPRESA" class="java.lang.String"/>
+	<field name="MONTO" class="java.lang.Number"/>
+	<field name="CODEMP" class="java.lang.String"/>
+	<field name="NOMBRES" class="java.lang.String"/>
+	<field name="BANCO" class="java.lang.String"/>
+	<field name="NUMCTA" class="java.lang.String"/>
+	<variable name="BANCOSUM" class="java.lang.Number" resetType="Group" resetGroup="BANCO" calculation="Sum">
+		<variableExpression><![CDATA[$F{MONTO}]]></variableExpression>
+	</variable>
+	<variable name="SUMTOTAL" class="java.lang.Number" calculation="Sum">
+		<variableExpression><![CDATA[$F{MONTO}]]></variableExpression>
+	</variable>
+	<group name="BANCO">
+		<groupExpression><![CDATA[$F{BANCO}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<staticText>
+					<reportElement uuid="b6b9b224-8520-4c05-8e43-b3a88c9f5ec9" x="0" y="0" width="66" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[COD]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="4e7ed1c0-aee5-4d43-b531-e0b298857547" x="66" y="0" width="172" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[NOMBRES]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="b1155bc2-0afd-49ee-ba52-64bf77bcc009" x="238" y="0" width="159" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[BANCO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="027759f1-33aa-4854-a584-047d2c9815ba" x="397" y="0" width="111" height="20"/>
+					<textElement>
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[NÚMERO DE CUENTA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="8d34bccc-a097-4fb5-80a2-4117c86e8f29" x="508" y="0" width="47" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[MONTO]]></text>
+				</staticText>
+				<line>
+					<reportElement uuid="339a6a4c-af18-4910-bb50-a11c296714d3" x="1" y="19" width="555" height="1"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="50">
+				<textField pattern="#,##0.00;(#,##0.00)">
+					<reportElement uuid="149935fb-518e-4b24-96df-5ac1f18bea2d" x="508" y="4" width="47" height="20"/>
+					<textElement textAlignment="Right">
+						<font size="8"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{BANCOSUM}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="339a6a4c-af18-4910-bb50-a11c296714d3" x="508" y="3" width="47" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="b793d942-ee50-4d14-af13-9376801fb092" x="408" y="4" width="100" height="20"/>
+					<textElement textAlignment="Center">
+						<font size="8"/>
+					</textElement>
+					<text><![CDATA[TOTAL BANCO: ]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="70" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8d48a4d3-fce6-4c23-b4e4-6c77b7a2a634" x="0" y="30" width="555" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[RESUMEN DE LIQUIDACIÓN DE CTS TRUNCAS]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a1881cab-d573-4dc3-b5a0-5af5aeaa61a0" x="0" y="0" width="555" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="16" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EMPRESA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3c1e6187-3999-497f-bd55-9056395a21bf" x="1" y="50" width="100" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[PERIODO: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="23853c02-0a70-4b94-96c5-5c81e5e9a2c8" x="101" y="50" width="100" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{cperiodo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement uuid="7472245f-9a5e-40ab-87ac-9b9794e6dec0" x="1" y="0" width="65" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CODEMP}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="38230067-3e77-4ba6-b841-4d09858ef987" x="66" y="0" width="172" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NOMBRES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="82b43e27-5656-4ce0-95cb-cf6442a25aa1" x="238" y="0" width="159" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BANCO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5aa04e38-73d5-45db-9b1d-d8372983b506" x="397" y="0" width="111" height="20"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NUMCTA}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00;(#,##0.00)">
+				<reportElement uuid="30073c81-a60b-46f6-b3a2-357861ef78e7" x="508" y="0" width="47" height="20"/>
+				<textElement textAlignment="Right">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{MONTO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="b793d942-ee50-4d14-af13-9376801fb092" x="408" y="0" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="8"/>
+				</textElement>
+				<text><![CDATA[TOTAL GENERAL: ]]></text>
+			</staticText>
+			<textField pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="false">
+				<reportElement uuid="2c9f315d-e8fe-43dd-b77b-07927d02ab18" mode="Transparent" x="508" y="0" width="47" height="20" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Right" verticalAlignment="Top" rotation="None" markup="none">
+					<font fontName="SansSerif" size="8" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false" pdfEncoding="Cp1252" isPdfEmbedded="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{SUMTOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</summary>
+</jasperReport>

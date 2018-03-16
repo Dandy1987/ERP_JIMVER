@@ -42,22 +42,36 @@
                             <tabpanel>
                                 <div id="div_lst_personal" >                                    
                                     <groupbox width="987px" height="135px" open="true" closable="false">
-                                        <caption label="Opciones de Busqueda" />
+                                        <caption label="MOVIMIENTOS EN LINEA - EMPLEADOS " />
                                         <hbox align="center">
                                             <cell align="right" valign="center">
-                                                <label value="PERIODO EN PROCESO :" style="color:#FF0000;font-size:11px;"/>                                                 
+                                                <label value="PERIODO EN PROCESO" style="color:#FF0000;font-size:11px;"/>                                                 
                                             </cell>
-                                            <space width="2px"/>
-                                            <textbox id="txt_periodo" style="text-align:right;"  disabled="true"  width="72px"/> 
-                                            <space width="5px"/>
+                                            <space width="2px"/>                                            
                                             <span class="colorRojo">
-                                                <label value="AAMM" />
+                                                <label value="(AAAAMMTP) : " />
                                             </span>
-                                        
+                                            <space width="5px"/>                                                                                        
+                                            <textbox id="txt_periodo" style="text-align:right;"  disabled="true"  width="72px"/>                                                                                         
+                                             <space width="5px"/>      
+                                             <label id="lbl_periododesc" style="font-weight: bold;" width="300px" />                                                                                        
+                                            <space width="250px"/> 
+                                            <button id="btn_genblo" label="Bloque" sclass="botones" />
+											<space width="5px"/>
+                                            <button id="btn_eliminarBloque" label="Eliminar" sclass="botones" />
+                                            <!--
                                             <space width="15px"/>
                                             <cell align="left" width="65px">
                                                 <label value="CONCEPTO :"/>
                                             </cell> 
+                                            -->
+                                            
+                                            
+                                        </hbox>
+                                        
+                                        
+                                        <groupbox open="true"  >
+                                            <caption label="FILTROS" />
                                             <radiogroup id="rbg_indicador_principal">
                                                 <radio label="CONSTANTE" value="0" tooltiptext="Constante"/>
                                                 <radio label="CONSTANTE MENSUAL" value="1" tooltiptext="Constante Mensual"/>
@@ -66,15 +80,15 @@
                                             <textbox id="txt_codcon" maxlength="3"  width="18px" tooltiptext="Código de concepto de personal"/>
                                             <space width="8px"/>
                                             <textbox id="txt_descon" maxlength="70" disabled="true" width="333px"  tooltiptext="Descripción de concepto de personal"/>
-                                        </hbox>
-                                        
-                                        <space width="3px"/>
-                                        <hbox align="center">
-                                            <space width="5px"/>
+                                            
+                                            
+                                            <space width="15px"/>
                                             <cell align="left" width="65px">
                                                 <label value="AREA :"/>
-                                            </cell>
+                                            </cell>        
+                                            <space width="5px"/>                                    
                                             <textbox id="txt_codarea" maxlength="9"  placeholder="ENTER" width="80px" focus="false" tooltiptext="Código de Personal" style="text-align:center;"/>
+                                            <space width="8px"/>
                                             <textbox id="txt_desarea" disabled="true" width="180px" focus="false" tooltiptext="Descripción de Personal"/>
                                             <textbox id="txt_codarea1" visible="false"/>
                                             <combobox id="cb_area" width="190px" tooltiptext="Seleccione área" readonly="true" visible = "false">
@@ -82,34 +96,40 @@
                                                     <comboitem label="${each.area_des}" value="${each.area_id}"/>
                                                 </template>
                                             </combobox>
+                                        </groupbox>
+                                        
+                                        
+                                        <space width="3px"/>
+                                        <hbox align="center">
                                             <space width="5px"/>
-                                            <cell align="left" width="65px">
+                                            <cell align="left" width="75px">
+                                                <label value="SUCURSAL :"/>
+                                            </cell>
+                                            <combobox id="cb_fsucursal" width="80px" tooltiptext="Seleccione sucursal" readonly="true">
+                                                <template name="model">
+                                                    <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
+                                                </template>
+                                            </combobox>
+                                                                                        
+                                            <space width="5px"/>
+                                            <cell align="left" width="60px">
                                                 <label value="CODIGO :"/>
                                             </cell>
                                             <textbox id="txt_codigo" maxlength="15" readonly="false"  width="80px" tooltiptext="Código de personal"/>
                                             <textbox id="txt_codigo1" visible="false"/>
                                             <space width="5px"/>
-                                            <cell align="left" width="135px">
+                                            <cell align="left" width="150px">
                                                 <label value="APELLIDOS Y NOMBRE(S) :"/>
                                             </cell>
                                             <textbox id="txt_apenom" maxlength="150"   width="360px" disabled="true" tooltiptext="Apellidos y Nombre(s) de personal"/>
+                                            <space width="5px"/>
+                                            <button id="btn_consultar" label="Consultar" sclass="botones"/>
                                         </hbox>
                                         <space height="5px"/>
                                         <hbox align="center">
-                                            <space width="5px"/>
-                                            <cell align="left" width="65px">
-                                                <label value="SUCURSAL :"/>
-                                            </cell>
-                                            <combobox id="cb_fsucursal" width="190px" tooltiptext="Seleccione sucursal" readonly="true">
-                                                <template name="model">
-                                                    <comboitem label="${each.suc_des}" value="${each.suc_id}"/>
-                                                </template>
-                                            </combobox>
-                                           
-                                            <space width="400px"/>
-                                            <button id="btn_consultar" label="Consultar" sclass="botones"/>
-                                            <space width="10px"/>
-                                            <button id="btn_genblo" label="Bloque" sclass="botones" />
+                                            
+                                            
+                                            
                                         </hbox>
                                        
                                         
@@ -117,10 +137,14 @@
                                     <separator height="10px"/>    
                                     <listbox id="lst_principal" mold="paging" pageSize="15" width="985px" height="400px">
                                         <listhead>
+                                            
+                                            <listheader>
+                                                <checkbox id="chk_selecAll"/>
+                                            </listheader>
                                             <listheader label="CODIGO" width="80px" align="center"/>
                                             <listheader label="APE. PATERNO" width="120px" align="center"/>
                                             <listheader label="APE. MATERNO" width="120px" align="center"/>
-                                            <listheader label="NOMBRES" width="175px" align="center"/>
+                                            <listheader label="NOMBRES" width="155px" align="center"/>
                                             <listheader label="AREA" width="180px" align="center"/>
                                             <listheader label="CONSTANTES" width="140px" align="center"/>
                                             <listheader label="MENSUALES" width="140px" align="center"/>
@@ -128,6 +152,9 @@
                                         </listhead>
                                         <template name="model">	
                                             <listitem>
+                                                <listcell>
+                                                    <checkbox forward="onCheck=lst_principal.onSeleccion"  checked="${each.valSelec}"/>
+                                                </listcell>  
                                                 <listcell label="${each.codigo_vista}"/>
                                                 <listcell label="${each.paterno}" style="text-align:left;"/>
                                                 <listcell label="${each.materno}" style="text-align:left;"/>
@@ -150,7 +177,7 @@
                                 <groupbox width="987px" height="50px" open="true" closable="false">
                                     <caption label="DATOS DE CONCEPTO DE PERSONAL" />
                                     <hbox align="center">
-                                        <cell align="left" width="65px">
+                                        <cell align="left" width="75px">
                                             <label value="PERSONAL :"/> 
                                         </cell>
                                         <textbox id="txt_idpersonal" maxlength="15"  width="80px" tooltiptext="Codigo del Empleado"></textbox>
@@ -169,9 +196,9 @@
                                 </hbox>
                                 <space width="15px"/>
                                 <hbox>
-                                    <groupbox width="987px" height="290px" open="true" closable="false">
+                                    <groupbox width="987px" height="450px" open="true" closable="false">
                                         <hbox>
-                                            <listbox id="lst_constante"  width="450px" height="220px">
+                                            <listbox id="lst_constante"  width="450px" height="320px">
                                                 <listhead>
                                                     <listheader label="COD" width="40px" align="center"/>
                                                     <listheader label="CONSTANTE" align="center"/>
@@ -185,20 +212,20 @@
                                                     </listitem>
                                                 </template>
                                             </listbox>
-                                            <toolbar id="tb_constante" width="25px" height="217px" >
+                                            <toolbar id="tb_constante" width="25px" height="317px" >
                                                 <separator height="40px"/>
                                                 <toolbarbutton id="tbbtn_btn_nuevoc" image="/images/iconos/nuevo.png"  tooltiptext="Nuevo (ALT+N)"  />                                            
-                                                <separator height="10px"/>
+                                                <separator height="20px"/>
                                                 <toolbarbutton id="tbbtn_btn_editarc" image="/images/iconos/editar.png" tooltiptext="Editar (ALT+D)" />            
-                                                <separator height="10px"/>
+                                                <separator height="20px"/>
                                                 <toolbarbutton id="tbbtn_btn_eliminarc" image="/images/iconos/eliminar.png" tooltiptext="Eliminar (ALT+D)"  />
-                                                <separator height="10px"/>
+                                                <separator height="20px"/>
                                                 <toolbarbutton id="tbbtn_btn_guardarc" image="/images/iconos/guardar.png"  tooltiptext="Guardar (F10)" disabled="true"/>
-                                                <separator height="10px"/>
+                                                <separator height="20px"/>
                                                 <toolbarbutton id="tbbtn_btn_deshacerc" image="/images/iconos/deshacer.png" disabled="true" tooltiptext="Deshacer (F9)"/>                                                                                               
                                             </toolbar>
                                             <space width="1px"/>
-                                            <listbox id="lst_constantemensual"  width="450px" height="220px">
+                                            <listbox id="lst_constantemensual"  width="450px" height="320px">
                                                 <listhead>
                                                     <listheader label="COD" width="40px" align="center"/>
                                                     <listheader label="CONSTANTE MENSUAL" align="center"/>

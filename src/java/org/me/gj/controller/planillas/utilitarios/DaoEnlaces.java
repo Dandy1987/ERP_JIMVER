@@ -5,13 +5,16 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.logging.Level;
+import oracle.sql.ARRAY;
+import oracle.sql.ArrayDescriptor;
 import org.apache.log4j.Logger;
 import org.me.gj.database.ConectaBD;
 import org.me.gj.model.planillas.mantenimiento.Bancos;
 import org.me.gj.model.planillas.mantenimiento.PerPago;
+import org.me.gj.model.planillas.utilitarios.ModelUtiComision;
 import org.me.gj.model.planillas.utilitarios.UtiNroCuenta;
 import org.me.gj.model.seguridad.utilitarios.UsuariosCredential;
+import org.me.gj.util.ParametrosSalida;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
 import org.zkoss.zul.ListModelList;
@@ -27,10 +30,15 @@ public class DaoEnlaces {
     ListModelList<PerPago> objListPerPago;
     ListModelList<Bancos> objListBancos;
     ListModelList<UtiNroCuenta> objListNrocta;
+    ListModelList<ModelUtiComision> objlstComi;
     PerPago objPerPago;
     Bancos objBancos;
     UtiNroCuenta objNrocta;
-
+    ModelUtiComision objComision;
+ ArrayDescriptor arrayC, arrayCM;
+    ARRAY arrC, arrCM;
+     int i_flagErrorBD = 0;
+    String s_msg = "";
     //Variables jdbc
     Connection con = null;
     Statement st = null;
@@ -346,4 +354,118 @@ public class DaoEnlaces {
         return objListNrocta;
     }
 
+    public int enlaceComision(int emp, String sucursal, String periodo) {
+        int valor = 0;
+        String empresa = String.valueOf(emp);
+        String query = "";
+        query = "{?= call pack_tcalculoplla.f_linkcomiJimver(?,?,?)}";
+        try {
+            con = new ConectaBD().conectar();
+            cst = con.prepareCall(query);
+            cst.clearParameters();
+            cst.registerOutParameter(1, java.sql.Types.INTEGER);
+            cst.setString(2, empresa);
+            cst.setString(3, sucursal);
+            cst.setString(4, periodo);
+            cst.execute();
+            valor = cst.getInt(1);
+
+        } catch (Exception e) {
+            LOGGER.error("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | Intentó revertir el cierre de planilla | " + objUsuCredential.getEmpresa() + " | En el periodo: " + periodo + e.toString());
+            Messagebox.show("Error de Carga de Datos debido al Error: " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+            valor = 0;
+        } finally {
+            if (con != null) {
+                try {
+                    con.close();
+                    cst.close();
+                } catch (SQLException ex) {
+                    Messagebox.show("Error de conexión debido al Error: " + ex.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+                }
+            }
+        }
+        return valor;
+    }
+
+    /**
+     * Funcion para traer lsita de comision con link
+     * @param empresa
+     * @param sucursal
+     * @param periodo
+     * @return 
+     * @throws java.sql.SQLException 
+     */
+    public ListModelList<ModelUtiComision> listaComision(int empresa, String sucursal, String periodo) throws SQLException {
+        String query;
+        try {
+            con = new ConectaBD().conectar();
+            query = "{?= call codijisa.pack_tcomision.f_listacomision(?,?,?)}";
+            cst = con.prepareCall(query);
+            cst.clearParameters();
+            cst.registerOutParameter(1, java.sql.Types.VARCHAR);
+            cst.setInt(2, empresa);
+            cst.setString(3, sucursal);
+            cst.setString(4, periodo);
+            cst.execute();
+            String consulta = cst.getString(1);
+            objlstComi = new ListModelList<ModelUtiComision>();
+            st = con.createStatement();
+            rs = st.executeQuery(consulta);
+            while (rs.next()) {
+                objComision = new ModelUtiComision();
+                objComision.setCod_vendedor(rs.getString("cod_ven"));
+                objComision.setDni(rs.getString("dni"));
+                objComision.setEmpresa(rs.getInt("empresa"));
+                objComision.setEncriptado(rs.getString("encriptado"));
+                objComision.setPeriodo(rs.getString("periodo"));
+                objComision.setPersonal(rs.getString("personal"));
+                objComision.setSucursal(rs.getInt("sucursal"));
+                objComision.setTipo_doc(rs.getInt("tipo_doc"));
+                objComision.setValor(rs.getDouble("valor"));
+                objlstComi.add(objComision);
+            }
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } finally {
+            if (con != null) {
+                st.close();
+                rs.close();
+                con.close();
+            }
+        }
+
+        return objlstComi;
+    }
+
+    
+      public ParametrosSalida insertarComisiones(Object[][] listaConstante,int empresa, String sucursal) throws SQLException {
+
+        String query = "{call pack_tcomision.p_insertar_comisiones(?,?,?,?,?)}";
+
+        try {
+            con = (new ConectaBD()).conectar();
+            cst = con.prepareCall(query);
+            arrayC = ArrayDescriptor.createDescriptor("LISTACOMISIONES", con.getMetaData().getConnection());
+            arrC = new ARRAY(arrayC, con.getMetaData().getConnection(), listaConstante);
+
+            cst.clearParameters();
+            cst.setArray(1, arrC);
+            cst.setInt(2, empresa);
+            cst.setString(3, sucursal);
+            cst.registerOutParameter(4, java.sql.Types.VARCHAR);
+            cst.registerOutParameter(5, java.sql.Types.NUMERIC);
+            cst.execute();
+            s_msg = cst.getString(4);
+            i_flagErrorBD = cst.getInt(5);
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } finally {
+            if (con != null) {
+                cst.close();
+                con.close();
+            }
+        }
+        return new ParametrosSalida(i_flagErrorBD, s_msg);
+
+    }
 }

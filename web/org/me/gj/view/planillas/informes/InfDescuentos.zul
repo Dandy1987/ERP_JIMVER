@@ -46,7 +46,7 @@
                                     </groupbox>   
                                     <space width="10px"/>
                                     <hbox align="center">
-                                        <space width="300px"/>
+                                        <space width="260px"/>
                                         <cell align="left" width="65px">
                                             <label value="PERIODO :"/>
                                         </cell>
@@ -56,7 +56,8 @@
                                                 <comboitem label="${each.periodoProceso}" value="${each.periodoProceso}"/>
                                             </template>
                                         </combobox>
-                                        
+										<space width="15px"/>
+                                        <label id="lbl_periododesc" style="font-weight: bold;" width="300px" />  
                                        
                                          
                                  

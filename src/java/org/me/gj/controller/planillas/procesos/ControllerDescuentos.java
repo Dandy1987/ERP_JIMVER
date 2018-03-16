@@ -39,6 +39,7 @@ import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Doublebox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
@@ -77,13 +78,15 @@ public class ControllerDescuentos extends SelectorComposer<Component> {
     @Wire
     Doublebox d_cargo, d_abono, txt_total, txt_total_lista;
     ListModelList<Sucursales> objlstSucursal = new ListModelList<Sucursales>();
-
+	@Wire
+	Label lbl_periododesc;
     ListModelList<ManAreas> objlstAreas = new ListModelList<ManAreas>();
 
     DaoAccesos objDaoAccesos = new DaoAccesos();
     DaoPersonal objDaoPersonal = new DaoPersonal();
     Personal objPersonal;
 	Accesos objAccesos;
+	DaoAsistenciaGen objdaoAsistenciaGen;
     Descuentos objDescuentos, objPrincipal;
     ListModelList<Descuentos> objlstDescuentos;
     ListModelList<Descuentos> objlstPrincipal;
@@ -108,7 +111,7 @@ public class ControllerDescuentos extends SelectorComposer<Component> {
         objlstEliminar = new ListModelList<Descuentos>();
         objlstPrincipal = null;
         objlstPrincipal = new ListModelList<Descuentos>();
-
+		objdaoAsistenciaGen = new DaoAsistenciaGen();
         objDaoMovLinea = new DaoMovLinea();
         objDaoDescuentos = new DaoDescuentos();
         //se completa combobox de sucursales
@@ -118,6 +121,8 @@ public class ControllerDescuentos extends SelectorComposer<Component> {
         objDaoPerPago = new DaoPerPago();
         String periodo = objDaoPerPago.getPeriodoProceso(objUsuCredential.getCodemp());
         txt_periodo2.setValue(periodo);
+		String periodo_descrip = objDaoPerPago.getPeriodoDescripcion(periodo);
+        lbl_periododesc.setValue(periodo_descrip);
         objlstAreas = objDaoPersonal.lst_areas();
         cb_area.setModel(objlstAreas);
         habilitaTab(false, true);
@@ -271,28 +276,40 @@ public class ControllerDescuentos extends SelectorComposer<Component> {
      * @autor Junior Fernandez
      */
     @Listen("onClick=#tbbtn_btn_nuevo")
-    public void botonNuevo() {
+    public void botonNuevo() throws SQLException {
+
         estado = "N";
         //if (txt_periodo.getValue()!=null || !txt_periodo.getValue().isEmpty() || txt_periodo.getValue().equalsIgnoreCase("")) {
         if (!txt_periodo2.getValue().isEmpty() && !txt_periodo2.getValue().equals("--------")) {// if (!txt_periodo.getValue().isEmpty()) {
-            String periodo = txt_periodo2.getValue();
-            txt_periodo.setValue(periodo);
-            habilitaBotones(true, false);
-            habilitaBotonesDetalle(false, true);
-            seleccionaTab(false, true);
-            habilitaTab(true, false);
-            txt_idpersonal.focus();
-            txt_idpersonal.setDisabled(false);
-            limpiarListaDetalle();
-            limpiaAuditoria();
-            limpiaCabeceradetalle();
-            limpiarCamposDetalle();
-            /* limpiaAuditoria();
-             limpiaConstante();
-             limpiaConstanteMensual();
-             limpiarCamposGuardar();
-             limpiarListas();*/
-            LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | pulso la opcion nuevo para crear un registro");
+            if (objDaoDescuentos.validaPeriodoCalculando(txt_periodo2.getValue().toString()) == 1) {
+                Messagebox.show("La planilla se encuentra calculando", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+            } else {
+
+                int i_valida = objDaoDescuentos.validaPeriodoProceso(txt_periodo2.getValue().toString());
+                if (i_valida == 1) {
+                    String periodo = txt_periodo2.getValue();
+                    txt_periodo.setValue(periodo);
+                    habilitaBotones(true, false);
+                    habilitaBotonesDetalle(false, true);
+                    seleccionaTab(false, true);
+                    habilitaTab(true, false);
+                    txt_idpersonal.focus();
+                    txt_idpersonal.setDisabled(false);
+                    limpiarListaDetalle();
+                    limpiaAuditoria();
+                    limpiaCabeceradetalle();
+                    limpiarCamposDetalle();
+                    /* limpiaAuditoria();
+                     limpiaConstante();
+                     limpiaConstanteMensual();
+                     limpiarCamposGuardar();
+                     limpiarListas();*/
+                    LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | pulso la opcion nuevo para crear un registro");
+                } else {
+                    Messagebox.show("El periodo no se encuentra en proceso", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+                }
+            }
+
         } else {
             Messagebox.show("No hay periodo en proceso no puede continuar con la operación", "ERP-JIMVER", Messagebox.OK,
                     Messagebox.INFORMATION, new EventListener() {
@@ -311,28 +328,38 @@ public class ControllerDescuentos extends SelectorComposer<Component> {
      */
 
     @Listen("onClick=#tbbtn_btn_editar")
-    public void botonEditar() {
+    public void botonEditar() throws SQLException {
+
         if (!txt_periodo2.getValue().isEmpty() && !txt_periodo2.getValue().equals("--------")) {
-            txt_idpersonal.setDisabled(true);
-            if (lst_principal.getSelectedIndex() == -1) {
-                Messagebox.show("Por favor seleccionar un registro", "ERP-JIMVER", Messagebox.OK,
-                        Messagebox.INFORMATION, new EventListener() {
-                            @Override
-                            public void onEvent(Event event) throws Exception {
-                                if (((Integer) event.getData()).intValue() == Messagebox.OK) {
-
-                                }
-                            }
-                        });
-
+            if (objDaoDescuentos.validaPeriodoCalculando(txt_periodo2.getValue().toString()) == 1) {
+                Messagebox.show("La planilla se encuentra calculando", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
             } else {
-                estado = "M";
-                habilitaBotones(true, false);
-                seleccionaTab(false, true);
-                habilitaTab(true, false);
-                habilitaBotonesDetalle(false, true);
-                objlstEliminar = null;
-                objlstEliminar = new ListModelList<Descuentos>();
+                    int i_valida = objDaoDescuentos.validaPeriodoProceso(txt_periodo2.getValue().toString());
+                    if (i_valida == 1) {
+                        txt_idpersonal.setDisabled(true);
+                        if (lst_principal.getSelectedIndex() == -1) {
+                            Messagebox.show("Por favor seleccionar un registro", "ERP-JIMVER", Messagebox.OK,
+                                    Messagebox.INFORMATION, new EventListener() {
+                                        @Override
+                                        public void onEvent(Event event) throws Exception {
+                                            if (((Integer) event.getData()).intValue() == Messagebox.OK) {
+
+                                            }
+                                        }
+                                    });
+
+                        } else {
+                            estado = "M";
+                            habilitaBotones(true, false);
+                            seleccionaTab(false, true);
+                            habilitaTab(true, false);
+                            habilitaBotonesDetalle(false, true);
+                            objlstEliminar = null;
+                            objlstEliminar = new ListModelList<Descuentos>();
+                        }
+                    } else {
+                        Messagebox.show("El periodo no se encuentra en proceso", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+                    }
             }
         } else {
             Messagebox.show("No hay periodo en proceso no puede continuar con la operación", "ERP-JIMVER", Messagebox.OK,

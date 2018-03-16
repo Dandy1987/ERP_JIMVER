@@ -541,5 +541,4 @@ public class DaoBoletaPago {
         return objlstBoleta;
 
     }
-
 }

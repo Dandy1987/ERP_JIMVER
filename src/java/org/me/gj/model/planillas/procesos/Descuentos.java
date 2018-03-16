@@ -36,6 +36,8 @@ public class Descuentos {
     private boolean valSelec;
     private String fecha_movimiento;
     private int tipo_ingreso;
+	private String cod_personal;
+    private String nombre_completo;
     
       //para consultar
     private String paterno;
@@ -325,5 +327,20 @@ public class Descuentos {
         this.tipo_ingreso = tipo_ingreso;
     }
     
+    public String getCod_personal() {
+        return cod_personal;
+    }
 
+    public void setCod_personal(String cod_personal) {
+        this.cod_personal = cod_personal;
+    }
+
+    public String getNombre_completo() {
+        return nombre_completo;
+    }
+
+    public void setNombre_completo(String nombre_completo) {
+        this.nombre_completo = nombre_completo;
+    }
+	
 }

@@ -131,7 +131,11 @@ public class ControllerLovInformesMovimiento extends SelectorComposer<Component>
             ControllerDescuentos.bandera = false;
         }else if (controlador.equals("ControllerMovLinea")) {
             ControllerMovLinea.bandera = false;
+        }else if (controlador.equals("ControllerInfUtil")) {
+            ControllerMovLinea.bandera = false;
         }
+        
+      
     }
 
     @Listen("onCheck=#chk_selecAll")

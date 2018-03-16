@@ -743,7 +743,12 @@ public class ControllerFunciones extends SelectorComposer<Component> {
         } else if (cb_busqueda.getSelectedIndex() == 2) {
             selec = 2;
             LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | ha ingresado la descripción " + consulta + " para su busqueda");
+        }else if (cb_busqueda.getSelectedIndex() == 3) {
+            selec = 3;
+            LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | ha ingresado la descripción " + consulta + " para su busqueda");
         }
+        
+       
         ///  objlstBancos = objDaoBancos.consultar(selec, consulta, est);
         // Cargar data para la lista principal
         objListModelFormulas = new ListModelList<Formulas>();

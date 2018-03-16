@@ -51,6 +51,7 @@
                                         <span class="colorRojo">
                                             <label value="AAAAMMTP" />
                                         </span>
+										<label id="lbl_periododesc" style="font-weight: bold;" width="300px" />  
                                     </hbox>
                                     <space height="20px"/>
                                     <hbox align="center">
@@ -143,6 +144,7 @@
                                         <span class="colorRojo">
                                             <label value="AAAAMMTP" />
                                         </span>
+									<label id="lbl_periododesc1" style="font-weight: bold;" width="300px" />  
                                     </hbox>
                                     <space height="20px"/>
                                     <hbox align="center">

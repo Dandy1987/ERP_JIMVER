@@ -47,7 +47,8 @@
                                         <combobox id="cb_busqueda" readonly="true" placeholder="---seleccione Opcion----" tooltiptext="Seleccione una opción">
                                             <comboitem label=" "/>
                                             <comboitem label="ID"/>
-                                            <comboitem label="FORMULA"/>
+                                            <comboitem label="CONCEPTO"/>
+                                            <comboitem label="FORMULA"/>                                             
                                             <attribute name="onSelect">
                                                 txt_busqueda.setDisabled(false);
                                             </attribute>

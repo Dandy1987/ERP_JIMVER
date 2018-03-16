@@ -15,15 +15,22 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import org.apache.log4j.Logger;
+import org.me.gj.controller.seguridad.mantenimiento.DaoAccesos;
 
 import org.me.gj.model.planillas.mantenimiento.Feriados;
+import org.me.gj.model.seguridad.mantenimiento.Accesos;
+import org.me.gj.model.seguridad.utilitarios.UsuariosCredential;
 
 import org.zkoss.zk.ui.Component;
+import org.zkoss.zk.ui.Session;
+import org.zkoss.zk.ui.Sessions;
 
 import org.zkoss.zk.ui.event.Event;
 import org.zkoss.zk.ui.event.EventListener;
 
 import org.zkoss.zk.ui.event.ForwardEvent;
+import org.zkoss.zk.ui.select.annotation.Listen;
 
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.Clients;
@@ -44,16 +51,23 @@ public class ControllerManFeriados extends GenericForwardComposer {
     Listbox lst_Feriados, lst_mantenimiento;
     @Wire
     Combobox cb_mes, cb_anho;
-
+	@Wire
+    Button btn_guardar, btn_eliminar;
     Feriados objFeriado;
     ListModelList<Feriados> objlstFeriado, objlstFeriadoVista;
     DaoManFeriados objDaoManFeriados;
+	Accesos objAccesos;
+    DaoAccesos objDaoAccesos;
 
     private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
     DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
     boolean b_valida = true;
     boolean b_validainsert = true;
 
+    Session sesion = Sessions.getCurrent();
+    UsuariosCredential objUsuCredential = (UsuariosCredential) sesion.getAttribute("usuariosCredential");
+    private static final Logger LOGGER = Logger.getLogger(ControllerPerProceso.class);
+	
     @Override
     public void doAfterCompose(Component comp) throws Exception {
 
@@ -68,6 +82,36 @@ public class ControllerManFeriados extends GenericForwardComposer {
         cb_mes.setSelectedIndex(0);
     }
 
+    public void onCreate$tb_transacciones() throws SQLException {
+        int usuario = objUsuCredential.getCodigo();
+        int empresa = objUsuCredential.getCodemp();
+        int sucursal = objUsuCredential.getCodsuc();
+        objDaoAccesos = new DaoAccesos();
+        objAccesos = objDaoAccesos.Verifica_Permisos_Transacciones(90101150, usuario, empresa, sucursal);
+        if (objUsuCredential.getRol() == 1) {
+            LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | ha ingresado al mantenimiento de Feriados con el rol: ADMINISTRADOR");
+        } else {
+            LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | ha Ingresado al Mantenimiento de Feriados con el rol: USUARIO NORMAL");
+        }
+        if (objAccesos.getAcc_ins() == 1) {
+            btn_guardar.setDisabled(false);
+            LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | tiene acceso a creación de un nuevo Feriado");
+        } else {
+            btn_guardar.setDisabled(true);
+            LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | no tiene acceso a creación de un nuevo Feriado");
+        }
+
+        if (objAccesos.getAcc_eli() == 1) {
+            btn_eliminar.setDisabled(false);
+            LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | tiene acceso a eliminar un Feriado");
+        } else {
+            btn_eliminar.setDisabled(false);
+            LOGGER.info("[" + objUsuCredential.getComputerName() + "] | " + objUsuCredential.getCuenta() + " | no tiene acceso a eliminar un Feriado");
+
+        }
+
+    }
+	
     public void onClick$lst_Feriados() {
         if (lst_Feriados.getSelectedItem() != null) {
             Messagebox.show("¿Desea eliminar la fecha seleccionada?", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION, new EventListener() {
@@ -124,13 +168,14 @@ public class ControllerManFeriados extends GenericForwardComposer {
                     break;
                 }
             }
+            if (b_validainsert) {
+                Messagebox.show(s_ms, "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+            }
 
         } else {
             Messagebox.show("No hay ninguna fecha seleccionada", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
         }
-        if (b_validainsert) {
-            Messagebox.show(s_ms, "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
-        }
+		
         objlstFeriadoVista = objDaoManFeriados.listarFeriados("TODOS", "TODOS");
         lst_mantenimiento.setModel(objlstFeriadoVista);
         objlstFeriado = null;

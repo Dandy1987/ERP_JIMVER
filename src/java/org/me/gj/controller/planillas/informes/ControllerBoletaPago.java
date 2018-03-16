@@ -38,6 +38,7 @@ import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Button;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Groupbox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Radiogroup;
@@ -65,6 +66,8 @@ public class ControllerBoletaPago extends SelectorComposer<Component> {
     Radiogroup chk_tipo;
     @Wire
     Groupbox g_personal, g_costo;
+	@Wire
+	Label lbl_periododesc;
 	@Wire
     Toolbarbutton tbbtn_btn_imprimir;
     public static boolean bandera = false;
@@ -113,6 +116,8 @@ public class ControllerBoletaPago extends SelectorComposer<Component> {
         chk_tipo.setSelectedIndex(0);
         rg_tiporep.setSelectedIndex(0);
         g_personal.setVisible(true);
+		String periodo_descrip = objdaoPerPago.getPeriodoDescripcion(periodo);
+        lbl_periododesc.setValue(periodo_descrip);
 		
     }
 
@@ -139,6 +144,7 @@ public class ControllerBoletaPago extends SelectorComposer<Component> {
         }
 
     }
+	
     @Listen("onOK=#txt_codarea")
     public void busquedaArea() {
 
@@ -226,7 +232,7 @@ public class ControllerBoletaPago extends SelectorComposer<Component> {
         }
     }
 
-    @Listen("onOK=#txt_codper")
+    /*@Listen("onOK=#txt_codper")
     public void enterPersonal() {
         if (txt_periodo.getValue().isEmpty() || txt_periodo.getValue().equals("--------")) {
             Messagebox.show("Por favor ingrese un periodo", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
@@ -244,14 +250,54 @@ public class ControllerBoletaPago extends SelectorComposer<Component> {
                     objMapObjetos.put("tipo", rg_tiporep.getSelectedIndex());
                     objMapObjetos.put("area", txt_codarea1.getValue());
                     objMapObjetos.put("controlador", "ControllerBoletaPago");
+					if(rg_periodo.getSelectedIndex()==1){
+                        objMapObjetos.put("estado", "TODOS");
+                    }else{
+                        objMapObjetos.put("estado", "ACTIVOS");
+                    }
                     Window window = (Window) Executions.createComponents("/org/me/gj/view/componentes/LovInformesBoletaPago.zul", null, objMapObjetos);
                     window.doModal();
                 }
             }
         }
 
-    }
+    }*/
+	
+     @Listen("onOK=#txt_codper")
+    public void buscarPersonalPrincipal() {
+        int perio;
+        if (txt_periodo.getValue().isEmpty() || txt_periodo.getValue().equals("--------")) {
+            Messagebox.show("Por favor ingrese un periodo", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+        } else {
+            if (rg_periodo.getSelectedIndex() == 0) {
+                perio = 1;//PERIODO ACTUAL
 
+            } else {
+                perio = 2;//PERIODO ANTERIOR
+
+            }
+            if (txt_codper.getValue().equals("")) {
+                Map objMapObjetos = new HashMap();
+                objMapObjetos.put("id_per", txt_codper);
+                objMapObjetos.put("des_per", txt_desper);
+                objMapObjetos.put("cod", txt_codper1);//campo invisible que guarda informacion de personal
+                objMapObjetos.put("sucursal", cb_sucursal.getSelectedIndex() == -1 || cb_sucursal.getSelectedItem().getValue().toString().trim().equals("0") ? "" : cb_sucursal.getSelectedItem().getValue().toString());
+                objMapObjetos.put("periodo", txt_periodo.getValue());
+                objMapObjetos.put("tipo", perio);
+                objMapObjetos.put("area", "TODOS");
+                objMapObjetos.put("controlador", "ControllerBoletaPago");
+                if (rg_periodo.getSelectedIndex() == 1) {
+                    objMapObjetos.put("estado", "TODOS");
+                } else {
+                    objMapObjetos.put("estado", "TODOS");
+                }
+                Window window = (Window) Executions.createComponents("/org/me/gj/view/componentes/LovInformesBoletaPago.zul", null, objMapObjetos);
+                window.doModal();
+            }
+        }
+
+    }
+	
     //blur para costos
     //Salir de lov para el filtro
     @Listen("onBlur=#txt_costo")
@@ -335,6 +381,8 @@ public class ControllerBoletaPago extends SelectorComposer<Component> {
             String periodo = objdaoPerPago.getPeriodoCalculado(objUsuCredential.getCodemp());
             txt_periodo.setValue(periodo);
             txt_periodo.setDisabled(true);
+            String periodo_descrip = objdaoPerPago.getPeriodoDescripcion(periodo);
+            lbl_periododesc.setValue(periodo_descrip);
 
         } else {
             txt_periodo.setValue("");
@@ -430,6 +478,7 @@ public class ControllerBoletaPago extends SelectorComposer<Component> {
                 } else {
                     txt_periodo.setValue(objMovimiento.getPeriodo());
                     //txt_periodo1.setValue(objMovimiento.getPeriodo() + "','");
+					lbl_periododesc.setValue(objdaoPerPago.getPeriodoDescripcion(txt_periodo.getValue().toString()));
                 }
             }
         }

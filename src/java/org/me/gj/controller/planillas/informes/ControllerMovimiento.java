@@ -33,6 +33,7 @@ import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Datebox;
 import org.zkoss.zul.Doublebox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
@@ -72,7 +73,9 @@ public class ControllerMovimiento extends SelectorComposer<Component> {
     Radiogroup rg_periodo;
     @Wire
     Checkbox chk_positivos, chk_negativos;
-
+	
+	@Wire
+    Label lbl_periododesc;
     ListModelList<Sucursales> objlstSucursal = new ListModelList<Sucursales>();
     ListModelList<PerPago> objlstPerPago = new ListModelList<PerPago>();
     ListModelList<InformesMovimiento> objlstMovimiento;
@@ -107,6 +110,8 @@ public class ControllerMovimiento extends SelectorComposer<Component> {
         // cb_periodo.setModel(objlstPerPago);
         String periodo = objdaoPerPago.getPeriodoCalculado(objUsuCredential.getCodemp());
         txt_periodo.setValue(periodo);
+		String periodo_descrip = objdaoPerPago.getPeriodoDescripcion(periodo);
+        lbl_periododesc.setValue(periodo_descrip);
         txt_periodo.setDisabled(true);
         rg_periodo.setSelectedIndex(0);
 		
@@ -237,7 +242,7 @@ public class ControllerMovimiento extends SelectorComposer<Component> {
     }
 
     //@Listen("onChange=#txt_periodo")//optimizar salto de text
-    // @Listen("onBlur=#txt_periodo")
+    @Listen("onBlur=#txt_periodo")
     public void salirPeriodo() throws SQLException {
 
         if (!txt_periodo.getValue().isEmpty()) {
@@ -255,7 +260,12 @@ public class ControllerMovimiento extends SelectorComposer<Component> {
                 } else {
                     txt_periodo.setValue(objMovimiento.getPeriodo());
                     txt_periodo1.setValue(objMovimiento.getPeriodo() + "','");
+
+                    lbl_periododesc.setValue(objdaoPerPago.getPeriodoDescripcion(txt_periodo.getValue().toString()));
+
                 }
+            } else {
+                lbl_periododesc.setValue("VARIOS");
             }
         } else {
             txt_periodo1.setValue("");
@@ -264,12 +274,12 @@ public class ControllerMovimiento extends SelectorComposer<Component> {
         bandera = false;
     }
 
-    @Listen("onChange=#txt_periodo")
-    public void puntero() throws SQLException {
-        if (txt_periodo.getValue().length() == 8) {
-            salirPeriodo();
-        }
-    }
+    /* @Listen("onChange=#txt_periodo")
+     public void puntero() throws SQLException {
+     if (txt_periodo.getValue().length() == 8) {
+     salirPeriodo();
+     }
+     }*/
 
     /*
      * Salida del campo que identifica si exite el codigo de constante
@@ -358,6 +368,8 @@ public class ControllerMovimiento extends SelectorComposer<Component> {
             String periodo = objdaoPerPago.getPeriodoCalculado(objUsuCredential.getCodemp());
             txt_periodo.setValue(periodo);
             txt_periodo.setDisabled(true);
+			String periodo_descrip = objdaoPerPago.getPeriodoDescripcion(periodo);
+            lbl_periododesc.setValue(periodo_descrip);
 
         } else {
             txt_periodo.setValue("");

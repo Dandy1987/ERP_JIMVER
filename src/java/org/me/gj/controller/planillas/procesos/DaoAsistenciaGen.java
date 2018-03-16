@@ -1270,7 +1270,7 @@ public ListModelList<AsistenciaGen> listaRegistro(int n_empid, int n_sucid, Stri
 
     }
     
-     public int validaCambioAsistencia(String s_periodo) throws SQLException {
+     public int validaPeriodoProceso(String s_periodo) throws SQLException {
         int i_valida = 0;
         try {
             con = (new ConectaBD().conectar());
@@ -1297,7 +1297,34 @@ public ListModelList<AsistenciaGen> listaRegistro(int n_empid, int n_sucid, Stri
         return i_valida;
 
     }
-     
+	
+public int validaPeriodoCalculado(String s_periodo) throws SQLException {
+        int i_valida = 0;
+        try {
+            con = (new ConectaBD().conectar());
+            String query = "{?=call pack_tperpag.f_periodo_asistenciac(?,?)}";
+            cst = con.prepareCall(query);
+            cst.clearParameters();
+            cst.registerOutParameter(1, java.sql.Types.NUMERIC);
+            cst.setInt(2, objUsuCredential.getCodemp());
+            cst.setString(3,s_periodo );
+            cst.execute();
+            i_valida = cst.getInt(1);
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+
+        } catch (NullPointerException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+
+        } finally {
+            if (con != null) {
+                cst.close();
+                con.close();
+            }
+        }
+        return i_valida;
+    }
+	
      public int getVacxMes( String s_periodo, String s_nrodoc) throws SQLException {
         int vacaciones = 0;
         try {

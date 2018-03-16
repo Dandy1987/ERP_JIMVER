@@ -39,6 +39,7 @@ import org.zkoss.zk.ui.select.SelectorComposer;
 import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Filedownload;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 
@@ -50,6 +51,8 @@ public class ControllerInfPagosCruce extends SelectorComposer<Component> {
 
     @Wire
     private Textbox txt_periodo;
+    @Wire
+    Label lbl_periododesc;
 
     private DaoPerPago objDaoPerPago;
 	DaoAccesos objDaoAccesos;
@@ -68,6 +71,8 @@ public class ControllerInfPagosCruce extends SelectorComposer<Component> {
         //String periodo = objDaoMovLinea.setearPeriodo();
         String periodo = objDaoPerPago.getPeriodoCalculado(objUsuCredential.getCodemp());
         txt_periodo.setValue(periodo.equals("") ? "--------" : periodo);
+		String periodo_descrip = objDaoPerPago.getPeriodoDescripcion(periodo);
+        lbl_periododesc.setValue(periodo_descrip);
     }
 
     @Listen("onCreate=#tb_transacciones")

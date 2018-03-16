@@ -14,6 +14,7 @@ import static org.me.gj.controller.planillas.informes.ControllerBoletaPago.bande
 import org.me.gj.controller.planillas.mantenimiento.DaoPerPago;
 import org.me.gj.controller.planillas.procesos.DaoMovLinea;
 import org.me.gj.controller.seguridad.mantenimiento.DaoAccesos;
+import org.me.gj.model.planillas.informes.InformesMovimiento;
 import org.me.gj.model.planillas.mantenimiento.ManAreas;
 import org.me.gj.model.seguridad.mantenimiento.Accesos;
 import org.me.gj.model.seguridad.mantenimiento.Sucursales;
@@ -30,6 +31,7 @@ import org.zkoss.zk.ui.select.annotation.Listen;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Radiogroup;
@@ -57,11 +59,16 @@ public class ControllerInfPlanillas extends SelectorComposer<Component> {
     Toolbarbutton tbbtn_btn_imprimir;
 	@Wire
     Tab tab_planillas, tab_planillastotal;
+	@Wire
+    Label lbl_periododesc, lbl_periododesc1;
 	
 	Accesos objAccesos = new Accesos();
     DaoAccesos objDaoAccesos;
     DaoPerPago objdaoPerPago;
     DaoMovLinea objDaoMovLinea;
+	InformesMovimiento objMovimiento;
+    DaoMovimiento objDaoMovimiento;
+	
     Session sesion = Sessions.getCurrent();
     UsuariosCredential objUsuCredential = (UsuariosCredential) sesion.getAttribute("usuariosCredential");
     String foco;
@@ -74,6 +81,7 @@ public class ControllerInfPlanillas extends SelectorComposer<Component> {
         super.doAfterCompose(comp); //To change body of generated methods, choose Tools | Templates.
         objDaoAccesos = new DaoAccesos();
         objdaoPerPago = new DaoPerPago();
+		objDaoMovimiento = new DaoMovimiento();
         objlstSucursal = objDaoAccesos.lstSucursales_union(objUsuCredential.getCodemp());
         cb_sucursal.setModel(objlstSucursal);
 		cb_sucursaltotal.setModel(objlstSucursal);
@@ -88,6 +96,10 @@ public class ControllerInfPlanillas extends SelectorComposer<Component> {
         rg_tiporeptotal.setSelectedIndex(0);
         rg_order.setSelectedIndex(0);
 		objDaoMovLinea = new DaoMovLinea();
+		String periodo_descrip = objdaoPerPago.getPeriodoDescripcion(periodo);
+        lbl_periododesc.setValue(periodo_descrip);
+        String periodo_descrip1 = objdaoPerPago.getPeriodoDescripcion(periodo);
+        lbl_periododesc1.setValue(periodo_descrip1);
 
     }
 
@@ -330,6 +342,8 @@ public class ControllerInfPlanillas extends SelectorComposer<Component> {
             String periodo = objdaoPerPago.getPeriodoCalculado(objUsuCredential.getCodemp());
             txt_periodo.setValue(periodo);
             txt_periodo.setDisabled(true);
+			String periodo_descrip = objdaoPerPago.getPeriodoDescripcion(periodo);
+            lbl_periododesc.setValue(periodo_descrip);
 
         } else {
             txt_periodo.setValue("");
@@ -338,12 +352,66 @@ public class ControllerInfPlanillas extends SelectorComposer<Component> {
         }
     }
 
+@Listen("onBlur=#txt_periodo")
+    public void salirPeriodo() throws SQLException {
+
+        if (!txt_periodo.getValue().isEmpty()) {
+            if (!txt_periodo.getValue().equals("ALL")) {
+                String consulta = txt_periodo.getValue();
+                objMovimiento = objDaoMovimiento.getperiodo(consulta);
+                if (objMovimiento == null) {
+                    txt_periodo.setValue("");
+                    Messagebox.show("El periodo no existe o esta inactivo", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION, new EventListener<Event>() {
+                        public void onEvent(Event t) throws Exception {
+                            //txt_periodo.setValue("");
+                            txt_periodo.focus();
+                        }
+                    });
+                } else {
+                    txt_periodo.setValue(objMovimiento.getPeriodo());
+                    //txt_periodo1.setValue(objMovimiento.getPeriodo() + "','");
+                    lbl_periododesc.setValue(objdaoPerPago.getPeriodoDescripcion(txt_periodo.getValue().toString()));
+                }
+            }
+        }
+
+        
+    }
+    
+            @Listen("onBlur=#txt_periodototal")
+    public void salirPeriodoTotal() throws SQLException {
+
+        if (!txt_periodototal.getValue().isEmpty()) {
+            if (!txt_periodototal.getValue().equals("ALL")) {
+                String consulta = txt_periodototal.getValue();
+                objMovimiento = objDaoMovimiento.getperiodo(consulta);
+                if (objMovimiento == null) {
+                    txt_periodototal.setValue("");
+                    Messagebox.show("El periodo no existe o esta inactivo", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION, new EventListener<Event>() {
+                        public void onEvent(Event t) throws Exception {
+                            //txt_periodo.setValue("");
+                            txt_periodototal.focus();
+                        }
+                    });
+                } else {
+                    txt_periodototal.setValue(objMovimiento.getPeriodo());
+                    //txt_periodo1.setValue(objMovimiento.getPeriodo() + "','");
+                    lbl_periododesc1.setValue(objdaoPerPago.getPeriodoDescripcion(txt_periodototal.getValue().toString()));
+                }
+            }
+        }
+
+        
+    }
+	
     @Listen("onClick=#rg_periodototal")
     public void radioSeleccionTotal() throws SQLException {
         if (rg_periodototal.getSelectedIndex() == 0) {
             String periodo = objdaoPerPago.getPeriodoCalculado(objUsuCredential.getCodemp());
             txt_periodototal.setValue(periodo);
             txt_periodototal.setDisabled(true);
+            String periodo_descrip = objdaoPerPago.getPeriodoDescripcion(periodo);
+            lbl_periododesc1.setValue(periodo_descrip);
 
         } else {
             txt_periodototal.setValue("");

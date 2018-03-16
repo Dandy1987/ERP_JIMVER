@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleTypes;
 import oracle.jdbc.oracore.OracleType;
@@ -55,6 +56,62 @@ public class DaoDescuentos {
      * @return
      * @throws java.sql.SQLException ***************************************
      */
+    public int validaPeriodoProceso(String s_periodo) throws SQLException {
+        int i_valida = 0;
+        try {
+            con = (new ConectaBD().conectar());
+            String query = "{?=call pack_tperpag.f_periodo_movimiento(?,?)}";
+            cst = con.prepareCall(query);
+            cst.clearParameters();
+            cst.registerOutParameter(1, java.sql.Types.NUMERIC);
+            cst.setInt(2, objUsuCredential.getCodemp());
+            cst.setString(3, s_periodo);
+            cst.execute();
+            i_valida = cst.getInt(1);
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+
+        } catch (NullPointerException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+
+        } finally {
+            if (con != null) {
+                cst.close();
+                con.close();
+            }
+        }
+        return i_valida;
+
+    }
+
+    public int validaPeriodoCalculando(String s_periodo) throws SQLException {
+        int i_valida = 0;
+        try {
+            con = (new ConectaBD().conectar());
+            String query = "{?=call pack_tperpag.f_validaperiodo_calculando(?,?)}";
+            cst = con.prepareCall(query);
+            cst.clearParameters();
+            cst.registerOutParameter(1, java.sql.Types.NUMERIC);
+            cst.setInt(2, objUsuCredential.getCodemp());
+            cst.setString(3, s_periodo);
+            cst.execute();
+            i_valida = cst.getInt(1);
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+
+        } catch (NullPointerException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+
+        } finally {
+            if (con != null) {
+                cst.close();
+                con.close();
+            }
+        }
+        return i_valida;
+
+    }
+
     public ListModelList<Descuentos> busquedaConstanteDescuentos() throws SQLException {
         String query = "{call codijisa.pack_tpldsctos.p_lov_concepto(?)}";
 
@@ -88,8 +145,8 @@ public class DaoDescuentos {
         } catch (NullPointerException e) {
             Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
         } finally {
-            if (con != null) {
-                //st.close();
+            if (con != null) {                
+				cst.close();
                 rs.close();
                 con.close();
             }
@@ -214,8 +271,8 @@ public class DaoDescuentos {
         return new ParametrosSalida(i_flagErrorBD, s_msg);
 
     }
-    
-        public ParametrosSalida insertarBloque(Object[][] lista) throws SQLException {
+
+    public ParametrosSalida insertarBloque(Object[][] lista) throws SQLException {
         String query = "{call pack_tpldsctos.p_insertar_bloque_registro(?,?,?)}";
         try {
             con = (new ConectaBD()).conectar();
@@ -420,7 +477,7 @@ public class DaoDescuentos {
                 + " t.plapepat,t.plapemat,t.plnomemp,t.pltipdoc,t.plnrodoc,dl.plfecing,dl.plfecces,d.plppag_id,"
                 + " pack_tpersonal.ftb1_descripcion(dl.plarea,'00003') plarea_des, dl.suc_id,"
                 + " (  sum(to_number(lib.decrypt8(d.pldc_valcar),'99999990.999')) - sum(to_number(lib.decrypt8(d.pldc_valabo),'99999990.999'))    )neto"
-                 //+ " sum(to_number(lib.decrypt8(d.pldc_valabo),'99999990.999')) abono,"
+                //+ " sum(to_number(lib.decrypt8(d.pldc_valabo),'99999990.999')) abono,"
                 + " from"
                 + " tpersonal t,tpldsctos d,tpldatoslab dl"
                 + " where"
@@ -493,11 +550,9 @@ public class DaoDescuentos {
         return objlstDescuentos;
 
     }
-    
-    
 
     //codigo para realiar lov 
-    public ListModelList<Descuentos> buscaBloque(String sucursal,String idcodigo,String idconstante,String area,String periodo,double valor) throws SQLException {
+    public ListModelList<Descuentos> buscaBloque(String sucursal, String idcodigo, String idconstante, String area, String periodo, double valor) throws SQLException {
 
         String query = "{call codijisa.pack_movimiento_linea.p_consultaParaBloque(?,?,?,?,?,?,?)}";
         try {
@@ -523,7 +578,7 @@ public class DaoDescuentos {
                 objDescuentos.setArea(rs.getString("plarea_des"));
                 objDescuentos.setTipo_doc(rs.getInt("pltipdoc"));
                 objDescuentos.setSucursal(rs.getInt("suc_id"));
-             //   objDescuentos.setValor_concepto(valor);
+                //   objDescuentos.setValor_concepto(valor);
 
             }
         } catch (Exception e) {
@@ -531,6 +586,293 @@ public class DaoDescuentos {
 
         return objlstDescuentos;
 
+    }
+
+    public ParametrosSalida insertarFaltante(int i_sucu, Descuentos objDesc, String periodo, Date d_fecha) throws SQLException {
+        String query = "{call pack_tpldsctos.p_faltanteProcesar(?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+            con = (new ConectaBD()).conectar();
+            cst = con.prepareCall(query);
+
+            cst.clearParameters();
+            cst.setInt(1, objUsuCredential.getCodemp());
+            cst.setInt(2, i_sucu);
+            cst.setString(3, objDesc.getCod_personal());
+            cst.setString(4, periodo);
+            cst.setString(5, objDesc.getCod_constante());
+            cst.setDate(6, convertJavaDateToSqlDate(d_fecha));
+            cst.setString(7, objDesc.getGlosa());
+            cst.setDouble(8, objDesc.getNeto());
+            cst.setString(9, objDesc.getRecibo_egreso());
+            cst.setString(10, objUsuCredential.getCuenta());
+
+            cst.registerOutParameter(11, java.sql.Types.VARCHAR);
+            cst.registerOutParameter(12, java.sql.Types.NUMERIC);
+            cst.execute();
+            s_msg = cst.getString(11);
+            i_flagErrorBD = cst.getInt(12);
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } finally {
+            if (con != null) {
+                cst.close();
+                con.close();
+            }
+        }
+        return new ParametrosSalida(i_flagErrorBD, s_msg);
+
+    }
+
+    public ListModelList<Descuentos> listaDescuentosFaltante(int nsucu, String s_periodo, String s_tipopersonal, Date d_fechaini, Date d_fechafin) throws SQLException {
+        String query = "{call codijisa.pack_tpldsctos.p_consultafaltantes(?,?,?,?,?,?,?)}";
+
+        try {
+            con = new ConectaBD().conectar();
+            cst = con.prepareCall(query);
+
+            cst.setInt(1, objUsuCredential.getCodemp());
+            cst.setInt(2, nsucu);
+            cst.setString(3, s_periodo);
+            cst.setString(4, s_tipopersonal);
+            if (d_fechaini != null) {
+                cst.setDate(5, convertJavaDateToSqlDate(d_fechaini));
+                cst.setDate(6, convertJavaDateToSqlDate(d_fechafin));
+            } else {
+                cst.setDate(5, null);
+                cst.setDate(6, null);
+            }
+            cst.registerOutParameter(7, OracleTypes.CURSOR);
+            cst.execute();
+            rs = ((OracleCallableStatement) cst).getCursor(7);
+            objlstDescuentos = null;
+            objlstDescuentos = new ListModelList<Descuentos>();
+            /*String query = " select t.tabla_id, t.tabla_descri"
+             + " from tpltablas1 t"
+             + " where t.tabla_cod = '00001'"
+             + " and t.tabla_tipo1 in ('C','M')"
+             + " and t.tabla_datbol in ('2')"
+             + " order by 1";
+             objlstDescuentos = new ListModelList<Descuentos>();
+             try {
+             con = new ConectaBD().conectar();
+             st = con.createStatement();
+             rs = st.executeQuery(query);*/
+            while (rs.next()) {
+                objDescuentos = new Descuentos();
+                objDescuentos.setCod_constante(rs.getString("cod"));
+                objDescuentos.setCod_personal(rs.getString("codemp"));
+                objDescuentos.setNombre_completo(rs.getString("trabajador"));
+                objDescuentos.setNeto(rs.getDouble("monto"));
+                objDescuentos.setGlosa(rs.getString("glosa"));
+                objDescuentos.setRecibo_egreso(rs.getString("codrecibo"));
+
+                objlstDescuentos.add(objDescuentos);
+            }
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } catch (NullPointerException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } finally {
+            if (con != null) {
+                //st.close();
+                rs.close();
+                con.close();
+            }
+        }
+        return objlstDescuentos;
+
+    }
+
+    public ListModelList<Descuentos> listaDescuentosReintegros(int nsucu, String s_periodo, String s_tipopersonal, Date d_fechaini, Date d_fechafin) throws SQLException {
+        String query = "{call codijisa.pack_tpldsctos.p_consultareintegros(?,?,?,?,?,?,?)}";
+
+        try {
+            con = new ConectaBD().conectar();
+            cst = con.prepareCall(query);
+
+            cst.setInt(1, objUsuCredential.getCodemp());
+            cst.setInt(2, nsucu);
+            cst.setString(3, s_periodo);
+            cst.setString(4, s_tipopersonal);
+            if (d_fechaini != null) {
+                cst.setDate(5, convertJavaDateToSqlDate(d_fechaini));
+                cst.setDate(6, convertJavaDateToSqlDate(d_fechafin));
+            } else {
+                cst.setDate(5, null);
+                cst.setDate(6, null);
+            }
+            cst.registerOutParameter(7, OracleTypes.CURSOR);
+            cst.execute();
+            rs = ((OracleCallableStatement) cst).getCursor(7);
+            objlstDescuentos = null;
+            objlstDescuentos = new ListModelList<Descuentos>();
+            /*String query = " select t.tabla_id, t.tabla_descri"
+             + " from tpltablas1 t"
+             + " where t.tabla_cod = '00001'"
+             + " and t.tabla_tipo1 in ('C','M')"
+             + " and t.tabla_datbol in ('2')"
+             + " order by 1";
+             objlstDescuentos = new ListModelList<Descuentos>();
+             try {
+             con = new ConectaBD().conectar();
+             st = con.createStatement();
+             rs = st.executeQuery(query);*/
+            while (rs.next()) {
+                objDescuentos = new Descuentos();
+                objDescuentos.setCod_constante(rs.getString("cod"));
+                objDescuentos.setCod_personal(rs.getString("codemp"));
+                objDescuentos.setNombre_completo(rs.getString("trabajador"));
+                objDescuentos.setNeto(rs.getDouble("monto"));
+                objDescuentos.setGlosa(rs.getString("glosa"));
+                objDescuentos.setRecibo_egreso(rs.getString("codrecibo"));
+                objDescuentos.setRecibo_egreso_referencia(rs.getString("reciboref"));
+
+                objlstDescuentos.add(objDescuentos);
+            }
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } catch (NullPointerException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } finally {
+            if (con != null) {
+                //st.close();
+                rs.close();
+                con.close();
+            }
+        }
+        return objlstDescuentos;
+
+    }
+
+    public ListModelList<Descuentos> buscaBloquedescuentos(String sucursal, String idconstante, String area, String periodo, double valor, String glosa, String cargo, Date fecha) throws SQLException {
+
+        String query = "{call codijisa.pack_tpldsctos.p_buscarBloque(?,?,?,?,?,?)}";
+        try {
+            con = new ConectaBD().conectar();
+            cst = con.prepareCall(query);
+
+            cst.setInt(1, objUsuCredential.getCodemp());
+
+            cst.setString(2, sucursal);
+            cst.setString(3, idconstante);
+            cst.setString(4, area);
+
+            cst.setString(5, periodo);
+            cst.registerOutParameter(6, OracleTypes.CURSOR);
+
+            cst.executeQuery();
+            rs = ((OracleCallableStatement) cst).getCursor(6);
+            objlstDescuentos = null;
+            objlstDescuentos = new ListModelList<Descuentos>();
+
+            while (rs.next()) {
+                objDescuentos = new Descuentos();
+                objDescuentos.setCodigo_vista(rs.getString("codigo"));
+                objDescuentos.setPaterno(rs.getString("plapepat"));
+                objDescuentos.setMaterno(rs.getString("plapemat"));
+                objDescuentos.setNombre(rs.getString("plnomemp"));
+                objDescuentos.setDocumento(rs.getString("dni"));
+                objDescuentos.setTipo_doc(rs.getInt("pltipdoc"));
+                objDescuentos.setGlosa(glosa);
+                if (cargo.equals("2")) {
+                    objDescuentos.setCargo(valor);
+                } else if (cargo.equals("3")) {
+                    objDescuentos.setAbono(valor);
+                }
+                objDescuentos.setPeriodo(periodo);
+                objDescuentos.setCod_constante(idconstante);
+                objDescuentos.setFecha_mov(fecha);
+                objDescuentos.setSucursal(rs.getInt("suc_id"));
+
+                objlstDescuentos.add(objDescuentos);
+
+            }
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+
+        } finally {
+            if (con != null) {
+
+                cst.close();
+                rs.close();
+                con.close();
+            }
+        }
+
+        return objlstDescuentos;
+
+    }
+
+    /**
+     * Metodo para insertar bloque de descuentos
+     */
+    public ParametrosSalida insertarBloqueDes(Object[][] lista) throws SQLException {
+        String query = "{call pack_tpldsctos.p_insertar_bloque_registro(?,?,?)}";
+        try {
+            con = (new ConectaBD()).conectar();
+            cst = con.prepareCall(query);
+
+            arrayC = ArrayDescriptor.createDescriptor("LISTADESCUENTOS", con.getMetaData().getConnection());
+            arrC = new ARRAY(arrayC, con.getMetaData().getConnection(), lista);
+            cst.clearParameters();
+
+            cst.setArray(1, arrC);
+            cst.registerOutParameter(2, java.sql.Types.VARCHAR);
+            cst.registerOutParameter(3, java.sql.Types.NUMERIC);
+            cst.execute();
+            s_msg = cst.getString(2);
+            i_flagErrorBD = cst.getInt(3);
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } finally {
+            if (con != null) {
+                cst.close();
+                con.close();
+            }
+        }
+        return new ParametrosSalida(i_flagErrorBD, s_msg);
+
+    }
+
+    public ParametrosSalida insertarReintegro(int i_sucu, Descuentos objDesc, String periodo, Date d_fecha) throws SQLException {
+        String query = "{call pack_tpldsctos.p_reintegroProcesar(?,?,?,?,?,?,?,?,?,?,?,?,?)}";
+
+        try {
+            con = (new ConectaBD()).conectar();
+            cst = con.prepareCall(query);
+
+            cst.clearParameters();
+            cst.setInt(1, objUsuCredential.getCodemp());
+            cst.setInt(2, i_sucu);
+            cst.setString(3, objDesc.getCod_personal());
+            cst.setString(4, periodo);
+            cst.setString(5, objDesc.getCod_constante());
+            cst.setDate(6, convertJavaDateToSqlDate(d_fecha));
+            cst.setString(7, objDesc.getGlosa());
+            cst.setDouble(8, objDesc.getNeto());
+            cst.setString(9, objDesc.getRecibo_egreso());
+            cst.setString(10, objDesc.getRecibo_egreso_referencia());
+            cst.setString(11, objUsuCredential.getCuenta());
+
+            cst.registerOutParameter(12, java.sql.Types.VARCHAR);
+            cst.registerOutParameter(13, java.sql.Types.NUMERIC);
+            cst.execute();
+            s_msg = cst.getString(12);
+            i_flagErrorBD = cst.getInt(13);
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } finally {
+            if (con != null) {
+                cst.close();
+                con.close();
+            }
+        }
+        return new ParametrosSalida(i_flagErrorBD, s_msg);
+
+    }
+    public java.sql.Date convertJavaDateToSqlDate(java.util.Date date) {
+        return new java.sql.Date(date.getTime());
     }
 
 }

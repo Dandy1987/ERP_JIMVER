@@ -34,6 +34,7 @@
                             <menuitem id="smen3_horarios" label="Horarios" image="/images/iconos_menu/planillas/horarios.png"  href="/org/me/gj/view/planillas/mantenimiento/ManHorarios.zul"/>
 							<!--1.9 Configuracion Planilla -->
                             <menuitem id="smen3_confplanilla" label="Configuracion Planilla" image="/images/iconos_menu/planillas/conf_personal.png"  href="/org/me/gj/view/planillas/mantenimiento/ConfPlanilla.zul"/>
+							<menuitem id="smen3_feriado" label="Feriados" image="/images/iconos_menu/planillas/cierre_diario.png" href="/org/me/gj/view/planillas/mantenimiento/Manferiado.zul" />
                         </menupopup>
                     </menu>
                     <!-- 2. MANTENIMIENTO DE PERSONAL -->
@@ -44,8 +45,7 @@
                     <menuitem id="smen1_manper" label="Personal" image="/images/iconos_menu/planillas/personal.png" href="/org/me/gj/view/planillas/mantenimiento/ManPersonal.zul" />
                     <menuitem id="smen1_contrato" label="Contratos" image="/images/iconos_menu/planillas/afp.png" href="/org/me/gj/view/planillas/mantenimiento/ManContratos.zul" />
                     <!-- 3. PRESTAMOS PERSONALES -->
-                    <menuitem id="smen1_presper" label="Préstamos Personales" image="/images/iconos_menu/planillas/pres_per.png" href="/org/me/gj/view/planillas/mantenimiento/ManPresPer.zul" />
-					<menuitem id="smen1_feriado" label="Feriados" image="/images/iconos_menu/planillas/cierre_diario.png" href="/org/me/gj/view/planillas/mantenimiento/Manferiado.zul" />
+                    <menuitem id="smen1_presper" label="Préstamos Personales" image="/images/iconos_menu/planillas/pres_per.png" href="/org/me/gj/view/planillas/mantenimiento/ManPresPer.zul" />					
                 </menupopup>
             </menu>
             <menu id="men_procesos" label="Procesos" width="90px" >

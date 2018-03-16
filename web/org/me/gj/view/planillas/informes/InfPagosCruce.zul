@@ -18,7 +18,7 @@
                             <tabpanel>
                                 <groupbox width="987px" height="380px" open="true" closable="false">
                                     <hbox align="center">
-                                        <space width="400px" height="100px"/>                                        
+										<space width="350px" height="100px"/>
                                         <cell align="right" valign="center">
                                             <label value="PERIODO :"/>
                                         </cell>
@@ -26,6 +26,8 @@
                                         <cell align="right" valign="center">
                                             <textbox id="txt_periodo" width="60px" disabled="true" maxlength="8" tooltiptext="Periodo en Proceso" />
                                         </cell>
+										<space width="10px"/>
+                                        <label id="lbl_periododesc" style="font-weight: bold;" width="300px" />  
                                     </hbox>
                                     
                                     

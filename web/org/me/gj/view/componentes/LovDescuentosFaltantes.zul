@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <zk xmlns="http://www.zkoss.org/2005/zul">
-    <window id="w_lov_faltantes" title="Enlace Descuentos" border="normal" width="850px"
+    <window id="w_lov_faltantes" title="Enlace Descuentos" border="normal" width="860px"
             apply="org.me.gj.controller.componentes.ControllerLovDescuentosFaltantes"
             position="center,center" 
             action="show: slideDown;hide: slideUp">
@@ -66,27 +66,28 @@
                 </hbox>
             </groupbox>
             <separator height="12px"/>    
-            <listbox id="lst_lista" mold="paging" width="850px" height="350px">
+            <listbox id="lst_lista" mold="paging" pageSize="13" width="845px" height="350px">
                 <listhead>
-                    <listheader label="NRO. RECIBO" align="center"/>
-                    <listheader label="CODIGO"  align="center"/>
-                    <listheader label="TRABAJADOR"  align="center"/>
-                    <listheader label="IMPORTE"  align="center"/>
-                    <listheader label="GLOSA"  align="center"/>
-                    <listheader width="25px" label="S">
+                    <listheader label="NRO. RECIBO" align="center" width="100px"/>
+                    <listheader label="CODIGO"  align="center" width='80px'/>
+                    <listheader label="TRABAJADOR"  align="center" width="320px"/>
+                    <listheader label="IMPORTE"  align="center" width="80px"/>
+                    <listheader label="GLOSA"  align="center" width="185px"/>
+                    <listheader width="50px" label="S">
                         <checkbox id="chk_selecAll"/>
                     </listheader>
                 </listhead>
                 <template name="model">	
                     <listitem>
-                        <listcell label="${each.codigo_vista}"/>
-                        <listcell label="${each.paterno} ${each.materno} ${each.nombre}" style="text-align:left;"/>
-                        <listcell label="${each.valor_concepto}" style="text-align:right;"/>
-                        <listcell label="${each.codigo_vista}"/>
+                        <listcell label="${each.recibo_egreso}"/>
+                        <listcell label="${each.cod_personal}" style="text-align:center;"/>
+                               <listcell label="${each.nombre_completo}"/>
                   
-                        <listcell label="${each.codigo_vista}"/>
+                        <listcell label="${each.neto}" style="text-align:right;"/>
+                 
+                        <listcell label="${each.glosa}"/>
                         <listcell>
-                            <checkbox forward="onCheck=lst_bloque.onSeleccion"  checked="${each.valSelec}"/>
+                            <checkbox forward="onCheck=lst_lista.onSeleccion"  checked="${each.valSelec}"/>
                         </listcell>  
                     </listitem>
                 </template>

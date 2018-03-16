@@ -243,7 +243,21 @@ public class DaoFunciones {
                     + " and t.form_id like '" + consulta + "'"
                     + " order by t.form_id";
             
-        } else if (selec == 2) {
+        } 
+        else if (selec == 2) {
+            sql = "select t.emp_id , t.suc_id ,t.form_id , pack_tconceptos.f_descripcion('00001',t.form_id) form_descri ,"
+                    + " t.form_estado , t.form_contenido , t.form_calculo , t.form_sep_contenido , t.form_sep_calculo ,"
+                    + " t.form_usuadd , t.form_fecadd , t.form_usumod , t.form_fecmod"
+                    + " from codijisa.tplformulas t"
+                    + " where"
+                    + estado
+                    + " and t.emp_id ='" + objUsuCredential.getCodemp() + "'"
+                    + " and t.suc_id ='" + objUsuCredential.getCodsuc() + "'"
+                    + " and pack_tconceptos.f_descripcion('00001',t.form_id) like '" + consulta + "'"
+                    + " order by t.form_id";            
+        }
+        
+        else if (selec == 3) {
             sql = "select t.emp_id , t.suc_id ,t.form_id , pack_tconceptos.f_descripcion('00001',t.form_id) form_descri ,"
                     + " t.form_estado , t.form_contenido , t.form_calculo , t.form_sep_contenido , t.form_sep_calculo ,"
                     + " t.form_usuadd , t.form_fecadd , t.form_usumod , t.form_fecmod"

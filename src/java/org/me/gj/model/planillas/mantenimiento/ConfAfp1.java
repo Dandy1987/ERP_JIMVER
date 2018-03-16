@@ -13,7 +13,7 @@ public class ConfAfp1 {
 
     private String afp_id;
     private String afp_des;
-
+	private boolean valSelec;	
     public ConfAfp1() {
 
     }
@@ -39,4 +39,12 @@ public class ConfAfp1 {
         this.afp_des = afp_des;
     }
 
+    public boolean isValSelec() {
+        return valSelec;
+    }
+
+    public void setValSelec(boolean valSelec) {
+        this.valSelec = valSelec;
+    }
+	
 }

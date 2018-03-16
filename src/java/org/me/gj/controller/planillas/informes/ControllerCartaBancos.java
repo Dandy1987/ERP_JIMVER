@@ -59,7 +59,7 @@ public class ControllerCartaBancos extends SelectorComposer<Component> {
     InformesCartaBancos objPlaCarBan;
     DaoCartaBancos objDaoCarBan = new DaoCartaBancos();
     ListModelList<InformesCartaBancos> objlstPlaCarBan;
-
+	
     Process process;
 	
 	Accesos objAccesos = new Accesos();
@@ -68,14 +68,14 @@ public class ControllerCartaBancos extends SelectorComposer<Component> {
     DateFormat fhora = new SimpleDateFormat("HHmmss");
     DateFormat ffecha = new SimpleDateFormat("ddMMyyyy");
     String impresion = "";
-
+	
     //Variables de Sesion
     Session sesion = Sessions.getCurrent();
     UsuariosCredential objUsuCredential = (UsuariosCredential) sesion.getAttribute("usuariosCredential");
     private static final Logger LOGGER = Logger.getLogger(ControllerCliente.class);
-
+	
     public static boolean bandera = false;
-
+	
     @Override
     public void doAfterCompose(Component comp) throws Exception {
         super.doAfterCompose(comp);

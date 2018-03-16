@@ -184,7 +184,36 @@ public class DaoMovLinea {
         return new ParametrosSalida(i_flagErrorBD, s_msg);
 
     }
+        public ParametrosSalida eliminarBloque(Object[][] listaConstante) throws SQLException {
 
+        String query = "{call pack_movimiento_linea.p_eliminar_bloque(?,?,?)}";
+
+        try {
+            con = (new ConectaBD()).conectar();
+            cst = con.prepareCall(query);
+            arrayC = ArrayDescriptor.createDescriptor("LISTACONSTANTE", con.getMetaData().getConnection());
+            arrC = new ARRAY(arrayC, con.getMetaData().getConnection(), listaConstante);
+
+            cst.clearParameters();
+            cst.setArray(1, arrC);
+
+            cst.registerOutParameter(2, java.sql.Types.VARCHAR);
+            cst.registerOutParameter(3, java.sql.Types.NUMERIC);
+            cst.execute();
+            s_msg = cst.getString(2);
+            i_flagErrorBD = cst.getInt(3);
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } finally {
+            if (con != null) {
+                cst.close();
+                con.close();
+            }
+        }
+        return new ParametrosSalida(i_flagErrorBD, s_msg);
+
+    }
+	
     public ParametrosSalida insertarConstante(Object[][] listaConstante, Object[][] listaConstanteMensual) throws SQLException {
 
         String query = "{call pack_movimiento_linea.p_insertar_constante(?,?,?,?)}";
@@ -278,7 +307,7 @@ public class DaoMovLinea {
         return valor;
 
     }
-
+	
 	public ListModelList<Personal> busquedaLovPersonal(int empresa,int sucursal,String area,String estado,String cese,String consulta) throws SQLException {
 		
 String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?,?,?)}";
@@ -448,8 +477,8 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
                 + " t.pltipdoc,t.plnrodoc,d.suc_id,d.emp_id,d.plfecing"
                 + " from tpersonal t,tpldatoslab d"
                 + " where t.pltipdoc = d.pltipdoc and"
-                + " t.plnrodoc = d.plnrodoc and"
-                + " t.plestado = 1 and"
+                + " t.plnrodoc = d.plnrodoc and"                
+				+ " t.plestado = 1 and"
                 + " d.plestado_dl = 1 and"
                 + " d.emp_id =" + objUsuCredential.getCodemp() + " and"
                 + " t.pltipdoc||''||t.plnrodoc like '%" + id + "%'"
@@ -490,16 +519,16 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
 
     }
 
-    /**
+/**
      * @param periodo
      * @autor Junior Fernandez Ortiz version 10/08/2017
      * @return lista de datos a mostrar
      * @throws SQLException
      */
     public ListModelList<Movlinea> ingresoMovimiento(String periodo) throws SQLException {
-
+        
         String query = "{call codijisa.pack_movimiento_linea.p_consulta(?,?,?)}";
-
+        
         try {
             con = (new ConectaBD().conectar());
             cst = con.prepareCall(query);
@@ -508,7 +537,7 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
             cst.registerOutParameter(3, OracleTypes.CURSOR);
             cst.executeQuery();
             rs = ((OracleCallableStatement) cst).getCursor(3);
-
+            
             objlstMov = null;
             objlstMov = new ListModelList<Movlinea>();
             while (rs.next()) {
@@ -521,7 +550,7 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
                 objMov.setTipo_doc(rs.getInt("pltipdoc"));
                 objMov.setNumero_doc(rs.getString("plnrodoc"));
                 objMov.setSucursal(rs.getInt("suc_id"));
-
+                objMov.setPeriodo_proceso(rs.getString("plppag_id"));
                 objMov.setValor_constante(0);
                 objMov.setValor_constante_mesual(0);
                 /* objMov.setUsu_add(rs.getString("pld_usuadd"));
@@ -530,7 +559,7 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
                  objMov.setFecha_mod(rs.getTimestamp("pld_fecmod"));*/
                 objlstMov.add(objMov);
             }
-
+            
         } catch (SQLException e) {
             Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
         } catch (NullPointerException e) {
@@ -542,23 +571,24 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
                 con.close();
             }
         }
-
+        
         return objlstMov;
-
+        
     }
 
     /**
      * @param codigo -->codigo del trabajador
      * @param tipo -- tipo de constante
      * @param sucursal -- codigo de sucursal
+     * @param periodo
      * @autor Junior Fernandez Ortiz version 10/08/2017
      * @return lista de datos a mostrar enm el detalle
      * @throws SQLException
      */
-    public ListModelList<Movlinea> buscarDetalle(String codigo, String tipo, int sucursal) throws SQLException {
-
-        String query = "{call codijisa.pack_movimiento_linea.p_buscaxpersonal(?,?,?,?,?)}";
-
+    public ListModelList<Movlinea> buscarDetalle(String codigo, String tipo, int sucursal,String periodo) throws SQLException {
+        
+        String query = "{call codijisa.pack_movimiento_linea.p_buscaxpersonal(?,?,?,?,?,?)}";
+        
         try {
             con = (new ConectaBD().conectar());
             cst = con.prepareCall(query);
@@ -566,10 +596,11 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
             cst.setInt(2, sucursal); //objUsuCredential.getCodsuc());
             cst.setString(3, codigo);
             cst.setString(4, tipo);
-            cst.registerOutParameter(5, OracleTypes.CURSOR);
+            cst.setString(5, periodo);
+            cst.registerOutParameter(6, OracleTypes.CURSOR);
             cst.executeQuery();
-            rs = ((OracleCallableStatement) cst).getCursor(5);
-
+            rs = ((OracleCallableStatement) cst).getCursor(6);
+            
             objlstMov = null;
             objlstMov = new ListModelList<Movlinea>();
             while (rs.next()) {
@@ -584,7 +615,7 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
                 objMov.setFecha_add(rs.getTimestamp("pld_fecadd"));
                 objMov.setFecha_mod(rs.getTimestamp("pld_fecmod"));
                 objMov.setSucursal(rs.getInt("suc_id"));
-				//SE modifico jr 19/01/2017
+                //SE modifico jr 19/01/2017
                 objMov.setNro_ope(rs.getInt("pld_nroope"));
                 if (tipo.equals("C")) {
                     objMov.setValor_constante(rs.getDouble("valor"));
@@ -593,7 +624,7 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
                 }
                 objlstMov.add(objMov);
             }
-
+            
         } catch (SQLException e) {
             Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
         } catch (NullPointerException e) {
@@ -605,12 +636,12 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
                 con.close();
             }
         }
-
+        
         return objlstMov;
-
+        
     }
 
-    /**
+/**
      * @autor Junior Fernandez Ortiz version 11/08/2017
      * @return lista de datos a mostrar en la lista Principal
      * @throws SQLException
@@ -626,13 +657,17 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
         String cidconstante = idconstante.isEmpty() ? "" : " and d.pld_idconc =" + idconstante + "";
         String s_area = area.isEmpty() ? "" : " and dl.plarea in ('" + area + "')";
         String s_periodo = periodo.isEmpty() ? "" : " and d.plppag_id ='" + periodo + "'";
-
+        
         String query = " select"
                 + " t.pltipdoc||t.plnrodoc codigo,"
                 + " t.plapepat,t.plapemat,t.plnomemp,t.pltipdoc,t.plnrodoc,"
                 + " pack_tpersonal.ftb1_descripcion(dl.plarea,'00003') plarea_des, dl.suc_id ,"
                 + " case when '" + idconstante + "' is not null then pack_movimiento_linea.f_buscatipoC('" + idconstante + "') else 'X' end tipo,"
-                + " max(case when '" + idconstante + "' is not null then to_number(lib.decrypt8(d.pld_valor)) else 0 end) valor"
+                //+ " max(case when '" + idconstante + "' is not null then to_number(lib.decrypt8(d.pld_valor)) else 0 end) valor,d.plppag_id"
+                + " max(case when '" + idconstante + "' is not null then "
+                + "  to_number(lib.decrypt8(d.pld_valor), '99999990.00')"
+                //+ " to_number(lib.decrypt8(d.pld_valor)) "
+                + " else 0 end) valor,d.plppag_id,d.pld_nroope"
                 + " from"
                 + " tpersonal t,tpldatosfv d,tpldatoslab dl"
                 + " where"
@@ -650,11 +685,12 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
                 + " d.emp_id = " + objUsuCredential.getCodemp()
                 + s_sucursal + s_personal + cidconstante + s_area + s_periodo
                 + " group by t.pltipdoc||t.plnrodoc ,t.plapepat,t.plapemat,t.plnomemp,t.pltipdoc,t.plnrodoc,"
-                + " pack_tpersonal.ftb1_descripcion(dl.plarea,'00003'), dl.suc_id"
+                //+ " pack_tpersonal.ftb1_descripcion(dl.plarea,'00003'), dl.suc_id,d.plppag_id"
+				+ " pack_tpersonal.ftb1_descripcion(dl.plarea,'00003'), dl.suc_id,d.plppag_id,d.pld_nroope"
                 + " order by t.plapepat";
         objlstMov = null;
         objlstMov = new ListModelList<Movlinea>();
-
+        
         try {
             con = new ConectaBD().conectar();
             st = con.createStatement();
@@ -669,6 +705,8 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
                 objMov.setTipo_doc(rs.getInt("pltipdoc"));
                 objMov.setNumero_doc(rs.getString("plnrodoc"));
                 objMov.setSucursal(rs.getInt("suc_id"));
+                objMov.setPeriodo_proceso(rs.getString("plppag_id"));
+				objMov.setNro_ope(rs.getInt("pld_nroope"));
                 if (rs.getString("tipo").equals("C")) {
                     objMov.setValor_constante(rs.getDouble("valor"));
                 } else if (rs.getString("tipo").equals("M")) {
@@ -676,7 +714,7 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
                 }
                 objlstMov.add(objMov);
             }
-
+            
         } catch (SQLException e) {
             Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
         } catch (NullPointerException e) {
@@ -689,7 +727,7 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
             }
         }
         return objlstMov;
-
+        
     }
 
 //  String query = "{call codijisa.pack_movimiento_linea.p_consultaFiltro(?,?,?,?,?,?,?)}";
@@ -707,10 +745,11 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
      cst.executeQuery();
      rs = ((OracleCallableStatement) cst).getCursor(7);
      */
-   
-    
-     public int verificarDniVacaciones(String dni) throws SQLException {
-        int valor = 0;String sql;
+	 
+    public int verificarDniVacaciones(String dni) throws SQLException {
+		
+        int valor = 0;
+        String sql;
         try {
             con = new ConectaBD().conectar();
             sql = "{ ?= call PACK_TPLVACGOZ.f_exi_empleado(?,?)}";
@@ -742,6 +781,7 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
                 + " where t.pltipdoc||t.plnrodoc='" + dni + "'"
                 + " and t.plppag_id ='" + periodo + "'"
                 + " and t.emp_id = " + objUsuCredential.getCodemp();*/
+				
         try {
             con = new ConectaBD().conectar();
             sql = "{?= call pack_tpldatfor.f_exi_empleado(?,?,?)}";
@@ -857,9 +897,93 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
         return valor;
 
     }
+public ListModelList<Personal> buscarPersonalInformesPlames (String sucursal,String personal,String periodo) throws SQLException{
+        String sql = "{call codijisa.pack_tpersonal.lov_personal_Plames(?,?,?,?,?)}";
+         try {
+             con = new ConectaBD().conectar();
+             cst = con.prepareCall(sql);
+             cst.setInt(1, objUsuCredential.getCodemp());
+             cst.setString(2, sucursal);
+             cst.setString(3,personal);
+             cst.setString(4, periodo);
+             cst.registerOutParameter(5, OracleTypes.CURSOR);
+             cst.execute();
+             rs = ((OracleCallableStatement) cst).getCursor(5);
+            objlstPersonal = null;
+            objlstPersonal = new ListModelList<Personal>();
 
-    public ListModelList<Personal> buscarPersonaBoleta(int sucursal, String periodo, int tipo, String area) throws SQLException {
-        String query = "{call codijisa.pack_planilla_informes.p_lov_boleta(?,?,?,?,?,?)}";
+            while (rs.next()) {
+                objPersonal = new Personal();
+                objPersonal.setPlidper(rs.getString("codigo"));
+                objPersonal.setPldesper(rs.getString("nombre"));
+                objPersonal.setPltipdoc(rs.getInt("pltipdoc"));
+                objPersonal.setPlnrodoc(rs.getString("plnrodoc"));
+                objPersonal.setSuc_id_des(rs.getString("sucursal"));
+                objPersonal.setPlarea_des(rs.getString("area_des"));
+                objlstPersonal.add(objPersonal);
+
+            }
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } catch (NullPointerException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } finally {
+            if (con != null) {
+                cst.close();
+                rs.close();
+                con.close();
+            }
+
+        }
+
+        return objlstPersonal;
+
+    }
+     public ListModelList<Personal> buscarPersonalInformesPlanilla (String sucursal,String personal,String periodo) throws SQLException{
+        String sql = "{call codijisa.pack_tpersonal.lov_personal_Planilla(?,?,?,?,?)}";
+         try {
+             con = new ConectaBD().conectar();
+             cst = con.prepareCall(sql);
+             cst.setInt(1, objUsuCredential.getCodemp());
+             cst.setString(2, sucursal);
+             cst.setString(3,personal);
+             cst.setString(4, periodo);
+             cst.registerOutParameter(5, OracleTypes.CURSOR);
+             cst.execute();
+             rs = ((OracleCallableStatement) cst).getCursor(5);
+            objlstPersonal = null;
+            objlstPersonal = new ListModelList<Personal>();
+
+            while (rs.next()) {
+                objPersonal = new Personal();
+                objPersonal.setPlidper(rs.getString("codigo"));
+                objPersonal.setPldesper(rs.getString("nombre"));
+                objPersonal.setPltipdoc(rs.getInt("pltipdoc"));
+                objPersonal.setPlnrodoc(rs.getString("plnrodoc"));
+                objPersonal.setSuc_id_des(rs.getString("sucursal"));
+                objPersonal.setPlarea_des(rs.getString("area_des"));
+                objlstPersonal.add(objPersonal);
+
+            }
+        } catch (SQLException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } catch (NullPointerException e) {
+            Messagebox.show("Error de Carga de Datos debido al Error " + e.toString(), "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
+        } finally {
+            if (con != null) {
+                cst.close();
+                rs.close();
+                con.close();
+            }
+
+        }
+
+        return objlstPersonal;
+
+    }
+	
+public ListModelList<Personal> buscarPersonaBoleta(int sucursal, String periodo, int tipo, String area,String estadotrab) throws SQLException {
+        String query = "{call codijisa.pack_planilla_informes.p_lov_boleta(?,?,?,?,?,?,?)}";
         if(area.isEmpty()){
             area = "TODOS";
         }
@@ -872,9 +996,10 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
             cst.setString(3, periodo);
             cst.setInt(4, tipo);
             cst.setString(5, area);
-            cst.registerOutParameter(6, OracleTypes.CURSOR); //REF CURSOR
+            cst.setString(6,estadotrab);
+            cst.registerOutParameter(7, OracleTypes.CURSOR); //REF CURSOR
             cst.execute();
-            rs = ((OracleCallableStatement) cst).getCursor(6);
+            rs = ((OracleCallableStatement) cst).getCursor(7);
 
             objlstPersonal = null;
             objlstPersonal = new ListModelList<Personal>();
@@ -907,7 +1032,7 @@ String sql_personal = "{call codijisa.pack_tpersonal.p_listPersonalLov(?,?,?,?,?
         return objlstPersonal;
 
     }
-
+	
     public ManAreas consultaArea(String areaid) throws SQLException {
         String query = "{call codijisa.pack_movimiento_linea.p_validaArea(?,?)}";
 

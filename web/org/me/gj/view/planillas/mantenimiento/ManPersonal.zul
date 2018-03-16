@@ -192,7 +192,7 @@
                                         <hbox align="center">
                                             <space width="5px"/>
                                             <cell align="left" width="center">
-                                                <label value="COSTO :"/>
+                                                <label value="C. COSTO:"/>
                                             </cell>
                                             <space width="5px"/>
                                             <textbox id="txt_costo" placeholder="PRESIONE ENTER" maxlength="3" readonly="false" width="100px" focus="false" tooltiptext="Código de Centro de Costos" style="text-align:center;"/>
@@ -204,7 +204,7 @@
                                         </hbox>
                                     </groupbox>
                                     <separator height="5px"/>    
-                                    <listbox id="lst_personal" mold="paging" pageSize="14" width="985px" height="370px">
+                                    <listbox id="lst_personal" mold="paging" pageSize="14" width="985px" height="360px">
                                         <listhead>
                                             <listheader label="DNI" width="70px" align="center"/>
                                             <listheader label="PATERNO" width="95px" align="center"/>

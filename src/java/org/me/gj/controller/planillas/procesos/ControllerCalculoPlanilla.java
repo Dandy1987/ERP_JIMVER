@@ -27,6 +27,7 @@ import org.zkoss.zul.Checkbox;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Textbox;
 import org.zkoss.zul.Combobox;
+import org.zkoss.zul.Label;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Window;
 
@@ -44,6 +45,8 @@ public class ControllerCalculoPlanilla extends SelectorComposer<Component> {
     private Combobox cb_sucursal;
     @Wire
     private Button btn_calcular;
+	@Wire
+    Label lbl_periododesc;
 
     DaoMovLinea objDaoMovLinea;
     Personal objPersonal;
@@ -55,9 +58,10 @@ public class ControllerCalculoPlanilla extends SelectorComposer<Component> {
     private ListModelList<Sucursales> objListSucursales;
     ListModelList<InformesMovimiento> objlstmovimiento;
     DaoMovimiento objDaoMovimiento;
+	DaoDescuentos objDaoDescuentos;
     Session sesion = Sessions.getCurrent();
     UsuariosCredential objUsuCredential = (UsuariosCredential) sesion.getAttribute("usuariosCredential");
-    private static final Logger LOGGER = Logger.getLogger(ControllerMovLinea.class);
+    private static final Logger LOGGER = Logger.getLogger(ControllerCalculoPlanilla.class);
     public static boolean bandera = false;
     ParametrosSalida objPaSalida;
 
@@ -69,6 +73,7 @@ public class ControllerCalculoPlanilla extends SelectorComposer<Component> {
         objDaoPerPago = new DaoPerPago();
         objDaoMovimiento = new DaoMovimiento();
         objlstmovimiento = null;
+		objDaoDescuentos = new DaoDescuentos();
         objlstmovimiento = new ListModelList<InformesMovimiento>();
         //String periodo = objDaoMovLinea.setearPeriodo();
         String periodo = objDaoPerPago.getPeriodoProceso(objUsuCredential.getCodemp());
@@ -78,9 +83,11 @@ public class ControllerCalculoPlanilla extends SelectorComposer<Component> {
         objListSucursales = objDaoAccesos.lstSucursales_union(objUsuCredential.getCodemp());
         // objlstSucursal = objDaoPersonal.lstSucursales(emp_id); //se comento
         cb_sucursal.setModel(objListSucursales);
+        String periodo_descrip = objDaoPerPago.getPeriodoDescripcion(periodo);
+        lbl_periododesc.setValue(periodo_descrip);
     }
 
-    @Listen("onClick=#btn_calcular")
+@Listen("onClick=#btn_calcular")
     public void botonCalcularPlanilla() {
         try {
             //Capturar datos ingresados
@@ -92,6 +99,10 @@ public class ControllerCalculoPlanilla extends SelectorComposer<Component> {
                 Messagebox.show("No hay ningun periodo en proceso", "ERP-JIMVER", Messagebox.OK, Messagebox.ERROR);
             } else {
                 if (!objlstmovimiento.isEmpty() && !txt_periodo.getValue().equals("--------")) {
+                    
+                     if (objDaoDescuentos.validaPeriodoCalculando(txt_periodo.getValue().toString()) == 1) {
+                Messagebox.show("La planilla se encuentra calculando", "ERP-JIMVER", Messagebox.OK, Messagebox.INFORMATION);
+            } else {
                     Messagebox.show("Ya existe calculo,desea eliminar y volver a generar", "ERP-JIMVER", Messagebox.OK | Messagebox.CANCEL, Messagebox.QUESTION,
                             new EventListener() {
                                 @Override
@@ -136,10 +147,9 @@ public class ControllerCalculoPlanilla extends SelectorComposer<Component> {
 
                                     }
                                 }
-                            });
-
+                            });}
                 } else {
-
+                        
                     if (chk_marca.isChecked()) {
                         String valida = verificar();
                         if (!valida.isEmpty()) {
@@ -278,4 +288,5 @@ public class ControllerCalculoPlanilla extends SelectorComposer<Component> {
         }
         return valor;
     }
+
 }

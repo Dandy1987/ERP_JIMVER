@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import org.me.gj.controller.planillas.informes.ControllerBoletaPago;
+import org.me.gj.controller.planillas.informes.ControllerInfUtil;
 import org.me.gj.controller.planillas.mantenimiento.DaoPerPago;
 import org.me.gj.model.planillas.mantenimiento.PerPago;
 import org.me.gj.model.seguridad.utilitarios.UsuariosCredential;
@@ -88,6 +89,8 @@ public class ControllerPeriodoAnterior extends SelectorComposer<Component> {
 
         if (controlador.equals("ControllerBoletaPago")) {
             ControllerBoletaPago.bandera = false;
+		}if (controlador.equals("ControllerInfUtil")) {
+                ControllerInfUtil.bandera = false;
         }
     }
 
@@ -100,6 +103,8 @@ public class ControllerPeriodoAnterior extends SelectorComposer<Component> {
 
             if (controlador.equals("ControllerBoletaPago")) {
                 ControllerBoletaPago.bandera = false;
+			}if (controlador.equals("ControllerInfUtil")) {
+                ControllerInfUtil.bandera = false;
             }
             w_periodo.detach();
         } catch (Exception e) {

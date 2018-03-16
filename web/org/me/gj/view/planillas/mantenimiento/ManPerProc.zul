@@ -41,7 +41,7 @@
                                                 <label value="TIPO DE PLANILLA : "/>
                                             </cell>
                                             <space width="2px"/>
-                                            <combobox id="cb_tipPeriodo" readonly="true" width="200px" tooltiptext="Seleccione una Opcion">
+                                            <combobox id="cb_tipPeriodo" readonly="true" width="300px" tooltiptext="Seleccione una Opcion">
                                                 <template name="model">
                                                     <comboitem label = "${each.tab_descri}" value = "${each.tab_id}"/>
                                                 </template>
@@ -55,7 +55,7 @@
                                     <separator height="5px"/>
                                     <listbox id="lst_perProc" mold="paging" pageSize="18" width="985px" height="430px">
                                         <listhead>
-                                            <listheader label="COD" width="50px" align="center"/>
+                                            <listheader label="PERIODO" width="70px" align="center"/>
                                             <listheader label="DESCRIPCIÓN"/>
                                             <listheader label="FEC. INI." width="90px" align="center"/>
                                             <listheader label="FEC. FIN." width="90px" align="center"/>
@@ -78,7 +78,7 @@
                                     <space height="5px"/>
                                     <hbox align="center">
                                         <space width="867px"/>
-                                        <button id="btn_ajussp" label="Ajustar S.S.P." sclass="botones"/>
+                                        <button id="btn_ajussp" label="Ajustar S.S.P." sclass="botones" width="105px" />
                                     </hbox>
                                     <space height="5px"/>
                                     <hbox align="center">
